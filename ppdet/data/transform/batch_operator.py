@@ -139,7 +139,7 @@ class PadBatchOp(BaseOperator):
         return samples
 
 
-@register_op
+#@register_op
 class BatchRandomResizeOp(BaseOperator):
     """
     Resize image to target size randomly. random target_size and interpolation method
@@ -591,7 +591,7 @@ class Gt2TTFTargetOp(BaseOperator):
         return heatmap
 
 
-@register_op
+#@register_op
 class Gt2Solov2TargetOp(BaseOperator):
     """Assign mask target and labels in SOLOv2 network.
     Args:

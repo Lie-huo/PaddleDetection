@@ -1,0 +1,18 @@
+metric: COCO
+
+TrainDataset:
+  !COCODataSet
+    image_dir: images
+    anno_path: annotations/train.json
+    dataset_dir: /Users/liuhui29/Downloads/download/datasets/roadsign_coco
+
+EvalDataset:
+  !COCODataSet
+    image_dir: images
+    anno_path: annotations/valid.json
+    dataset_dir: dataset/coco
+
+TestDataset:
+  !ImageFolder
+    anno_path: annotations/valid.json
+    dataset_dir: /Users/liuhui29/Downloads/download/datasets/roadsign_coco

@@ -482,7 +482,7 @@ class RandomErasingImage(BaseOperator):
 
 
 @register_op
-class GridMaskOp(BaseOperator):
+class GridMaskOp_v1(BaseOperator):
     def __init__(self,
                  use_h=True,
                  use_w=True,
@@ -504,7 +504,7 @@ class GridMaskOp(BaseOperator):
             prob (float): max probability to carry out gridmask
             upper_iter (int): suggested to be equal to global max_iter
         """
-        super(GridMaskOp, self).__init__()
+        super(GridMaskOp_v1, self).__init__()
         self.use_h = use_h
         self.use_w = use_w
         self.rotate = rotate
@@ -1980,13 +1980,13 @@ class PadBox(BaseOperator):
 
 
 @register_op
-class BboxXYXY2XYWH(BaseOperator):
+class BboxXYXY2XYWH_v1(BaseOperator):
     """
     Convert bbox XYXY format to XYWH format.
     """
 
     def __init__(self):
-        super(BboxXYXY2XYWH, self).__init__()
+        super(BboxXYXY2XYWH_v1, self).__init__()
 
     def __call__(self, sample, context=None):
         assert 'gt_bbox' in sample
