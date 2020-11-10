@@ -48,7 +48,7 @@ class LayerTest(unittest.TestCase):
         program = Program()
         with fluid.scope_guard(scope):
             with fluid.program_guard(program):
-                paddle.manual_seed(self.seed)
+                paddle.seed(self.seed)
                 paddle.framework.random._manual_program_seed(self.seed)
                 yield
 
