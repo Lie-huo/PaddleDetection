@@ -12,39 +12,44 @@ __all__ = ['YOLOv3']
 class YOLOv3(BaseArch):
     __category__ = 'architecture'
     __inject__ = [
-        'anchor',
         'backbone',
+        'neck',
         'yolo_head',
+        'post_process',
     ]
 
-    def __init__(self, anchor, backbone, yolo_head):
+    def __init__(self,
+                 backbone='DarkNet',
+                 neck='YOLOv3FPN',
+                 yolo_head='YOLOv3Head',
+                 post_process='BBoxPostProcess'):
         super(YOLOv3, self).__init__()
-        self.anchor = anchor
         self.backbone = backbone
+        self.neck = neck
         self.yolo_head = yolo_head
+        self.post_process = post_process
 
     def model_arch(self, ):
         # Backbone
         body_feats = self.backbone(self.inputs)
 
+        # neck
+        body_feats = self.neck(body_feats)
+
         # YOLO Head
-        self.yolo_head_out = self.yolo_head(body_feats)
+        self.yolo_head_outs = self.yolo_head(body_feats)
 
-        # Anchor
-        self.anchors, self.anchor_masks, self.mask_anchors = self.anchor()
+    def get_loss(self, ):
+        loss = self.yolo_head.get_loss(self.inputs, self.yolo_head_outs)
+        return loss
 
-    def loss(self, ):
-        yolo_loss = self.yolo_head.loss(self.inputs, self.yolo_head_out,
-                                        self.anchors, self.anchor_masks,
-                                        self.mask_anchors)
-        return yolo_loss
-
-    def infer(self, ):
-        bbox, bbox_num = self.anchor.post_process(
-            self.inputs['im_size'], self.yolo_head_out, self.mask_anchors)
+    def get_pred(self, ):
+        bbox, bbox_num = self.post_process(self.yolo_head_outs,
+                                           self.yolo_head.mask_anchors,
+                                           self.inputs['im_size'])
         outs = {
             "bbox": bbox.numpy(),
-            "bbox_num": bbox_num,
+            "bbox_num": bbox_num.numpy(),
             'im_id': self.inputs['im_id'].numpy()
         }
         return outs

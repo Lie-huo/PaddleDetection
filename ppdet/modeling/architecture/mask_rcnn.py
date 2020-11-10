@@ -21,6 +21,8 @@ class MaskRCNN(BaseArch):
         'rpn_head',
         'bbox_head',
         'mask_head',
+        'bbox_post_process',
+        'mask_post_process',
     ]
 
     def __init__(self,
@@ -31,6 +33,8 @@ class MaskRCNN(BaseArch):
                  rpn_head,
                  bbox_head,
                  mask_head,
+                 bbox_post_process,
+                 mask_post_process,
                  neck=None):
         super(MaskRCNN, self).__init__()
         self.anchor = anchor
@@ -41,6 +45,8 @@ class MaskRCNN(BaseArch):
         self.rpn_head = rpn_head
         self.bbox_head = bbox_head
         self.mask_head = mask_head
+        self.bbox_post_process = bbox_post_process
+        self.mask_post_process = mask_post_process
 
     def model_arch(self):
         # Backbone
@@ -72,9 +78,11 @@ class MaskRCNN(BaseArch):
 
         rois_has_mask_int32 = None
         if self.inputs['mode'] == 'infer':
+            bbox_pred, bboxes = self.bbox_head.get_prediction(
+                self.bbox_head_out, rois)
             # Refine bbox by the output from bbox_head at test stage
-            self.bboxes = self.proposal.post_process(self.inputs,
-                                                     self.bbox_head_out, rois)
+            self.bboxes = self.bbox_post_process(bbox_pred, bboxes,
+                                                 self.inputs['im_info'])
         else:
             # Proposal RoI for Mask branch
             # bboxes update at training stage only
@@ -87,31 +95,31 @@ class MaskRCNN(BaseArch):
                                             self.bboxes, bbox_feat,
                                             rois_has_mask_int32, spatial_scale)
 
-    def loss(self, ):
+    def get_loss(self, ):
         loss = {}
 
         # RPN loss
         rpn_loss_inputs = self.anchor.generate_loss_inputs(
             self.inputs, self.rpn_head_out, self.anchor_out)
-        loss_rpn = self.rpn_head.loss(rpn_loss_inputs)
+        loss_rpn = self.rpn_head.get_loss(rpn_loss_inputs)
         loss.update(loss_rpn)
 
         # BBox loss
         bbox_targets = self.proposal.get_targets()
-        loss_bbox = self.bbox_head.loss(self.bbox_head_out, bbox_targets)
+        loss_bbox = self.bbox_head.get_loss(self.bbox_head_out, bbox_targets)
         loss.update(loss_bbox)
 
         # Mask loss
         mask_targets = self.mask.get_targets()
-        loss_mask = self.mask_head.loss(self.mask_head_out, mask_targets)
+        loss_mask = self.mask_head.get_loss(self.mask_head_out, mask_targets)
         loss.update(loss_mask)
 
         total_loss = fluid.layers.sums(list(loss.values()))
         loss.update({'loss': total_loss})
         return loss
 
-    def infer(self, ):
-        mask = self.mask.post_process(self.bboxes, self.mask_head_out,
+    def get_pred(self, ):
+        mask = self.mask_post_process(self.bboxes, self.mask_head_out,
                                       self.inputs['im_info'])
         bbox, bbox_num = self.bboxes
         output = {
