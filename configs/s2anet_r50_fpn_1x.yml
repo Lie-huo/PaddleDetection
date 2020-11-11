@@ -1,0 +1,7 @@
+_BASE_: [
+  './_base_/models/s2anet.yml',
+  './_base_/optimizers/rcnn_1x.yml',
+  './_base_/datasets/roadsign.yml',
+  './_base_/readers/yolov3_reader.yml',
+  './_base_/runtime.yml',
+]

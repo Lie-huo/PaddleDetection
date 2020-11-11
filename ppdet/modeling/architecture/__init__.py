@@ -16,3 +16,4 @@ from .faster_rcnn import *
 from .mask_rcnn import *
 from .yolo import *
 from .cascade_rcnn import *
+from .s2anet import *

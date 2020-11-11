@@ -192,3 +192,56 @@ class Proposal(object):
 
     def get_proposals(self):
         return self.proposals_list
+
+
+# [x, y, w, h] to [xmin, ymin, xmax, ymax]
+def center_form_to_corner_form(locations):
+    return paddle.concat([locations[..., :2] - locations[..., 2:] / 2,
+                       locations[..., :2] + locations[..., 2:] / 2], locations.dim() - 1)
+
+
+# [xmin, ymin, xmax, ymax] to [x, y, w, h]
+def corner_form_to_center_form(boxes):
+    return paddle.concat([
+        (boxes[..., :2] + boxes[..., 2:]) / 2,
+        boxes[..., 2:] - boxes[..., :2]
+    ], boxes.dim() - 1)
+
+
+@register
+class S2ANetAnchor(object):
+    def __init__(self, aspect_ratios, anchor_start_size, stride):
+        self.features_maps = [(75, 75), (38, 38), (19, 19), (10, 10), (5, 5)]
+        self.anchor_sizes = [32, 64, 128, 256, 512]
+        self.ratios = np.array([0.5, 1, 2])
+        self.scales = np.array([2 ** 0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)])
+        self.image_size = 600
+        self.clip = True
+    
+    def __call__(self, *args, **kwargs):
+        anchor_list = []
+        for k, (feature_map_w, feature_map_h) in enumerate(self.features_maps):
+            for i in range(feature_map_w):
+                for j in range(feature_map_h):
+                    cx = (j + 0.5) / feature_map_w
+                    cy = (i + 0.5) / feature_map_h
+                    
+                    size = self.anchor_sizes[k] / self.image_size  # 将框体长宽转为 比例形式
+                    
+                    sides_square = self.scales * size  # 计算方形检测框边长
+                    for side_square in sides_square:
+                        anchor_list.append([cx, cy, side_square, side_square])  # 添加方形检测框
+                    
+                    sides_long = sides_square * 2 ** (1 / 2)  # 计算长形检测框长边
+                    for side_long in sides_long:
+                        anchor_list.append([cx, cy, side_long, side_long / 2])  # 添加长形检测框,短边为长边的一半
+                        anchor_list.append([cx, cy, side_long / 2, side_long])
+        
+        print('anchor_list ddd: ', type(anchor_list), len(anchor_list))
+        anchor_list = paddle.fluid.layers.assign(anchor_list) #paddle.tensor(anchor_list)
+        print('anchor_list shape:',anchor_list.shape)
+        if self.clip:  # 对超出图像范围的框体进行截断
+            anchor_list = center_form_to_corner_form(anchor_list)  # 截断时,先转为 [xmin, ymin, xmin, xmax]形式
+            anchor_list.clamp_(max=1, min=0)
+            anchor_list = corner_form_to_center_form(anchor_list)  # 转回 [x, y, w, h]形式
+        return anchor_list

@@ -31,7 +31,10 @@ class FasterRCNN(BaseArch):
 
     def model_arch(self, ):
         # Backbone
+        self.gbd = self.inputs
+        #print('inputs', self.inputs.shape)
         bb_out = self.backbone(self.gbd)
+        print('bb_out', bb_out.shape)
         self.gbd.update(bb_out)
 
         # RPN

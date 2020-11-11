@@ -109,7 +109,7 @@ class PadBatch(BaseOperator):
             if pad_mask:
                 poly_num_max = max(poly_num)
                 poly_part_num_max = max(poly_part_num)
-                point_num_max = max(point_num)
+                point_num_max = max(poly_num)
                 gt_masks_data = -np.ones(
                     [poly_num_max, poly_part_num_max, point_num_max, 2])
 

@@ -120,6 +120,8 @@ def run(FLAGS, cfg):
         ckpt_type=FLAGS.ckpt_type,
         load_static_weights=cfg.get('load_static_weights', False))
 
+    print('model create OK', model)
+
     # Parallel Model 
     if dist.ParallelEnv().nranks > 1:
         model = paddle.DataParallel(model)
@@ -152,6 +154,9 @@ def run(FLAGS, cfg):
 
         # Model Forward
         model.train()
+        print('cfg', cfg['TrainReader']['inputs_def']['fields'])
+        print('data')
+        print(data[0][0].shape, data[0][1].shape)
         outputs = model(data, cfg['TrainReader']['inputs_def']['fields'],
                         'train')
 

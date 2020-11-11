@@ -35,6 +35,8 @@ class YOLOv3(BaseArch):
 
         # neck
         body_feats = self.neck(body_feats)
+        print('body_feats,', len(body_feats))
+        input('xxxx')
 
         # YOLO Head
         self.yolo_head_outs = self.yolo_head(body_feats)

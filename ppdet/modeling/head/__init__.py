@@ -16,6 +16,7 @@ from . import rpn_head
 from . import bbox_head
 from . import mask_head
 from . import yolo_head
+from . import s2anet_head
 from . import roi_extractor
 
 from .rpn_head import *

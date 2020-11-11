@@ -1,0 +1,45 @@
+architecture: S2ANet
+use_gpu: false
+log_iter: 20
+save_dir: output
+snapshot_iter: 10000
+pretrain_weights: https://paddle-imagenet-models-name.bj.bcebos.com/DarkNet53_pretrained.tar
+weights: output/yolov3_darknet/model_final
+num_classes: 4
+use_fine_grained_loss: false
+load_static_weights: True
+
+S2ANet:
+  anchor: S2ANetAnchor
+  backbone: ResNet
+  neck: FPN
+  s2anet_head: S2ANetHead
+
+ResNet:
+  # index 0 stands for res2
+  depth: 50
+  norm_type: bn
+  freeze_at: 0
+  return_idx: [0,1,2,3]
+  num_stages: 4
+
+S2ANetAnchor:
+  aspect_ratios: [ 0.5, 1.0, 2.0 ]
+  anchor_start_size: 32
+  stride: [ 4., 4. ]
+
+FPN:
+  in_channels: [256, 512, 1024, 2048]
+  out_channel: 256
+  min_level: 0
+  max_level: 4
+  spatial_scale: [0.25, 0.125, 0.0625, 0.03125]
+
+S2ANetHead:
+  loss: S2ANetLoss
+
+S2ANetLoss:
+  ignore_thresh: 0.7
+  downsample: 32
+  label_smooth: true
+
