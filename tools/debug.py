@@ -25,11 +25,14 @@ class priorbox:
     Retainnet anchors, 生成策略与SSD不同
     """
     def __init__(self,cfg=None):
-        self.features_maps = [(75, 75), (38, 38), (19, 19), (10, 10), (5, 5)]
-        self.anchor_sizes = [32, 64, 128, 256, 512]
+        # self.features_maps = [(75, 75), (38, 38), (19, 19), (10, 10), (5, 5)]
+        self.features_maps = [(8, 8)]
+        # 600
+        self.anchor_sizes = [32]
         self.ratios = np.array([0.5, 1, 2])
         self.scales = np.array([2 ** 0, 2 ** (1.0 / 3.0), 2 ** (2.0 / 3.0)])
-        self.image_size = 600
+        # 32x32  22.63x45.2
+        self.image_size = 512
         self.clip = True
         if cfg:
             # [(75, 75), (38, 38), (19, 19), (10, 10), (5, 5)]  # fpn输出的特征图大小
@@ -67,13 +70,26 @@ class priorbox:
         priors = torch.tensor(priors)
         if self.clip:   # 对超出图像范围的框体进行截断
             priors = center_form_to_corner_form(priors) # 截断时,先转为 [xmin, ymin, xmin, xmax]形式
-            priors.clamp_(max=1, min=0)
+            #priors.clamp_(max=1, min=0)
             priors = corner_form_to_center_form(priors) # 转回 [x, y, w, h]形式
         return priors
 
 
 if __name__ == '__main__':
     anchors = priorbox()()
-    print(anchors[-10:])
+    print(anchors[-10:, :])
     print(len(anchors))
     print(anchors.shape)
+
+    import paddle
+    paddle.enable_static()
+    conv1 = paddle.fluid.data(name='conv1', shape=[None, 1, 8, 8], dtype='float32')
+    input = conv1
+    anchor_sizes = [32, 40.31747359663594, 50.79683366298238]
+    aspect_ratios = [0.5, 1, 2]
+    variance = [0.1, 0.1, 0.2, 0.2]
+    stride=[16.0, 16.0]
+    pd_anchor = paddle.fluid.layers.anchor_generator(input, anchor_sizes, aspect_ratios, variance, stride)
+    print(pd_anchor[0].shape, pd_anchor[1].shape)
+    print(pd_anchor[1][0:10])
+    

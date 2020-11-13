@@ -10,7 +10,7 @@ use_fine_grained_loss: false
 load_static_weights: True
 
 S2ANet:
-  anchor: S2ANetAnchor
+  anchor: AnchorGeneratorRPN
   backbone: ResNet
   neck: FPN
   s2anet_head: S2ANetHead
@@ -23,10 +23,10 @@ ResNet:
   return_idx: [0,1,2,3]
   num_stages: 4
 
-S2ANetAnchor:
-  aspect_ratios: [ 0.5, 1.0, 2.0 ]
+AnchorGeneratorRPN:
+  aspect_ratios: [0.5, 1.0, 2.0]
   anchor_start_size: 32
-  stride: [ 4., 4. ]
+  stride: [4., 4.]
 
 FPN:
   in_channels: [256, 512, 1024, 2048]
