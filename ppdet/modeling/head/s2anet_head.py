@@ -149,25 +149,66 @@ def anchor2offset(anchors, kernel_size, stride):
     return offset_tensor
 
 
+class S2ANetHead_FAM_CLS(nn.Layer):
+    def __init__(self,
+                 feat_in=2048,
+                 feat_size=256,
+                  num_anchors=9):
+        super(S2ANetHead_FAM_CLS, self).__init__()
+        self.feat_in = feat_in
+        self.feat_size = feat_size
+        self.num_anchors = num_anchors
+    
+    def model_arch(self, ):
+        # Backbone
+        self.gbd = self.inputs
+        #print('inputs', self.inputs.shape)
+        bb_out = self.backbone(self.gbd)
+        print('bb_out', bb_out.shape)
+        self.gbd.update(bb_out)
+
+        # RPN
+        rpn_head_out = self.rpn_head(self.gbd)
+        self.gbd.update(rpn_head_out)
+
+        # Anchor
+        anchor_out = self.anchor(self.gbd)
+        self.gbd.update(anchor_out)
+
+        # Proposal BBox
+        self.gbd['stage'] = 0
+        proposal_out = self.proposal(self.gbd)
+        self.gbd.update({'proposal_0': proposal_out})
+
+        # BBox Head
+        bboxhead_out = self.bbox_head(self.gbd)
+        self.gbd.update({'bbox_head_0': bboxhead_out})
+
+        if self.gbd['mode'] == 'infer':
+            bbox_out = self.proposal.post_process(self.gbd)
+            self.gbd.update(bbox_out)
+        
+
 @register
 class S2ANetHead(nn.Layer):
     __shared__ = ['num_classes']
     __inject__ = ['loss']
 
     def __init__(self,
-                 stacked_convs=2,
-                 feat_in=2048,
+                 stacked_convs=4,
+                 feat_in=256,
                  feat_out=256,
-                 feat_channels=256,
+                 fam_feat_channels=256,
                  num_classes=16,
                  loss='S2ANetLoss'):
         super(S2ANetHead, self).__init__()
         self.stacked_convs = stacked_convs
         self.feat_in = feat_in
         self.feat_out = feat_out
-        self.feat_channels = feat_channels
+        self.fam_feat_channels = fam_feat_channels
         self.anchor_list = None
         self.num_classes = num_classes
+        self.num_classes = 16 # for debug
         self.loss = loss
         
         self.fam_cls_convs = Sequential()
@@ -176,12 +217,13 @@ class S2ANetHead(nn.Layer):
         fan_conv = feat_out * 3 * 3
 
         for i in range(self.stacked_convs):
-            chan_in = self.in_channels if i == 0 else self.feat_channels
+            chan_in = self.feat_in if i == 0 else self.fam_feat_channels
+            # chan_in = self.feat_channels
             self.fam_cls_convs.add_sublayer(
                 'fam_cls_conv_{}'.format(i),
                 Conv2D(
                     num_channels=chan_in,
-                    num_filters=self.feat_channels,
+                    num_filters=self.fam_feat_channels,
                     filter_size=3,
                     act='relu',
                     padding=1,
@@ -199,7 +241,7 @@ class S2ANetHead(nn.Layer):
                 'fam_reg_conv',
                 Conv2D(
                     num_channels=chan_in,
-                    num_filters=self.feat_channels,
+                    num_filters=self.fam_feat_channels,
                     filter_size=3,
                     act='relu',
                     padding=1,
@@ -212,32 +254,47 @@ class S2ANetHead(nn.Layer):
                         learning_rate=2.,
                         regularizer=L2Decay(0.))))
 
-        self.fam_reg = Conv2D(self.feat_channels, 5, 1)
-        self.fam_cls = Conv2D(self.feat_channels, self.num_classes, 1)
+        self.fam_reg = Conv2D(self.fam_feat_channels, 5, 1)
+        self.fam_cls = Conv2D(self.fam_feat_channels, self.num_classes, 1)
     
     def align_conv(self):
         pass
     
     def forward(self, feats):
         print('feats', len(feats))
-        assert len(feats) == len(self.mask_anchors)
         
+        fam_reg_branch_list = []
+        fam_cls_branch_list = []
         for i, feat in enumerate(feats):
+            print('i==', i)
             fam_cls_feat = self.fam_cls_convs(feat)
+            print('fam_cls_feat', fam_cls_feat.shape)
             fam_cls = self.fam_cls(fam_cls_feat)
-            fam_cls_feat = self.fam_reg_convs(feat)
-            fam_reg = self.fam_reg(fam_cls_feat)
-
-            stride = None
-            refine_anchor = bbox_decode(
-                fam_bbox_pred.detach(),
-                init_anchors,
-                self.target_means,
-                self.target_stds)
+            fam_cls = fam_cls.transpose([0, 2, 3, 1])
+            fam_cls = fam_cls.reshape([fam_cls.shape[0], -1, self.num_classes])
+            fam_cls_branch_list.append(fam_cls)
             
-            align_feat = self.align_conv(feat, refine_anchor.clone(), stride)
+            fam_reg_feat = self.fam_reg_convs(feat)
+            print('fam_reg_feat', fam_reg_feat.shape)
+            fam_reg = self.fam_reg(fam_reg_feat)
+            fam_reg = fam_reg.transpose([0, 2, 3, 1])
+            fam_reg = fam_reg.reshape([fam_reg.shape[0], -1, 5])
+            fam_reg_branch_list.append(fam_reg)
+
+            print('fam_cls', fam_cls.shape)
+            print('fam_reg', fam_reg.shape)
+            input('debug')
+            
+        print('feats out')
+        fam_reg_branch = paddle.concat(fam_reg_branch_list, axis=1)
+        fam_cls_branch = paddle.concat(fam_cls_branch_list, axis=1)
+
+        print('fam_reg_branch:', fam_reg_branch.shape)
+        print('fam_cls_branch:', fam_cls_branch.shape)
+            
+            
         
-        return yolo_outputs
+        return None
 
     def get_loss(self, inputs, head_outputs):
         return self.loss(inputs, head_outputs)
