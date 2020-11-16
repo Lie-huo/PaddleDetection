@@ -1,5 +1,5 @@
 use_gpu: false
 log_iter: 1
 save_dir: output
-snapshot_iter: 10000
+snapshot_epoch: 2
 num_classes: 5
