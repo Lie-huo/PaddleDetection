@@ -24,13 +24,12 @@ ResNet:
   freeze_at: 0
   return_idx: [0,1,2,3]
   num_stages: 4
-  variant: d
   dcn_v2_stages: [1, 2, 3]
-  lr_mult_list: [ 0.05, 0.05, 0.1, 0.15 ]
+
 
 FPN:
   in_channels: [256, 512, 1024, 2048]
-  out_channel: 64
+  out_channel: 256
   min_level: 0
   max_level: 4
   spatial_scale: [0.25, 0.125, 0.0625, 0.03125]
@@ -41,7 +40,7 @@ RPNHead:
     feat_in: 256
     feat_out: 256
   anchor_per_position: 3
-  rpn_channel: 64
+  rpn_channel: 256
 
 Anchor:
   anchor_generator:
@@ -64,8 +63,8 @@ Proposal:
     nms_thresh: 0.7
     train_pre_nms_top_n: 2000
     train_post_nms_top_n: 2000
-    infer_pre_nms_top_n: 500
-    infer_post_nms_top_n: 300`
+    infer_pre_nms_top_n: 1000
+    infer_post_nms_top_n: 1000
   proposal_target_generator:
     name: ProposalTargetGenerator
     batch_size_per_im: 512
@@ -87,20 +86,6 @@ BBoxHead:
       in_dim: 256
       mlp_dim: 1024
   in_feat: 1024
-  bbox_loss: DiouLoss
-
-DiouLoss:
-  loss_weight: 10.0
-  is_cls_agnostic: false
-  use_complete_iou_loss: true
-
-BBoxAssigner:
-  batch_size_per_im: 512
-  bbox_reg_weights: [ 0.1, 0.1, 0.2, 0.2 ]
-  bg_thresh_hi: 0.5
-  bg_thresh_lo: 0.0
-  fg_fraction: 0.25
-  fg_thresh: 0.5
 
 BBoxPostProcess:
   decode:

@@ -19,10 +19,12 @@ import paddle.nn as nn
 import paddle.nn.functional as F
 from paddle.nn import Conv2D, BatchNorm
 from paddle.nn import MaxPool2D
+import paddle.fluid as fluid
 
 from ppdet.core.workspace import register, serializable
 
 from paddle.regularizer import L2Decay
+from  fluid.initializer import ConstantInitializer
 from .name_adapter import NameAdapter
 from numbers import Integral
 
@@ -39,22 +41,56 @@ class ConvNormLayer(nn.Layer):
                  norm_decay=0.,
                  freeze_norm=True,
                  lr=1.0,
-                 name=None):
+                 name=None,
+                 dcn_v2=False,
+                 groups=1):
         super(ConvNormLayer, self).__init__()
         assert norm_type in ['bn', 'sync_bn']
         self.norm_type = norm_type
         self.act = act
 
-        self.conv = Conv2D(
-            in_channels=ch_in,
-            out_channels=ch_out,
-            kernel_size=filter_size,
-            stride=stride,
-            padding=(filter_size - 1) // 2,
-            groups=1,
-            weight_attr=ParamAttr(
-                learning_rate=lr, name=name + "_weights"),
-            bias_attr=False)
+        if not dcn_v2:
+            self.conv = Conv2D(
+                in_channels=ch_in,
+                out_channels=ch_out,
+                kernel_size=filter_size,
+                stride=stride,
+                padding=(filter_size - 1) // 2,
+                groups=1,
+                weight_attr=ParamAttr(
+                    learning_rate=lr, name=name + "_weights"),
+                bias_attr=False)
+        else:
+            # select deformable conv"
+            offset_mask = self._conv_offset(
+                input=input,
+                filter_size=filter_size,
+                stride=stride,
+                padding=(filter_size - 1) // 2,
+                act=None,
+                name=name + "_conv_offset")
+            offset_channel = filter_size ** 2 * 2
+            mask_channel = filter_size ** 2
+            offset, mask = fluid.layers.split(
+                input=offset_mask,
+                num_or_sections=[offset_channel, mask_channel],
+                dim=1)
+            mask = fluid.layers.sigmoid(mask)
+            conv = fluid.layers.deformable_conv(
+                input=input,
+                offset=offset,
+                mask=mask,
+                num_filters=ch_out,
+                filter_size=filter_size,
+                stride=stride,
+                padding=(filter_size - 1) // 2,
+                groups=groups,
+                deformable_groups=1,
+                im2col_step=1,
+                param_attr=ParamAttr(
+                    name=name + "_weights", learning_rate=lr_mult),
+                bias_attr=False,
+                name=name + ".conv2d.output.1")
 
         bn_name = name_adapter.fix_conv_norm_name(name)
         norm_lr = 0. if freeze_norm else lr
@@ -83,7 +119,29 @@ class ConvNormLayer(nn.Layer):
         if freeze_norm:
             for param in norm_params:
                 param.stop_gradient = True
-
+    
+    def _conv_offset(self,
+                     input,
+                     filter_size,
+                     stride,
+                     padding,
+                     act=None,
+                     name=None):
+        out_channel = filter_size * filter_size * 3
+        out = fluid.layers.conv2d(
+            input,
+            num_filters=out_channel,
+            filter_size=filter_size,
+            stride=stride,
+            padding=padding,
+            param_attr=ParamAttr(
+                initializer=ConstantInitializer(0.0), name=name + ".w_0"),
+            bias_attr=ParamAttr(
+                initializer=ConstantInitializer(0.0), name=name + ".b_0"),
+            act=act,
+            name=name)
+        return out
+    
     def forward(self, inputs):
         out = self.conv(inputs)
         if self.norm_type == 'bn':
@@ -103,7 +161,8 @@ class BottleNeck(nn.Layer):
                  lr=1.0,
                  norm_type='bn',
                  norm_decay=0.,
-                 freeze_norm=True):
+                 freeze_norm=True,
+                 dcn_v2=False):
         super(BottleNeck, self).__init__()
         if variant == 'a':
             stride1, stride2 = stride, 1
@@ -151,7 +210,8 @@ class BottleNeck(nn.Layer):
             norm_decay=norm_decay,
             freeze_norm=freeze_norm,
             lr=lr,
-            name=conv_name2)
+            name=conv_name2,
+            dcn_v2=dcn_v2)
 
         self.branch2c = ConvNormLayer(
             ch_in=ch_out,
@@ -191,7 +251,8 @@ class Blocks(nn.Layer):
                  lr=1.0,
                  norm_type='bn',
                  norm_decay=0.,
-                 freeze_norm=True):
+                 freeze_norm=True,
+                 dcn_v2=False):
         super(Blocks, self).__init__()
 
         self.blocks = []
@@ -211,7 +272,8 @@ class Blocks(nn.Layer):
                     lr=lr,
                     norm_type=norm_type,
                     norm_decay=norm_decay,
-                    freeze_norm=freeze_norm))
+                    freeze_norm=freeze_norm,
+                    dcn_v2=dcn_v2))
             self.blocks.append(block)
 
     def forward(self, inputs):
@@ -236,7 +298,9 @@ class ResNet(nn.Layer):
                  freeze_norm=True,
                  freeze_at=0,
                  return_idx=[0, 1, 2, 3],
-                 num_stages=4):
+                 num_stages=4,
+                 dcn_v2_stages=[],
+                 lr_mult_list=[]):
         super(ResNet, self).__init__()
         self.depth = depth
         self.variant = variant
@@ -244,6 +308,8 @@ class ResNet(nn.Layer):
         self.norm_decay = norm_decay
         self.freeze_norm = freeze_norm
         self.freeze_at = freeze_at
+        self.dcn_v2_stages = dcn_v2_stages
+        
         if isinstance(return_idx, Integral):
             return_idx = [return_idx]
         assert max(return_idx) < num_stages, \
@@ -266,7 +332,7 @@ class ResNet(nn.Layer):
         else:
             conv_def = [[3, 64, 7, 2, conv1_name]]
         self.conv1 = nn.Sequential()
-        for (c_in, c_out, k, s, _name) in conv_def:
+        for i, (c_in, c_out, k, s, _name) in enumerate(conv_def):
             self.conv1.add_sublayer(
                 _name,
                 ConvNormLayer(
@@ -289,6 +355,7 @@ class ResNet(nn.Layer):
 
         self.res_layers = []
         for i in range(num_stages):
+            dcn_v2 = True if i in self.dcn_v2_stages else False
             stage_num = i + 2
             res_name = "res{}".format(stage_num)
             res_layer = self.add_sublayer(
@@ -302,7 +369,8 @@ class ResNet(nn.Layer):
                     lr=lr_mult,
                     norm_type=norm_type,
                     norm_decay=norm_decay,
-                    freeze_norm=freeze_norm))
+                    freeze_norm=freeze_norm,
+                    dcn_v2=dcn_v2))
             self.res_layers.append(res_layer)
 
     def forward(self, inputs):
