@@ -90,9 +90,9 @@ BBoxHead:
       start_level: 0
     head_feat:
       name: TwoFCHead
-      in_dim: 1024
+      in_dim: 64
       mlp_dim: 1024
-  in_feat: 64
+  in_feat: 1024
   #bbox_loss: DiouLoss
 
 DiouLoss:
