@@ -81,6 +81,7 @@ class ConvNormLayer(nn.Layer):
                 bias_attr=ParamAttr(
                     initializer=ConstantInitializer(0.0), name=name + "_conv_offset" + ".b_0"))
 
+            self.lr_mult = [0.05, 0.05, 0.1, 0.15]
             self.deform_conv = paddle.vision.ops.DeformConv2D(in_channels=ch_in,
                                         out_channels=ch_out,
                                         kernel_size=[filter_size, filter_size],
