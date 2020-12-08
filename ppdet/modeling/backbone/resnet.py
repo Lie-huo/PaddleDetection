@@ -88,7 +88,7 @@ class ConvNormLayer(nn.Layer):
                                         padding=(self.filter_size - 1) // 2,
                                         stride=stride,
                                         groups=groups,
-                                        param_attr=ParamAttr(
+                                        weight_attr=ParamAttr(
                                             name=self.name + "_weights",
                                             learning_rate=self.lr_mult),
                                         bias_attr=False
