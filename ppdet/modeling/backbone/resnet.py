@@ -48,6 +48,12 @@ class ConvNormLayer(nn.Layer):
         assert norm_type in ['bn', 'sync_bn']
         self.norm_type = norm_type
         self.act = act
+        self.filter_size = filter_size
+        self.dcn_v2 = dcn_v2
+        self.stride = self.stride
+        self.groups = groups
+        self.ch_out = ch_out
+        self.name = name
 
         if not dcn_v2:
             self.conv = Conv2D(
@@ -62,35 +68,19 @@ class ConvNormLayer(nn.Layer):
                 bias_attr=False)
         else:
             # select deformable conv"
-            offset_mask = self._conv_offset(
-                input=input,
-                filter_size=filter_size,
+            dcn_out_channel = filter_size * filter_size * 3
+            self.offset_mask = Conv2D(
+                in_channels=ch_in,
+                out_channels=dcn_out_channel,
+                kernel_size=filter_size,
                 stride=stride,
                 padding=(filter_size - 1) // 2,
-                act=None,
-                name=name + "_conv_offset")
-            offset_channel = filter_size ** 2 * 2
-            mask_channel = filter_size ** 2
-            offset, mask = fluid.layers.split(
-                input=offset_mask,
-                num_or_sections=[offset_channel, mask_channel],
-                dim=1)
-            mask = fluid.layers.sigmoid(mask)
-            conv = fluid.layers.deformable_conv(
-                input=input,
-                offset=offset,
-                mask=mask,
-                num_filters=ch_out,
-                filter_size=filter_size,
-                stride=stride,
-                padding=(filter_size - 1) // 2,
-                groups=groups,
-                deformable_groups=1,
-                im2col_step=1,
+                groups=1,
                 param_attr=ParamAttr(
-                    name=name + "_weights", learning_rate=lr_mult),
-                bias_attr=False,
-                name=name + ".conv2d.output.1")
+                    initializer=ConstantInitializer(0.0), name=name + "_conv_offset" + ".w_0"),
+                bias_attr=ParamAttr(
+                    initializer=ConstantInitializer(0.0), name=name + "_conv_offset" + ".b_0"),
+                name=name + "_conv_offset")
 
         bn_name = name_adapter.fix_conv_norm_name(name)
         norm_lr = 0. if freeze_norm else lr
@@ -120,30 +110,40 @@ class ConvNormLayer(nn.Layer):
             for param in norm_params:
                 param.stop_gradient = True
     
-    def _conv_offset(self,
-                     input,
-                     filter_size,
-                     stride,
-                     padding,
-                     act=None,
-                     name=None):
-        out_channel = filter_size * filter_size * 3
-        out = fluid.layers.conv2d(
-            input,
-            num_filters=out_channel,
-            filter_size=filter_size,
-            stride=stride,
-            padding=padding,
-            param_attr=ParamAttr(
-                initializer=ConstantInitializer(0.0), name=name + ".w_0"),
-            bias_attr=ParamAttr(
-                initializer=ConstantInitializer(0.0), name=name + ".b_0"),
-            act=act,
-            name=name)
-        return out
-    
     def forward(self, inputs):
-        out = self.conv(inputs)
+        if not self.dcn_v2:
+            out = self.conv(inputs)
+            if self.norm_type == 'bn':
+                out = self.norm(out)
+            return out
+        
+        offset_channel = self.filter_size ** 2 * 2
+        mask_channel = self.filter_size ** 2
+
+        offset, mask = fluid.layers.split(
+            input=self.offset_mask,
+            num_or_sections=[offset_channel, mask_channel],
+            dim=1)
+
+        mask = fluid.layers.sigmoid(mask)
+
+        self.lr_mult = [1.0]
+        out = paddle.vision.ops.deformable_conv(
+            input=input,
+            offset=offset,
+            mask=mask,
+            num_filters=self.ch_out,
+            filter_size=self.filter_size,
+            stride=self.stride,
+            padding=(self.filter_size - 1) // 2,
+            groups=self.groups,
+            deformable_groups=1,
+            im2col_step=1,
+            param_attr=ParamAttr(
+                name=self.name  + "_weights", learning_rate=self.lr_mult),
+            bias_attr=False,
+            name=self.name + ".conv2d.output.1")
+
         if self.norm_type == 'bn':
             out = self.norm(out)
         return out
