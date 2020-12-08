@@ -50,7 +50,7 @@ class ConvNormLayer(nn.Layer):
         self.act = act
         self.filter_size = filter_size
         self.dcn_v2 = dcn_v2
-        self.stride = self.stride
+        self.stride = stride
         self.groups = groups
         self.ch_out = ch_out
         self.name = name
