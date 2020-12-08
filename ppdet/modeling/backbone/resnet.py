@@ -54,8 +54,9 @@ class ConvNormLayer(nn.Layer):
         self.groups = groups
         self.ch_out = ch_out
         self.name = name
+        self.dcn = dcn
 
-        if dcn == 0:
+        if self.dcn == 0:
             self.conv = Conv2D(
                 in_channels=ch_in,
                 out_channels=ch_out,
@@ -66,7 +67,7 @@ class ConvNormLayer(nn.Layer):
                 weight_attr=ParamAttr(
                     learning_rate=lr, name=name + "_weights"),
                 bias_attr=False)
-        elif dcn==2:
+        elif self.dcn==2:
             # select deformable conv"
             dcn_out_channel = filter_size * filter_size * 3
             self.offset_mask = Conv2D(
@@ -93,7 +94,7 @@ class ConvNormLayer(nn.Layer):
                                             learning_rate=self.lr_mult),
                                         bias_attr=False
                                         )
-        elif dcn == 1:
+        elif self.dcn == 1:
             # select deformable conv"
             dcn_out_channel = filter_size * filter_size * 2
             self.offset = Conv2D(
