@@ -83,6 +83,10 @@ BBoxHead:
       name: RoIAlign
       resolution: 7
       sampling_ratio: 2
+      canconical_level: 4
+      canonical_size: 224
+      max_level: 3
+      min_level: 0
     head_feat:
       name: TwoFCHead
       in_dim: 256
