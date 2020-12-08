@@ -79,8 +79,7 @@ class ConvNormLayer(nn.Layer):
                 weight_attr=ParamAttr(
                     initializer=ConstantInitializer(0.0), name=name + "_conv_offset" + ".w_0"),
                 bias_attr=ParamAttr(
-                    initializer=ConstantInitializer(0.0), name=name + "_conv_offset" + ".b_0"),
-                name=name + "_conv_offset")
+                    initializer=ConstantInitializer(0.0), name=name + "_conv_offset" + ".b_0"))
 
         bn_name = name_adapter.fix_conv_norm_name(name)
         norm_lr = 0. if freeze_norm else lr
