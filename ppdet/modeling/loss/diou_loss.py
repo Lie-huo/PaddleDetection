@@ -20,7 +20,6 @@ import numpy as np
 
 from paddle import fluid
 from ppdet.core.workspace import register, serializable
-from .giou_loss import GiouLoss
 
 __all__ = ['DiouLoss']
 
