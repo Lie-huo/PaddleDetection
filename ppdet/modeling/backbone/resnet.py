@@ -128,8 +128,8 @@ class ConvNormLayer(nn.Layer):
         mask = fluid.layers.sigmoid(mask)
 
         self.lr_mult = [1.0]
-        out = paddle.vision.ops.deformable_conv(
-            input=input,
+        out = paddle.vision.ops.deform_conv2d(
+            x=inputs,
             offset=offset,
             mask=mask,
             num_filters=self.ch_out,
