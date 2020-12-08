@@ -86,14 +86,14 @@ BBoxHead:
       sampling_ratio: 2
       canconical_level: 4
       canonical_size: 224
-      max_level: 3
-      min_level: 0
+      end_level: 3
+      start_level: 0
     head_feat:
       name: TwoFCHead
       in_dim: 256
       mlp_dim: 1024
   in_feat: 1024
-  bbox_loss: DiouLoss
+  #bbox_loss: DiouLoss
 
 DiouLoss:
   loss_weight: 10.0
