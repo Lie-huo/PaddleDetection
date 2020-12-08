@@ -81,6 +81,18 @@ class ConvNormLayer(nn.Layer):
                 bias_attr=ParamAttr(
                     initializer=ConstantInitializer(0.0), name=name + "_conv_offset" + ".b_0"))
 
+            self.deform_conv = paddle.vision.ops.DeformConv2D(in_channels=ch_in,
+                                        out_channels=ch_out,
+                                        kernel_size=[filter_size, filter_size],
+                                        padding=(self.filter_size - 1) // 2,
+                                        stride=stride,
+                                        groups=groups,
+                                        param_attr=ParamAttr(
+                                            name=self.name + "_weights",
+                                            learning_rate=self.lr_mult),
+                                        bias_attr=False
+                                        )
+
         bn_name = name_adapter.fix_conv_norm_name(name)
         norm_lr = 0. if freeze_norm else lr
         param_attr = ParamAttr(
@@ -128,22 +140,7 @@ class ConvNormLayer(nn.Layer):
         mask = fluid.layers.sigmoid(mask)
 
         self.lr_mult = [1.0]
-        out = paddle.vision.ops.deform_conv2d(
-            x=inputs,
-            offset=offset,
-            mask=mask,
-            num_filters=self.ch_out,
-            filter_size=self.filter_size,
-            stride=self.stride,
-            padding=(self.filter_size - 1) // 2,
-            groups=self.groups,
-            deformable_groups=1,
-            im2col_step=1,
-            param_attr=ParamAttr(
-                name=self.name  + "_weights", learning_rate=self.lr_mult),
-            bias_attr=False,
-            name=self.name + ".conv2d.output.1")
-
+        out = self.deform_conv(inputs, offset, mask)
         if self.norm_type == 'bn':
             out = self.norm(out)
         return out
