@@ -42,20 +42,20 @@ class ConvNormLayer(nn.Layer):
                  freeze_norm=True,
                  lr=1.0,
                  name=None,
-                 dcn_v2=False,
+                 dcn=0,
                  groups=1):
         super(ConvNormLayer, self).__init__()
         assert norm_type in ['bn', 'sync_bn']
         self.norm_type = norm_type
         self.act = act
         self.filter_size = filter_size
-        self.dcn_v2 = dcn_v2
+        self.dcn = dcn
         self.stride = stride
         self.groups = groups
         self.ch_out = ch_out
         self.name = name
 
-        if not dcn_v2:
+        if dcn == 0:
             self.conv = Conv2D(
                 in_channels=ch_in,
                 out_channels=ch_out,
@@ -66,7 +66,7 @@ class ConvNormLayer(nn.Layer):
                 weight_attr=ParamAttr(
                     learning_rate=lr, name=name + "_weights"),
                 bias_attr=False)
-        else:
+        elif dcn==2:
             # select deformable conv"
             dcn_out_channel = filter_size * filter_size * 3
             self.offset_mask = Conv2D(
@@ -93,6 +93,33 @@ class ConvNormLayer(nn.Layer):
                                             learning_rate=self.lr_mult),
                                         bias_attr=False
                                         )
+        elif dcn == 1:
+            # select deformable conv"
+            dcn_out_channel = filter_size * filter_size * 2
+            self.offset = Conv2D(
+                in_channels=ch_in,
+                out_channels=dcn_out_channel,
+                kernel_size=filter_size,
+                stride=stride,
+                padding=(filter_size - 1) // 2,
+                groups=1,
+                weight_attr=ParamAttr(
+                    initializer=ConstantInitializer(0.0), name=name + "_conv_offset" + ".w_0"),
+                bias_attr=ParamAttr(
+                    initializer=ConstantInitializer(0.0), name=name + "_conv_offset" + ".b_0"))
+    
+            self.lr_mult = [0.05, 0.05, 0.1, 0.15]
+            self.deform_conv = paddle.vision.ops.DeformConv2D(in_channels=ch_in,
+                                                              out_channels=ch_out,
+                                                              kernel_size=[filter_size, filter_size],
+                                                              padding=(self.filter_size - 1) // 2,
+                                                              stride=stride,
+                                                              groups=groups,
+                                                              weight_attr=ParamAttr(
+                                                                  name=self.name + "_weights",
+                                                                  learning_rate=self.lr_mult),
+                                                              bias_attr=False
+                                                              )
 
         bn_name = name_adapter.fix_conv_norm_name(name)
         norm_lr = 0. if freeze_norm else lr
@@ -123,28 +150,35 @@ class ConvNormLayer(nn.Layer):
                 param.stop_gradient = True
     
     def forward(self, inputs):
-        if not self.dcn_v2:
+        if self.dcn==0:
             out = self.conv(inputs)
             if self.norm_type == 'bn':
                 out = self.norm(out)
             return out
-        
-        offset_channel = self.filter_size ** 2 * 2
-        mask_channel = self.filter_size ** 2
-
-        offset_mask = self.offset_mask(inputs)
-        offset, mask = fluid.layers.split(
-            input=offset_mask,
-            num_or_sections=[offset_channel, mask_channel],
-            dim=1)
-
-        mask = fluid.layers.sigmoid(mask)
-
-        self.lr_mult = [1.0]
-        out = self.deform_conv(inputs, offset, mask)
-        if self.norm_type == 'bn':
-            out = self.norm(out)
-        return out
+        if self.dcn == 2:
+            offset_channel = self.filter_size ** 2 * 2
+            mask_channel = self.filter_size ** 2
+    
+            offset_mask = self.offset_mask(inputs)
+            offset, mask = fluid.layers.split(
+                input=offset_mask,
+                num_or_sections=[offset_channel, mask_channel],
+                dim=1)
+    
+            mask = fluid.layers.sigmoid(mask)
+    
+            self.lr_mult = [1.0]
+            out = self.deform_conv(inputs, offset, mask)
+            if self.norm_type == 'bn':
+                out = self.norm(out)
+            return out
+        if self.dcn == 1:
+            offset = self.offset(inputs)
+            self.lr_mult = [1.0]
+            out = self.deform_conv(inputs, offset)
+            if self.norm_type == 'bn':
+                out = self.norm(out)
+            return out
 
 
 class BottleNeck(nn.Layer):
