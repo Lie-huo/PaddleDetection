@@ -76,7 +76,7 @@ class ConvNormLayer(nn.Layer):
                 stride=stride,
                 padding=(filter_size - 1) // 2,
                 groups=1,
-                param_attr=ParamAttr(
+                weight_attr=ParamAttr(
                     initializer=ConstantInitializer(0.0), name=name + "_conv_offset" + ".w_0"),
                 bias_attr=ParamAttr(
                     initializer=ConstantInitializer(0.0), name=name + "_conv_offset" + ".b_0"),
