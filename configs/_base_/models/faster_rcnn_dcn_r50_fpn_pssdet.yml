@@ -39,8 +39,8 @@ FPN:
 RPNHead:
   rpn_feat:
     name: RPNFeat
-    feat_in: 256
-    feat_out: 256
+    feat_in: 64
+    feat_out: 64
   anchor_per_position: 3
   rpn_channel: 64
 
