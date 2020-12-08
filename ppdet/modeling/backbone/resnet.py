@@ -119,8 +119,9 @@ class ConvNormLayer(nn.Layer):
         offset_channel = self.filter_size ** 2 * 2
         mask_channel = self.filter_size ** 2
 
+        offset_mask = self.offset_mask(inputs)
         offset, mask = fluid.layers.split(
-            input=self.offset_mask,
+            input=offset_mask,
             num_or_sections=[offset_channel, mask_channel],
             dim=1)
 
