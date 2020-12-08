@@ -26,6 +26,7 @@ ResNet:
   return_idx: [0,1,2,3]
   num_stages: 4
   dcn_v2_stages: [1, 2, 3]
+  dcn: 1
 
 FPN:
   in_channels: [256, 512, 1024, 2048]
