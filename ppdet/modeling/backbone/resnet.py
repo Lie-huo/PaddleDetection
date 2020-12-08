@@ -194,7 +194,7 @@ class BottleNeck(nn.Layer):
                  norm_type='bn',
                  norm_decay=0.,
                  freeze_norm=True,
-                 dcn_v2=False):
+                 dcn=0):
         super(BottleNeck, self).__init__()
         if variant == 'a':
             stride1, stride2 = stride, 1
@@ -243,7 +243,7 @@ class BottleNeck(nn.Layer):
             freeze_norm=freeze_norm,
             lr=lr,
             name=conv_name2,
-            dcn_v2=dcn_v2)
+            dcn=dcn)
 
         self.branch2c = ConvNormLayer(
             ch_in=ch_out,
@@ -284,7 +284,7 @@ class Blocks(nn.Layer):
                  norm_type='bn',
                  norm_decay=0.,
                  freeze_norm=True,
-                 dcn_v2=False):
+                 dcn=0):
         super(Blocks, self).__init__()
 
         self.blocks = []
@@ -305,7 +305,7 @@ class Blocks(nn.Layer):
                     norm_type=norm_type,
                     norm_decay=norm_decay,
                     freeze_norm=freeze_norm,
-                    dcn_v2=dcn_v2))
+                    dcn=dcn))
             self.blocks.append(block)
 
     def forward(self, inputs):
@@ -332,7 +332,8 @@ class ResNet(nn.Layer):
                  return_idx=[0, 1, 2, 3],
                  num_stages=4,
                  dcn_v2_stages=[],
-                 lr_mult_list=[]):
+                 lr_mult_list=[],
+                 dcn=0):
         super(ResNet, self).__init__()
         self.depth = depth
         self.variant = variant
@@ -341,6 +342,7 @@ class ResNet(nn.Layer):
         self.freeze_norm = freeze_norm
         self.freeze_at = freeze_at
         self.dcn_v2_stages = dcn_v2_stages
+        self.dcn = dcn
         
         if isinstance(return_idx, Integral):
             return_idx = [return_idx]
@@ -387,7 +389,7 @@ class ResNet(nn.Layer):
 
         self.res_layers = []
         for i in range(num_stages):
-            dcn_v2 = True if i in self.dcn_v2_stages else False
+            dcn = dcn if i in self.dcn_v2_stages else 0
             stage_num = i + 2
             res_name = "res{}".format(stage_num)
             res_layer = self.add_sublayer(
@@ -402,7 +404,7 @@ class ResNet(nn.Layer):
                     norm_type=norm_type,
                     norm_decay=norm_decay,
                     freeze_norm=freeze_norm,
-                    dcn_v2=dcn_v2))
+                    dcn=dcn))
             self.res_layers.append(res_layer)
 
     def forward(self, inputs):
