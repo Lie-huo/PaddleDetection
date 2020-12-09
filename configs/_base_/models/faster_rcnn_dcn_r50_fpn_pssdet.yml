@@ -48,9 +48,11 @@ RPNHead:
 Anchor:
   anchor_generator:
     name: AnchorGeneratorRPN
+    anchor_sizes: [32, 64, 128, 256, 512]
     aspect_ratios: [0.5, 1.0, 2.0]
     anchor_start_size: 32
     stride: [4., 4.]
+    variance: [1.0, 1.0, 1.0, 1.0]
   anchor_target_generator:
     name: AnchorTargetGeneratorRPN
     batch_size_per_im: 256
