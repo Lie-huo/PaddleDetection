@@ -143,7 +143,7 @@ class DeformableConvV2(nn.Layer):
     def forward(self, x):
         offset_mask = self.dcn_conv_offset(x)
         offset, mask = paddle.split(
-            offset_mask, num_or_sections=[self.offset_channel, self.mask_channel], axis=1)
+            offset_mask, num_or_sections=[self.offset_channel, self.mask_channel], axis=0)
         mask = F.sigmoid(mask)
         y = self.dcn(x, offset, mask=mask)
         return y
