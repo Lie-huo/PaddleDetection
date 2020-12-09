@@ -4,6 +4,7 @@ import pickle
 import paddle
 import paddle.fluid as fluid
 from ppdet.utils.download import get_weights_path
+import numpy as np
 
 
 class Load(paddle.nn.Layer):
@@ -36,9 +37,19 @@ def convert(weights, weight_name_map_file, target_name):
             k_path = os.path.join(weights, k)
             if os.path.exists(k_path):
                 load = Load()
+                weiht_path = os.path.join(weights, k)
+                if weiht_path.find('_conv_offset.') > 0:
+                    print(weiht_path)
                 weight = load(os.path.join(weights, k))
                 weight = weight.numpy()
+                print('weight:', k, weight.shape)
                 dst[v] = weight
+                if True:#weiht_path.find('_conv_offset.') > 0:
+                    print(weiht_path)
+                    save_path = weiht_path + '.npy'
+                    print('save_path', save_path)
+                    np.save(save_path, weight)
+                    #input('xxxx')
             else:
                 print("warning: static weight file {} not found".format(k))
     else:
