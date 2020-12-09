@@ -47,7 +47,7 @@ def check_gpu(use_gpu):
         pass
 
 
-def check_version(version='1.7.0'):
+def check_version(version='2.0'):
     """
     Log error and exit when the installed version of paddlepaddle is
     not satisfied.
@@ -65,13 +65,11 @@ def check_version(version='1.7.0'):
     version_split = version.split('.')
 
     length = min(len(version_installed), len(version_split))
-    flag = False
     for i in six.moves.range(length):
         if version_installed[i] > version_split[i]:
-            flag = True
-            break
-    if not flag:
-        raise Exception(err)
+            return
+        if version_installed[i] < version_split[i]:
+            raise Exception(err)
 
 
 def check_config(cfg):
@@ -92,20 +90,11 @@ def check_config(cfg):
     if 'log_iter' not in cfg:
         cfg.log_iter = 20
 
-    train_dataset = cfg['TrainReader']['dataset']
-    eval_dataset = cfg['EvalReader']['dataset']
-    test_dataset = cfg['TestReader']['dataset']
-    assert train_dataset.with_background == eval_dataset.with_background, \
-        "'with_background' of TrainReader is not equal to EvalReader."
-    assert train_dataset.with_background == test_dataset.with_background, \
-        "'with_background' of TrainReader is not equal to TestReader."
-
-    actual_num_classes = int(cfg.num_classes) - int(
-        train_dataset.with_background)
     logger.debug("The 'num_classes'(number of classes) you set is {}, " \
                 "and 'with_background' in 'dataset' sets {}.\n" \
                 "So please note the actual number of categories is {}."
-                .format(cfg.num_classes, train_dataset.with_background,
-                    actual_num_classes))
+                .format(cfg.num_classes, cfg.with_background,
+                        cfg.num_classes + 1))
+    cfg.num_classes = cfg.num_classes + int(cfg.with_background)
 
     return cfg

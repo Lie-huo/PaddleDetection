@@ -1,3 +1,17 @@
+# Copyright (c) 2020 PaddlePaddle Authors. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -16,14 +30,12 @@ import datetime
 import numpy as np
 from collections import deque
 import paddle
-from paddle import fluid
 from ppdet.core.workspace import load_config, merge_config, create
-from ppdet.data.reader import create_reader
 from ppdet.utils.stats import TrainingStats
 from ppdet.utils.check import check_gpu, check_version, check_config
 from ppdet.utils.cli import ArgsParser
-from ppdet.utils.checkpoint import load_dygraph_ckpt, save_dygraph_ckpt
-import paddle.distributed as dist
+from ppdet.utils.checkpoint import load_weight, load_pretrain_weight, save_model
+from paddle.distributed import ParallelEnv
 import logging
 FORMAT = '%(asctime)s-%(levelname)s: %(message)s'
 logging.basicConfig(level=logging.INFO, format=FORMAT)
@@ -33,7 +45,7 @@ logger = logging.getLogger(__name__)
 def parse_args():
     parser = ArgsParser()
     parser.add_argument(
-        "-ckpt_type",
+        "--weight_type",
         default='pretrain',
         type=str,
         help="Loading Checkpoints only support 'pretrain', 'finetune', 'resume'."
@@ -87,9 +99,8 @@ def parse_args():
     return args
 
 
-def run(FLAGS, cfg):
+def run(FLAGS, cfg, place):
     env = os.environ
-
     FLAGS.dist = 'PADDLE_TRAINER_ID' in env and 'PADDLE_TRAINERS_NUM' in env
     if FLAGS.dist:
         trainer_id = int(env['PADDLE_TRAINER_ID'])
@@ -101,92 +112,98 @@ def run(FLAGS, cfg):
         random.seed(0)
         np.random.seed(0)
 
-    if dist.ParallelEnv().nranks > 1:
+    if ParallelEnv().nranks > 1:
         paddle.distributed.init_parallel_env()
 
+    # Data 
+    dataset = cfg.TrainDataset
+    train_loader, step_per_epoch = create('TrainReader')(
+        dataset, cfg['worker_num'], place)
+
     # Model
-    main_arch = cfg.architecture
     model = create(cfg.architecture)
 
     # Optimizer
-    lr = create('LearningRate')()
+    lr = create('LearningRate')(step_per_epoch)
     optimizer = create('OptimizerBuilder')(lr, model.parameters())
 
     # Init Model & Optimzer   
-    model = load_dygraph_ckpt(
-        model,
-        optimizer,
-        cfg.pretrain_weights,
-        ckpt_type=FLAGS.ckpt_type,
-        load_static_weights=cfg.get('load_static_weights', False))
+    if FLAGS.weight_type == 'resume':
+        load_weight(model, cfg.pretrain_weights, optimizer)
+    else:
+        load_pretrain_weight(model, cfg.pretrain_weights,
+                             cfg.get('load_static_weights', False),
+                             FLAGS.weight_type)
+
+    if getattr(model.backbone, 'norm_type', None) == 'sync_bn':
+        assert cfg.use_gpu and ParallelEnv(
+        ).nranks > 1, 'you should use bn rather than sync_bn while using a single gpu'
+    # sync_bn = (getattr(model.backbone, 'norm_type', None) == 'sync_bn' and
+    #            cfg.use_gpu and ParallelEnv().nranks > 1)
+    # if sync_bn:
+    #     model = paddle.nn.SyncBatchNorm.convert_sync_batchnorm(model)
 
     # Parallel Model 
-    if dist.ParallelEnv().nranks > 1:
+    if ParallelEnv().nranks > 1:
         model = paddle.DataParallel(model)
 
-    # Data Reader 
-    start_iter = 0
-    if cfg.use_gpu:
-        devices_num = fluid.core.get_cuda_device_count()
-    else:
-        devices_num = int(os.environ.get('CPU_NUM', 1))
-
-    train_reader = create_reader(
-        cfg.TrainReader, (cfg.max_iters - start_iter),
-        cfg,
-        devices_num=devices_num)
-
+    fields = train_loader.collate_fn.output_fields
+    # Run Train
     time_stat = deque(maxlen=cfg.log_iter)
     start_time = time.time()
     end_time = time.time()
-    # Run Train 
-    for iter_id, data in enumerate(train_reader()):
+    # Run Train
+    start_epoch = optimizer.state_dict()['LR_Scheduler']['last_epoch']
+    for epoch_id in range(int(cfg.epoch)):
+        cur_eid = epoch_id + start_epoch
+        train_loader.dataset.epoch = cur_eid
+        for iter_id, data in enumerate(train_loader):
+            start_time = end_time
+            end_time = time.time()
+            time_stat.append(end_time - start_time)
+            time_cost = np.mean(time_stat)
+            eta_sec = (
+                (cfg.epoch - cur_eid) * step_per_epoch - iter_id) * time_cost
+            eta = str(datetime.timedelta(seconds=int(eta_sec)))
 
-        start_time = end_time
-        end_time = time.time()
-        time_stat.append(end_time - start_time)
-        time_cost = np.mean(time_stat)
-        eta_sec = (cfg.max_iters - iter_id) * time_cost
-        eta = str(datetime.timedelta(seconds=int(eta_sec)))
+            # Model Forward
+            model.train()
+            outputs = model(data, fields, 'train')
 
-        # Model Forward
-        model.train()
-        outputs = model(data, cfg['TrainReader']['inputs_def']['fields'],
-                        'train')
+            # Model Backward
+            loss = outputs['loss']
+            if ParallelEnv().nranks > 1:
+                loss = model.scale_loss(loss)
+                loss.backward()
+                model.apply_collective_grads()
+            else:
+                loss.backward()
+            optimizer.step()
+            curr_lr = optimizer.get_lr()
+            lr.step()
+            optimizer.clear_grad()
 
-        # Model Backward
-        loss = outputs['loss']
-        if dist.ParallelEnv().nranks > 1:
-            loss = model.scale_loss(loss)
-            loss.backward()
-            model.apply_collective_grads()
-        else:
-            loss.backward()
-        optimizer.minimize(loss)
-        optimizer.step()
-        curr_lr = optimizer.get_lr()
-        lr.step()
-        optimizer.clear_grad()
+            if ParallelEnv().nranks < 2 or ParallelEnv().local_rank == 0:
+                # Log state 
+                if epoch_id == 0 and iter_id == 0:
+                    train_stats = TrainingStats(cfg.log_iter, outputs.keys())
+                train_stats.update(outputs)
+                logs = train_stats.log()
+                if iter_id % cfg.log_iter == 0:
+                    ips = float(cfg['TrainReader']['batch_size']) / time_cost
+                    strs = 'Epoch:{}: iter: {}, lr: {:.6f}, {}, eta: {}, batch_cost: {:.5f} sec, ips: {:.5f} images/sec'.format(
+                        cur_eid, iter_id, curr_lr, logs, eta, time_cost, ips)
+                    logger.info(strs)
 
-        if dist.ParallelEnv().nranks < 2 or dist.ParallelEnv().local_rank == 0:
-            # Log state 
-            if iter_id == 0:
-                train_stats = TrainingStats(cfg.log_iter, outputs.keys())
-            train_stats.update(outputs)
-            logs = train_stats.log()
-            if iter_id % cfg.log_iter == 0:
-                ips = float(cfg['TrainReader']['batch_size']) / time_cost
-                strs = 'iter: {}, lr: {:.6f}, {}, eta: {}, batch_cost: {:.5f} sec, ips: {:.5f} images/sec'.format(
-                    iter_id, curr_lr, logs, eta, time_cost, ips)
-                logger.info(strs)
-            # Save Stage 
-            if iter_id > 0 and iter_id % int(
-                    cfg.snapshot_iter) == 0 or iter_id == cfg.max_iters - 1:
-                cfg_name = os.path.basename(FLAGS.config).split('.')[0]
-                save_name = str(
-                    iter_id) if iter_id != cfg.max_iters - 1 else "model_final"
-                save_dir = os.path.join(cfg.save_dir, cfg_name)
-                save_dygraph_ckpt(model, optimizer, save_dir, save_name)
+        # Save Stage 
+        if ParallelEnv().local_rank == 0 and (
+                cur_eid % cfg.snapshot_epoch == 0 or
+            (cur_eid + 1) == int(cfg.epoch)):
+            cfg_name = os.path.basename(FLAGS.config).split('.')[0]
+            save_name = str(cur_eid) if cur_eid + 1 != int(
+                cfg.epoch) else "model_final"
+            save_dir = os.path.join(cfg.save_dir, cfg_name)
+            save_model(model, optimizer, save_dir, save_name)
 
 
 def main():
@@ -198,7 +215,10 @@ def main():
     check_gpu(cfg.use_gpu)
     check_version()
 
-    run(FLAGS, cfg)
+    place = 'gpu:{}'.format(ParallelEnv().dev_id) if cfg.use_gpu else 'cpu'
+    place = paddle.set_device(place)
+
+    run(FLAGS, cfg, place)
 
 
 if __name__ == "__main__":

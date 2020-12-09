@@ -1,4 +1,4 @@
-# Copyright (c) 2019 PaddlePaddle Authors. All Rights Reserved.
+# Copyright (c) 2020 PaddlePaddle Authors. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,14 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+from . import yolo_loss
+from . import iou_aware_loss
+from . import iou_loss
+from . import diou_loss
 
-__all__ = ['SharedBuffer', 'SharedMemoryMgr', 'SharedQueue']
+from .yolo_loss import *
+from .iou_aware_loss import *
+from .iou_loss import *
+from .diou_loss import *
 
-from .sharedmemory import SharedBuffer
-from .sharedmemory import SharedMemoryMgr
-from .sharedmemory import SharedMemoryError
-from .queue import SharedQueue

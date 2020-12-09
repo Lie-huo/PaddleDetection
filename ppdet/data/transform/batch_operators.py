@@ -24,8 +24,9 @@ except Exception:
 import logging
 import cv2
 import numpy as np
-from .operators import register_op, BaseOperator
+from .operator import register_op, BaseOperator
 from .op_helper import jaccard_overlap, gaussian2D
+from .operators import NormalizeImage, Permute
 
 logger = logging.getLogger(__name__)
 
@@ -55,7 +56,7 @@ class PadBatch(BaseOperator):
         self.use_padded_im_info = use_padded_im_info
         self.pad_gt = pad_gt
 
-    def __call__(self, samples, context=None):
+    def __call__(self, samples):
         """
         Args:
             samples (list): a batch of sample, each is dict.
@@ -84,7 +85,8 @@ class PadBatch(BaseOperator):
                 data['im_info'][:2] = max_shape[1:3]
         if self.pad_gt:
             gt_num = []
-            if data['gt_poly'] is not None and len(data['gt_poly']) > 0:
+            if 'gt_poly' in data and data['gt_poly'] is not None and len(data[
+                    'gt_poly']) > 0:
                 pad_mask = True
             else:
                 pad_mask = False
@@ -102,18 +104,19 @@ class PadBatch(BaseOperator):
                         for p_p in poly:
                             point_num.append(int(len(p_p) / 2))
             gt_num_max = max(gt_num)
-            gt_box_data = np.zeros([gt_num_max, 4])
-            gt_class_data = np.zeros([gt_num_max])
-            is_crowd_data = np.ones([gt_num_max])
-
-            if pad_mask:
-                poly_num_max = max(poly_num)
-                poly_part_num_max = max(poly_part_num)
-                point_num_max = max(point_num)
-                gt_masks_data = -np.ones(
-                    [poly_num_max, poly_part_num_max, point_num_max, 2])
 
             for i, data in enumerate(samples):
+                gt_box_data = np.zeros([gt_num_max, 4], dtype=np.float32)
+                gt_class_data = np.zeros([gt_num_max], dtype=np.int32)
+                is_crowd_data = np.ones([gt_num_max], dtype=np.int32)
+                if pad_mask:
+                    poly_num_max = max(poly_num)
+                    poly_part_num_max = max(poly_part_num)
+                    point_num_max = max(point_num)
+                    gt_masks_data = -np.ones(
+                        [poly_num_max, poly_part_num_max, point_num_max, 2],
+                        dtype=np.float32)
+
                 gt_num = data['gt_bbox'].shape[0]
                 gt_box_data[0:gt_num, :] = data['gt_bbox']
                 gt_class_data[0:gt_num] = np.squeeze(data['gt_class'])
@@ -156,7 +159,7 @@ class RandomShape(BaseOperator):
         ] if random_inter else []
         self.resize_box = resize_box
 
-    def __call__(self, samples, context=None):
+    def __call__(self, samples):
         shape = np.random.choice(self.sizes)
         method = np.random.choice(self.interps) if self.random_inter \
             else cv2.INTER_NEAREST
@@ -191,7 +194,7 @@ class PadMultiScaleTest(BaseOperator):
         super(PadMultiScaleTest, self).__init__()
         self.pad_to_stride = pad_to_stride
 
-    def __call__(self, samples, context=None):
+    def __call__(self, samples):
         coarsest_stride = self.pad_to_stride
         if coarsest_stride == 0:
             return samples
@@ -247,7 +250,7 @@ class Gt2YoloTarget(BaseOperator):
         self.num_classes = num_classes
         self.iou_thresh = iou_thresh
 
-    def __call__(self, samples, context=None):
+    def __call__(self, samples):
         assert len(self.anchor_masks) == len(self.downsample_ratios), \
             "anchor_masks', and 'downsample_ratios' should have same length."
 
@@ -430,7 +433,7 @@ class Gt2FCOSTarget(BaseOperator):
         inside_gt_box = np.min(clipped_box_reg_targets, axis=2) > 0
         return inside_gt_box
 
-    def __call__(self, samples, context=None):
+    def __call__(self, samples):
         assert len(self.object_sizes_of_interest) == len(self.downsample_ratios), \
             "object_sizes_of_interest', and 'downsample_ratios' should have same length."
 
@@ -554,7 +557,7 @@ class Gt2TTFTarget(BaseOperator):
         self.num_classes = num_classes
         self.alpha = alpha
 
-    def __call__(self, samples, context=None):
+    def __call__(self, samples):
         output_size = samples[0]['image'].shape[1]
         feat_size = output_size // self.down_ratio
         for sample in samples:

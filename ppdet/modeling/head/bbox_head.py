@@ -1,14 +1,33 @@
-import paddle.fluid as fluid
-from paddle.fluid.dygraph import Layer
-from paddle.fluid.param_attr import ParamAttr
-from paddle.fluid.initializer import Normal, Xavier
-from paddle.fluid.regularizer import L2Decay
-from paddle.fluid.dygraph.nn import Conv2D, Pool2D, Linear
+# Copyright (c) 2020 PaddlePaddle Authors. All Rights Reserved. 
+#   
+# Licensed under the Apache License, Version 2.0 (the "License");   
+# you may not use this file except in compliance with the License.  
+# You may obtain a copy of the License at   
+#   
+#     http://www.apache.org/licenses/LICENSE-2.0    
+#   
+# Unless required by applicable law or agreed to in writing, software   
+# distributed under the License is distributed on an "AS IS" BASIS, 
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  
+# See the License for the specific language governing permissions and   
+# limitations under the License.
+
+import paddle
+from paddle import ParamAttr
+import paddle.nn as nn
+import paddle.nn.functional as F
+from paddle.nn import ReLU
+from paddle.nn.initializer import Normal, XavierUniform
+from paddle.regularizer import L2Decay
 from ppdet.core.workspace import register
+from ppdet.modeling import ops
+
+from ..backbone.name_adapter import NameAdapter
+from ..backbone.resnet import Blocks
 
 
 @register
-class TwoFCHead(Layer):
+class TwoFCHead(nn.Layer):
 
     __shared__ = ['num_stages']
 
@@ -19,48 +38,64 @@ class TwoFCHead(Layer):
         self.num_stages = num_stages
         fan = in_dim * resolution * resolution
         self.fc6_list = []
+        self.fc6_relu_list = []
         self.fc7_list = []
+        self.fc7_relu_list = []
         for stage in range(num_stages):
             fc6_name = 'fc6_{}'.format(stage)
             fc7_name = 'fc7_{}'.format(stage)
             fc6 = self.add_sublayer(
                 fc6_name,
-                Linear(
+                nn.Linear(
                     in_dim * resolution * resolution,
                     mlp_dim,
-                    act='relu',
-                    param_attr=ParamAttr(
-                        #name='fc6_w',
-                        initializer=Xavier(fan_out=fan)),
+                    weight_attr=ParamAttr(
+                        initializer=XavierUniform(fan_out=fan)),
                     bias_attr=ParamAttr(
-                        #name='fc6_b',
-                        learning_rate=2.,
-                        regularizer=L2Decay(0.))))
+                        learning_rate=2., regularizer=L2Decay(0.))))
+            fc6_relu = self.add_sublayer(fc6_name + 'act', ReLU())
             fc7 = self.add_sublayer(
                 fc7_name,
-                Linear(
+                nn.Linear(
                     mlp_dim,
                     mlp_dim,
-                    act='relu',
-                    param_attr=ParamAttr(
-                        #name='fc7_w',
-                        initializer=Xavier()),
+                    weight_attr=ParamAttr(initializer=XavierUniform()),
                     bias_attr=ParamAttr(
-                        #name='fc7_b',
-                        learning_rate=2.,
-                        regularizer=L2Decay(0.))))
+                        learning_rate=2., regularizer=L2Decay(0.))))
+            fc7_relu = self.add_sublayer(fc7_name + 'act', ReLU())
             self.fc6_list.append(fc6)
+            self.fc6_relu_list.append(fc6_relu)
             self.fc7_list.append(fc7)
+            self.fc7_relu_list.append(fc7_relu)
 
     def forward(self, rois_feat, stage=0):
-        rois_feat = fluid.layers.flatten(rois_feat)
+        rois_feat = paddle.flatten(rois_feat, start_axis=1, stop_axis=-1)
         fc6 = self.fc6_list[stage](rois_feat)
-        fc7 = self.fc7_list[stage](fc6)
-        return fc7
+        fc6_relu = self.fc6_relu_list[stage](fc6)
+        fc7 = self.fc7_list[stage](fc6_relu)
+        fc7_relu = self.fc7_relu_list[stage](fc7)
+        return fc7_relu
 
 
 @register
-class BBoxFeat(Layer):
+class Res5Head(nn.Layer):
+    def __init__(self, feat_in=1024, feat_out=512):
+        super(Res5Head, self).__init__()
+        na = NameAdapter(self)
+        self.res5_conv = []
+        self.res5 = self.add_sublayer(
+            'res5_roi_feat',
+            Blocks(
+                feat_in, feat_out, count=3, name_adapter=na, stage_num=5))
+        self.feat_out = feat_out * 4
+
+    def forward(self, roi_feat, stage=0):
+        y = self.res5(roi_feat)
+        return y
+
+
+@register
+class BBoxFeat(nn.Layer):
     __inject__ = ['roi_extractor', 'head_feat']
 
     def __init__(self, roi_extractor, head_feat):
@@ -71,11 +106,11 @@ class BBoxFeat(Layer):
     def forward(self, body_feats, rois, spatial_scale, stage=0):
         rois_feat = self.roi_extractor(body_feats, rois, spatial_scale)
         bbox_feat = self.head_feat(rois_feat, stage)
-        return bbox_feat
+        return bbox_feat, self.head_feat
 
 
 @register
-class BBoxHead(Layer):
+class BBoxHead(nn.Layer):
     __shared__ = ['num_classes', 'num_stages']
     __inject__ = ['bbox_feat']
 
@@ -85,7 +120,9 @@ class BBoxHead(Layer):
                  num_classes=81,
                  cls_agnostic=False,
                  num_stages=1,
-                 with_pool=False):
+                 with_pool=False,
+                 score_stage=[0, 1, 2],
+                 delta_stage=[2]):
         super(BBoxHead, self).__init__()
         self.num_classes = num_classes
         self.delta_dim = 2 if cls_agnostic else num_classes
@@ -94,71 +131,66 @@ class BBoxHead(Layer):
         self.bbox_score_list = []
         self.bbox_delta_list = []
         self.with_pool = with_pool
+        self.score_stage = score_stage
+        self.delta_stage = delta_stage
         for stage in range(num_stages):
             score_name = 'bbox_score_{}'.format(stage)
             delta_name = 'bbox_delta_{}'.format(stage)
             bbox_score = self.add_sublayer(
                 score_name,
-                fluid.dygraph.Linear(
-                    input_dim=in_feat,
-                    output_dim=1 * self.num_classes,
-                    act=None,
-                    param_attr=ParamAttr(
-                        #name='cls_score_w', 
-                        initializer=Normal(
-                            loc=0.0, scale=0.01)),
+                nn.Linear(
+                    in_feat,
+                    1 * self.num_classes,
+                    weight_attr=ParamAttr(initializer=Normal(
+                        mean=0.0, std=0.01)),
                     bias_attr=ParamAttr(
-                        #name='cls_score_b',
-                        learning_rate=2.,
-                        regularizer=L2Decay(0.))))
+                        learning_rate=2., regularizer=L2Decay(0.))))
 
             bbox_delta = self.add_sublayer(
                 delta_name,
-                fluid.dygraph.Linear(
-                    input_dim=in_feat,
-                    output_dim=4 * self.delta_dim,
-                    act=None,
-                    param_attr=ParamAttr(
-                        #name='bbox_pred_w', 
-                        initializer=Normal(
-                            loc=0.0, scale=0.001)),
+                nn.Linear(
+                    in_feat,
+                    4 * self.delta_dim,
+                    weight_attr=ParamAttr(initializer=Normal(
+                        mean=0.0, std=0.001)),
                     bias_attr=ParamAttr(
-                        #name='bbox_pred_b',
-                        learning_rate=2.,
-                        regularizer=L2Decay(0.))))
+                        learning_rate=2., regularizer=L2Decay(0.))))
             self.bbox_score_list.append(bbox_score)
             self.bbox_delta_list.append(bbox_delta)
 
     def forward(self, body_feats, rois, spatial_scale, stage=0):
-        bbox_feat = self.bbox_feat(body_feats, rois, spatial_scale, stage)
-        if self.with_pool:
-            bbox_feat = fluid.layers.pool2d(
-                bbox_feat, pool_type='avg', global_pooling=True)
+        bbox_feat, head_feat_func = self.bbox_feat(body_feats, rois,
+                                                   spatial_scale, stage)
         bbox_head_out = []
-        scores = self.bbox_score_list[stage](bbox_feat)
-        deltas = self.bbox_delta_list[stage](bbox_feat)
+        if self.with_pool:
+            bbox_feat_ = F.adaptive_avg_pool2d(bbox_feat, output_size=1)
+            bbox_feat_ = paddle.squeeze(bbox_feat_, axis=[2, 3])
+            scores = self.bbox_score_list[stage](bbox_feat_)
+            deltas = self.bbox_delta_list[stage](bbox_feat_)
+        else:
+            scores = self.bbox_score_list[stage](bbox_feat)
+            deltas = self.bbox_delta_list[stage](bbox_feat)
         bbox_head_out.append((scores, deltas))
-        return bbox_feat, bbox_head_out
+        return bbox_feat, bbox_head_out, head_feat_func
 
     def _get_head_loss(self, score, delta, target):
         # bbox cls  
-        labels_int64 = fluid.layers.cast(
-            x=target['labels_int32'], dtype='int64')
+        labels_int64 = paddle.cast(x=target['labels_int32'], dtype='int64')
         labels_int64.stop_gradient = True
-        loss_bbox_cls = fluid.layers.softmax_with_cross_entropy(
+        loss_bbox_cls = F.softmax_with_cross_entropy(
             logits=score, label=labels_int64)
-        loss_bbox_cls = fluid.layers.reduce_mean(loss_bbox_cls)
+        loss_bbox_cls = paddle.mean(loss_bbox_cls)
         # bbox reg
-        loss_bbox_reg = fluid.layers.smooth_l1(
-            x=delta,
-            y=target['bbox_targets'],
+        loss_bbox_reg = ops.smooth_l1(
+            input=delta,
+            label=target['bbox_targets'],
             inside_weight=target['bbox_inside_weights'],
             outside_weight=target['bbox_outside_weights'],
             sigma=1.0)
-        loss_bbox_reg = fluid.layers.reduce_mean(loss_bbox_reg)
+        loss_bbox_reg = paddle.mean(loss_bbox_reg)
         return loss_bbox_cls, loss_bbox_reg
 
-    def loss(self, bbox_head_out, targets):
+    def get_loss(self, bbox_head_out, targets):
         loss_bbox = {}
         for lvl, (bboxhead, target) in enumerate(zip(bbox_head_out, targets)):
             score, delta = bboxhead
@@ -169,3 +201,35 @@ class BBoxHead(Layer):
             loss_bbox[cls_name] = loss_bbox_cls
             loss_bbox[reg_name] = loss_bbox_reg
         return loss_bbox
+
+    def get_prediction(self, bbox_head_out, rois):
+        if len(bbox_head_out) == 1:
+            proposal, proposal_num = rois
+            score, delta = bbox_head_out[0]
+            bbox_prob = F.softmax(score)
+            delta = paddle.reshape(delta, (-1, self.delta_dim, 4))
+        else:
+            num_stage = len(rois)
+            proposal_list = []
+            prob_list = []
+            delta_list = []
+            for stage, (proposals, bboxhead) in zip(rois, bbox_head_out):
+                score, delta = bboxhead
+                proposal, proposal_num = proposals
+                if stage in self.score_stage:
+                    bbox_prob = F.softmax(score)
+                    prob_list.append(bbox_prob)
+                if stage in self.delta_stage:
+                    proposal_list.append(proposal)
+                    delta_list.append(delta)
+            bbox_prob = paddle.mean(paddle.stack(prob_list), axis=0)
+            delta = paddle.mean(paddle.stack(delta_list), axis=0)
+            proposal = paddle.mean(paddle.stack(proposal_list), axis=0)
+            delta = paddle.reshape(delta, (-1, self.out_dim, 4))
+            if self.cls_agnostic:
+                N, C, M = delta.shape
+                delta = delta[:, 1:2, :]
+                delta = paddle.expand(delta, [N, self.num_classes, M])
+        bboxes = (proposal, proposal_num)
+        bbox_pred = (delta, bbox_prob)
+        return bbox_pred, bboxes

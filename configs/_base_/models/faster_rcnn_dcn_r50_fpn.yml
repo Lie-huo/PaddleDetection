@@ -1,27 +1,23 @@
-architecture: MaskRCNN
-use_gpu: true
-max_iters: 180000
-log_iter: 20
-save_dir: output
-snapshot_iter: 10000
+architecture: FasterRCNN
 pretrain_weights: https://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_cos_pretrained.tar
-metric: COCO
-weights: output/mask_rcnn_r50_fpn_1x/model_final
-num_classes: 81
+weights: output/faster_rcnn_dcn_r50_fpn_1x.pdparams
+#/paddle/ppdet_convert/kongming6_faster_rcnn_fpn_37.0/faster_rcnn_r50_fpn_1x_coco/model_final.pdparams
+# output/faster_rcnn_r50_fpn_1x_coco/model_final.pdparams
 load_static_weights: True
 
 # Model Achitecture
-MaskRCNN:
+FasterRCNN:
   # model anchor info flow
-  anchor: AnchorRPN
+  anchor: Anchor
   proposal: Proposal
-  mask: Mask
   # model feat info flow
   backbone: ResNet
   neck: FPN
   rpn_head: RPNHead
   bbox_head: BBoxHead
-  mask_head: MaskHead
+  # post process
+  bbox_post_process: BBoxPostProcess
+
 
 ResNet:
   # index 0 stands for res2
@@ -30,6 +26,8 @@ ResNet:
   freeze_at: 0
   return_idx: [0,1,2,3]
   num_stages: 4
+  dcn_v2_stages: [1, 2, 3]
+  dcn: 1
 
 FPN:
   in_channels: [256, 512, 1024, 2048]
@@ -37,7 +35,6 @@ FPN:
   min_level: 0
   max_level: 4
   spatial_scale: [0.25, 0.125, 0.0625, 0.03125]
-
 
 RPNHead:
   rpn_feat:
@@ -47,33 +44,7 @@ RPNHead:
   anchor_per_position: 3
   rpn_channel: 256
 
-BBoxHead:
-  bbox_feat:
-    name: BBoxFeat
-    roi_extractor:
-      name: RoIExtractor
-      resolution: 7
-      sampling_ratio: 2
-    head_feat:
-      name: TwoFCHead
-      in_dim: 256
-      mlp_dim: 1024
-  in_feat: 1024
-
-MaskHead:
-  mask_feat:
-    name: MaskFeat
-    num_convs: 4
-    feat_in: 256
-    feat_out: 256
-    mask_roi_extractor:
-      name: RoIExtractor
-      resolution: 14
-      sampling_ratio: 2
-    share_bbox_feat: False
-  feat_in: 256
-
-AnchorRPN:
+Anchor:
   anchor_generator:
     name: AnchorGeneratorRPN
     aspect_ratios: [0.5, 1.0, 2.0]
@@ -104,41 +75,27 @@ Proposal:
     bg_thresh_lo: [0.0,]
     fg_thresh: [0.5,]
     fg_fraction: 0.25
-  bbox_post_process: # used in infer
-    name: BBoxPostProcess
-    # decode -> clip -> nms
-    decode_clip_nms:
-      name: DecodeClipNms
-      keep_top_k: 100
-      score_threshold: 0.05
-      nms_threshold: 0.5
 
-Mask:
-  mask_target_generator:
-    name: MaskTargetGenerator
-    mask_resolution: 28
-  mask_post_process:
-    name: MaskPostProcess
-    mask_resolution: 28
+BBoxHead:
+  bbox_feat:
+    name: BBoxFeat
+    roi_extractor:
+      name: RoIAlign
+      resolution: 7
+      sampling_ratio: 2
+    head_feat:
+      name: TwoFCHead
+      in_dim: 256
+      mlp_dim: 1024
+  in_feat: 1024
 
-
-# Train
-LearningRate:
-  base_lr: 0.01
-  schedulers:
-  - !PiecewiseDecay
-    gamma: 0.1
-    milestones: [120000, 160000]
-  - !LinearWarmup
-    start_factor: 0.3333333
-    steps: 500
-
-OptimizerBuilder:
-  optimizer:
-    momentum: 0.9
-    type: Momentum
-  regularizer:
-    factor: 0.0001
-    type: L2
-
-_READER_: 'mask_reader.yml'
+BBoxPostProcess:
+  decode:
+    name: RCNNBox
+    num_classes: 81
+    batch_size: 1
+  nms:
+    name: MultiClassNMS
+    keep_top_k: 100
+    score_threshold: 0.05
+    nms_threshold: 0.5

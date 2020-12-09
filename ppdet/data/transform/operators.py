@@ -39,6 +39,7 @@ from PIL import Image, ImageEnhance, ImageDraw
 
 from ppdet.core.workspace import serializable
 from ppdet.modeling.layers import AnchorGrid
+from .operator import register_op, BaseOperator, BboxError, ImageError
 
 from .op_helper import (satisfy_sample_constraint, filter_and_process,
                         generate_sample_bbox, clip_bbox, data_anchor_sampling,
@@ -47,45 +48,6 @@ from .op_helper import (satisfy_sample_constraint, filter_and_process,
                         is_poly, gaussian_radius, draw_gaussian)
 
 logger = logging.getLogger(__name__)
-
-registered_ops = []
-
-
-def register_op(cls):
-    registered_ops.append(cls.__name__)
-    if not hasattr(BaseOperator, cls.__name__):
-        setattr(BaseOperator, cls.__name__, cls)
-    else:
-        raise KeyError("The {} class has been registered.".format(cls.__name__))
-    return serializable(cls)
-
-
-class BboxError(ValueError):
-    pass
-
-
-class ImageError(ValueError):
-    pass
-
-
-class BaseOperator(object):
-    def __init__(self, name=None):
-        if name is None:
-            name = self.__class__.__name__
-        self._id = name + '_' + str(uuid.uuid4())[-6:]
-
-    def __call__(self, sample, context=None):
-        """ Process a sample.
-        Args:
-            sample (dict): a dict of sample, eg: {'image':xx, 'label': xxx}
-            context (dict): info about this sample processing
-        Returns:
-            result (dict): a processed sample
-        """
-        return sample
-
-    def __str__(self):
-        return str(self._id)
 
 
 @register_op
@@ -109,7 +71,7 @@ class DecodeImage(BaseOperator):
         if not isinstance(self.with_cutmix, bool):
             raise TypeError("{}: input type is invalid.".format(self))
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         """ load image if 'im_file' field is not empty but 'image' is"""
         if 'image' not in sample:
             with open(sample['im_file'], 'rb') as f:
@@ -144,10 +106,10 @@ class DecodeImage(BaseOperator):
             [im.shape[0], im.shape[1], 1.], dtype=np.float32)
         # decode mixup image
         if self.with_mixup and 'mixup' in sample:
-            self.__call__(sample['mixup'], context)
+            self.__call__(sample['mixup'])
         # decode cutmix image
         if self.with_cutmix and 'cutmix' in sample:
-            self.__call__(sample['cutmix'], context)
+            self.__call__(sample['cutmix'])
 
         return sample
 
@@ -188,7 +150,7 @@ class MultiscaleTestResize(BaseOperator):
                 and isinstance(self.interp, int)):
             raise TypeError("{}: input type is invalid.".format(self))
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         """ Resize the image numpy for multi-scale test.
         """
         origin_ims = {}
@@ -406,7 +368,7 @@ class RandomFlipImage(BaseOperator):
                     gt_keypoint[:, i] = width - old_x - 1
         return gt_keypoint
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         """Filp the image and bounding box.
         Operators:
             1. Flip the image numpy.
@@ -479,7 +441,7 @@ class RandomErasingImage(BaseOperator):
         self.sh = sh
         self.r1 = r1
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         samples = sample
         batch_input = True
         if not isinstance(samples, Sequence):
@@ -563,7 +525,7 @@ class GridMaskOp(BaseOperator):
             prob=prob,
             upper_iter=upper_iter)
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         samples = sample
         batch_input = True
         if not isinstance(samples, Sequence):
@@ -591,7 +553,7 @@ class AutoAugmentImage(BaseOperator):
         if not isinstance(self.is_normalized, bool):
             raise TypeError("{}: input type is invalid.".format(self))
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         """
         Learning Data Augmentation Strategies for Object Detection, see https://arxiv.org/abs/1906.11172
         """
@@ -670,7 +632,7 @@ class NormalizeImage(BaseOperator):
         if reduce(lambda x, y: x * y, self.std) == 0:
             raise ValueError('{}: std is invalid!'.format(self))
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         """Normalize the image.
         Operators:
             1.(optional) Scale the image to [0,1]
@@ -786,7 +748,7 @@ class RandomDistort(BaseOperator):
             img = Image.fromarray(img, mode='HSV').convert('RGB')
         return img
 
-    def __call__(self, sample, context):
+    def __call__(self, sample):
         """random distort the image"""
         ops = [
             self.random_brightness, self.random_contrast,
@@ -827,7 +789,7 @@ class ExpandImage(BaseOperator):
         self.mean = mean
         self.prob = prob
 
-    def __call__(self, sample, context):
+    def __call__(self, sample):
         """
         Expand the image and modify bounding box.
         Operators:
@@ -911,7 +873,7 @@ class CropImage(BaseOperator):
         self.satisfy_all = satisfy_all
         self.avoid_no_bbox = avoid_no_bbox
 
-    def __call__(self, sample, context):
+    def __call__(self, sample):
         """
         Crop the image and modify bounding box.
         Operators:
@@ -1007,7 +969,7 @@ class CropImageWithDataAchorSampling(BaseOperator):
         self.avoid_no_bbox = avoid_no_bbox
         self.das_anchor_scales = np.array(das_anchor_scales)
 
-    def __call__(self, sample, context):
+    def __call__(self, sample):
         """
         Crop the image and modify bounding box.
         Operators:
@@ -1140,7 +1102,7 @@ class NormalizeBox(BaseOperator):
     def __init__(self):
         super(NormalizeBox, self).__init__()
 
-    def __call__(self, sample, context):
+    def __call__(self, sample):
         gt_bbox = sample['gt_bbox']
         width = sample['w']
         height = sample['h']
@@ -1986,22 +1948,21 @@ class PadBox(BaseOperator):
         self.num_max_boxes = num_max_boxes
         super(PadBox, self).__init__()
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         assert 'gt_bbox' in sample
         bbox = sample['gt_bbox']
         gt_num = min(self.num_max_boxes, len(bbox))
         num_max = self.num_max_boxes
-        fields = context['fields'] if context else []
         pad_bbox = np.zeros((num_max, 4), dtype=np.float32)
         if gt_num > 0:
             pad_bbox[:gt_num, :] = bbox[:gt_num, :]
         sample['gt_bbox'] = pad_bbox
-        if 'gt_class' in fields:
+        if 'gt_class' in sample.keys():
             pad_class = np.zeros((num_max), dtype=np.int32)
             if gt_num > 0:
                 pad_class[:gt_num] = sample['gt_class'][:gt_num, 0]
             sample['gt_class'] = pad_class
-        if 'gt_score' in fields:
+        if 'gt_score' in sample.keys():
             pad_score = np.zeros((num_max), dtype=np.float32)
             if gt_num > 0:
                 pad_score[:gt_num] = sample['gt_score'][:gt_num, 0]
@@ -2009,7 +1970,7 @@ class PadBox(BaseOperator):
         # in training, for example in op ExpandImage,
         # the bbox and gt_class is expandded, but the difficult is not,
         # so, judging by it's length
-        if 'is_difficult' in fields:
+        if 'is_difficult' in sample.keys():
             pad_diff = np.zeros((num_max), dtype=np.int32)
             if gt_num > 0:
                 pad_diff[:gt_num] = sample['difficult'][:gt_num, 0]
@@ -2026,7 +1987,7 @@ class BboxXYXY2XYWH(BaseOperator):
     def __init__(self):
         super(BboxXYXY2XYWH, self).__init__()
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         assert 'gt_bbox' in sample
         bbox = sample['gt_bbox']
         bbox[:, 2:4] = bbox[:, 2:4] - bbox[:, :2]
@@ -2050,7 +2011,7 @@ class Lighting(BaseOperator):
         self.eigval = np.array(eigval).astype('float32')
         self.eigvec = np.array(eigvec).astype('float32')
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         alpha = np.random.normal(scale=self.alphastd, size=(3, ))
         sample['image'] += np.dot(self.eigvec, self.eigval * alpha)
         return sample
@@ -2088,7 +2049,7 @@ class CornerTarget(BaseOperator):
         self.gaussian_iou = gaussian_iou
         self.max_tag_len = max_tag_len
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         tl_heatmaps = np.zeros(
             (self.num_classes, self.output_size[0], self.output_size[1]),
             dtype=np.float32)
@@ -2185,7 +2146,7 @@ class CornerCrop(BaseOperator):
         self.is_train = is_train
         self.input_size = input_size
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         im_h, im_w = int(sample['h']), int(sample['w'])
         if self.is_train:
             scale = np.random.choice(self.random_scales)
@@ -2259,7 +2220,7 @@ class CornerRatio(BaseOperator):
         self.input_size = input_size
         self.output_size = output_size
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         scale = (self.input_size + 1) // self.output_size
         out_height, out_width = (sample['h'] + 1) // scale, (
             sample['w'] + 1) // scale
@@ -2289,7 +2250,7 @@ class RandomScaledCrop(BaseOperator):
         self.scale_range = scale_range
         self.interp = interp
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         w = sample['w']
         h = sample['h']
         random_scale = np.random.uniform(*self.scale_range)
@@ -2338,7 +2299,7 @@ class ResizeAndPad(BaseOperator):
         self.target_dim = target_dim
         self.interp = interp
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         w = sample['w']
         h = sample['h']
         interp = self.interp
@@ -2442,7 +2403,7 @@ class TargetAssign(BaseOperator):
         offsets[..., 2:] = np.log(whb / wha)
         return offsets
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         gt_boxes = sample['gt_bbox']
         gt_labels = sample['gt_class']
         labels = np.full((self.anchors.shape[0], 1), 0, dtype=np.int32)
@@ -2482,7 +2443,7 @@ class DebugVisibleImage(BaseOperator):
         if not isinstance(self.is_normalized, bool):
             raise TypeError("{}: input type is invalid.".format(self))
 
-    def __call__(self, sample, context=None):
+    def __call__(self, sample):
         image = Image.open(sample['im_file']).convert('RGB')
         out_file_name = sample['im_file'].split('/')[-1]
         width = sample['w']
