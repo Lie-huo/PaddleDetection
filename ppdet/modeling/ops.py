@@ -111,7 +111,8 @@ class DeformableConvV2(nn.Layer):
                  groups=1,
                  weight_attr=None,
                  bias_attr=None,
-                 name=None):
+                 name=None,
+                 lr_scale=1.0):
         super(DeformableConvV2, self).__init__()
         self.offset_channel = 2 * kernel_size**2
         self.mask_channel = kernel_size**2
@@ -127,10 +128,6 @@ class DeformableConvV2(nn.Layer):
             bias_attr=ParamAttr(
                 initializer=Constant(0.0),
                 name='{}.conv_offset.bias'.format(name)))
-
-        if weight_attr is None:
-            weight_attr = ParamAttr(
-                name='{}.dcn.weight'.format(name), learning_rate=lr_scale)
 
         self.dcn = DeformConv2D(
             in_channels,
