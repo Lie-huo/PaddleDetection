@@ -116,7 +116,7 @@ class DeformableConvV2(nn.Layer):
         super(DeformableConvV2, self).__init__()
         self.offset_channel = 2 * kernel_size**2
         self.mask_channel = kernel_size**2
-        self.conv = nn.Conv2D(
+        self.dcn_conv_offset = nn.Conv2D(
             in_channels,
             3 * kernel_size**2,
             kernel_size,
@@ -128,7 +128,7 @@ class DeformableConvV2(nn.Layer):
             bias_attr=ParamAttr(
                 initializer=Constant(0.0),
                 name='{}.conv_offset.bias'.format(name)))
-
+        
         self.dcn = DeformConv2D(
             in_channels,
             out_channels,
@@ -141,7 +141,7 @@ class DeformableConvV2(nn.Layer):
             bias_attr=bias_attr)
 
     def forward(self, x):
-        offset_mask = self.conv(x)
+        offset_mask = self.dcn_conv_offset(x)
         offset, mask = paddle.split(
             offset_mask, num_or_sections=[self.offset_channel, self.mask_channel], axis=1)
         mask = F.sigmoid(mask)
