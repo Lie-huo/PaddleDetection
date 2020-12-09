@@ -25,6 +25,9 @@ class Load(paddle.nn.Layer):
 
 if __name__ == '__main__':
     p = '/Users/liuhui29/.cache/paddle/weights/libra_rcnn_r50_vd_fpn_1x/bn3a_branch2c_mean'
+    p = 'output/st_weights/faster_rcnn_dcn_r50_vd_fpn_3x_server_side/res5c_branch2b_conv_offset.b_0'
+    p = 'output/st_weights/faster_rcnn_dcn_r50_vd_fpn_3x_server_side/res3a_branch2b_conv_offset.b_0'
+    p = 'output/st_weights/faster_rcnn_dcn_r50_vd_fpn_3x_server_side/res3a_branch2b_conv_offset.w_0'
     load = Load()
     weight = load(p)
     np_weight = weight.numpy()

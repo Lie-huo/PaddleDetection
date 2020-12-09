@@ -66,6 +66,7 @@ def run(FLAGS, cfg, place):
 
     # Init Model
     load_weight(model, cfg.weights)
+    print('cfg.weights: ', cfg.weights)
 
     # Data Reader
     dataset = cfg.EvalDataset
