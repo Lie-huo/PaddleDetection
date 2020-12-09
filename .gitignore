@@ -1,6 +1,7 @@
 # Virtualenv
 /.venv/
 /venv/
+*.pdparams
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
