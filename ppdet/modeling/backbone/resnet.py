@@ -65,7 +65,7 @@ class ConvNormLayer(nn.Layer):
                 stride=stride,
                 padding=(filter_size - 1) // 2,
                 groups=1,
-                lr_scale=1.0)
+                name='{}.dcn.weight'.format(name))
 
         bn_name = name_adapter.fix_conv_norm_name(name)
         norm_lr = 0. if freeze_norm else lr
