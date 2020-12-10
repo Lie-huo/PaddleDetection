@@ -39,9 +39,9 @@ class FasterRCNN(BaseArch):
         body_feats = self.backbone(self.inputs)
         spatial_scale = 0.0625
         
-        print('before fpn')
-        for ee in  body_feats:
-            print('ee', ee.shape, ee.numpy().sum())
+        #print('before fpn')
+        #for ee in  body_feats:
+        #    print('ee', ee.shape, ee.numpy().sum())
 
         # Neck
         if self.neck is not None:
