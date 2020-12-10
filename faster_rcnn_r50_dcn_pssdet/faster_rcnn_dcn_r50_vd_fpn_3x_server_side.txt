@@ -1,331 +1,331 @@
-bbox_pred_b
-bbox_pred_w
-bn2a_branch1_mean
-bn2a_branch1_offset
-bn2a_branch1_scale
-bn2a_branch1_variance
-bn2a_branch2a_mean
-bn2a_branch2a_offset
-bn2a_branch2a_scale
-bn2a_branch2a_variance
-bn2a_branch2b_mean
-bn2a_branch2b_offset
-bn2a_branch2b_scale
-bn2a_branch2b_variance
-bn2a_branch2c_mean
-bn2a_branch2c_offset
-bn2a_branch2c_scale
-bn2a_branch2c_variance
-bn2b_branch2a_mean
-bn2b_branch2a_offset
-bn2b_branch2a_scale
-bn2b_branch2a_variance
-bn2b_branch2b_mean
-bn2b_branch2b_offset
-bn2b_branch2b_scale
-bn2b_branch2b_variance
-bn2b_branch2c_mean
-bn2b_branch2c_offset
-bn2b_branch2c_scale
-bn2b_branch2c_variance
-bn2c_branch2a_mean
-bn2c_branch2a_offset
-bn2c_branch2a_scale
-bn2c_branch2a_variance
-bn2c_branch2b_mean
-bn2c_branch2b_offset
-bn2c_branch2b_scale
-bn2c_branch2b_variance
-bn2c_branch2c_mean
-bn2c_branch2c_offset
-bn2c_branch2c_scale
-bn2c_branch2c_variance
-bn3a_branch1_mean
-bn3a_branch1_offset
-bn3a_branch1_scale
-bn3a_branch1_variance
-bn3a_branch2a_mean
-bn3a_branch2a_offset
-bn3a_branch2a_scale
-bn3a_branch2a_variance
-bn3a_branch2b_mean
-bn3a_branch2b_offset
-bn3a_branch2b_scale
-bn3a_branch2b_variance
-bn3a_branch2c_mean
-bn3a_branch2c_offset
-bn3a_branch2c_scale
-bn3a_branch2c_variance
-bn3b_branch2a_mean
-bn3b_branch2a_offset
-bn3b_branch2a_scale
-bn3b_branch2a_variance
-bn3b_branch2b_mean
-bn3b_branch2b_offset
-bn3b_branch2b_scale
-bn3b_branch2b_variance
-bn3b_branch2c_mean
-bn3b_branch2c_offset
-bn3b_branch2c_scale
-bn3b_branch2c_variance
-bn3c_branch2a_mean
-bn3c_branch2a_offset
-bn3c_branch2a_scale
-bn3c_branch2a_variance
-bn3c_branch2b_mean
-bn3c_branch2b_offset
-bn3c_branch2b_scale
-bn3c_branch2b_variance
-bn3c_branch2c_mean
-bn3c_branch2c_offset
-bn3c_branch2c_scale
-bn3c_branch2c_variance
-bn3d_branch2a_mean
-bn3d_branch2a_offset
-bn3d_branch2a_scale
-bn3d_branch2a_variance
-bn3d_branch2b_mean
-bn3d_branch2b_offset
-bn3d_branch2b_scale
-bn3d_branch2b_variance
-bn3d_branch2c_mean
-bn3d_branch2c_offset
-bn3d_branch2c_scale
-bn3d_branch2c_variance
-bn4a_branch1_mean
-bn4a_branch1_offset
-bn4a_branch1_scale
-bn4a_branch1_variance
-bn4a_branch2a_mean
-bn4a_branch2a_offset
-bn4a_branch2a_scale
-bn4a_branch2a_variance
-bn4a_branch2b_mean
-bn4a_branch2b_offset
-bn4a_branch2b_scale
-bn4a_branch2b_variance
-bn4a_branch2c_mean
-bn4a_branch2c_offset
-bn4a_branch2c_scale
-bn4a_branch2c_variance
-bn4b_branch2a_mean
-bn4b_branch2a_offset
-bn4b_branch2a_scale
-bn4b_branch2a_variance
-bn4b_branch2b_mean
-bn4b_branch2b_offset
-bn4b_branch2b_scale
-bn4b_branch2b_variance
-bn4b_branch2c_mean
-bn4b_branch2c_offset
-bn4b_branch2c_scale
-bn4b_branch2c_variance
-bn4c_branch2a_mean
-bn4c_branch2a_offset
-bn4c_branch2a_scale
-bn4c_branch2a_variance
-bn4c_branch2b_mean
-bn4c_branch2b_offset
-bn4c_branch2b_scale
-bn4c_branch2b_variance
-bn4c_branch2c_mean
-bn4c_branch2c_offset
-bn4c_branch2c_scale
-bn4c_branch2c_variance
-bn4d_branch2a_mean
-bn4d_branch2a_offset
-bn4d_branch2a_scale
-bn4d_branch2a_variance
-bn4d_branch2b_mean
-bn4d_branch2b_offset
-bn4d_branch2b_scale
-bn4d_branch2b_variance
-bn4d_branch2c_mean
-bn4d_branch2c_offset
-bn4d_branch2c_scale
-bn4d_branch2c_variance
-bn4e_branch2a_mean
-bn4e_branch2a_offset
-bn4e_branch2a_scale
-bn4e_branch2a_variance
-bn4e_branch2b_mean
-bn4e_branch2b_offset
-bn4e_branch2b_scale
-bn4e_branch2b_variance
-bn4e_branch2c_mean
-bn4e_branch2c_offset
-bn4e_branch2c_scale
-bn4e_branch2c_variance
-bn4f_branch2a_mean
-bn4f_branch2a_offset
-bn4f_branch2a_scale
-bn4f_branch2a_variance
-bn4f_branch2b_mean
-bn4f_branch2b_offset
-bn4f_branch2b_scale
-bn4f_branch2b_variance
-bn4f_branch2c_mean
-bn4f_branch2c_offset
-bn4f_branch2c_scale
-bn4f_branch2c_variance
-bn5a_branch1_mean
-bn5a_branch1_offset
-bn5a_branch1_scale
-bn5a_branch1_variance
-bn5a_branch2a_mean
-bn5a_branch2a_offset
-bn5a_branch2a_scale
-bn5a_branch2a_variance
-bn5a_branch2b_mean
-bn5a_branch2b_offset
-bn5a_branch2b_scale
-bn5a_branch2b_variance
-bn5a_branch2c_mean
-bn5a_branch2c_offset
-bn5a_branch2c_scale
-bn5a_branch2c_variance
-bn5b_branch2a_mean
-bn5b_branch2a_offset
-bn5b_branch2a_scale
-bn5b_branch2a_variance
-bn5b_branch2b_mean
-bn5b_branch2b_offset
-bn5b_branch2b_scale
-bn5b_branch2b_variance
-bn5b_branch2c_mean
-bn5b_branch2c_offset
-bn5b_branch2c_scale
-bn5b_branch2c_variance
-bn5c_branch2a_mean
-bn5c_branch2a_offset
-bn5c_branch2a_scale
-bn5c_branch2a_variance
-bn5c_branch2b_mean
-bn5c_branch2b_offset
-bn5c_branch2b_scale
-bn5c_branch2b_variance
-bn5c_branch2c_mean
-bn5c_branch2c_offset
-bn5c_branch2c_scale
-bn5c_branch2c_variance
-bnv1_1_mean
-bnv1_1_offset
-bnv1_1_scale
-bnv1_1_variance
-bnv1_2_mean
-bnv1_2_offset
-bnv1_2_scale
-bnv1_2_variance
-bnv1_3_mean
-bnv1_3_offset
-bnv1_3_scale
-bnv1_3_variance
-cls_score_b
-cls_score_w
-conv1_1_weights
-conv1_2_weights
-conv1_3_weights
-conv_rpn_fpn2_b
-conv_rpn_fpn2_w
-fc6_b
-fc6_w
-fc7_b
-fc7_w
-fpn_inner_res2_sum_lateral_b
-fpn_inner_res2_sum_lateral_w
-fpn_inner_res3_sum_lateral_b
-fpn_inner_res3_sum_lateral_w
-fpn_inner_res4_sum_lateral_b
-fpn_inner_res4_sum_lateral_w
-fpn_inner_res5_sum_b
-fpn_inner_res5_sum_w
-fpn_res2_sum_b
-fpn_res2_sum_w
-fpn_res3_sum_b
-fpn_res3_sum_w
-fpn_res4_sum_b
-fpn_res4_sum_w
-fpn_res5_sum_b
-fpn_res5_sum_w
-res2a_branch1_weights
-res2a_branch2a_weights
-res2a_branch2b_weights
-res2a_branch2c_weights
-res2b_branch2a_weights
-res2b_branch2b_weights
-res2b_branch2c_weights
-res2c_branch2a_weights
-res2c_branch2b_weights
-res2c_branch2c_weights
-res3a_branch1_weights
-res3a_branch2a_weights
-res3a_branch2b_conv_offset.b_0
-res3a_branch2b_conv_offset.w_0
-res3a_branch2b_weights
-res3a_branch2c_weights
-res3b_branch2a_weights
-res3b_branch2b_conv_offset.b_0
-res3b_branch2b_conv_offset.w_0
-res3b_branch2b_weights
-res3b_branch2c_weights
-res3c_branch2a_weights
-res3c_branch2b_conv_offset.b_0
-res3c_branch2b_conv_offset.w_0
-res3c_branch2b_weights
-res3c_branch2c_weights
-res3d_branch2a_weights
-res3d_branch2b_conv_offset.b_0
-res3d_branch2b_conv_offset.w_0
-res3d_branch2b_weights
-res3d_branch2c_weights
-res4a_branch1_weights
-res4a_branch2a_weights
-res4a_branch2b_conv_offset.b_0
-res4a_branch2b_conv_offset.w_0
-res4a_branch2b_weights
-res4a_branch2c_weights
-res4b_branch2a_weights
-res4b_branch2b_conv_offset.b_0
-res4b_branch2b_conv_offset.w_0
-res4b_branch2b_weights
-res4b_branch2c_weights
-res4c_branch2a_weights
-res4c_branch2b_conv_offset.b_0
-res4c_branch2b_conv_offset.w_0
-res4c_branch2b_weights
-res4c_branch2c_weights
-res4d_branch2a_weights
-res4d_branch2b_conv_offset.b_0
-res4d_branch2b_conv_offset.w_0
-res4d_branch2b_weights
-res4d_branch2c_weights
-res4e_branch2a_weights
-res4e_branch2b_conv_offset.b_0
-res4e_branch2b_conv_offset.w_0
-res4e_branch2b_weights
-res4e_branch2c_weights
-res4f_branch2a_weights
-res4f_branch2b_conv_offset.b_0
-res4f_branch2b_conv_offset.w_0
-res4f_branch2b_weights
-res4f_branch2c_weights
-res5a_branch1_weights
-res5a_branch2a_weights
-res5a_branch2b_conv_offset.b_0
-res5a_branch2b_conv_offset.w_0
-res5a_branch2b_weights
-res5a_branch2c_weights
-res5b_branch2a_weights
-res5b_branch2b_conv_offset.b_0
-res5b_branch2b_conv_offset.w_0
-res5b_branch2b_weights
-res5b_branch2c_weights
-res5c_branch2a_weights
-res5c_branch2b_conv_offset.b_0
-res5c_branch2b_conv_offset.w_0
-res5c_branch2b_weights
-res5c_branch2c_weights
-rpn_bbox_pred_fpn2_b
-rpn_bbox_pred_fpn2_w
-rpn_cls_logits_fpn2_b
-rpn_cls_logits_fpn2_w
+conv1_1_weights                                    backbone.conv1.conv1_1.conv.weight
+bnv1_1_scale                                       backbone.conv1.conv1_1.norm.weight
+bnv1_1_offset                                      backbone.conv1.conv1_1.norm.bias
+bnv1_1_mean                                        backbone.conv1.conv1_1.norm._mean
+bnv1_1_variance                                    backbone.conv1.conv1_1.norm._variance
+conv1_2_weights                                    backbone.conv1.conv1_2.conv.weight
+bnv1_2_scale                                       backbone.conv1.conv1_2.norm.weight
+bnv1_2_offset                                      backbone.conv1.conv1_2.norm.bias
+bnv1_2_mean                                        backbone.conv1.conv1_2.norm._mean
+bnv1_2_variance                                    backbone.conv1.conv1_2.norm._variance
+conv1_3_weights                                    backbone.conv1.conv1_3.conv.weight
+bnv1_3_scale                                       backbone.conv1.conv1_3.norm.weight
+bnv1_3_offset                                      backbone.conv1.conv1_3.norm.bias
+bnv1_3_mean                                        backbone.conv1.conv1_3.norm._mean
+bnv1_3_variance                                    backbone.conv1.conv1_3.norm._variance
+res2a_branch2a_weights                             backbone.res2.res2a.branch2a.conv.weight          
+bn2a_branch2a_scale                                backbone.res2.res2a.branch2a.norm.weight          
+bn2a_branch2a_offset                               backbone.res2.res2a.branch2a.norm.bias            
+bn2a_branch2a_mean                                 backbone.res2.res2a.branch2a.norm._mean           
+bn2a_branch2a_variance                             backbone.res2.res2a.branch2a.norm._variance       
+res2a_branch2b_weights                             backbone.res2.res2a.branch2b.conv.weight          
+bn2a_branch2b_scale                                backbone.res2.res2a.branch2b.norm.weight          
+bn2a_branch2b_offset                               backbone.res2.res2a.branch2b.norm.bias            
+bn2a_branch2b_mean                                 backbone.res2.res2a.branch2b.norm._mean           
+bn2a_branch2b_variance                             backbone.res2.res2a.branch2b.norm._variance       
+res2a_branch2c_weights                             backbone.res2.res2a.branch2c.conv.weight                   
+bn2a_branch2c_scale                                backbone.res2.res2a.branch2c.norm.weight                   
+bn2a_branch2c_offset                               backbone.res2.res2a.branch2c.norm.bias                     
+bn2a_branch2c_mean                                 backbone.res2.res2a.branch2c.norm._mean                    
+bn2a_branch2c_variance                             backbone.res2.res2a.branch2c.norm._variance                
+res2a_branch1_weights                              backbone.res2.res2a.short.conv.weight    
+bn2a_branch1_scale                                 backbone.res2.res2a.short.norm.weight    
+bn2a_branch1_offset                                backbone.res2.res2a.short.norm.bias      
+bn2a_branch1_mean                                  backbone.res2.res2a.short.norm._mean     
+bn2a_branch1_variance                              backbone.res2.res2a.short.norm._variance 
+res2b_branch2a_weights                             backbone.res2.res2b.branch2a.conv.weight          
+bn2b_branch2a_scale                                backbone.res2.res2b.branch2a.norm.weight          
+bn2b_branch2a_offset                               backbone.res2.res2b.branch2a.norm.bias            
+bn2b_branch2a_mean                                 backbone.res2.res2b.branch2a.norm._mean           
+bn2b_branch2a_variance                             backbone.res2.res2b.branch2a.norm._variance       
+res2b_branch2b_weights                             backbone.res2.res2b.branch2b.conv.weight          
+bn2b_branch2b_scale                                backbone.res2.res2b.branch2b.norm.weight          
+bn2b_branch2b_offset                               backbone.res2.res2b.branch2b.norm.bias            
+bn2b_branch2b_mean                                 backbone.res2.res2b.branch2b.norm._mean           
+bn2b_branch2b_variance                             backbone.res2.res2b.branch2b.norm._variance       
+res2b_branch2c_weights                             backbone.res2.res2b.branch2c.conv.weight          
+bn2b_branch2c_scale                                backbone.res2.res2b.branch2c.norm.weight          
+bn2b_branch2c_offset                               backbone.res2.res2b.branch2c.norm.bias            
+bn2b_branch2c_mean                                 backbone.res2.res2b.branch2c.norm._mean           
+bn2b_branch2c_variance                             backbone.res2.res2b.branch2c.norm._variance       
+res2c_branch2a_weights                             backbone.res2.res2c.branch2a.conv.weight          
+bn2c_branch2a_scale                                backbone.res2.res2c.branch2a.norm.weight          
+bn2c_branch2a_offset                               backbone.res2.res2c.branch2a.norm.bias            
+bn2c_branch2a_mean                                 backbone.res2.res2c.branch2a.norm._mean           
+bn2c_branch2a_variance                             backbone.res2.res2c.branch2a.norm._variance       
+res2c_branch2b_weights                             backbone.res2.res2c.branch2b.conv.weight          
+bn2c_branch2b_scale                                backbone.res2.res2c.branch2b.norm.weight          
+bn2c_branch2b_offset                               backbone.res2.res2c.branch2b.norm.bias            
+bn2c_branch2b_mean                                 backbone.res2.res2c.branch2b.norm._mean           
+bn2c_branch2b_variance                             backbone.res2.res2c.branch2b.norm._variance       
+res2c_branch2c_weights                             backbone.res2.res2c.branch2c.conv.weight          
+bn2c_branch2c_scale                                backbone.res2.res2c.branch2c.norm.weight          
+bn2c_branch2c_offset                               backbone.res2.res2c.branch2c.norm.bias            
+bn2c_branch2c_mean                                 backbone.res2.res2c.branch2c.norm._mean           
+bn2c_branch2c_variance                             backbone.res2.res2c.branch2c.norm._variance       
+res3a_branch2a_weights                             backbone.res3.res3a.branch2a.conv.weight          
+bn3a_branch2a_scale                                backbone.res3.res3a.branch2a.norm.weight          
+bn3a_branch2a_offset                               backbone.res3.res3a.branch2a.norm.bias            
+bn3a_branch2a_mean                                 backbone.res3.res3a.branch2a.norm._mean           
+bn3a_branch2a_variance                             backbone.res3.res3a.branch2a.norm._variance       
+res3a_branch2b_weights                             backbone.res3.res3a.branch2b.conv.dcn.weight
+res3a_branch2b_conv_offset.w_0                     backbone.res3.res3a.branch2b.conv.dcn_conv_offset.weight
+res3a_branch2b_conv_offset.b_0                     backbone.res3.res3a.branch2b.conv.dcn_conv_offset.bias
+bn3a_branch2b_scale                                backbone.res3.res3a.branch2b.norm.weight          
+bn3a_branch2b_offset                               backbone.res3.res3a.branch2b.norm.bias            
+bn3a_branch2b_mean                                 backbone.res3.res3a.branch2b.norm._mean           
+bn3a_branch2b_variance                             backbone.res3.res3a.branch2b.norm._variance       
+res3a_branch2c_weights                             backbone.res3.res3a.branch2c.conv.weight          
+bn3a_branch2c_scale                                backbone.res3.res3a.branch2c.norm.weight          
+bn3a_branch2c_offset                               backbone.res3.res3a.branch2c.norm.bias            
+bn3a_branch2c_mean                                 backbone.res3.res3a.branch2c.norm._mean           
+bn3a_branch2c_variance                             backbone.res3.res3a.branch2c.norm._variance       
+res3a_branch1_weights                              backbone.res3.res3a.short.conv.conv.weight
+bn3a_branch1_scale                                 backbone.res3.res3a.short.conv.norm.weight
+bn3a_branch1_offset                                backbone.res3.res3a.short.conv.norm.bias
+bn3a_branch1_mean                                  backbone.res3.res3a.short.conv.norm._mean
+bn3a_branch1_variance                              backbone.res3.res3a.short.conv.norm._variance
+res3b_branch2a_weights                             backbone.res3.res3b.branch2a.conv.weight          
+bn3b_branch2a_scale                                backbone.res3.res3b.branch2a.norm.weight          
+bn3b_branch2a_offset                               backbone.res3.res3b.branch2a.norm.bias            
+bn3b_branch2a_mean                                 backbone.res3.res3b.branch2a.norm._mean           
+bn3b_branch2a_variance                             backbone.res3.res3b.branch2a.norm._variance       
+res3b_branch2b_weights                             backbone.res3.res3b.branch2b.conv.dcn.weight
+res3b_branch2b_conv_offset.w_0                     backbone.res3.res3b.branch2b.conv.dcn_conv_offset.weight
+res3b_branch2b_conv_offset.b_0                     backbone.res3.res3b.branch2b.conv.dcn_conv_offset.bias
+bn3b_branch2b_scale                                backbone.res3.res3b.branch2b.norm.weight          
+bn3b_branch2b_offset                               backbone.res3.res3b.branch2b.norm.bias            
+bn3b_branch2b_mean                                 backbone.res3.res3b.branch2b.norm._mean           
+bn3b_branch2b_variance                             backbone.res3.res3b.branch2b.norm._variance       
+res3b_branch2c_weights                             backbone.res3.res3b.branch2c.conv.weight          
+bn3b_branch2c_scale                                backbone.res3.res3b.branch2c.norm.weight          
+bn3b_branch2c_offset                               backbone.res3.res3b.branch2c.norm.bias            
+bn3b_branch2c_mean                                 backbone.res3.res3b.branch2c.norm._mean           
+bn3b_branch2c_variance                             backbone.res3.res3b.branch2c.norm._variance       
+res3c_branch2a_weights                             backbone.res3.res3c.branch2a.conv.weight          
+bn3c_branch2a_scale                                backbone.res3.res3c.branch2a.norm.weight          
+bn3c_branch2a_offset                               backbone.res3.res3c.branch2a.norm.bias            
+bn3c_branch2a_mean                                 backbone.res3.res3c.branch2a.norm._mean           
+bn3c_branch2a_variance                             backbone.res3.res3c.branch2a.norm._variance       
+res3c_branch2b_weights                             backbone.res3.res3c.branch2b.conv.dcn.weight
+res3c_branch2b_conv_offset.w_0                     backbone.res3.res3c.branch2b.conv.dcn_conv_offset.weight
+res3c_branch2b_conv_offset.b_0                     backbone.res3.res3c.branch2b.conv.dcn_conv_offset.bias
+bn3c_branch2b_scale                                backbone.res3.res3c.branch2b.norm.weight          
+bn3c_branch2b_offset                               backbone.res3.res3c.branch2b.norm.bias            
+bn3c_branch2b_mean                                 backbone.res3.res3c.branch2b.norm._mean           
+bn3c_branch2b_variance                             backbone.res3.res3c.branch2b.norm._variance       
+res3c_branch2c_weights                             backbone.res3.res3c.branch2c.conv.weight          
+bn3c_branch2c_scale                                backbone.res3.res3c.branch2c.norm.weight          
+bn3c_branch2c_offset                               backbone.res3.res3c.branch2c.norm.bias            
+bn3c_branch2c_mean                                 backbone.res3.res3c.branch2c.norm._mean           
+bn3c_branch2c_variance                             backbone.res3.res3c.branch2c.norm._variance       
+res3d_branch2a_weights                             backbone.res3.res3d.branch2a.conv.weight          
+bn3d_branch2a_scale                                backbone.res3.res3d.branch2a.norm.weight          
+bn3d_branch2a_offset                               backbone.res3.res3d.branch2a.norm.bias            
+bn3d_branch2a_mean                                 backbone.res3.res3d.branch2a.norm._mean           
+bn3d_branch2a_variance                             backbone.res3.res3d.branch2a.norm._variance       
+res3d_branch2b_weights                             backbone.res3.res3d.branch2b.conv.dcn.weight
+res3d_branch2b_conv_offset.w_0                     backbone.res3.res3d.branch2b.conv.dcn_conv_offset.weight
+res3d_branch2b_conv_offset.b_0                     backbone.res3.res3d.branch2b.conv.dcn_conv_offset.bias
+bn3d_branch2b_scale                                backbone.res3.res3d.branch2b.norm.weight          
+bn3d_branch2b_offset                               backbone.res3.res3d.branch2b.norm.bias            
+bn3d_branch2b_mean                                 backbone.res3.res3d.branch2b.norm._mean           
+bn3d_branch2b_variance                             backbone.res3.res3d.branch2b.norm._variance       
+res3d_branch2c_weights                             backbone.res3.res3d.branch2c.conv.weight          
+bn3d_branch2c_scale                                backbone.res3.res3d.branch2c.norm.weight          
+bn3d_branch2c_offset                               backbone.res3.res3d.branch2c.norm.bias            
+bn3d_branch2c_mean                                 backbone.res3.res3d.branch2c.norm._mean           
+bn3d_branch2c_variance                             backbone.res3.res3d.branch2c.norm._variance       
+res4a_branch2a_weights                             backbone.res4.res4a.branch2a.conv.weight          
+bn4a_branch2a_scale                                backbone.res4.res4a.branch2a.norm.weight          
+bn4a_branch2a_offset                               backbone.res4.res4a.branch2a.norm.bias            
+bn4a_branch2a_mean                                 backbone.res4.res4a.branch2a.norm._mean           
+bn4a_branch2a_variance                             backbone.res4.res4a.branch2a.norm._variance       
+res4a_branch2b_weights                             backbone.res4.res4a.branch2b.conv.dcn.weight
+res4a_branch2b_conv_offset.w_0                     backbone.res4.res4a.branch2b.conv.dcn_conv_offset.weight
+res4a_branch2b_conv_offset.b_0                     backbone.res4.res4a.branch2b.conv.dcn_conv_offset.bias
+bn4a_branch2b_scale                                backbone.res4.res4a.branch2b.norm.weight          
+bn4a_branch2b_offset                               backbone.res4.res4a.branch2b.norm.bias            
+bn4a_branch2b_mean                                 backbone.res4.res4a.branch2b.norm._mean           
+bn4a_branch2b_variance                             backbone.res4.res4a.branch2b.norm._variance       
+res4a_branch2c_weights                             backbone.res4.res4a.branch2c.conv.weight          
+bn4a_branch2c_scale                                backbone.res4.res4a.branch2c.norm.weight          
+bn4a_branch2c_offset                               backbone.res4.res4a.branch2c.norm.bias            
+bn4a_branch2c_mean                                 backbone.res4.res4a.branch2c.norm._mean           
+bn4a_branch2c_variance                             backbone.res4.res4a.branch2c.norm._variance       
+res4a_branch1_weights                              backbone.res4.res4a.short.conv.conv.weight
+bn4a_branch1_scale                                 backbone.res4.res4a.short.conv.norm.weight
+bn4a_branch1_offset                                backbone.res4.res4a.short.conv.norm.bias
+bn4a_branch1_mean                                  backbone.res4.res4a.short.conv.norm._mean
+bn4a_branch1_variance                              backbone.res4.res4a.short.conv.norm._variance
+res4b_branch2a_weights                             backbone.res4.res4b.branch2a.conv.weight          
+bn4b_branch2a_scale                                backbone.res4.res4b.branch2a.norm.weight          
+bn4b_branch2a_offset                               backbone.res4.res4b.branch2a.norm.bias            
+bn4b_branch2a_mean                                 backbone.res4.res4b.branch2a.norm._mean           
+bn4b_branch2a_variance                             backbone.res4.res4b.branch2a.norm._variance       
+res4b_branch2b_weights                             backbone.res4.res4b.branch2b.conv.dcn.weight
+res4b_branch2b_conv_offset.w_0                     backbone.res4.res4b.branch2b.conv.dcn_conv_offset.weight
+res4b_branch2b_conv_offset.b_0                     backbone.res4.res4b.branch2b.conv.dcn_conv_offset.bias
+bn4b_branch2b_scale                                backbone.res4.res4b.branch2b.norm.weight          
+bn4b_branch2b_offset                               backbone.res4.res4b.branch2b.norm.bias            
+bn4b_branch2b_mean                                 backbone.res4.res4b.branch2b.norm._mean           
+bn4b_branch2b_variance                             backbone.res4.res4b.branch2b.norm._variance       
+res4b_branch2c_weights                             backbone.res4.res4b.branch2c.conv.weight          
+bn4b_branch2c_scale                                backbone.res4.res4b.branch2c.norm.weight          
+bn4b_branch2c_offset                               backbone.res4.res4b.branch2c.norm.bias            
+bn4b_branch2c_mean                                 backbone.res4.res4b.branch2c.norm._mean           
+bn4b_branch2c_variance                             backbone.res4.res4b.branch2c.norm._variance       
+res4c_branch2a_weights                             backbone.res4.res4c.branch2a.conv.weight          
+bn4c_branch2a_scale                                backbone.res4.res4c.branch2a.norm.weight          
+bn4c_branch2a_offset                               backbone.res4.res4c.branch2a.norm.bias            
+bn4c_branch2a_mean                                 backbone.res4.res4c.branch2a.norm._mean           
+bn4c_branch2a_variance                             backbone.res4.res4c.branch2a.norm._variance       
+res4c_branch2b_weights                             backbone.res4.res4c.branch2b.conv.dcn.weight
+res4c_branch2b_conv_offset.w_0                     backbone.res4.res4c.branch2b.conv.dcn_conv_offset.weight
+res4c_branch2b_conv_offset.b_0                     backbone.res4.res4c.branch2b.conv.dcn_conv_offset.bias
+bn4c_branch2b_scale                                backbone.res4.res4c.branch2b.norm.weight          
+bn4c_branch2b_offset                               backbone.res4.res4c.branch2b.norm.bias            
+bn4c_branch2b_mean                                 backbone.res4.res4c.branch2b.norm._mean           
+bn4c_branch2b_variance                             backbone.res4.res4c.branch2b.norm._variance       
+res4c_branch2c_weights                             backbone.res4.res4c.branch2c.conv.weight          
+bn4c_branch2c_scale                                backbone.res4.res4c.branch2c.norm.weight          
+bn4c_branch2c_offset                               backbone.res4.res4c.branch2c.norm.bias            
+bn4c_branch2c_mean                                 backbone.res4.res4c.branch2c.norm._mean           
+bn4c_branch2c_variance                             backbone.res4.res4c.branch2c.norm._variance       
+res4d_branch2a_weights                             backbone.res4.res4d.branch2a.conv.weight          
+bn4d_branch2a_scale                                backbone.res4.res4d.branch2a.norm.weight          
+bn4d_branch2a_offset                               backbone.res4.res4d.branch2a.norm.bias            
+bn4d_branch2a_mean                                 backbone.res4.res4d.branch2a.norm._mean           
+bn4d_branch2a_variance                             backbone.res4.res4d.branch2a.norm._variance       
+res4d_branch2b_weights                             backbone.res4.res4d.branch2b.conv.dcn.weight
+res4d_branch2b_conv_offset.w_0                     backbone.res4.res4d.branch2b.conv.dcn_conv_offset.weight
+res4d_branch2b_conv_offset.b_0                     backbone.res4.res4d.branch2b.conv.dcn_conv_offset.bias
+bn4d_branch2b_scale                                backbone.res4.res4d.branch2b.norm.weight          
+bn4d_branch2b_offset                               backbone.res4.res4d.branch2b.norm.bias            
+bn4d_branch2b_mean                                 backbone.res4.res4d.branch2b.norm._mean           
+bn4d_branch2b_variance                             backbone.res4.res4d.branch2b.norm._variance       
+res4d_branch2c_weights                             backbone.res4.res4d.branch2c.conv.weight          
+bn4d_branch2c_scale                                backbone.res4.res4d.branch2c.norm.weight          
+bn4d_branch2c_offset                               backbone.res4.res4d.branch2c.norm.bias            
+bn4d_branch2c_mean                                 backbone.res4.res4d.branch2c.norm._mean           
+bn4d_branch2c_variance                             backbone.res4.res4d.branch2c.norm._variance       
+res4e_branch2a_weights                             backbone.res4.res4e.branch2a.conv.weight          
+bn4e_branch2a_scale                                backbone.res4.res4e.branch2a.norm.weight          
+bn4e_branch2a_offset                               backbone.res4.res4e.branch2a.norm.bias            
+bn4e_branch2a_mean                                 backbone.res4.res4e.branch2a.norm._mean           
+bn4e_branch2a_variance                             backbone.res4.res4e.branch2a.norm._variance       
+res4e_branch2b_weights                             backbone.res4.res4e.branch2b.conv.dcn.weight
+res4e_branch2b_conv_offset.w_0                     backbone.res4.res4e.branch2b.conv.dcn_conv_offset.weight
+res4e_branch2b_conv_offset.b_0                     backbone.res4.res4e.branch2b.conv.dcn_conv_offset.bias
+bn4e_branch2b_scale                                backbone.res4.res4e.branch2b.norm.weight          
+bn4e_branch2b_offset                               backbone.res4.res4e.branch2b.norm.bias            
+bn4e_branch2b_mean                                 backbone.res4.res4e.branch2b.norm._mean           
+bn4e_branch2b_variance                             backbone.res4.res4e.branch2b.norm._variance       
+res4e_branch2c_weights                             backbone.res4.res4e.branch2c.conv.weight          
+bn4e_branch2c_scale                                backbone.res4.res4e.branch2c.norm.weight          
+bn4e_branch2c_offset                               backbone.res4.res4e.branch2c.norm.bias            
+bn4e_branch2c_mean                                 backbone.res4.res4e.branch2c.norm._mean           
+bn4e_branch2c_variance                             backbone.res4.res4e.branch2c.norm._variance       
+res4f_branch2a_weights                             backbone.res4.res4f.branch2a.conv.weight          
+bn4f_branch2a_scale                                backbone.res4.res4f.branch2a.norm.weight          
+bn4f_branch2a_offset                               backbone.res4.res4f.branch2a.norm.bias            
+bn4f_branch2a_mean                                 backbone.res4.res4f.branch2a.norm._mean           
+bn4f_branch2a_variance                             backbone.res4.res4f.branch2a.norm._variance       
+res4f_branch2b_weights                             backbone.res4.res4f.branch2b.conv.dcn.weight
+res4f_branch2b_conv_offset.w_0                     backbone.res4.res4f.branch2b.conv.dcn_conv_offset.weight
+res4f_branch2b_conv_offset.b_0                     backbone.res4.res4f.branch2b.conv.dcn_conv_offset.bias
+bn4f_branch2b_scale                                backbone.res4.res4f.branch2b.norm.weight          
+bn4f_branch2b_offset                               backbone.res4.res4f.branch2b.norm.bias            
+bn4f_branch2b_mean                                 backbone.res4.res4f.branch2b.norm._mean           
+bn4f_branch2b_variance                             backbone.res4.res4f.branch2b.norm._variance       
+res4f_branch2c_weights                             backbone.res4.res4f.branch2c.conv.weight          
+bn4f_branch2c_scale                                backbone.res4.res4f.branch2c.norm.weight          
+bn4f_branch2c_offset                               backbone.res4.res4f.branch2c.norm.bias            
+bn4f_branch2c_mean                                 backbone.res4.res4f.branch2c.norm._mean           
+bn4f_branch2c_variance                             backbone.res4.res4f.branch2c.norm._variance       
+res5a_branch2a_weights                             backbone.res5.res5a.branch2a.conv.weight          
+bn5a_branch2a_scale                                backbone.res5.res5a.branch2a.norm.weight          
+bn5a_branch2a_offset                               backbone.res5.res5a.branch2a.norm.bias            
+bn5a_branch2a_mean                                 backbone.res5.res5a.branch2a.norm._mean           
+bn5a_branch2a_variance                             backbone.res5.res5a.branch2a.norm._variance       
+res5a_branch2b_weights                             backbone.res5.res5a.branch2b.conv.dcn.weight
+res5a_branch2b_conv_offset.w_0                     backbone.res5.res5a.branch2b.conv.dcn_conv_offset.weight
+res5a_branch2b_conv_offset.b_0                     backbone.res5.res5a.branch2b.conv.dcn_conv_offset.bias
+bn5a_branch2b_scale                                backbone.res5.res5a.branch2b.norm.weight          
+bn5a_branch2b_offset                               backbone.res5.res5a.branch2b.norm.bias            
+bn5a_branch2b_mean                                 backbone.res5.res5a.branch2b.norm._mean           
+bn5a_branch2b_variance                             backbone.res5.res5a.branch2b.norm._variance       
+res5a_branch2c_weights                             backbone.res5.res5a.branch2c.conv.weight          
+bn5a_branch2c_scale                                backbone.res5.res5a.branch2c.norm.weight          
+bn5a_branch2c_offset                               backbone.res5.res5a.branch2c.norm.bias            
+bn5a_branch2c_mean                                 backbone.res5.res5a.branch2c.norm._mean           
+bn5a_branch2c_variance                             backbone.res5.res5a.branch2c.norm._variance       
+res5a_branch1_weights                              backbone.res5.res5a.short.conv.conv.weight
+bn5a_branch1_scale                                 backbone.res5.res5a.short.conv.norm.weight
+bn5a_branch1_offset                                backbone.res5.res5a.short.conv.norm.bias
+bn5a_branch1_mean                                  backbone.res5.res5a.short.conv.norm._mean
+bn5a_branch1_variance                              backbone.res5.res5a.short.conv.norm._variance
+res5b_branch2a_weights                             backbone.res5.res5b.branch2a.conv.weight          
+bn5b_branch2a_scale                                backbone.res5.res5b.branch2a.norm.weight          
+bn5b_branch2a_offset                               backbone.res5.res5b.branch2a.norm.bias            
+bn5b_branch2a_mean                                 backbone.res5.res5b.branch2a.norm._mean           
+bn5b_branch2a_variance                             backbone.res5.res5b.branch2a.norm._variance       
+res5b_branch2b_weights                             backbone.res5.res5b.branch2b.conv.dcn.weight
+res5b_branch2b_conv_offset.w_0                     backbone.res5.res5b.branch2b.conv.dcn_conv_offset.weight
+res5b_branch2b_conv_offset.b_0                     backbone.res5.res5b.branch2b.conv.dcn_conv_offset.bias
+bn5b_branch2b_scale                                backbone.res5.res5b.branch2b.norm.weight          
+bn5b_branch2b_offset                               backbone.res5.res5b.branch2b.norm.bias            
+bn5b_branch2b_mean                                 backbone.res5.res5b.branch2b.norm._mean           
+bn5b_branch2b_variance                             backbone.res5.res5b.branch2b.norm._variance       
+res5b_branch2c_weights                             backbone.res5.res5b.branch2c.conv.weight          
+bn5b_branch2c_scale                                backbone.res5.res5b.branch2c.norm.weight          
+bn5b_branch2c_offset                               backbone.res5.res5b.branch2c.norm.bias            
+bn5b_branch2c_mean                                 backbone.res5.res5b.branch2c.norm._mean           
+bn5b_branch2c_variance                             backbone.res5.res5b.branch2c.norm._variance       
+res5c_branch2a_weights                             backbone.res5.res5c.branch2a.conv.weight          
+bn5c_branch2a_scale                                backbone.res5.res5c.branch2a.norm.weight          
+bn5c_branch2a_offset                               backbone.res5.res5c.branch2a.norm.bias            
+bn5c_branch2a_mean                                 backbone.res5.res5c.branch2a.norm._mean           
+bn5c_branch2a_variance                             backbone.res5.res5c.branch2a.norm._variance       
+res5c_branch2b_weights                             backbone.res5.res5c.branch2b.conv.dcn.weight
+res5c_branch2b_conv_offset.w_0                     backbone.res5.res5c.branch2b.conv.dcn_conv_offset.weight
+res5c_branch2b_conv_offset.b_0                     backbone.res5.res5c.branch2b.conv.dcn_conv_offset.bias
+bn5c_branch2b_scale                                backbone.res5.res5c.branch2b.norm.weight          
+bn5c_branch2b_offset                               backbone.res5.res5c.branch2b.norm.bias            
+bn5c_branch2b_mean                                 backbone.res5.res5c.branch2b.norm._mean           
+bn5c_branch2b_variance                             backbone.res5.res5c.branch2b.norm._variance       
+res5c_branch2c_weights                             backbone.res5.res5c.branch2c.conv.weight          
+bn5c_branch2c_scale                                backbone.res5.res5c.branch2c.norm.weight          
+bn5c_branch2c_offset                               backbone.res5.res5c.branch2c.norm.bias            
+bn5c_branch2c_mean                                 backbone.res5.res5c.branch2c.norm._mean           
+bn5c_branch2c_variance                             backbone.res5.res5c.branch2c.norm._variance       
+fpn_inner_res5_sum_w                               neck.fpn_inner_res5_sum.weight                    
+fpn_inner_res5_sum_b                               neck.fpn_inner_res5_sum.bias                      
+fpn_inner_res4_sum_lateral_w                       neck.fpn_inner_res4_sum_lateral.weight            
+fpn_inner_res4_sum_lateral_b                       neck.fpn_inner_res4_sum_lateral.bias              
+fpn_inner_res3_sum_lateral_w                       neck.fpn_inner_res3_sum_lateral.weight            
+fpn_inner_res3_sum_lateral_b                       neck.fpn_inner_res3_sum_lateral.bias              
+fpn_inner_res2_sum_lateral_w                       neck.fpn_inner_res2_sum_lateral.weight            
+fpn_inner_res2_sum_lateral_b                       neck.fpn_inner_res2_sum_lateral.bias              
+fpn_res5_sum_w                                     neck.fpn_res5_sum.weight                          
+fpn_res5_sum_b                                     neck.fpn_res5_sum.bias                            
+fpn_res4_sum_w                                     neck.fpn_res4_sum.weight                          
+fpn_res4_sum_b                                     neck.fpn_res4_sum.bias                            
+fpn_res3_sum_w                                     neck.fpn_res3_sum.weight                          
+fpn_res3_sum_b                                     neck.fpn_res3_sum.bias                            
+fpn_res2_sum_w                                     neck.fpn_res2_sum.weight                          
+fpn_res2_sum_b                                     neck.fpn_res2_sum.bias                            
+conv_rpn_fpn2_w                                    rpn_head.rpn_feat.rpn_conv.weight                 
+conv_rpn_fpn2_b                                    rpn_head.rpn_feat.rpn_conv.bias                   
+rpn_cls_logits_fpn2_w                              rpn_head.rpn_rois_score.weight                    
+rpn_cls_logits_fpn2_b                              rpn_head.rpn_rois_score.bias                      
+rpn_bbox_pred_fpn2_w                               rpn_head.rpn_rois_delta.weight                    
+rpn_bbox_pred_fpn2_b                               rpn_head.rpn_rois_delta.bias                      
+fc6_w                                              bbox_head.bbox_feat.head_feat.fc6_0.weight        
+fc6_b                                              bbox_head.bbox_feat.head_feat.fc6_0.bias          
+fc7_w                                              bbox_head.bbox_feat.head_feat.fc7_0.weight        
+fc7_b                                              bbox_head.bbox_feat.head_feat.fc7_0.bias          
+cls_score_w                                        bbox_head.bbox_score_0.weight                     
+cls_score_b                                        bbox_head.bbox_score_0.bias                       
+bbox_pred_w                                        bbox_head.bbox_delta_0.weight                     
+bbox_pred_b                                        bbox_head.bbox_delta_0.bias                                       
