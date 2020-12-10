@@ -41,6 +41,11 @@ FORMAT = '%(asctime)s-%(levelname)s: %(message)s'
 logging.basicConfig(level=logging.INFO, format=FORMAT)
 logger = logging.getLogger(__name__)
 
+# set seed
+np.random.seed = 1234
+paddle.seed(1234)
+#paddle.manual_seed(1234)
+#paddle.framework.manual_seed(1234)
 
 def parse_args():
     parser = ArgsParser()
@@ -105,12 +110,14 @@ def run(FLAGS, cfg, place):
     if FLAGS.dist:
         trainer_id = int(env['PADDLE_TRAINER_ID'])
         local_seed = (99 + trainer_id)
+        local_seed = 1234
         random.seed(local_seed)
         np.random.seed(local_seed)
 
     if FLAGS.enable_ce:
-        random.seed(0)
-        np.random.seed(0)
+        seed = 1234
+        random.seed(seed)
+        np.random.seed(seed)
 
     if ParallelEnv().nranks > 1:
         paddle.distributed.init_parallel_env()
