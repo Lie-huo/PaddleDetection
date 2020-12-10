@@ -85,13 +85,14 @@ class MaskFeat(Layer):
                 stage=0,
                 bbox_head_feat_func=None,
                 mode='train'):
-        if self.share_bbox_feat and mask_index:
+        if self.share_bbox_feat and mask_index is not None:
             rois_feat = paddle.gather(bbox_feat, mask_index)
         else:
             rois_feat = self.mask_roi_extractor(body_feats, bboxes,
                                                 spatial_scale)
-        if bbox_head_feat_func is not None and mode == 'infer':
+        if self.share_bbox_feat and bbox_head_feat_func is not None and mode == 'infer':
             rois_feat = bbox_head_feat_func(rois_feat)
+
         # upsample 
         mask_feat = self.upsample_module[stage](rois_feat)
         return mask_feat
@@ -157,6 +158,7 @@ class MaskHead(Layer):
                      stage=0,
                      bbox_head_feat_func=None):
         bbox, bbox_num = bboxes
+
         if bbox.shape[0] == 0:
             mask_head_out = bbox
         else:

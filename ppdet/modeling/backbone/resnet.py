@@ -211,13 +211,12 @@ class BottleNeck(nn.Layer):
         out = self.branch2a(inputs)
         out = self.branch2b(out)
         out = self.branch2c(out)
-
         if self.shortcut:
             short = inputs
         else:
             short = self.short(inputs)
 
-        out = paddle.add(x=short, y=out)
+        out = paddle.add(x=out, y=short)
         out = F.relu(out)
 
         return out

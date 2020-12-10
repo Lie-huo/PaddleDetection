@@ -3,7 +3,7 @@ import os,sys
 
 dy_name_lst = []
 
-for line in open('faster_rcnn_dcn_r50_vd_fpn_1x_coco.txt'):
+for line in open('faster_rcnn_r50_vd_fpn_1x_coco_pssdet_list.txt'):
     line = line.strip()
 
     if line.find('state_dict') >= 0:
