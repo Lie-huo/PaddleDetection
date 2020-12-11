@@ -271,9 +271,6 @@ def libra_generate_proposal_target(rpn_rois,
                                    is_cascade_rcnn=False,
                                    max_overlaps=None,
                                    num_bins=3):
-    def create_tmp_var(program, name, dtype, shape, lod_level=None):
-        return program.current_block().create_var(
-            name=name, dtype=dtype, shape=shape, lod_level=lod_level)
     
     def _sample_pos(max_overlaps, max_classes, pos_inds, num_expected):
         if len(pos_inds) <= num_expected:
@@ -430,8 +427,7 @@ def libra_generate_proposal_target(rpn_rois,
         end_num += length
         rpn_roi = rpn_rois[st_num:end_num]
         max_overlap = max_overlaps[st_num:end_num] if is_cascade_rcnn else None
-        # TODO: to check
-        max_classes = max_overlaps[st_num:end_num].argmax(axis=1)
+        
         im_scale = im_info[im_i][2]
         rpn_roi = rpn_roi / im_scale
         gt_bbox = gt_boxes[im_i]
@@ -443,6 +439,7 @@ def libra_generate_proposal_target(rpn_rois,
         # Step1: label bbox
         roi_gt_bbox_inds, labels, max_overlap = label_bbox(
             bbox, gt_bbox, gt_classes[im_i], is_crowd[im_i])
+        max_classes = max_overlaps[st_num:end_num].argmax(axis=1)
 
         # Step2: sample bbox
         rois_per_image = int(batch_size_per_im)
