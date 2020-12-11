@@ -191,6 +191,7 @@ class Proposal(object):
             roi = self.refine_bbox(proposal_out[0], bbox_delta, stage)
             rois_num = proposal_out[1]
         if inputs['mode'] == 'train':
+            print('this is train self.max_overlap is ', self.max_overlap)
             roi, rois_num, targets, self.max_overlap = self.generate_proposal_target(
                 inputs, roi, rois_num, stage, self.max_overlap)
             self.targets_list.append(targets)

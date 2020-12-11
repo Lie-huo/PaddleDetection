@@ -268,6 +268,8 @@ class LibraProposalTargetGenerator(object):
         gt_boxes = gt_boxes.numpy()
         is_crowd = is_crowd.numpy()
         im_info = im_info.numpy()
+        print('max_overlap', max_overlap.shape, max_overlap)
+        input('xxx')
         max_overlap = max_overlap if max_overlap is None else max_overlap.numpy(
         )
         reg_weights = [i / (stage + 1) for i in self.bbox_reg_weights]
