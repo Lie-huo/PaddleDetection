@@ -43,7 +43,7 @@ logging.basicConfig(level=logging.INFO, format=FORMAT)
 logger = logging.getLogger(__name__)
 
 # set seed
-np.random.seed = 1234
+np.random.seed(1234)
 paddle.seed(1234)
 #paddle.manual_seed(1234)
 #paddle.framework.manual_seed(1234)
