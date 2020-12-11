@@ -1,11 +1,7 @@
 architecture: FasterRCNN
 pretrain_weights: https://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_cos_pretrained.tar
-<<<<<<< HEAD
-weights: /paddle/ppdet_convert/kongming6_faster_rcnn_fpn_37.0/faster_rcnn_r50_fpn_1x_coco/model_final.pdparams
-# output/faster_rcnn_r50_fpn_1x_coco/model_final.pdparams
-=======
 weights: output/faster_rcnn_r50_fpn_1x_coco/model_final.pdparams
->>>>>>> 9b279ee3318d23a7711d1b782494de17879b212f
+
 load_static_weights: True
 
 # Model Achitecture
@@ -71,11 +67,7 @@ Proposal:
   proposal_target_generator:
     name: ProposalTargetGenerator
     batch_size_per_im: 512
-<<<<<<< HEAD
-    bbox_reg_weights: [[0.1, 0.1, 0.2, 0.2],]
-=======
     bbox_reg_weights: [0.1, 0.1, 0.2, 0.2]
->>>>>>> 9b279ee3318d23a7711d1b782494de17879b212f
     bg_thresh_hi: [0.5,]
     bg_thresh_lo: [0.0,]
     fg_thresh: [0.5,]
