@@ -252,7 +252,7 @@ def generate_proposal_target(rpn_rois,
 
 
 
-@jit
+#@jit
 def libra_generate_proposal_target(rpn_rois,
                                    rpn_rois_num,
                                    gt_classes,
