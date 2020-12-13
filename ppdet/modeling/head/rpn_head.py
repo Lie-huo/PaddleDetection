@@ -84,7 +84,13 @@ class RPNHead(nn.Layer):
         for rpn_feat in rpn_feats:
             rrs = self.rpn_rois_score(rpn_feat)
             rrd = self.rpn_rois_delta(rpn_feat)
+            print('rrs', rrs.shape, rrs.mean(), 'rrd', rrd.shape, rrd.mean())
             rpn_head_out.append((rrs, rrd))
+        for xx in rpn_feats:
+            print('rpn_feats  xxx', xx.shape, xx.numpy().mean())
+        for xx in rpn_head_out:
+            print('rpn_head_out xx', xx[0].shape, xx[0].numpy().mean(),
+                    xx[1].shape, xx[1].numpy().mean())
         return rpn_feats, rpn_head_out
 
     def get_loss(self, loss_inputs):

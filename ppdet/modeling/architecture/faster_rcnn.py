@@ -46,6 +46,11 @@ class FasterRCNN(BaseArch):
         # Neck
         if self.neck is not None:
             body_feats, spatial_scale = self.neck(body_feats)
+ 
+        print('after fpn')
+        for ee in  body_feats:
+            print('ee', ee.shape, ee.numpy().mean())
+
 
         # RPN
         # rpn_head returns two list: rpn_feat, rpn_head_out
@@ -58,6 +63,9 @@ class FasterRCNN(BaseArch):
         # anchor_out returns a list,
         # each element contains (anchor, anchor_var)
         self.anchor_out = self.anchor(rpn_feat)
+        for xx_anchor in self.anchor_out[0]:
+            print('self.anchor_out', xx_anchor.shape,
+                xx_anchor.numpy().mean())
 
         # Proposal RoI
         # compute targets here when training
