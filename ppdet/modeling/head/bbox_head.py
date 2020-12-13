@@ -126,7 +126,8 @@ class BBoxHead(nn.Layer):
                  roi_stages=1,
                  with_pool=False,
                  score_stage=[0, 1, 2],
-                 delta_stage=[2]):
+                 delta_stage=[2],
+                 use_diou_loss=False):
         super(BBoxHead, self).__init__()
         self.num_classes = num_classes
         self.cls_agnostic = cls_agnostic
@@ -139,6 +140,8 @@ class BBoxHead(nn.Layer):
         self.with_pool = with_pool
         self.score_stage = score_stage
         self.delta_stage = delta_stage
+        self.use_diou_loss = use_diou_loss
+        
         for stage in range(roi_stages):
             score_name = 'bbox_score_{}'.format(stage)
             delta_name = 'bbox_delta_{}'.format(stage)
@@ -201,12 +204,20 @@ class BBoxHead(nn.Layer):
             logits=score, label=labels_int64)
         loss_bbox_cls = paddle.mean(loss_bbox_cls)
         # bbox reg
-        loss_bbox_reg = ops.smooth_l1(
-            input=delta,
-            label=target['bbox_targets'],
-            inside_weight=target['bbox_inside_weights'],
-            outside_weight=target['bbox_outside_weights'],
-            sigma=1.0)
+        if self.use_diou_loss:
+            loss_bbox_reg = ops.smooth_l1(
+                input=delta,
+                label=target['bbox_targets'],
+                inside_weight=target['bbox_inside_weights'],
+                outside_weight=target['bbox_outside_weights'],
+                sigma=1.0)
+        else:
+            loss_bbox_reg = ops.smooth_l1(
+                input=delta,
+                label=target['bbox_targets'],
+                inside_weight=target['bbox_inside_weights'],
+                outside_weight=target['bbox_outside_weights'],
+                sigma=1.0)
         loss_bbox_reg = paddle.mean(loss_bbox_reg)
         return loss_bbox_cls, loss_bbox_reg
 

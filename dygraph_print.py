@@ -63,62 +63,62 @@ def run(FLAGS, cfg, place):
     # Model
     main_arch = cfg.architecture
     model = create(cfg.architecture)
+    print("model", model)
+
+    model.state_dict()
+    print("------------------------------")
+    eval_loader, _ = create('EvalReader')(cfg.EvalDataset, 0, place)
+    data = next(iter(eval_loader))
+    # data = [
+    #         np.zeros((1, 3, 320, 320)).astype('float32'),
+    #         np.zeros((1, 2)).astype('int32'),
+    #         np.zeros((1, 1)).astype('int32'),
+    #         ]
+    model.eval()
+    model(data, cfg['EvalReader']['inputs_def']['fields'], 'infer')
 
     # Init Model
-    load_weight(model, cfg.weights)
-    print('cfg.weights: ', cfg.weights)
+    # model = load_dygraph_ckpt(model, ckpt=cfg.weights)
+    # import paddle.fluid as fluid
+    # fluid.dygraph.save_dygraph(model.state_dict(), './tmp')
 
-    # Data Reader
-    dataset = cfg.EvalDataset
-    eval_loader, _ = create('EvalReader')(dataset, cfg['worker_num'], place)
-
-    # Run Eval
-    outs_res = []
-    start_time = time.time()
-    sample_num = 0
-    im_info = []
-    for iter_id, data in enumerate(eval_loader):
-        # forward
-        fields = cfg['EvalReader']['inputs_def']['fields']
-        model.eval()
-        outs = model(data=data, input_def=fields, mode='infer')
-        outs_res.append(outs)
-        im_info.append([
-            data[fields.index('im_shape')].numpy(),
-            data[fields.index('scale_factor')].numpy(),
-            data[fields.index('im_id')].numpy()
-        ])
-        # log
-        sample_num += len(data)
-        if iter_id % 100 == 0:
-            logger.info("Eval iter: {}".format(iter_id))
-
-    cost_time = time.time() - start_time
-    logger.info('Total sample number: {}, averge FPS: {}'.format(
-        sample_num, sample_num / cost_time))
-
-    eval_type = ['bbox']
-    if getattr(cfg, 'MaskHead', None):
-        eval_type.append('mask')
-    # Metric
-    # TODO: support other metric
-    from ppdet.utils.coco_eval import get_category_info
-    anno_file = dataset.get_anno()
-    with_background = cfg.with_background
-    use_default_label = dataset.use_default_label
-    clsid2catid, catid2name = get_category_info(anno_file, with_background,
-                                                use_default_label)
-
-    mask_resolution = None
-    if cfg['MaskPostProcess']['mask_resolution'] is not None:
-        mask_resolution = int(cfg['MaskPostProcess']['mask_resolution'])
-    infer_res = get_infer_results(
-        outs_res,
-        eval_type,
-        clsid2catid,
-        im_info,
-        mask_resolution=mask_resolution)
-    eval_results(infer_res, cfg.metric, anno_file)
+    # # Data Reader
+    # dataset = cfg.EvalDataset
+    # eval_loader, _ = create('EvalReader')(dataset, cfg['worker_num'], place)
+    #
+    # # Run Eval
+    # outs_res = []
+    # start_time = time.time()
+    # sample_num = 0
+    # for iter_id, data in enumerate(eval_loader):
+    #     # forward
+    #     model.eval()
+    #     outs = model(data, cfg['EvalReader']['inputs_def']['fields'], 'infer')
+    #     outs_res.append(outs)
+    #
+    #     # log
+    #     sample_num += len(data)
+    #     if iter_id % 100 == 0:
+    #         logger.info("Eval iter: {}".format(iter_id))
+    #
+    # cost_time = time.time() - start_time
+    # logger.info('Total sample number: {}, averge FPS: {}'.format(
+    #     sample_num, sample_num / cost_time))
+    #
+    # eval_type = ['bbox']
+    # if getattr(cfg, 'MaskHead', None):
+    #     eval_type.append('mask')
+    # # Metric
+    # # TODO: support other metric
+    # from ppdet.utils.coco_eval import get_category_info
+    # anno_file = dataset.get_anno()
+    # with_background = cfg.with_background
+    # use_default_label = dataset.use_default_label
+    # clsid2catid, catid2name = get_category_info(anno_file, with_background,
+    #                                             use_default_label)
+    #
+    # infer_res = get_infer_results(outs_res, eval_type, clsid2catid)
+    # eval_results(infer_res, cfg.metric, anno_file)
 
 
 def main():

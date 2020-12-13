@@ -17,10 +17,8 @@ import paddle.nn.functional as F
 import paddle.nn as nn
 from paddle import ParamAttr
 from paddle.regularizer import L2Decay
-from paddle.nn.initializer import Constant, Normal
 
 from paddle.fluid.framework import Variable, in_dygraph_mode
-from paddle.fluid.layers import utils
 from paddle.fluid import core
 from paddle.fluid.layer_helper import LayerHelper
 from paddle.fluid.dygraph import layers
@@ -31,19 +29,10 @@ import numpy as np
 from functools import reduce
 
 __all__ = [
-    'roi_pool',
-    'roi_align',
-    'prior_box',
-    'anchor_generator',
-    'generate_proposals',
-    'iou_similarity',
-    'box_coder',
-    'yolo_box',
-    'multiclass_nms',
-    'distribute_fpn_proposals',
-    'collect_fpn_proposals',
-    'matrix_nms',
-    'batch_norm',
+    'roi_pool', 'roi_align', 'prior_box', 'anchor_generator',
+    'generate_proposals', 'iou_similarity', 'box_coder', 'yolo_box',
+    'multiclass_nms', 'distribute_fpn_proposals', 'collect_fpn_proposals',
+    'matrix_nms', 'batch_norm'
 ]
 
 
@@ -62,420 +51,6 @@ def batch_norm(ch, norm_type='bn', name=None):
             name=bn_name + '.offset', regularizer=L2Decay(0.)))
 
 
-class DeformableConvV1(nn.Layer):
-    def __init__(self,
-                 in_channels,
-                 out_channels,
-                 kernel_size,
-                 stride=1,
-                 padding=0,
-                 dilation=1,
-                 groups=1,
-                 weight_attr=None,
-                 bias_attr=None,
-                 name=None):
-        super(DeformableConvV1, self).__init__()
-        self.conv = nn.Conv2D(
-            in_channels,
-            2 * kernel_size**2,
-            kernel_size,
-            stride=stride,
-            padding=(kernel_size - 1) // 2,
-            weight_attr=ParamAttr(
-                initializer=Constant(0.0),
-                name='{}.conv_offset.weight'.format(name)),
-            bias_attr=ParamAttr(
-                initializer=Constant(0.0),
-                name='{}.conv_offset.bias'.format(name)))
-
-        if weight_attr is None:
-            weight_attr = ParamAttr(
-                name='{}.dcn.weight'.format(name), learning_rate=lr_scale)
-
-        self.dcn = DeformConv2D(
-            in_channels,
-            out_channels,
-            kernel_size,
-            stride=stride,
-            padding=(kernel_size - 1) // 2 * dilation,
-            dilation=dilation,
-            groups=groups,
-            weight_attr=weight_attr,
-            bias_attr=bias_attr)
-
-    def forward(self, x):
-        offset = self.conv(x)
-        y = self.dcn(x, offset)
-        return y
-
-
-class DeformableConvV2(nn.Layer):
-    def __init__(self,
-                 in_channels,
-                 out_channels,
-                 kernel_size,
-                 stride=1,
-                 padding=0,
-                 dilation=1,
-                 groups=1,
-                 weight_attr=None,
-                 bias_attr=None,
-                 name=None,
-                 lr_scale=1.0):
-        super(DeformableConvV2, self).__init__()
-        self.offset_channel = 2 * kernel_size**2
-        self.mask_channel = kernel_size**2
-        self.dcn_conv_offset = nn.Conv2D(
-            in_channels,
-            3 * kernel_size**2,
-            kernel_size,
-            stride=stride,
-            padding=(kernel_size - 1) // 2,
-            weight_attr=ParamAttr(
-                initializer=Constant(0.0),
-                name='{}.conv_offset.weight'.format(name)),
-            bias_attr=ParamAttr(
-                initializer=Constant(0.0),
-                name='{}.conv_offset.bias'.format(name)))
-        
-        self.dcn = DeformConv2D(
-            in_channels,
-            out_channels,
-            kernel_size,
-            stride=stride,
-            padding=(kernel_size - 1) // 2 * dilation,
-            dilation=dilation,
-            groups=groups,
-            weight_attr=weight_attr,
-            bias_attr=bias_attr)
-
-    def forward(self, x):
-        offset_mask = self.dcn_conv_offset(x)
-        offset, mask = paddle.split(
-            offset_mask, num_or_sections=[self.offset_channel, self.mask_channel], axis=1)
-        mask = F.sigmoid(mask)
-        y = self.dcn(x, offset, mask=mask)
-        return y
-
-
-def deform_conv2d(x,
-                  offset,
-                  weight,
-                  bias=None,
-                  stride=1,
-                  padding=0,
-                  dilation=1,
-                  groups=1,
-                  mask=None,
-                  name=None):
-    stride = utils.convert_to_list(stride, 2, 'stride')
-    padding = utils.convert_to_list(padding, 2, 'padding')
-    dilation = utils.convert_to_list(dilation, 2, 'dilation')
-
-    use_deform_conv2d_v1 = True if mask is None else False
-
-    if in_dygraph_mode():
-        attrs = ('strides', stride, 'paddings', padding, 'dilations', dilation,
-                 'groups', groups, 'im2col_step', 1)
-        if use_deform_conv2d_v1:
-            op_type = 'deformable_conv_v1'
-            pre_bias = getattr(core.ops, op_type)(x, offset, weight, *attrs)
-        else:
-            op_type = 'deformable_conv'
-            pre_bias = getattr(core.ops, op_type)(x, offset, mask, weight,
-                                                  *attrs)
-        if bias is not None:
-            out = nn.elementwise_add(pre_bias, bias, axis=1)
-        else:
-            out = pre_bias
-    else:
-        check_variable_and_dtype(x, "x", ['float32', 'float64'],
-                                 'deform_conv2d')
-        check_variable_and_dtype(offset, "offset", ['float32', 'float64'],
-                                 'deform_conv2d')
-
-        num_channels = x.shape[1]
-
-        helper = LayerHelper('deformable_conv', **locals())
-        dtype = helper.input_dtype()
-
-        stride = utils.convert_to_list(stride, 2, 'stride')
-        padding = utils.convert_to_list(padding, 2, 'padding')
-        dilation = utils.convert_to_list(dilation, 2, 'dilation')
-
-        pre_bias = helper.create_variable_for_type_inference(dtype)
-
-        if use_deform_conv2d_v1:
-            op_type = 'deformable_conv_v1'
-            inputs = {
-                'Input': x,
-                'Filter': weight,
-                'Offset': offset,
-            }
-        else:
-            op_type = 'deformable_conv'
-            inputs = {
-                'Input': x,
-                'Filter': weight,
-                'Offset': offset,
-                'Mask': mask,
-            }
-
-        outputs = {"Output": pre_bias}
-        attrs = {
-            'strides': stride,
-            'paddings': padding,
-            'dilations': dilation,
-            'groups': groups,
-            'deformable_groups': 1,
-            'im2col_step': 1,
-        }
-        helper.append_op(
-            type=op_type, inputs=inputs, outputs=outputs, attrs=attrs)
-
-        if bias is not None:
-            out = helper.create_variable_for_type_inference(dtype)
-            helper.append_op(
-                type='elementwise_add',
-                inputs={'X': [pre_bias],
-                        'Y': [bias]},
-                outputs={'Out': [out]},
-                attrs={'axis': 1})
-        else:
-            out = pre_bias
-    return out
-
-
-class DeformConv2D(nn.Layer):
-    def __init__(self,
-                 in_channels,
-                 out_channels,
-                 kernel_size,
-                 stride=1,
-                 padding=0,
-                 dilation=1,
-                 groups=1,
-                 weight_attr=None,
-                 bias_attr=None):
-        super(DeformConv2D, self).__init__()
-        assert weight_attr is not False, "weight_attr should not be False in Conv."
-        self._weight_attr = weight_attr
-        self._bias_attr = bias_attr
-        self._groups = groups
-        self._in_channels = in_channels
-        self._out_channels = out_channels
-        self._channel_dim = 1
-
-        self._stride = utils.convert_to_list(stride, 2, 'stride')
-        self._dilation = utils.convert_to_list(dilation, 2, 'dilation')
-        self._kernel_size = utils.convert_to_list(kernel_size, 2, 'kernel_size')
-
-        if in_channels % groups != 0:
-            raise ValueError("in_channels must be divisible by groups.")
-
-        self._padding = utils.convert_to_list(padding, 2, 'padding')
-
-        filter_shape = [out_channels, in_channels // groups] + self._kernel_size
-
-        def _get_default_param_initializer():
-            filter_elem_num = np.prod(self._kernel_size) * self._in_channels
-            std = (2.0 / filter_elem_num)**0.5
-            return Normal(0.0, std, 0)
-
-        self.weight = self.create_parameter(
-            shape=filter_shape,
-            attr=self._weight_attr,
-            default_initializer=_get_default_param_initializer())
-        self.bias = self.create_parameter(
-            attr=self._bias_attr, shape=[self._out_channels], is_bias=True)
-
-    def forward(self, x, offset, mask=None):
-        out = deform_conv2d(
-            x=x,
-            offset=offset,
-            weight=self.weight,
-            bias=self.bias,
-            stride=self._stride,
-            padding=self._padding,
-            dilation=self._dilation,
-            groups=self._groups,
-            mask=mask)
-        return out
-
-# class DeformableConv(nn.Layer):
-#     def __init__(self,
-#                  in_channels,
-#                  out_channels,
-#                  kernel_size,
-#                  stride=1,
-#                  padding=0,
-#                  dilation=1,
-#                  groups=1,
-#                  padding_mode='zeros',
-#                  weight_attr=None,
-#                  bias_attr=None):
-#         super(DeformableConv, self).__init__()
-#         assert weight_attr is not False, "weight_attr should not be False in Conv."
-#         self._param_attr = weight_attr
-#         self._bias_attr = bias_attr
-#         self._groups = groups
-#         self._in_channels = in_channels
-#         self._out_channels = out_channels
-
-#         valid_padding_modes = {'zeros', 'reflect', 'replicate', 'circular'}
-#         if padding_mode not in valid_padding_modes:
-#             raise ValueError(
-#                 "padding_mode must be one of {}, but got padding_mode='{}'".
-#                 format(valid_padding_modes, padding_mode))
-
-#         if padding_mode in {'reflect', 'replicate', 'circular'
-#                             } and not isinstance(padding, np.int):
-#             raise TypeError(
-#                 "when padding_mode in ['reflect', 'replicate', 'circular'], type of padding must be int"
-#             )
-
-#         self._stride = utils.convert_to_list(stride, 2, 'stride')
-#         self._dilation = utils.convert_to_list(dilation, 2, 'dilation')
-#         self._kernel_size = utils.convert_to_list(kernel_size, 2, 'kernel_size')
-#         self._padding = padding
-#         self._padding_mode = padding_mode
-
-#         if in_channels % groups != 0:
-#             raise ValueError("in_channels must be divisible by groups.")
-
-#         if padding_mode in {'reflect', 'replicate', 'circular'}:
-#             _paired_padding = utils.convert_to_list(padding, 2, 'padding')
-#             self._reversed_padding_repeated_twice = _reverse_repeat_list(
-#                 _paired_padding, 2)
-
-#         filter_shape = [out_channels, in_channels // groups] + self._kernel_size
-
-#         self.weight = self.create_parameter(
-#             shape=filter_shape, attr=self._param_attr)
-#         self.bias = self.create_parameter(
-#             attr=self._bias_attr, shape=[self._out_channels], is_bias=True)
-
-#     def forward(self, x, offset, mask=None):
-#         if self._padding_mode != 'zeros':
-#             x = F.pad(x,
-#                       self._reversed_padding_repeated_twice,
-#                       mode=self._padding_mode,
-#                       data_format=self._data_format)
-#             return deformable_conv(
-#                 x,
-#                 self.weight,
-#                 offset,
-#                 mask=mask,
-#                 bias=self.bias,
-#                 stride=self._stride,
-#                 dilation=self._dilation,
-#                 groups=self._groups)
-#         else:
-#             return deformable_conv(
-#                 x,
-#                 self.weight,
-#                 offset,
-#                 mask=mask,
-#                 bias=self.bias,
-#                 stride=self._stride,
-#                 padding=self._padding,
-#                 dilation=self._dilation,
-#                 groups=self._groups)
-
-
-# def deformable_conv(input,
-#                     weight,
-#                     offset,
-#                     mask=None,
-#                     bias=None,
-#                     stride=1,
-#                     padding=0,
-#                     dilation=1,
-#                     groups=1,
-#                     deformable_groups=1,
-#                     im2col_step=64):
-
-#     stride = utils.convert_to_list(stride, 2, 'stride')
-#     padding = utils.convert_to_list(padding, 2, 'padding')
-#     dilation = utils.convert_to_list(dilation, 2, 'dilation')
-
-#     if in_dygraph_mode():
-#         attrs = ('strides', stride, 'paddings', padding, 'dilations', dilation,
-#                  'groups', groups, 'deformable_groups', deformable_groups,
-#                  'im2col_step', im2col_step)
-#         if mask is not None:
-#             pre_bias = core.ops.deformable_conv(input, offset, mask, weight,
-#                                                 *attrs)
-#         else:
-#             pre_bias = core.ops.deformable_conv_v1(input, offset, weight,
-#                                                    *attrs)
-#         if bias:
-#             out = nn.elementwise_add(pre_bias, bias, axis=1)
-#         else:
-#             out = pre_bias
-#         return out
-#     else:
-#         check_variable_and_dtype(input, "input", ['float32', 'float64'],
-#                                  'deformable_conv')
-#         check_variable_and_dtype(weight, "weight", ['float32', 'float64'],
-#                                  'deformable_conv')
-#         check_variable_and_dtype(offset, "offset", ['float32', 'float64'],
-#                                  'deformable_conv')
-#         check_type(mask, 'mask', (Variable, type(None)), 'deformable_conv')
-
-#         helper = LayerHelper('deformable_conv', **locals())
-#         dtype = helper.input_dtype()
-#         pre_bias = helper.create_variable_for_type_inference(dtype)
-
-#         if mask is not None:
-#             helper.append_op(
-#                 type='deformable_conv',
-#                 inputs={
-#                     'Input': input,
-#                     'Filter': weight,
-#                     'Offset': offset,
-#                     'Mask': mask,
-#                 },
-#                 outputs={"Output": pre_bias},
-#                 attrs={
-#                     'strides': stride,
-#                     'paddings': padding,
-#                     'dilations': dilation,
-#                     'groups': groups,
-#                     'deformable_groups': deformable_groups,
-#                     'im2col_step': im2col_step
-#                 })
-#         else:
-#             helper.append_op(
-#                 type='deformable_conv_v1',
-#                 inputs={
-#                     'Input': input,
-#                     'Filter': weight,
-#                     'Offset': offset,
-#                 },
-#                 outputs={"Output": pre_bias},
-#                 attrs={
-#                     'strides': stride,
-#                     'paddings': padding,
-#                     'dilations': dilation,
-#                     'groups': groups,
-#                     'deformable_groups': deformable_groups,
-#                     'im2col_step': im2col_step
-#                 })
-#         if bias is not None:
-#             output = helper.create_variable_for_type_inference(dtype)
-#             helper.append_op(
-#                 type='elementwise_add',
-#                 inputs={'X': [pre_bias],
-#                         'Y': [bias]},
-#                 outputs={'Out': [out]},
-#                 attrs={'axis': 1})
-#         else:
-#             output = pre_bias
-#         return output
-
-
-@paddle.jit.not_to_static
 def roi_pool(input,
              rois,
              output_size,
@@ -548,34 +123,32 @@ def roi_pool(input,
             "pooled_width", pooled_width, "spatial_scale", spatial_scale)
         return pool_out, argmaxes
 
-    else:
-        check_variable_and_dtype(input, 'input', ['float32'], 'roi_pool')
-        check_variable_and_dtype(rois, 'rois', ['float32'], 'roi_pool')
-        helper = LayerHelper('roi_pool', **locals())
-        dtype = helper.input_dtype()
-        pool_out = helper.create_variable_for_type_inference(dtype)
-        argmaxes = helper.create_variable_for_type_inference(dtype='int32')
+    check_variable_and_dtype(input, 'input', ['float32'], 'roi_pool')
+    check_variable_and_dtype(rois, 'rois', ['float32'], 'roi_pool')
+    helper = LayerHelper('roi_pool', **locals())
+    dtype = helper.input_dtype()
+    pool_out = helper.create_variable_for_type_inference(dtype)
+    argmaxes = helper.create_variable_for_type_inference(dtype='int32')
 
-        inputs = {
-            "X": input,
-            "ROIs": rois,
-        }
-        if rois_num is not None:
-            inputs['RoisNum'] = rois_num
-        helper.append_op(
-            type="roi_pool",
-            inputs=inputs,
-            outputs={"Out": pool_out,
-                     "Argmax": argmaxes},
-            attrs={
-                "pooled_height": pooled_height,
-                "pooled_width": pooled_width,
-                "spatial_scale": spatial_scale
-            })
-        return pool_out, argmaxes
+    inputs = {
+        "X": input,
+        "ROIs": rois,
+    }
+    if rois_num is not None:
+        inputs['RoisNum'] = rois_num
+    helper.append_op(
+        type="roi_pool",
+        inputs=inputs,
+        outputs={"Out": pool_out,
+                 "Argmax": argmaxes},
+        attrs={
+            "pooled_height": pooled_height,
+            "pooled_width": pooled_width,
+            "spatial_scale": spatial_scale
+        })
+    return pool_out, argmaxes
 
 
-@paddle.jit.not_to_static
 def roi_align(input,
               rois,
               output_size,
@@ -655,34 +228,31 @@ def roi_align(input,
             "sampling_ratio", sampling_ratio)
         return align_out
 
-    else:
-        check_variable_and_dtype(input, 'input', ['float32', 'float64'],
-                                 'roi_align')
-        check_variable_and_dtype(rois, 'rois', ['float32', 'float64'],
-                                 'roi_align')
-        helper = LayerHelper('roi_align', **locals())
-        dtype = helper.input_dtype()
-        align_out = helper.create_variable_for_type_inference(dtype)
-        inputs = {
-            "X": input,
-            "ROIs": rois,
-        }
-        if rois_num is not None:
-            inputs['RoisNum'] = rois_num
-        helper.append_op(
-            type="roi_align",
-            inputs=inputs,
-            outputs={"Out": align_out},
-            attrs={
-                "pooled_height": pooled_height,
-                "pooled_width": pooled_width,
-                "spatial_scale": spatial_scale,
-                "sampling_ratio": sampling_ratio
-            })
-        return align_out
+    check_variable_and_dtype(input, 'input', ['float32', 'float64'],
+                             'roi_align')
+    check_variable_and_dtype(rois, 'rois', ['float32', 'float64'], 'roi_align')
+    helper = LayerHelper('roi_align', **locals())
+    dtype = helper.input_dtype()
+    align_out = helper.create_variable_for_type_inference(dtype)
+    inputs = {
+        "X": input,
+        "ROIs": rois,
+    }
+    if rois_num is not None:
+        inputs['RoisNum'] = rois_num
+    helper.append_op(
+        type="roi_align",
+        inputs=inputs,
+        outputs={"Out": align_out},
+        attrs={
+            "pooled_height": pooled_height,
+            "pooled_width": pooled_width,
+            "spatial_scale": spatial_scale,
+            "sampling_ratio": sampling_ratio
+        })
+    return align_out
 
 
-@paddle.jit.not_to_static
 def iou_similarity(x, y, box_normalized=True, name=None):
     """
     Computes intersection-over-union (IOU) between two box lists.
@@ -733,20 +303,19 @@ def iou_similarity(x, y, box_normalized=True, name=None):
     if in_dygraph_mode():
         out = core.ops.iou_similarity(x, y, 'box_normalized', box_normalized)
         return out
-    else:
-        helper = LayerHelper("iou_similarity", **locals())
-        out = helper.create_variable_for_type_inference(dtype=x.dtype)
 
-        helper.append_op(
-            type="iou_similarity",
-            inputs={"X": x,
-                    "Y": y},
-            attrs={"box_normalized": box_normalized},
-            outputs={"Out": out})
-        return out
+    helper = LayerHelper("iou_similarity", **locals())
+    out = helper.create_variable_for_type_inference(dtype=x.dtype)
+
+    helper.append_op(
+        type="iou_similarity",
+        inputs={"X": x,
+                "Y": y},
+        attrs={"box_normalized": box_normalized},
+        outputs={"Out": out})
+    return out
 
 
-@paddle.jit.not_to_static
 def collect_fpn_proposals(multi_rois,
                           multi_scores,
                           min_level,
@@ -829,35 +398,34 @@ def collect_fpn_proposals(multi_rois,
         attrs = ('post_nms_topN', post_nms_top_n)
         output_rois, rois_num = core.ops.collect_fpn_proposals(
             input_rois, input_scores, rois_num_per_level, *attrs)
+
+    helper = LayerHelper('collect_fpn_proposals', **locals())
+    dtype = helper.input_dtype('multi_rois')
+    check_dtype(dtype, 'multi_rois', ['float32', 'float64'],
+                'collect_fpn_proposals')
+    output_rois = helper.create_variable_for_type_inference(dtype)
+    output_rois.stop_gradient = True
+
+    inputs = {
+        'MultiLevelRois': input_rois,
+        'MultiLevelScores': input_scores,
+    }
+    outputs = {'FpnRois': output_rois}
+    if rois_num_per_level is not None:
+        inputs['MultiLevelRoIsNum'] = rois_num_per_level
+        rois_num = helper.create_variable_for_type_inference(dtype='int32')
+        rois_num.stop_gradient = True
+        outputs['RoisNum'] = rois_num
+    helper.append_op(
+        type='collect_fpn_proposals',
+        inputs=inputs,
+        outputs=outputs,
+        attrs={'post_nms_topN': post_nms_top_n})
+    if rois_num_per_level is not None:
         return output_rois, rois_num
-
-    else:
-        helper = LayerHelper('collect_fpn_proposals', **locals())
-        dtype = helper.input_dtype('multi_rois')
-        check_dtype(dtype, 'multi_rois', ['float32', 'float64'],
-                    'collect_fpn_proposals')
-        output_rois = helper.create_variable_for_type_inference(dtype)
-        output_rois.stop_gradient = True
-
-        inputs = {
-            'MultiLevelRois': input_rois,
-            'MultiLevelScores': input_scores,
-        }
-        outputs = {'FpnRois': output_rois}
-        if rois_num_per_level is not None:
-            inputs['MultiLevelRoIsNum'] = rois_num_per_level
-            rois_num = helper.create_variable_for_type_inference(dtype='int32')
-            rois_num.stop_gradient = True
-            outputs['RoisNum'] = rois_num
-        helper.append_op(
-            type='collect_fpn_proposals',
-            inputs=inputs,
-            outputs=outputs,
-            attrs={'post_nms_topN': post_nms_top_n})
-        return output_rois, rois_num
+    return output_rois
 
 
-@paddle.jit.not_to_static
 def distribute_fpn_proposals(fpn_rois,
                              min_level,
                              max_level,
@@ -942,46 +510,45 @@ def distribute_fpn_proposals(fpn_rois,
             fpn_rois, rois_num, num_lvl, num_lvl, *attrs)
         return multi_rois, restore_ind, rois_num_per_level
 
-    else:
-        check_variable_and_dtype(fpn_rois, 'fpn_rois', ['float32', 'float64'],
-                                 'distribute_fpn_proposals')
-        helper = LayerHelper('distribute_fpn_proposals', **locals())
-        dtype = helper.input_dtype('fpn_rois')
-        multi_rois = [
-            helper.create_variable_for_type_inference(dtype)
+    check_variable_and_dtype(fpn_rois, 'fpn_rois', ['float32', 'float64'],
+                             'distribute_fpn_proposals')
+    helper = LayerHelper('distribute_fpn_proposals', **locals())
+    dtype = helper.input_dtype('fpn_rois')
+    multi_rois = [
+        helper.create_variable_for_type_inference(dtype) for i in range(num_lvl)
+    ]
+
+    restore_ind = helper.create_variable_for_type_inference(dtype='int32')
+
+    inputs = {'FpnRois': fpn_rois}
+    outputs = {
+        'MultiFpnRois': multi_rois,
+        'RestoreIndex': restore_ind,
+    }
+
+    if rois_num is not None:
+        inputs['RoisNum'] = rois_num
+        rois_num_per_level = [
+            helper.create_variable_for_type_inference(dtype='int32')
             for i in range(num_lvl)
         ]
+        outputs['MultiLevelRoIsNum'] = rois_num_per_level
 
-        restore_ind = helper.create_variable_for_type_inference(dtype='int32')
-
-        inputs = {'FpnRois': fpn_rois}
-        outputs = {
-            'MultiFpnRois': multi_rois,
-            'RestoreIndex': restore_ind,
-        }
-
-        if rois_num is not None:
-            inputs['RoisNum'] = rois_num
-            rois_num_per_level = [
-                helper.create_variable_for_type_inference(dtype='int32')
-                for i in range(num_lvl)
-            ]
-            outputs['MultiLevelRoIsNum'] = rois_num_per_level
-
-        helper.append_op(
-            type='distribute_fpn_proposals',
-            inputs=inputs,
-            outputs=outputs,
-            attrs={
-                'min_level': min_level,
-                'max_level': max_level,
-                'refer_level': refer_level,
-                'refer_scale': refer_scale
-            })
+    helper.append_op(
+        type='distribute_fpn_proposals',
+        inputs=inputs,
+        outputs=outputs,
+        attrs={
+            'min_level': min_level,
+            'max_level': max_level,
+            'refer_level': refer_level,
+            'refer_scale': refer_scale
+        })
+    if rois_num is not None:
         return multi_rois, restore_ind, rois_num_per_level
+    return multi_rois, restore_ind
 
 
-@paddle.jit.not_to_static
 def yolo_box(
         x,
         origin_shape,
@@ -1118,7 +685,6 @@ def yolo_box(
         return boxes, scores
 
 
-@paddle.jit.not_to_static
 def prior_box(input,
               image,
               min_sizes,
@@ -1232,37 +798,36 @@ def prior_box(input,
         attrs = tuple(attrs)
         box, var = core.ops.prior_box(input, image, *attrs)
         return box, var
-    else:
-        attrs = {
-            'min_sizes': min_sizes,
-            'aspect_ratios': aspect_ratios,
-            'variances': variance,
-            'flip': flip,
-            'clip': clip,
-            'step_w': steps[0],
-            'step_h': steps[1],
-            'offset': offset,
-            'min_max_aspect_ratios_order': min_max_aspect_ratios_order
-        }
 
-        if cur_max_sizes is not None:
-            attrs['max_sizes'] = cur_max_sizes
+    attrs = {
+        'min_sizes': min_sizes,
+        'aspect_ratios': aspect_ratios,
+        'variances': variance,
+        'flip': flip,
+        'clip': clip,
+        'step_w': steps[0],
+        'step_h': steps[1],
+        'offset': offset,
+        'min_max_aspect_ratios_order': min_max_aspect_ratios_order
+    }
 
-        box = helper.create_variable_for_type_inference(dtype)
-        var = helper.create_variable_for_type_inference(dtype)
-        helper.append_op(
-            type="prior_box",
-            inputs={"Input": input,
-                    "Image": image},
-            outputs={"Boxes": box,
-                     "Variances": var},
-            attrs=attrs, )
-        box.stop_gradient = True
-        var.stop_gradient = True
-        return box, var
+    if cur_max_sizes is not None:
+        attrs['max_sizes'] = cur_max_sizes
+
+    box = helper.create_variable_for_type_inference(dtype)
+    var = helper.create_variable_for_type_inference(dtype)
+    helper.append_op(
+        type="prior_box",
+        inputs={"Input": input,
+                "Image": image},
+        outputs={"Boxes": box,
+                 "Variances": var},
+        attrs=attrs, )
+    box.stop_gradient = True
+    var.stop_gradient = True
+    return box, var
 
 
-@paddle.jit.not_to_static
 def anchor_generator(input,
                      anchor_sizes=None,
                      aspect_ratios=None,
@@ -1351,29 +916,27 @@ def anchor_generator(input,
         anchor, var = core.ops.anchor_generator(input, *attrs)
         return anchor, var
 
-    else:
-        attrs = {
-            'anchor_sizes': anchor_sizes,
-            'aspect_ratios': aspect_ratios,
-            'variances': variance,
-            'stride': stride,
-            'offset': offset
-        }
+    attrs = {
+        'anchor_sizes': anchor_sizes,
+        'aspect_ratios': aspect_ratios,
+        'variances': variance,
+        'stride': stride,
+        'offset': offset
+    }
 
-        anchor = helper.create_variable_for_type_inference(dtype)
-        var = helper.create_variable_for_type_inference(dtype)
-        helper.append_op(
-            type="anchor_generator",
-            inputs={"Input": input},
-            outputs={"Anchors": anchor,
-                     "Variances": var},
-            attrs=attrs, )
-        anchor.stop_gradient = True
-        var.stop_gradient = True
-        return anchor, var
+    anchor = helper.create_variable_for_type_inference(dtype)
+    var = helper.create_variable_for_type_inference(dtype)
+    helper.append_op(
+        type="anchor_generator",
+        inputs={"Input": input},
+        outputs={"Anchors": anchor,
+                 "Variances": var},
+        attrs=attrs, )
+    anchor.stop_gradient = True
+    var.stop_gradient = True
+    return anchor, var
 
 
-@paddle.jit.not_to_static
 def multiclass_nms(bboxes,
                    scores,
                    score_threshold,
@@ -1528,7 +1091,6 @@ def multiclass_nms(bboxes,
         return output, nms_rois_num, index
 
 
-@paddle.jit.not_to_static
 def matrix_nms(bboxes,
                scores,
                score_threshold,
@@ -1634,42 +1196,41 @@ def matrix_nms(bboxes,
         if return_rois_num:
             return out, rois_num
         return out
-    else:
-        helper = LayerHelper('matrix_nms', **locals())
-        output = helper.create_variable_for_type_inference(dtype=bboxes.dtype)
-        index = helper.create_variable_for_type_inference(dtype='int')
-        outputs = {'Out': output, 'Index': index}
+
+    helper = LayerHelper('matrix_nms', **locals())
+    output = helper.create_variable_for_type_inference(dtype=bboxes.dtype)
+    index = helper.create_variable_for_type_inference(dtype='int')
+    outputs = {'Out': output, 'Index': index}
+    if return_rois_num:
+        rois_num = helper.create_variable_for_type_inference(dtype='int')
+        outputs['RoisNum'] = rois_num
+
+    helper.append_op(
+        type="matrix_nms",
+        inputs={'BBoxes': bboxes,
+                'Scores': scores},
+        attrs={
+            'background_label': background_label,
+            'score_threshold': score_threshold,
+            'post_threshold': post_threshold,
+            'nms_top_k': nms_top_k,
+            'gaussian_sigma': gaussian_sigma,
+            'use_gaussian': use_gaussian,
+            'keep_top_k': keep_top_k,
+            'normalized': normalized
+        },
+        outputs=outputs)
+    output.stop_gradient = True
+
+    if return_index:
         if return_rois_num:
-            rois_num = helper.create_variable_for_type_inference(dtype='int')
-            outputs['RoisNum'] = rois_num
-
-        helper.append_op(
-            type="matrix_nms",
-            inputs={'BBoxes': bboxes,
-                    'Scores': scores},
-            attrs={
-                'background_label': background_label,
-                'score_threshold': score_threshold,
-                'post_threshold': post_threshold,
-                'nms_top_k': nms_top_k,
-                'gaussian_sigma': gaussian_sigma,
-                'use_gaussian': use_gaussian,
-                'keep_top_k': keep_top_k,
-                'normalized': normalized
-            },
-            outputs=outputs)
-        output.stop_gradient = True
-
-        if return_index:
-            if return_rois_num:
-                return output, index, rois_num
-            return output, index
-        if return_rois_num:
-            return output, rois_num
-        return output
+            return output, index, rois_num
+        return output, index
+    if return_rois_num:
+        return output, rois_num
+    return output
 
 
-@paddle.jit.not_to_static
 def box_coder(prior_box,
               prior_box_var,
               target_box,
@@ -1796,34 +1357,32 @@ def box_coder(prior_box,
             raise TypeError(
                 "Input variance of box_coder must be Variable or list")
         return output_box
+
+    helper = LayerHelper("box_coder", **locals())
+
+    output_box = helper.create_variable_for_type_inference(
+        dtype=prior_box.dtype)
+
+    inputs = {"PriorBox": prior_box, "TargetBox": target_box}
+    attrs = {
+        "code_type": code_type,
+        "box_normalized": box_normalized,
+        "axis": axis
+    }
+    if isinstance(prior_box_var, Variable):
+        inputs['PriorBoxVar'] = prior_box_var
+    elif isinstance(prior_box_var, list):
+        attrs['variance'] = prior_box_var
     else:
-        helper = LayerHelper("box_coder", **locals())
-
-        output_box = helper.create_variable_for_type_inference(
-            dtype=prior_box.dtype)
-
-        inputs = {"PriorBox": prior_box, "TargetBox": target_box}
-        attrs = {
-            "code_type": code_type,
-            "box_normalized": box_normalized,
-            "axis": axis
-        }
-        if isinstance(prior_box_var, Variable):
-            inputs['PriorBoxVar'] = prior_box_var
-        elif isinstance(prior_box_var, list):
-            attrs['variance'] = prior_box_var
-        else:
-            raise TypeError(
-                "Input variance of box_coder must be Variable or list")
-        helper.append_op(
-            type="box_coder",
-            inputs=inputs,
-            attrs=attrs,
-            outputs={"OutputBox": output_box})
-        return output_box
+        raise TypeError("Input variance of box_coder must be Variable or list")
+    helper.append_op(
+        type="box_coder",
+        inputs=inputs,
+        attrs=attrs,
+        outputs={"OutputBox": output_box})
+    return output_box
 
 
-@paddle.jit.not_to_static
 def generate_proposals(scores,
                        bbox_deltas,
                        im_shape,
@@ -1913,55 +1472,56 @@ def generate_proposals(scores,
             scores, bbox_deltas, im_shape, anchors, variances, *attrs)
         return rpn_rois, rpn_roi_probs, rpn_rois_num
 
-    else:
-        helper = LayerHelper('generate_proposals_v2', **locals())
+    helper = LayerHelper('generate_proposals_v2', **locals())
 
-        check_variable_and_dtype(scores, 'scores', ['float32'],
-                                 'generate_proposals_v2')
-        check_variable_and_dtype(bbox_deltas, 'bbox_deltas', ['float32'],
-                                 'generate_proposals_v2')
-        check_variable_and_dtype(im_shape, 'im_shape', ['float32', 'float64'],
-                                 'generate_proposals_v2')
-        check_variable_and_dtype(anchors, 'anchors', ['float32'],
-                                 'generate_proposals_v2')
-        check_variable_and_dtype(variances, 'variances', ['float32'],
-                                 'generate_proposals_v2')
+    check_variable_and_dtype(scores, 'scores', ['float32'],
+                             'generate_proposals_v2')
+    check_variable_and_dtype(bbox_deltas, 'bbox_deltas', ['float32'],
+                             'generate_proposals_v2')
+    check_variable_and_dtype(im_shape, 'im_shape', ['float32', 'float64'],
+                             'generate_proposals_v2')
+    check_variable_and_dtype(anchors, 'anchors', ['float32'],
+                             'generate_proposals_v2')
+    check_variable_and_dtype(variances, 'variances', ['float32'],
+                             'generate_proposals_v2')
 
-        rpn_rois = helper.create_variable_for_type_inference(
-            dtype=bbox_deltas.dtype)
-        rpn_roi_probs = helper.create_variable_for_type_inference(
-            dtype=scores.dtype)
-        outputs = {
-            'RpnRois': rpn_rois,
-            'RpnRoiProbs': rpn_roi_probs,
-        }
-        if return_rois_num:
-            rpn_rois_num = helper.create_variable_for_type_inference(
-                dtype='int32')
-            rpn_rois_num.stop_gradient = True
-            outputs['RpnRoisNum'] = rpn_rois_num
+    rpn_rois = helper.create_variable_for_type_inference(
+        dtype=bbox_deltas.dtype)
+    rpn_roi_probs = helper.create_variable_for_type_inference(
+        dtype=scores.dtype)
+    outputs = {
+        'RpnRois': rpn_rois,
+        'RpnRoiProbs': rpn_roi_probs,
+    }
+    if return_rois_num:
+        rpn_rois_num = helper.create_variable_for_type_inference(dtype='int32')
+        rpn_rois_num.stop_gradient = True
+        outputs['RpnRoisNum'] = rpn_rois_num
 
-        helper.append_op(
-            type="generate_proposals_v2",
-            inputs={
-                'Scores': scores,
-                'BboxDeltas': bbox_deltas,
-                'ImShape': im_shape,
-                'Anchors': anchors,
-                'Variances': variances
-            },
-            attrs={
-                'pre_nms_topN': pre_nms_top_n,
-                'post_nms_topN': post_nms_top_n,
-                'nms_thresh': nms_thresh,
-                'min_size': min_size,
-                'eta': eta
-            },
-            outputs=outputs)
-        rpn_rois.stop_gradient = True
-        rpn_roi_probs.stop_gradient = True
+    helper.append_op(
+        type="generate_proposals_v2",
+        inputs={
+            'Scores': scores,
+            'BboxDeltas': bbox_deltas,
+            'ImShape': im_shape,
+            'Anchors': anchors,
+            'Variances': variances
+        },
+        attrs={
+            'pre_nms_topN': pre_nms_top_n,
+            'post_nms_topN': post_nms_top_n,
+            'nms_thresh': nms_thresh,
+            'min_size': min_size,
+            'eta': eta
+        },
+        outputs=outputs)
+    rpn_rois.stop_gradient = True
+    rpn_roi_probs.stop_gradient = True
 
+    if return_rois_num:
         return rpn_rois, rpn_roi_probs, rpn_rois_num
+    else:
+        return rpn_rois, rpn_roi_probs
 
 
 def sigmoid_cross_entropy_with_logits(input,
@@ -1989,4 +1549,3 @@ def smooth_l1(input, label, inside_weight=None, outside_weight=None,
     out = paddle.reshape(out, shape=[out.shape[0], -1])
     out = paddle.sum(out, axis=1)
     return out
-
