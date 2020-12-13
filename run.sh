@@ -1,0 +1,3 @@
+
+CUDA_VISIBLE_DEVICES=6 python3.7 convert.py //paddlemodels.bj.bcebos.com/object_detection/faster_rcnn_dcn_r50_vd_fpn_3x_server_side.tar faster_rcnn_r50_dcn_pssdet/weight_name_map_faster_rcnn_dcn_r50_fpn_pssdet.txt faster_rcnn_r50_dcn_pssdet/faster_rcnn_dcn_r50_vd_fpn_3x_server_side.pdparams
+

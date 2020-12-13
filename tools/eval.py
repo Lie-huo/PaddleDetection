@@ -109,9 +109,9 @@ def run(FLAGS, cfg, place):
     clsid2catid, catid2name = get_category_info(anno_file, with_background,
                                                 use_default_label)
 
-    mask_resolution = None
-    if cfg['MaskPostProcess']['mask_resolution'] is not None:
-        mask_resolution = int(cfg['MaskPostProcess']['mask_resolution'])
+    mask_resolution = 7
+    #if cfg['MaskPostProcess']['mask_resolution'] is not None:
+    #    mask_resolution = int(cfg['MaskPostProcess']['mask_resolution'])
     infer_res = get_infer_results(
         outs_res,
         eval_type,

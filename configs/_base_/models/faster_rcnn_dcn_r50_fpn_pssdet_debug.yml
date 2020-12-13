@@ -24,13 +24,12 @@ ResNet:
   # index 0 stands for res2
   depth: 50
   norm_type: bn
-  freeze_at: 0
+  freeze_at: 2
   return_idx: [0,1,2,3]
   num_stages: 4
   variant: d
   dcn_v2_stages: [1, 2, 3]
-  #lr_mult_list: [ 0.05, 0.05, 0.1, 0.15 ]
-  #dcn_v2: True
+  lr_mult_list: [ 0.05, 0.05, 0.1, 0.15 ]
 
 FPN:
   in_channels: [256, 512, 1024, 2048]
