@@ -63,11 +63,15 @@ class FasterRCNN(BaseArch):
         # anchor_out returns a list,
         # each element contains (anchor, anchor_var)
         self.anchor_out = self.anchor(rpn_feat)
-        for xx_anchor in self.anchor_out:
-            print('self.anchor_out', xx_anchor[0].shape,
+        for i in range(self.anchor_out):
+            xx_anchor  = self.anchor_out[i]
+            print('self.anchor_out_{}_0'.format(i), xx_anchor[0].shape,
                 xx_anchor[0].numpy().mean())
-            print('self.anchor_out', xx_anchor[1].shape,
+            import numpy as np
+            np.save('npy/anchor_out_{}_0'.format(i), xx_anchor[0].numpy())
+            print('self.anchor_out_{}_1'.format(i), xx_anchor[1].shape,
                 xx_anchor[1].numpy().mean())
+            np.save('npy/anchor_out_{}_0'.format(i), xx_anchor[1].numpy())
 
         # Proposal RoI
         # compute targets here when training
