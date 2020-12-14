@@ -54,6 +54,10 @@ class FasterRCNN(BaseArch):
         # and the length is 1 when the neck is not applied.
         # each element in rpn_head_out contains (rpn_rois_score, rpn_rois_delta)
         rpn_feat, self.rpn_head_out = self.rpn_head(self.inputs, body_feats)
+        for e in rpn_feat:
+            print('rpn_feat', e.shape, e.numpy().mean())
+        for e in self.rpn_head_out:
+            print('rpn_head_out', e[0].shape, e[0].numpy().mean(), e[1].shape, e[1].numpy().mean())
 
         # Anchor
         # anchor_out returns a list,
@@ -68,8 +72,7 @@ class FasterRCNN(BaseArch):
         # Proposal RoI
         # compute targets here when training
         rois = self.proposal(self.inputs, self.rpn_head_out, self.anchor_out)
-        print('xxxddd rios', rois[0].numpy().shape, rois[0].numpy().mean())
-        print('xxxxddd rios', rois[1].numpy().shape, rois[1].numpy().mean())
+        
         # BBox Head
         bbox_feat, self.bbox_head_out, self.bbox_head_feat_func = self.bbox_head(
             body_feats, rois, spatial_scale)

@@ -84,7 +84,6 @@ class RPNHead(nn.Layer):
         for rpn_feat in rpn_feats:
             rrs = self.rpn_rois_score(rpn_feat)
             rrd = self.rpn_rois_delta(rpn_feat)
-            print('rrs', rrs.shape, rrs.mean(), 'rrd', rrd.shape, rrd.mean())
             rpn_head_out.append((rrs, rrd))
         for xx in rpn_feats:
             print('rpn_feats  xxx', xx.shape, xx.numpy().mean())

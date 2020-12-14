@@ -115,10 +115,6 @@ class Proposal(object):
             rpn_rois_list.append(rpn_rois)
             rpn_prob_list.append(rpn_rois_prob)
             rpn_rois_num_list.append(rpn_rois_num)
-            
-            print('rpn_rois', rpn_rois.numpy().shape, rpn_rois.numpy().mean())
-            print('rpn_rois_prob', rpn_rois_prob.numpy().shape, rpn_rois_prob.numpy().mean())
-            print(rpn_rois_num, post_nms_top_n)
 
         start_level = 2
         end_level = start_level + len(rpn_head_out)
@@ -195,7 +191,6 @@ class Proposal(object):
             roi = self.refine_bbox(proposal_out[0], bbox_delta, stage)
             rois_num = proposal_out[1]
         if inputs['mode'] == 'train':
-            print('this is train self.max_overlap is ', self.max_overlap)
             roi, rois_num, targets, self.max_overlap = self.generate_proposal_target(
                 inputs, roi, rois_num, stage, self.max_overlap)
             self.targets_list.append(targets)
