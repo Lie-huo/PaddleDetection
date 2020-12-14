@@ -84,11 +84,23 @@ class RPNHead(nn.Layer):
         for rpn_feat in rpn_feats:
             rrs = self.rpn_rois_score(rpn_feat)
             rrd = self.rpn_rois_delta(rpn_feat)
+            print('rrs', rrs.shape, rrs.mean(), 'rrd', rrd.shape, rrd.mean())
             rpn_head_out.append((rrs, rrd))
+        for xx in rpn_feats:
+            print('rpn_feats  xxx', xx.shape, xx.numpy().mean())
+        for xx in rpn_head_out:
+            print('rpn_head_out xx', xx[0].shape, xx[0].numpy().mean(),
+                    xx[1].shape, xx[1].numpy().mean())
         return rpn_feats, rpn_head_out
 
     def get_loss(self, loss_inputs):
         # cls loss
+        np_rpn_score_target =  loss_inputs['rpn_score_target'].numpy()
+        print('rpn_score_target', np_rpn_score_target.shape,
+                np_rpn_score_target.mean(),  np_rpn_score_target.sum())
+        np_rpn_score_pred = loss_inputs['rpn_score_pred'].numpy()
+        print('rpn_score_pred', np_rpn_score_pred.shape,
+                np_rpn_score_pred.mean(), np_rpn_score_pred.sum())
         score_tgt = paddle.cast(
             x=loss_inputs['rpn_score_target'], dtype='float32')
         score_tgt.stop_gradient = True

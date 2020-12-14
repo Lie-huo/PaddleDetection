@@ -281,8 +281,9 @@ class ResNet(nn.Layer):
                  freeze_norm=True,
                  freeze_at=0,
                  return_idx=[0, 1, 2, 3],
-                 dcn_v2_stages=[],
-                 num_stages=4):
+                 dcn_v2_stages=[1, 2, 3],
+                 num_stages=4,
+                 lr_mult_list=[0.05, 0.05, 0.1, 0.15]):
         super(ResNet, self).__init__()
         self.depth = depth
         self.variant = variant
@@ -290,6 +291,7 @@ class ResNet(nn.Layer):
         self.norm_decay = norm_decay
         self.freeze_norm = freeze_norm
         self.freeze_at = freeze_at
+        self.lr_mult_list = lr_mult_list
         if isinstance(return_idx, Integral):
             return_idx = [return_idx]
         assert max(return_idx) < num_stages, \
@@ -342,6 +344,7 @@ class ResNet(nn.Layer):
 
         self.res_layers = []
         for i in range(num_stages):
+            lr_mult = self.lr_mult_list[i]
             stage_num = i + 2
             res_name = "res{}".format(stage_num)
             res_layer = self.add_sublayer(

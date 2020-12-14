@@ -33,6 +33,8 @@ def generate_rpn_anchor_target(anchors,
         im_height = im_info[i][0]
         im_width = im_info[i][1]
         im_scale = im_info[i][2]
+        print('generate_rpn_anchor_target', anchors.shape)
+        
         if rpn_straddle_thresh >= 0:
             anchor_inds = np.where((anchors[:, 0] >= -rpn_straddle_thresh) & (
                 anchors[:, 1] >= -rpn_straddle_thresh) & (
@@ -42,7 +44,8 @@ def generate_rpn_anchor_target(anchors,
         else:
             anchor_inds = np.arange(anchors.shape[0])
             anchor = anchors
-
+        
+        print('generate_rpn_anchor_target', anchor.shape)
         gt_bbox = gt_boxes[i] * im_scale
         is_crowd_slice = is_crowd[i]
         not_crowd_inds = np.where(is_crowd_slice == 0)[0]
@@ -51,12 +54,17 @@ def generate_rpn_anchor_target(anchors,
         # Step1: match anchor and gt_bbox
         anchor_gt_bbox_inds, anchor_gt_bbox_iou, labels = label_anchor(anchor,
                                                                        gt_bbox)
-
+        print('anchor_gt_bbox_inds', anchor_gt_bbox_inds.mean(),
+                'anchor_gt_bbox_iou',anchor_gt_bbox_iou.mean(),
+                'labels', labels.mean())
         # Step2: sample anchor 
         fg_inds, bg_inds, fg_fake_inds, fake_num = sample_anchor(
             anchor_gt_bbox_iou, labels, rpn_positive_overlap,
             rpn_negative_overlap, rpn_batch_size_per_im, rpn_fg_fraction,
             use_random)
+
+        print('fg_inds', len(fg_inds), sum(fg_inds), 'bg_inds', len(bg_inds),
+                sum(bg_inds), 'fake_num',fake_num)
 
         # Step3: make output  
         loc_inds = np.hstack([fg_fake_inds, fg_inds])
@@ -439,7 +447,9 @@ def libra_generate_proposal_target(rpn_rois,
         # Step1: label bbox
         roi_gt_bbox_inds, labels, max_overlap = label_bbox(
             bbox, gt_bbox, gt_classes[im_i], is_crowd[im_i])
-        max_classes = max_overlaps[st_num:end_num].argmax(axis=1)
+
+        max_overlaps = max_overlap
+        max_classes = max_overlaps[st_num:end_num].argmax()
 
         # Step2: sample bbox
         rois_per_image = int(batch_size_per_im)
