@@ -439,7 +439,12 @@ def libra_generate_proposal_target(rpn_rois,
         # Step1: label bbox
         roi_gt_bbox_inds, labels, max_overlap = label_bbox(
             bbox, gt_bbox, gt_classes[im_i], is_crowd[im_i])
-        max_classes = max_overlaps[st_num:end_num].argmax(axis=1)
+        print('after label bbox', roi_gt_bbox_inds.shape, labels.shape,
+                max_overlap, max_overlap.mean())
+        max_overlaps = max_overlap
+        print('st_num', st_num, 'end_num', end_num)
+        #max_classes = max_overlaps[st_num:end_num].argmax(axis=1)
+        max_classes = max_overlaps[st_num:end_num].argmax()
 
         # Step2: sample bbox
         rois_per_image = int(batch_size_per_im)
@@ -484,6 +489,7 @@ def libra_generate_proposal_target(rpn_rois,
 
         sampled_labels = labels[sampled_inds]
         sampled_labels[fg_nums:] = 0
+        print('sampled_labels', sampled_labels.shape, sampled_labels.mean())
 
         sampled_boxes = bbox[sampled_inds]
         sampled_max_overlap = max_overlap[sampled_inds]

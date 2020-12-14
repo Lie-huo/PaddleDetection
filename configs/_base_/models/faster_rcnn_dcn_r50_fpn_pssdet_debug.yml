@@ -72,7 +72,7 @@ Proposal:
     infer_pre_nms_top_n: 500
     infer_post_nms_top_n: 300
   proposal_target_generator:
-    name: ProposalTargetGenerator
+    name: LibraProposalTargetGenerator
     batch_size_per_im: 512
     bbox_reg_weights: [0.1, 0.1, 0.2, 0.2]
     bg_thresh_hi: [0.5,]

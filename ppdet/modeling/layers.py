@@ -135,8 +135,13 @@ class ProposalGenerator(object):
                  mode='train'):
         pre_nms_top_n = self.train_pre_nms_top_n if mode == 'train' else self.infer_pre_nms_top_n
         post_nms_top_n = self.train_post_nms_top_n if mode == 'train' else self.infer_post_nms_top_n
+        
+        print('pre_nms_top_n', pre_nms_top_n, 'post_nms_top_n', post_nms_top_n,
+                'im_shape.shape', im_shape.shape)
+
         # TODO delete im_info
         if im_shape.shape[1] > 2:
+            print('this is im_shape.shape[1]>2')
             import paddle.fluid as fluid
             rpn_rois, rpn_rois_prob, rpn_rois_num = fluid.layers.generate_proposals(
                 scores,
@@ -150,6 +155,8 @@ class ProposalGenerator(object):
                 min_size=self.min_size,
                 eta=self.eta,
                 return_rois_num=True)
+            print('rpn_rois', rpn_rois.numpy().shape,
+                    rpn_rois_prob.numpy().shape, rpn_rois_num)
         else:
             rpn_rois, rpn_rois_prob, rpn_rois_num = ops.generate_proposals(
                 scores,
@@ -268,8 +275,6 @@ class LibraProposalTargetGenerator(object):
         gt_boxes = gt_boxes.numpy()
         is_crowd = is_crowd.numpy()
         im_info = im_info.numpy()
-        print('max_overlap', max_overlap.shape, max_overlap)
-        input('xxx')
         max_overlap = max_overlap if max_overlap is None else max_overlap.numpy(
         )
         reg_weights = [i / (stage + 1) for i in self.bbox_reg_weights]

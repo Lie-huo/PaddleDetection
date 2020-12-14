@@ -63,13 +63,17 @@ class FasterRCNN(BaseArch):
         # anchor_out returns a list,
         # each element contains (anchor, anchor_var)
         self.anchor_out = self.anchor(rpn_feat)
-        for xx_anchor in self.anchor_out[0]:
-            print('self.anchor_out', xx_anchor.shape,
-                xx_anchor.numpy().mean())
+        for xx_anchor in self.anchor_out:
+            print('self.anchor_out', xx_anchor[0].shape,
+                xx_anchor[0].numpy().mean())
+            print('self.anchor_out', xx_anchor[1].shape,
+                xx_anchor[1].numpy().mean())
 
         # Proposal RoI
         # compute targets here when training
         rois = self.proposal(self.inputs, self.rpn_head_out, self.anchor_out)
+        print('xxxddd rios', rois[0].numpy().shape, rois[0].numpy().mean())
+        print('xxxxddd rios', rois[1].numpy().shape, rois[1].numpy().mean())
         # BBox Head
         bbox_feat, self.bbox_head_out, self.bbox_head_feat_func = self.bbox_head(
             body_feats, rois, spatial_scale)
