@@ -97,10 +97,10 @@ class RPNHead(nn.Layer):
         # cls loss
         np_rpn_score_target =  loss_inputs['rpn_score_target'].numpy()
         print('rpn_score_target', np_rpn_score_target.shape,
-                np_rpn_score_target.mean())
+                np_rpn_score_target.mean(),  np_rpn_score_target.sum())
         np_rpn_score_pred = loss_inputs['rpn_score_pred'].numpy()
         print('rpn_score_pred', np_rpn_score_pred.shape,
-                np_rpn_score_pred.mean())
+                np_rpn_score_pred.mean(), np_rpn_score_pred.sum())
         score_tgt = paddle.cast(
             x=loss_inputs['rpn_score_target'], dtype='float32')
         score_tgt.stop_gradient = True
