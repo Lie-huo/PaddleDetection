@@ -436,13 +436,31 @@ def libra_generate_proposal_target(rpn_rois,
         if is_cascade_rcnn:
             rpn_roi = filter_roi(rpn_roi, max_overlap)
         bbox = np.vstack([gt_bbox, rpn_roi]).astype('float32')
+        gt_overlaps = np.zeros((bbox.shape[0], class_nums))
 
-        # Step1: label bbox
-        roi_gt_bbox_inds, labels, max_overlap = label_bbox(
-            bbox, gt_bbox, gt_classes[im_i], is_crowd[im_i])
+        box_to_gt_ind_map = np.zeros((bbox.shape[0]), dtype=np.int32)
+        if len(gt_boxes) > 0:
+            proposal_to_gt_overlaps = bbox_overlaps(bbox, gt_boxes)
+            overlaps_argmax = proposal_to_gt_overlaps.argmax(axis=1)
+            overlaps_max = proposal_to_gt_overlaps.max(axis=1)
+            # Boxes which with non-zero overlap with gt boxes
+            overlapped_boxes_ind = np.where(overlaps_max > 0)[0]
+    
+            overlapped_boxes_gt_classes = gt_classes[overlaps_argmax[
+                overlapped_boxes_ind]]
+    
+            for idx in range(len(overlapped_boxes_ind)):
+                gt_overlaps[overlapped_boxes_ind[
+                                idx], overlapped_boxes_gt_classes[idx]] = overlaps_max[
+                    overlapped_boxes_ind[idx]]
+                box_to_gt_ind_map[overlapped_boxes_ind[
+                    idx]] = overlaps_argmax[overlapped_boxes_ind[idx]]
 
-        max_overlaps = max_overlap
-        max_classes = max_overlaps[st_num:end_num].argmax()
+        crowd_ind = np.where(is_crowd)[0]
+        gt_overlaps[crowd_ind] = -1
+
+        max_overlaps = gt_overlaps.max(axis=1)
+        max_classes = gt_overlaps.argmax(axis=1)
 
         # Step2: sample bbox
         rois_per_image = int(batch_size_per_im)
@@ -523,7 +541,6 @@ def libra_generate_proposal_target(rpn_rois,
         sampled_max_overlaps, axis=0).astype(np.float32)
     new_rois_num = np.asarray(new_rois_num, np.int32)
     return rois, tgt_labels, tgt_deltas, rois_inside_weights, rois_outside_weights, new_rois_num, sampled_max_overlaps
-
 
 
 
