@@ -439,8 +439,9 @@ def libra_generate_proposal_target(rpn_rois,
         gt_overlaps = np.zeros((bbox.shape[0], class_nums))
 
         box_to_gt_ind_map = np.zeros((bbox.shape[0]), dtype=np.int32)
-        if len(gt_boxes) > 0:
-            proposal_to_gt_overlaps = bbox_overlaps(bbox, gt_boxes)
+        print('bbox', bbox.shape, 'gt_bbox', gt_bbox)
+        if len(gt_bbox) > 0:
+            proposal_to_gt_overlaps = bbox_overlaps(bbox, gt_bbox)
             overlaps_argmax = proposal_to_gt_overlaps.argmax(axis=1)
             overlaps_max = proposal_to_gt_overlaps.max(axis=1)
             # Boxes which with non-zero overlap with gt boxes
@@ -503,12 +504,12 @@ def libra_generate_proposal_target(rpn_rois,
         # Step3: make output
         sampled_inds = np.append(fg_inds, bg_inds)
 
-        sampled_labels = labels[sampled_inds]
+        sampled_labels = max_classes[sampled_inds]
         sampled_labels[fg_nums:] = 0
 
         sampled_boxes = bbox[sampled_inds]
         sampled_max_overlap = max_overlap[sampled_inds]
-        sampled_gt_boxes = gt_bbox[roi_gt_bbox_inds[sampled_inds]]
+        sampled_gt_boxes = gt_bbox[box_to_gt_ind_map[sampled_inds]]
         sampled_gt_boxes[fg_nums:, :] = 0
         sampled_deltas = compute_bbox_targets(sampled_boxes, sampled_gt_boxes,
                                               sampled_labels, bbox_reg_weights)
