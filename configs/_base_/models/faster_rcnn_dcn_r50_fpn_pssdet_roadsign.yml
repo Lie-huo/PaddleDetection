@@ -1,9 +1,6 @@
 architecture: FasterRCNN
-pretrain_weights: faster_rcnn_r50_dcn_pssdet/faster_rcnn_dcn_r50_vd_fpn_3x_server_side.pdparams
-# https://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_cos_pretrained.tar
-weights: faster_rcnn_r50_dcn_pssdet/faster_rcnn_dcn_r50_vd_fpn_3x_server_side.pdparams
-# output/faster_rcnn_dcn_r50_vd_fpn_3x_server_side.pdparams
-# output/faster_rcnn_r50_fpn_1x_coco/model_final.pdparams
+pretrain_weights: https://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_cos_pretrained.tar
+weights: faster_rcnn_r50_dcn_pssdet/faster_rcnn_dcn_r50_vd_fpn_3x_server_side_roadsign/model_final
 load_static_weights: False
 
 # Model Achitecture
@@ -108,7 +105,7 @@ DiouLoss:
 BBoxPostProcess:
   decode:
     name: RCNNBox
-    num_classes: 8
+    num_classes: 5
     batch_size: 1
   nms:
     name: MultiClassNMS
