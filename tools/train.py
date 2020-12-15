@@ -163,6 +163,7 @@ def run(FLAGS, cfg, place):
     time_stat = deque(maxlen=cfg.log_iter)
     start_time = time.time()
     end_time = time.time()
+    cfg.epoch = 1
     # Run Train
     for cur_eid in range(start_epoch, int(cfg.epoch)):
         train_loader.dataset.epoch = cur_eid

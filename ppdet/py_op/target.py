@@ -21,6 +21,11 @@ def generate_rpn_anchor_target(anchors,
     anchor_num = anchors.shape[0]
     batch_size = gt_boxes.shape[0]
 
+    use_random = True
+    print('input func', 'anchors',anchors.shape,anchors.sum(), 'gt_boxes,' ,gt_boxes.shape,
+            gt_boxes, 'is_crowd',is_crowd.shape, is_crowd, 'im_info',im_info.shape,
+            im_info)
+
     loc_indexes = []
     cls_indexes = []
     tgt_labels = []
@@ -33,7 +38,8 @@ def generate_rpn_anchor_target(anchors,
         im_height = im_info[i][0]
         im_width = im_info[i][1]
         im_scale = im_info[i][2]
-        
+        print('generate_rpn_anchor_target berer', anchors.shape)
+        np.save('input_anchors.npy', anchors)
         if rpn_straddle_thresh >= 0:
             anchor_inds = np.where((anchors[:, 0] >= -rpn_straddle_thresh) & (
                 anchors[:, 1] >= -rpn_straddle_thresh) & (
@@ -43,11 +49,16 @@ def generate_rpn_anchor_target(anchors,
         else:
             anchor_inds = np.arange(anchors.shape[0])
             anchor = anchors
-        
+       
+        print('generate_rpn_anchor_target', anchor.shape)
         gt_bbox = gt_boxes[i] * im_scale
         is_crowd_slice = is_crowd[i]
         not_crowd_inds = np.where(is_crowd_slice == 0)[0]
         gt_bbox = gt_bbox[not_crowd_inds]
+
+
+        print('before step', 'gt_bbox', gt_bbox.shape, 'gt_bbox',
+                gt_bbox.shape)
 
         # Step1: match anchor and gt_bbox
         anchor_gt_bbox_inds, anchor_gt_bbox_iou, labels = label_anchor(anchor,
@@ -58,7 +69,8 @@ def generate_rpn_anchor_target(anchors,
             anchor_gt_bbox_iou, labels, rpn_positive_overlap,
             rpn_negative_overlap, rpn_batch_size_per_im, rpn_fg_fraction,
             use_random)
-
+        print('fg_inds', len(fg_inds), sum(fg_inds), 'bg_inds', len(bg_inds),
+                                sum(bg_inds), 'fake_num',fake_num)
         # Step3: make output  
         loc_inds = np.hstack([fg_fake_inds, fg_inds])
         cls_inds = np.hstack([fg_inds, bg_inds])
