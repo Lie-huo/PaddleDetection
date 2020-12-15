@@ -139,8 +139,9 @@ class COCODataSet(DetDataset):
                         gt_poly[i] = box['segmentation']
                         has_segmentation = True
 
-                if has_segmentation and not any(gt_poly):
-                    continue
+                #if has_segmentation and not any(gt_poly):
+                #    print('zzdd')
+                #    continue
 
                 coco_rec.update({
                     'is_crowd': is_crowd,

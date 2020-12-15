@@ -272,7 +272,7 @@ def libra_generate_proposal_target(rpn_rois,
                                    is_cascade_rcnn=False,
                                    max_overlaps=None,
                                    num_bins=3):
-    
+    print('gt_boxesgt_boxesgt_boxesgt_boxes', gt_boxes, 'gt_classes',gt_classes) 
     def _sample_pos(max_overlaps, max_classes, pos_inds, num_expected):
         if len(pos_inds) <= num_expected:
             return pos_inds
@@ -432,7 +432,7 @@ def libra_generate_proposal_target(rpn_rois,
         im_scale = im_info[im_i][2]
         rpn_roi = rpn_roi / im_scale
         gt_bbox = gt_boxes[im_i]
-
+        print('fuk gt_boxes',gt_boxes,'gt_bbox',gt_bbox,'im_i',im_i)
         if is_cascade_rcnn:
             rpn_roi = filter_roi(rpn_roi, max_overlap)
         bbox = np.vstack([gt_bbox, rpn_roi]).astype('float32')
@@ -446,7 +446,7 @@ def libra_generate_proposal_target(rpn_rois,
             overlaps_max = proposal_to_gt_overlaps.max(axis=1)
             # Boxes which with non-zero overlap with gt boxes
             overlapped_boxes_ind = np.where(overlaps_max > 0)[0]
-    
+            gt_classes = gt_classes.reshape(-1, 1)
             overlapped_boxes_gt_classes = gt_classes[overlaps_argmax[
                 overlapped_boxes_ind]]
     
@@ -460,8 +460,10 @@ def libra_generate_proposal_target(rpn_rois,
         crowd_ind = np.where(is_crowd)[0]
         gt_overlaps[crowd_ind] = -1
 
+        print('gt_overlaps', gt_overlaps.shape, gt_overlaps.mean())
         max_overlaps = gt_overlaps.max(axis=1)
         max_classes = gt_overlaps.argmax(axis=1)
+        print('max_overlaps,',max_overlaps,'max_classes',max_classes)
 
         # Step2: sample bbox
         rois_per_image = int(batch_size_per_im)
@@ -469,23 +471,25 @@ def libra_generate_proposal_target(rpn_rois,
         bg_rois_per_im = rois_per_image - fg_rois_per_im
 
         if is_cascade_rcnn:
-            fg_inds = np.where(max_overlap >= fg_thresh)[0]
-            bg_inds = np.where((max_overlap < bg_thresh_hi) & (max_overlap >=
+            fg_inds = np.where(max_overlaps >= fg_thresh)[0]
+            bg_inds = np.where((max_overlaps < bg_thresh_hi) & (max_overlaps >=
                                                                bg_thresh_lo))[0]
             fg_nums = fg_inds.shape[0]
             bg_nums = bg_inds.shape[0]
         else:
             # sampe fg
-            fg_inds = np.where(max_overlap >= fg_thresh)[0]
+            fg_inds = np.where(max_overlaps >= fg_thresh)[0]
             fg_nums = np.minimum(fg_rois_per_im, fg_inds.shape[0])
             if (fg_inds.shape[0] > fg_nums) and use_random:
                 # fg_inds = np.random.choice(fg_inds, size=fg_nums, replace=False)
                 fg_inds = _sample_pos(max_overlaps, max_classes,
                                       fg_inds, fg_rois_per_im)
             fg_inds = fg_inds[:fg_nums]
+            print('min', min(max_overlaps[np.where(max_overlaps >= fg_thresh)]))
+            print('max', max(max_overlaps[np.where(max_overlaps < fg_thresh)]))
     
             # sample bg
-            bg_inds = np.where((max_overlap < bg_thresh_hi) & (max_overlap >=
+            bg_inds = np.where((max_overlaps < bg_thresh_hi) & (max_overlaps >=
                                                                bg_thresh_lo))[0]
             bg_nums = rois_per_image - fg_nums
             bg_nums = np.minimum(bg_nums, bg_inds.shape[0])
@@ -508,7 +512,7 @@ def libra_generate_proposal_target(rpn_rois,
         sampled_labels[fg_nums:] = 0
 
         sampled_boxes = bbox[sampled_inds]
-        sampled_max_overlap = max_overlap[sampled_inds]
+        sampled_max_overlap = max_overlaps[sampled_inds]
         sampled_gt_boxes = gt_bbox[box_to_gt_ind_map[sampled_inds]]
         sampled_gt_boxes[fg_nums:, :] = 0
         sampled_deltas = compute_bbox_targets(sampled_boxes, sampled_gt_boxes,
@@ -519,7 +523,13 @@ def libra_generate_proposal_target(rpn_rois,
         bbox_outside_weights = np.array(
             bbox_inside_weights > 0, dtype=bbox_inside_weights.dtype)
 
+        
+        print('libar sampled_rois', sampled_boxes.shape, sampled_boxes.mean(), sampled_labels.shape, sampled_labels.mean(),
+             'fg_inds', len(fg_inds), sum(fg_inds), 'bg_inds', len(bg_inds), sum(bg_inds))
+
         roi = sampled_boxes * im_scale
+        print('sampled roi', roi.shape, roi.mean())
+        
         st_num += length
 
         rois.append(roi)

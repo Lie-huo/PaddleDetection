@@ -276,6 +276,8 @@ class LibraProposalTargetGenerator(object):
         reg_weights = [i / (stage + 1) for i in self.bbox_reg_weights]
         is_cascade = True if stage > 0 else False
         num_classes = 2 if is_cascade else self.num_classes
+        print('in libra', gt_boxes, gt_classes)
+        
         outs = libra_generate_proposal_target(
             rpn_rois, rpn_rois_num, gt_classes, is_crowd, gt_boxes, im_info,
             self.batch_size_per_im, self.fg_fraction, self.fg_thresh[stage],
