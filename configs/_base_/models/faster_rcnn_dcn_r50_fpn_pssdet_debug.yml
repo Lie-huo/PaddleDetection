@@ -61,6 +61,7 @@ Anchor:
     negative_overlap: 0.3
     positive_overlap: 0.7
     straddle_thresh: 0.0
+    use_random: False
 
 Proposal:
   proposal_generator:
@@ -97,7 +98,7 @@ BBoxHead:
       in_dim: 64
       mlp_dim: 1024
   in_feat: 1024
-  #bbox_loss: DiouLoss
+  bbox_loss: DiouLoss
 
 DiouLoss:
   loss_weight: 10.0

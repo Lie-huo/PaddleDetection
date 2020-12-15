@@ -43,8 +43,8 @@ logging.basicConfig(level=logging.INFO, format=FORMAT)
 logger = logging.getLogger(__name__)
 
 # set seed
-np.random.seed(1234)
-paddle.seed(1234)
+np.random.seed(123)
+paddle.seed(123)
 #paddle.manual_seed(1234)
 #paddle.framework.manual_seed(1234)
 
@@ -111,12 +111,12 @@ def run(FLAGS, cfg, place):
     if FLAGS.dist:
         trainer_id = int(env['PADDLE_TRAINER_ID'])
         local_seed = (99 + trainer_id)
-        local_seed = 1234
+        local_seed = 123
         random.seed(local_seed)
         np.random.seed(local_seed)
 
     if FLAGS.enable_ce:
-        seed = 1234
+        seed = 123
         random.seed(seed)
         np.random.seed(seed)
 
