@@ -81,12 +81,18 @@ class AnchorTargetGeneratorRPN(object):
         gt_boxes = gt_boxes.numpy()
         is_crowd = is_crowd.numpy()
         im_info = im_info.numpy()
-        
+        print('1215----anchor_box,', anchor_box.shape, anchor_box.mean(),
+              'gt_boxes,', gt_boxes.shape, gt_boxes.mean(),
+              'is_crowd,', is_crowd, 'im_info', im_info)
         loc_indexes, score_indexes, tgt_labels, tgt_bboxes, bbox_inside_weights = generate_rpn_anchor_target(
             anchor_box, gt_boxes, is_crowd, im_info, self.straddle_thresh,
             self.batch_size_per_im, self.positive_overlap,
             self.negative_overlap, self.fg_fraction, self.use_random)
-        
+        print('loc_indexes', loc_indexes.shape, loc_indexes.mean(), 
+                'score_indexes', score_indexes.shape, score_indexes.mean(),
+                'tgt_labels', tgt_labels.shape, tgt_labels.mean(),
+                'tgt_bboxes', tgt_bboxes.shape, tgt_bboxes.mean(),
+                'bbox_inside_weights', bbox_inside_weights) 
         loc_indexes = to_tensor(loc_indexes)
         score_indexes = to_tensor(score_indexes)
         tgt_labels = to_tensor(tgt_labels)
