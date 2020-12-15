@@ -103,6 +103,8 @@ class RPNHead(nn.Layer):
         score_tgt = paddle.cast(
             x=loss_inputs['rpn_score_target'], dtype='float32')
         score_tgt.stop_gradient = True
+        print('score_tgt', score_tgt.numpy().shape, score_tgt.numpy().mean())
+        
         loss_rpn_cls = ops.sigmoid_cross_entropy_with_logits(
             input=loss_inputs['rpn_score_pred'], label=score_tgt)
         loss_rpn_cls = paddle.mean(loss_rpn_cls, name='loss_rpn_cls')
@@ -110,6 +112,7 @@ class RPNHead(nn.Layer):
         # reg loss
         loc_tgt = paddle.cast(x=loss_inputs['rpn_rois_target'], dtype='float32')
         loc_tgt.stop_gradient = True
+        print('loc_tgt', loc_tgt.numpy().shape, loc_tgt.numpy().mean())
         loss_rpn_reg = ops.smooth_l1(
             input=loss_inputs['rpn_rois_pred'],
             label=loc_tgt,

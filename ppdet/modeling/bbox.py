@@ -53,6 +53,10 @@ class Anchor(object):
         rpn_score, rpn_delta, anchors = self._get_target_input(rpn_head_out,
                                                                anchors)
 
+        print('before anchor tar gen', 'rpn_delta', rpn_delta.numpy().shape,
+                rpn_delta.numpy().mean(), 'rpn_score', rpn_score.numpy().shape,
+                rpn_score.numpy().mean(),
+                'anchors',anchors.numpy().shape, anchors.numpy().mean())
         score_pred, roi_pred, score_tgt, roi_tgt, roi_weight = self.anchor_target_generator(
             bbox_pred=rpn_delta,
             cls_logits=rpn_score,
@@ -67,6 +71,11 @@ class Anchor(object):
             'rpn_rois_target': roi_tgt,
             'rpn_rois_weight': roi_weight
         }
+        print('out score_pred', score_pred.numpy().shape, score_pred.numpy().mean(),
+              'score_tgt',  score_tgt.numpy().shape, score_tgt.numpy().mean(),
+              'roi_pred',  roi_pred.numpy().shape,roi_pred.numpy().mean(),
+              'roi_tgt',  roi_tgt.numpy().shape,roi_tgt.numpy().mean(),
+              'weights',  roi_weight.numpy().shape,roi_weight.numpy().mean()),
         return outs
 
 
