@@ -42,11 +42,6 @@ class FasterRCNN(BaseArch):
         # Neck
         if self.neck is not None:
             body_feats, spatial_scale = self.neck(body_feats)
- 
-        print('after fpn')
-        for ee in  body_feats:
-            print('ee', ee.shape, ee.numpy().mean())
-
 
         # RPN
         # rpn_head returns two list: rpn_feat, rpn_head_out
@@ -54,30 +49,16 @@ class FasterRCNN(BaseArch):
         # and the length is 1 when the neck is not applied.
         # each element in rpn_head_out contains (rpn_rois_score, rpn_rois_delta)
         rpn_feat, self.rpn_head_out = self.rpn_head(self.inputs, body_feats)
-        for e in rpn_feat:
-            print('rpn_feat', e.shape, e.numpy().mean())
-        for e in self.rpn_head_out:
-            print('rpn_head_out', e[0].shape, e[0].numpy().mean(), e[1].shape, e[1].numpy().mean())
 
         # Anchor
         # anchor_out returns a list,
         # each element contains (anchor, anchor_var)
         self.anchor_out = self.anchor(rpn_feat)
-        import numpy as np
-        for i in range(len(self.anchor_out)):
-            xx_anchor = self.anchor_out[i]
-            np.save('npy/anchor_out_{}_0'.format(i), xx_anchor[0].numpy())
-            np.save('npy/anchor_out_{}_1'.format(i), xx_anchor[1].numpy())
-            print('self.anchor_out', xx_anchor[0].shape,
-                xx_anchor[0].numpy().mean())
-            print('self.anchor_out', xx_anchor[1].shape,
-                xx_anchor[1].numpy().mean())
 
         # Proposal RoI
         # compute targets here when training
         rois = self.proposal(self.inputs, self.rpn_head_out, self.anchor_out)
-        print('rois', rois[0].numpy().shape, rois[0].numpy().mean(),
-                rois[1].numpy().shape, rois[1].numpy().mean()) 
+
         # BBox Head
         bbox_feat, self.bbox_head_out, self.bbox_head_feat_func = self.bbox_head(
             body_feats, rois, spatial_scale)
