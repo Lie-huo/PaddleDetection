@@ -21,11 +21,6 @@ def generate_rpn_anchor_target(anchors,
     anchor_num = anchors.shape[0]
     batch_size = gt_boxes.shape[0]
 
-    print('input func', 'anchors',anchors.shape,anchors.sum(), 'gt_boxes,' ,gt_boxes.shape,
-            gt_boxes, 'is_crowd',is_crowd.shape, is_crowd, 'im_info',im_info.shape,
-            im_info)
-    print('param', rpn_straddle_thresh, rpn_batch_size_per_im,
-            rpn_positive_overlap,rpn_negative_overlap,rpn_fg_fraction,use_random,anchor_reg_weights)
     loc_indexes = []
     cls_indexes = []
     tgt_labels = []

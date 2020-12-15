@@ -37,9 +37,6 @@ def generate_rpn_anchor_target(anchors,
                                anchor_reg_weights=[1., 1., 1., 1.]):
     anchor_num = anchors.shape[0]
     batch_size = gt_boxes.shape[0]
-    print('first in func', anchors.shape)
-    print('first in func', anchors.shape)
-    print('ininin rpn_fg_fraction', rpn_fg_fraction)
     
     loc_indexes = []
     cls_indexes = []
@@ -53,7 +50,6 @@ def generate_rpn_anchor_target(anchors,
         im_height = im_info[i][0]
         im_width = im_info[i][1]
         im_scale = im_info[i][2]
-        print('generate_rpn_anchor_target', anchors.shape)
         
         if rpn_straddle_thresh >= 0:
             anchor_inds = np.where((anchors[:, 0] >= -rpn_straddle_thresh) & (
@@ -65,7 +61,6 @@ def generate_rpn_anchor_target(anchors,
             anchor_inds = np.arange(anchors.shape[0])
             anchor = anchors
         
-        print('generate_rpn_anchor_target', anchor.shape)
         gt_bbox = gt_boxes[i] * im_scale
         is_crowd_slice = is_crowd[i]
         not_crowd_inds = np.where(is_crowd_slice == 0)[0]
@@ -74,17 +69,11 @@ def generate_rpn_anchor_target(anchors,
         # Step1: match anchor and gt_bbox
         anchor_gt_bbox_inds, anchor_gt_bbox_iou, labels = label_anchor(anchor,
                                                                        gt_bbox)
-        print('anchor_gt_bbox_inds', anchor_gt_bbox_inds.shape, anchor_gt_bbox_inds.mean(),
-              'anchor_gt_bbox_iou', anchor_gt_bbox_iou.shape, anchor_gt_bbox_iou.mean(),
-              'labels', labels.mean())
         # Step2: sample anchor
         fg_inds, bg_inds, fg_fake_inds, fake_num = sample_anchor(
             anchor_gt_bbox_iou, labels, rpn_positive_overlap,
             rpn_negative_overlap, rpn_batch_size_per_im, rpn_fg_fraction,
             use_random)
-        
-        print('fg_inds', len(fg_inds), sum(fg_inds), 'bg_inds', len(bg_inds),
-              sum(bg_inds), 'fake_num', fake_num)
         
         # Step3: make output
         loc_inds = np.hstack([fg_fake_inds, fg_inds])
@@ -165,11 +154,9 @@ def sample_anchor(anchor_gt_bbox_iou,
                   rpn_batch_size_per_im,
                   rpn_fg_fraction,
                   use_random=True):
-    print('rpn_fg_fraction', rpn_fg_fraction, 'anchor_gt_bbox_iou', anchor_gt_bbox_iou)
     labels[anchor_gt_bbox_iou >= rpn_positive_overlap] = 1
     num_fg = int(rpn_fg_fraction * rpn_batch_size_per_im)
     fg_inds = np.where(labels == 1)[0]
-    print('111111fg_inds', len(fg_inds), num_fg)
     if len(fg_inds) > num_fg and use_random:
         disable_inds = np.random.choice(
             fg_inds, size=(len(fg_inds) - num_fg), replace=False)
@@ -186,7 +173,6 @@ def sample_anchor(anchor_gt_bbox_iou,
         enable_inds = bg_inds[:num_bg]
     
     fg_fake_inds = np.array([], np.int32)
-    print('fg_inds', fg_inds)
     fg_value = np.array([fg_inds[0]], np.int32)
     fake_num = 0
     for bg_id in enable_inds:
@@ -220,8 +206,6 @@ if __name__ == '__main__':
     is_crowd = is_crowd.reshape(1,4)
     gt_boxes = np.expand_dims(gt_boxes, 0)
     
-    print(anchors.shape,anchors.sum(), gt_boxes.shape,  gt_boxes, is_crowd.shape, is_crowd, im_info.shape, im_info)
-
     rpn_straddle_thresh = 0.0
     rpn_batch_size_per_im = 256
     rpn_positive_overlap = 0.7
@@ -233,8 +217,3 @@ if __name__ == '__main__':
                                rpn_positive_overlap, rpn_fg_fraction, use_random, anchor_reg_weights)
 
     loc_indexes, cls_indexes, tgt_labels, tgt_deltas, anchor_inside_weights = ret
-    print('loc_indexes', loc_indexes.shape, loc_indexes.mean())
-    print('cls_indexes', cls_indexes.shape, cls_indexes.mean())
-    print('tgt_labels', tgt_labels.shape, tgt_labels.mean())
-    print('tgt_deltas', tgt_deltas.shape, tgt_deltas.mean())
-    print('anchor_inside_weights', anchor_inside_weights.shape, anchor_inside_weights.mean())
