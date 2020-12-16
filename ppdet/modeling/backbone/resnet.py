@@ -39,14 +39,14 @@ class ConvNormLayer(nn.Layer):
                  norm_decay=0.,
                  freeze_norm=True,
                  lr=1.0,
-                 dcn_v2=False,
+                 use_dcn_v2=False,
                  name=None):
         super(ConvNormLayer, self).__init__()
         assert norm_type in ['bn', 'sync_bn']
         self.norm_type = norm_type
         self.act = act
 
-        if dcn_v2 is False:
+        if not use_dcn_v2:
             self.conv = Conv2D(
                 in_channels=ch_in,
                 out_channels=ch_out,
@@ -118,7 +118,7 @@ class BottleNeck(nn.Layer):
                  norm_type='bn',
                  norm_decay=0.,
                  freeze_norm=True,
-                 dcn_v2=False):
+                 use_dcn_v2=False):
         super(BottleNeck, self).__init__()
         if variant == 'a':
             stride1, stride2 = stride, 1
@@ -192,7 +192,7 @@ class BottleNeck(nn.Layer):
             norm_decay=norm_decay,
             freeze_norm=freeze_norm,
             lr=lr,
-            dcn_v2=dcn_v2,
+            use_dcn_v2=use_dcn_v2,
             name=conv_name2)
 
         self.branch2c = ConvNormLayer(
@@ -233,7 +233,7 @@ class Blocks(nn.Layer):
                  norm_type='bn',
                  norm_decay=0.,
                  freeze_norm=True,
-                 dcn_v2=False):
+                 use_dcn_v2=False):
         super(Blocks, self).__init__()
 
         self.blocks = []
@@ -254,7 +254,7 @@ class Blocks(nn.Layer):
                     norm_type=norm_type,
                     norm_decay=norm_decay,
                     freeze_norm=freeze_norm,
-                    dcn_v2=dcn_v2))
+                    use_dcn_v2=use_dcn_v2))
             self.blocks.append(block)
 
     def forward(self, inputs):
@@ -283,7 +283,7 @@ class ResNet(nn.Layer):
                  return_idx=[0, 1, 2, 3],
                  dcn_v2_stages=[1, 2, 3],
                  num_stages=4,
-                 lr_mult_list=[0.05, 0.05, 0.1, 0.15]):
+                 lr_mult_list=[1.0, 1.0, 1.0, 1.0]):
         super(ResNet, self).__init__()
         self.depth = depth
         self.variant = variant
@@ -302,10 +302,12 @@ class ResNet(nn.Layer):
         self.num_stages = num_stages
         if isinstance(dcn_v2_stages, Integral):
             dcn_v2_stages = [dcn_v2_stages]
-        #assert max(dcn_v2_stages) < num_stages, \
-        #    'the maximum return dcn_v2_stages must smaller than num_stages, ' \
-        #    'but received maximum dcn_v2_stages is {} and num_stages ' \
-        #    'is {}'.format(max(return_idx), num_stages)
+        
+        if len(dcn_v2_stages) >= 1:
+            assert max(dcn_v2_stages) < num_stages, \
+                'the maximum return dcn_v2_stages must smaller than num_stages, ' \
+                'but received maximum dcn_v2_stages is {} and num_stages ' \
+                'is {}'.format(max(return_idx), num_stages)
         self.dcn_v2_stages = dcn_v2_stages
 
         block_nums = ResNet_cfg[depth]
@@ -334,7 +336,7 @@ class ResNet(nn.Layer):
                     norm_type=norm_type,
                     norm_decay=norm_decay,
                     freeze_norm=freeze_norm,
-                    lr=lr_mult,
+                    lr=1.0,
                     name=_name))
 
         self.pool = MaxPool2D(kernel_size=3, stride=2, padding=1)
@@ -359,7 +361,7 @@ class ResNet(nn.Layer):
                     norm_type=norm_type,
                     norm_decay=norm_decay,
                     freeze_norm=freeze_norm,
-                    dcn_v2=(i in self.dcn_v2_stages)))
+                    dcn_v2_stage=(i in self.dcn_v2_stages)))
             self.res_layers.append(res_layer)
 
     def forward(self, inputs):
