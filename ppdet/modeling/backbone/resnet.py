@@ -22,9 +22,10 @@ from paddle.nn import Conv2D, BatchNorm, Pool2D, MaxPool2D
 from ppdet.core.workspace import register, serializable
 
 from paddle.regularizer import L2Decay
+from paddle.fluid.initializer import ConstantInitializer
 from .name_adapter import NameAdapter
 from numbers import Integral
-from ppdet.modeling.ops import batch_norm, DeformableConvV2
+#from ppdet.modeling.ops import batch_norm, DeformableConvV2
 
 
 class ConvNormLayer(nn.Layer):
@@ -45,8 +46,9 @@ class ConvNormLayer(nn.Layer):
         assert norm_type in ['bn', 'sync_bn']
         self.norm_type = norm_type
         self.act = act
+        self.use_dcn_v2 = use_dcn_v2
 
-        if not use_dcn_v2:
+        if not self.use_dcn_v2:
             self.conv = Conv2D(
                 in_channels=ch_in,
                 out_channels=ch_out,
@@ -58,17 +60,32 @@ class ConvNormLayer(nn.Layer):
                     learning_rate=lr, name=name + "_weights"),
                 bias_attr=False)
         else:
-            self.conv = DeformableConvV2(
+            # select deformable conv"
+            dcn_out_channel = filter_size * filter_size * 2
+            self.offset = Conv2D(
                 in_channels=ch_in,
-                out_channels=ch_out,
+                out_channels=dcn_out_channel,
                 kernel_size=filter_size,
                 stride=stride,
                 padding=(filter_size - 1) // 2,
                 groups=1,
                 weight_attr=ParamAttr(
-                    name='{}.dcn.weight'.format(name), learning_rate=lr),
-                bias_attr=False,
-                name=name)
+                    initializer=ConstantInitializer(0.0), name=name + "_conv_offset" + ".w_0"),
+                bias_attr=ParamAttr(
+                    initializer=ConstantInitializer(0.0), name=name + "_conv_offset" + ".b_0"))
+    
+            #self.lr_mult = [0.05, 0.05, 0.1, 0.15]
+            self.deform_conv = paddle.vision.ops.DeformConv2D(in_channels=ch_in,
+                                                              out_channels=ch_out,
+                                                              kernel_size=[filter_size, filter_size],
+                                                              padding=(self.filter_size - 1) // 2,
+                                                              stride=stride,
+                                                              groups=1,
+                                                              weight_attr=ParamAttr(
+                                                                  name=self.name + "_weights",
+                                                                  learning_rate=lr),
+                                                              bias_attr=False
+                                                              )
 
         bn_name = name_adapter.fix_conv_norm_name(name)
         norm_lr = 0. if freeze_norm else lr
@@ -99,6 +116,24 @@ class ConvNormLayer(nn.Layer):
                 param.stop_gradient = True
 
     def forward(self, inputs):
+        if self.use_dcn_v2:
+            offset_channel = self.filter_size ** 2 * 2
+            mask_channel = self.filter_size ** 2
+    
+            offset_mask = self.offset_mask(inputs)
+            offset, mask = paddle.fluid.layers.split(
+                input=offset_mask,
+                num_or_sections=[offset_channel, mask_channel],
+                dim=1)
+    
+            mask = paddle.fluid.layers.sigmoid(mask)
+    
+            self.lr_mult = [1.0]
+            out = self.deform_conv(inputs, offset, mask)
+            if self.norm_type == 'bn':
+                out = self.norm(out)
+            return out
+        
         out = self.conv(inputs)
         if self.norm_type == 'bn':
             out = self.norm(out)
@@ -275,7 +310,6 @@ class ResNet(nn.Layer):
     def __init__(self,
                  depth=50,
                  variant='b',
-                 lr_mult=1.,
                  norm_type='bn',
                  norm_decay=0,
                  freeze_norm=True,
