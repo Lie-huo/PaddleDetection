@@ -1,6 +1,6 @@
 architecture: FasterRCNN
 pretrain_weights: https://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_cos_pretrained.tar
-weights: faster_rcnn_r50_dcn_pssdet/faster_rcnn_dcn_r50_vd_fpn_3x_server_side_roadsign/model_final
+weights: output/faster_rcnn_r50_vd_fpn_1x_coco_pssdet_roadsign/model_final.pdparams
 load_static_weights: False
 
 # Model Achitecture
@@ -78,6 +78,7 @@ Proposal:
     fg_thresh: [0.5,]
     fg_fraction: 0.25
     use_random: True
+    num_classes: 5
 
 BBoxHead:
   bbox_feat:
@@ -96,11 +97,13 @@ BBoxHead:
       mlp_dim: 1024
   in_feat: 1024
   bbox_loss: DiouLoss
+  num_classes: 5
 
 DiouLoss:
   loss_weight: 10.0
   is_cls_agnostic: false
   use_complete_iou_loss: true
+  num_classes: 5
 
 BBoxPostProcess:
   decode:
