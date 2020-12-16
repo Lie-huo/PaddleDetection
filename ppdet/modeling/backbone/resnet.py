@@ -281,7 +281,7 @@ class ResNet(nn.Layer):
                  freeze_norm=True,
                  freeze_at=0,
                  return_idx=[0, 1, 2, 3],
-                 dcn_v2_stages=[1, 2, 3],
+                 dcn_v2_stages=[],
                  num_stages=4,
                  lr_mult_list=[1.0, 1.0, 1.0, 1.0]):
         super(ResNet, self).__init__()
