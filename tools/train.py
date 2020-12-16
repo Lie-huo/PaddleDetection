@@ -117,8 +117,8 @@ def run(FLAGS, cfg, place):
 
     if FLAGS.enable_ce:
         #seed = 123
-        random.seed(seed)
-        np.random.seed(seed)
+        random.seed(0)
+        np.random.seed(0)
 
     if ParallelEnv().nranks > 1:
         paddle.distributed.init_parallel_env()

@@ -302,10 +302,10 @@ class ResNet(nn.Layer):
         self.num_stages = num_stages
         if isinstance(dcn_v2_stages, Integral):
             dcn_v2_stages = [dcn_v2_stages]
-        assert max(dcn_v2_stages) < num_stages, \
-            'the maximum return dcn_v2_stages must smaller than num_stages, ' \
-            'but received maximum dcn_v2_stages is {} and num_stages ' \
-            'is {}'.format(max(return_idx), num_stages)
+        #assert max(dcn_v2_stages) < num_stages, \
+        #    'the maximum return dcn_v2_stages must smaller than num_stages, ' \
+        #    'but received maximum dcn_v2_stages is {} and num_stages ' \
+        #    'is {}'.format(max(return_idx), num_stages)
         self.dcn_v2_stages = dcn_v2_stages
 
         block_nums = ResNet_cfg[depth]
