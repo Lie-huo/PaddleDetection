@@ -361,7 +361,7 @@ class ResNet(nn.Layer):
                     norm_type=norm_type,
                     norm_decay=norm_decay,
                     freeze_norm=freeze_norm,
-                    dcn_v2_stage=(i in self.dcn_v2_stages)))
+                    use_dcn_v2=(i in self.dcn_v2_stages)))
             self.res_layers.append(res_layer)
 
     def forward(self, inputs):
