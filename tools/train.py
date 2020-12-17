@@ -42,11 +42,6 @@ import ppdet.utils.stats as stats
 from ppdet.utils.logger import setup_logger
 logger = setup_logger('train')
 
-# set seed
-#np.random.seed(123)
-#paddle.seed(123)
-#paddle.manual_seed(1234)
-#paddle.framework.manual_seed(1234)
 
 def parse_args():
     parser = cli.ArgsParser()
@@ -94,12 +89,10 @@ def run(FLAGS, cfg, place):
     if FLAGS.dist:
         trainer_id = int(env['PADDLE_TRAINER_ID'])
         local_seed = (99 + trainer_id)
-        #local_seed = 123
         random.seed(local_seed)
         np.random.seed(local_seed)
 
     if FLAGS.enable_ce:
-        #seed = 123
         random.seed(0)
         np.random.seed(0)
 
