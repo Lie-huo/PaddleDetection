@@ -92,6 +92,7 @@ class RPNHead(nn.Layer):
         score_tgt = paddle.cast(
             x=loss_inputs['rpn_score_target'], dtype='float32')
         score_tgt.stop_gradient = True
+        
         loss_rpn_cls = ops.sigmoid_cross_entropy_with_logits(
             input=loss_inputs['rpn_score_pred'], label=score_tgt)
         loss_rpn_cls = paddle.mean(loss_rpn_cls, name='loss_rpn_cls')

@@ -58,6 +58,7 @@ class FasterRCNN(BaseArch):
         # Proposal RoI
         # compute targets here when training
         rois = self.proposal(self.inputs, self.rpn_head_out, self.anchor_out)
+
         # BBox Head
         bbox_feat, self.bbox_head_out, self.bbox_head_feat_func = self.bbox_head(
             body_feats, rois, spatial_scale)

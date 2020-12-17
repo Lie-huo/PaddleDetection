@@ -21,3 +21,4 @@ from .yolo_loss import *
 from .iou_aware_loss import *
 from .iou_loss import *
 from .ssd_loss import *
+from .diou_loss import *
