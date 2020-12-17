@@ -140,7 +140,6 @@ class COCODataSet(DetDataset):
                         has_segmentation = True
 
                 #if has_segmentation and not any(gt_poly):
-                #    print('zzdd')
                 #    continue
 
                 coco_rec.update({

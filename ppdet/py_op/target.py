@@ -480,8 +480,6 @@ def libra_generate_proposal_target(rpn_rois,
                 fg_inds = libra_sample_pos(max_overlaps, max_classes,
                                       fg_inds, fg_rois_per_im)
             fg_inds = fg_inds[:fg_nums]
-            #print('min', min(max_overlaps[np.where(max_overlaps >= fg_thresh)]))
-            #print('max', max(max_overlaps[np.where(max_overlaps < fg_thresh)]))
     
             # sample bg
             bg_inds = np.where((max_overlaps < bg_thresh_hi) & (max_overlaps >=
@@ -518,12 +516,7 @@ def libra_generate_proposal_target(rpn_rois,
         bbox_outside_weights = np.array(
             bbox_inside_weights > 0, dtype=bbox_inside_weights.dtype)
 
-        
-        #print('libar sampled_rois', sampled_boxes.shape, sampled_boxes.mean(), sampled_labels.shape, sampled_labels.mean(),
-        #     'fg_inds', len(fg_inds), sum(fg_inds), 'bg_inds', len(bg_inds), sum(bg_inds))
-
         roi = sampled_boxes * im_scale
-        #print('sampled roi', roi.shape, roi.mean())
         
         st_num += length
 

@@ -1,8 +1,9 @@
 # Virtualenv
 /.venv/
 /venv/
+
+# pdparams
 *.pdparams
-*.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
