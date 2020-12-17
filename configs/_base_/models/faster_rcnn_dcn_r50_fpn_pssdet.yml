@@ -1,8 +1,6 @@
 architecture: FasterRCNN
-pretrain_weights: https://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_cos_pretrained.tar
-weights: faster_rcnn_r50_dcn_pssdet/faster_rcnn_dcn_r50_vd_fpn_3x_server_side.pdparams
-# output/faster_rcnn_dcn_r50_vd_fpn_3x_server_side.pdparams
-# output/faster_rcnn_r50_fpn_1x_coco/model_final.pdparams
+pretrain_weights: https://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_vd_ssld_pretrained.tar
+weights: output/faster_rcnn_r50_vd_fpn_pssdet/model_final.pdparams
 load_static_weights: True
 
 # Model Achitecture
@@ -28,8 +26,7 @@ ResNet:
   num_stages: 4
   variant: d
   dcn_v2_stages: [1, 2, 3]
-  #lr_mult_list: [ 0.05, 0.05, 0.1, 0.15 ]
-  #dcn_v2: True
+  lr_mult_list: [0.05, 0.05, 0.1, 0.15]
 
 FPN:
   in_channels: [256, 512, 1024, 2048]
@@ -61,6 +58,7 @@ Anchor:
     negative_overlap: 0.3
     positive_overlap: 0.7
     straddle_thresh: 0.0
+    use_random: True
 
 Proposal:
   proposal_generator:
@@ -72,13 +70,14 @@ Proposal:
     infer_pre_nms_top_n: 500
     infer_post_nms_top_n: 300
   proposal_target_generator:
-    name: ProposalTargetGenerator
+    name: LibraProposalTargetGenerator
     batch_size_per_im: 512
     bbox_reg_weights: [0.1, 0.1, 0.2, 0.2]
     bg_thresh_hi: [0.5,]
     bg_thresh_lo: [0.0,]
     fg_thresh: [0.5,]
     fg_fraction: 0.25
+    use_random: True
 
 BBoxHead:
   bbox_feat:
@@ -96,20 +95,12 @@ BBoxHead:
       in_dim: 64
       mlp_dim: 1024
   in_feat: 1024
-  #bbox_loss: DiouLoss
+  bbox_loss: DiouLoss
 
 DiouLoss:
   loss_weight: 10.0
   is_cls_agnostic: false
   use_complete_iou_loss: true
-
-BBoxAssigner:
-  batch_size_per_im: 512
-  bbox_reg_weights: [ 0.1, 0.1, 0.2, 0.2 ]
-  bg_thresh_hi: 0.5
-  bg_thresh_lo: 0.0
-  fg_fraction: 0.25
-  fg_thresh: 0.5
 
 BBoxPostProcess:
   decode:
