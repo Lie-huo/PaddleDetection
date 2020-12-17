@@ -1,6 +1,6 @@
 _BASE_: [
   './_base_/models/faster_rcnn_dcn_r50_fpn_pssdet_roadsign.yml',
-  './_base_/optimizers/rcnn_1x.yml',
+  './_base_/optimizers/rcnn_1x_pssdet.yml',
   './_base_/datasets/roadsign.yml',
   './_base_/readers/faster_fpn_reader_pssdet.yml',
   './_base_/runtime.yml',
