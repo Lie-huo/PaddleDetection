@@ -174,6 +174,7 @@ def run(FLAGS, cfg, place):
                     fmt = ' '.join([
                         'Epoch: [{}]',
                         '[{' + space_fmt + '}/{}]',
+                        'lr: {}',
                         '{meters}',
                         'eta: {eta}',
                         'batch_cost: {btime}',
@@ -183,6 +184,7 @@ def run(FLAGS, cfg, place):
                     fmt = fmt.format(
                         cur_eid,
                         iter_id,
+                        lr,
                         steps,
                         meters=logs,
                         eta=eta_str,
