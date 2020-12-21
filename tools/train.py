@@ -184,7 +184,7 @@ def run(FLAGS, cfg, place):
                     fmt = fmt.format(
                         cur_eid,
                         iter_id,
-                        lr,
+                        curr_lr,
                         steps,
                         meters=logs,
                         eta=eta_str,
