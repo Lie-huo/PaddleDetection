@@ -1,7 +1,7 @@
-worker_num: 2
+worker_num: 1
 TrainReader:
-  #inputs_def:
-  #  fields: ['image', 'im_info', 'im_id', 'gt_bbox', 'gt_class', 'is_crowd']
+  inputs_def:
+    fields: ['image', 'im_info', 'im_id', 'gt_bbox', 'gt_class', 'is_crowd']
   sample_transforms:
   - DecodeImage: {to_rgb: true}
   - RandomFlipImage: {prob: 0.5}
@@ -9,7 +9,7 @@ TrainReader:
   - ResizeImage: {target_size: 800, max_size: 1333, interp: 1, use_cv2: true}
   - Permute: {to_bgr: false, channel_first: true}
   batch_transforms:
-  - PadBatch: {pad_to_stride: 128, use_padded_im_info: false, pad_gt: true}
+  - PadBatch: {pad_to_stride: 32, use_padded_im_info: false, pad_gt: true}
   batch_size: 1
   shuffle: true
   drop_last: true
@@ -24,7 +24,7 @@ EvalReader:
   - ResizeOp: { interp: 1, target_size: [ 800, 1333 ], keep_ratio: True }
   - PermuteOp: { }
   batch_transforms:
-  - PadBatchOp: { pad_to_stride: 128, pad_gt: false }
+  - PadBatchOp: { pad_to_stride: 32, pad_gt: false }
   batch_size: 1
   shuffle: false
   drop_last: false
