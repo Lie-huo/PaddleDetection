@@ -1,0 +1,53 @@
+architecture: S2ANet
+pretrain_weights: https://paddle-imagenet-models-name.bj.bcebos.com/ResNet50_cos_pretrained.tar
+weights: output/s2anet_r50_fpn_1x_dota/model_final.pdparams
+
+load_static_weights: True
+
+# Model Achitecture
+S2ANet:
+  backbone: ResNet
+  neck: FPN
+  #s2anet_head: RPNHead
+
+
+ResNet:
+  # index 0 stands for res2
+  depth: 50
+  norm_type: bn
+  freeze_at: 0
+  return_idx: [0,1,2,3]
+  num_stages: 4
+
+FPN:
+  in_channels: [256, 512, 1024, 2048]
+  out_channel: 256
+  min_level: 1
+  max_level: 3
+  spatial_scale: [0.25, 0.125, 0.0625, 0.03125]
+
+
+RetinaHead:
+  num_convs_per_octave: 4
+  num_chan: 256
+  max_level: 5
+  min_level: 1
+  prior_prob: 0.01
+  # TODO: check
+  base_scale: 4
+  num_scales_per_octave: 3
+  anchor_generator:
+    aspect_ratios: [1.0, 2.0, 0.5]
+    variance: [1.0, 1.0, 1.0, 1.0]
+  target_assign:
+    positive_overlap: 0.5
+    negative_overlap: 0.4
+  gamma: 2.0
+  alpha: 0.25
+  sigma: 3.0151134457776365
+  output_decoder:
+    score_thresh: 0.05
+    nms_thresh: 0.5
+    pre_nms_top_n: 1000
+    detections_per_im: 100
+    nms_eta: 1.0

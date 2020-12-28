@@ -17,9 +17,11 @@ from . import bbox_head
 from . import mask_head
 from . import yolo_head
 from . import roi_extractor
+from . import s2anet_head
 
 from .rpn_head import *
 from .bbox_head import *
 from .mask_head import *
 from .yolo_head import *
 from .roi_extractor import *
+from .s2anet_head import *
