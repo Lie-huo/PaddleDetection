@@ -1,0 +1,13 @@
+283 extract_feat in img torch.Size([1, 3, 1024, 608]) tensor(-1093875.2500, device='cuda:0')
+284 extract_feat, after backbone
+285 backbone_0.npy torch.Size([1, 256, 256, 152]) tensor(1525891.3750, device='cuda:0')
+286 backbone_1.npy torch.Size([1, 512, 128, 76]) tensor(420226.8125, device='cuda:0')
+287 backbone_2.npy torch.Size([1, 1024, 64, 38]) tensor(100217.5781, device='cuda:0')
+288 backbone_3.npy torch.Size([1, 2048, 32, 19]) tensor(30309.2559, device='cuda:0')
+
+548 extract_feat, after neck
+549 neck_0.npy torch.Size([1, 256, 128, 76]) tensor(-2978.0312, device='cuda:0')
+550 neck_1.npy torch.Size([1, 256, 64, 38]) tensor(826.0624, device='cuda:0')
+551 neck_2.npy torch.Size([1, 256, 32, 19]) tensor(305.4843, device='cuda:0')
+552 neck_3.npy torch.Size([1, 256, 16, 10]) tensor(-275.3528, device='cuda:0')
+553 neck_4.npy torch.Size([1, 256, 8, 5]) tensor(-95.0363, device='cuda:0')

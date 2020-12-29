@@ -82,6 +82,12 @@ class S2ANet(BaseArch):
         #self.s2anet_head = s2anet_head
 
     def model_arch(self):
+        
+        print('inputs', self.inputs['image'].shape, self.inputs['image'].sum())
+        np_s2anet_in_img = np.load('demo/extract_feat_in_img.npy')
+        self.inputs['image'] = paddle.to_tensor(np_s2anet_in_img)
+        print('inputs', self.inputs['image'].shape, self.inputs['image'].sum())
+        
         # Backbone
         body_feats = self.backbone(self.inputs)
         spatial_scale = 0.0625
@@ -89,15 +95,18 @@ class S2ANet(BaseArch):
         
         print('len body_feats', len(body_feats))
         for k in body_feats:
-            print(k.shape)
+            print(k.shape, k.sum())
             
             
         # Neck
         if self.neck is not None:
             body_feats, spatial_scale = self.neck(body_feats)
+        
+        print('debug after FPN')
+        for k in body_feats:
+            print(k.shape, k.numpy().sum())
 
-        '''
-        # Retain Head
+        # s2anet Head
         print('anchor', self.anchor)
         print('body_feats', len(body_feats))
         self.anchor_list_center = []
@@ -120,11 +129,10 @@ class S2ANet(BaseArch):
         print('create model anchor_out anchor_list_xywhr', len(self.anchor_list_xywhr))
         input('xxx')
         self.s2anet_head_outs = self.s2anet_head(body_feats)
-        '''
+
 
     def get_loss(self, ):
-        return None
-        loss = self.s2anet_head.get_loss(self.inputs, self.yolo_head_outs)
+        loss = self.s2anet_head.get_loss(self.inputs, self.s2anet_head_outs)
         total_loss = paddle.add_n(list(loss.values()))
         loss.update({'loss': total_loss})
         return loss

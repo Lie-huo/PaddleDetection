@@ -120,6 +120,12 @@ def load_pretrain_weight(model,
 
     model_dict = model.state_dict()
 
+    # for compare loss debug
+    print('path====', path)
+    pre_state_dict = paddle.load(path + '.pdparams')
+    model.set_state_dict(pre_state_dict)
+    return
+
     if load_static_weights:
         pre_state_dict = paddle.static.load_program_state(path)
         param_state_dict = {}

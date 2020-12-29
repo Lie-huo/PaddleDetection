@@ -70,7 +70,8 @@ class FPN(Layer):
                         initializer=XavierUniform(fan_out=in_c)),
                     bias_attr=ParamAttr(
                         learning_rate=2., regularizer=L2Decay(0.))))
-            # set i idx self.lateral_convs[i] = lateral
+            
+            # add lateral conv
             self.lateral_convs.append(lateral)
 
             fpn_name = 'fpn_res{}_sum'.format(i + 2)
@@ -135,7 +136,7 @@ class FPN(Layer):
         for i in range(len(self.lateral_convs)):
             laterals.append(self.lateral_convs[i](body_feats[i+self.min_level]))
 
-        print('lenn(laterals)', len([e for e in laterals if e is not None]))
+        print('len(laterals)', len(laterals))
         used_backbone_levels = len(laterals)
         for i in range(used_backbone_levels - 1, 0, -1):
             print('now i', i)

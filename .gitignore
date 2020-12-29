@@ -6,6 +6,8 @@
 __pycache__/
 .ipynb_checkpoints/
 *.py[cod]
+*.pdparams
+
 
 # C extensions
 *.so

@@ -50,7 +50,6 @@ def merge_dict():
         fout.write('{}{}\n'.format(t, pd_lsit[i]))
 
 
-
 def convert_param():
     paddle_model_dict = {}
     
@@ -59,7 +58,7 @@ def convert_param():
     
     s2anet_2_paddle_map = {}
     paddle_2_s2anet_map = {}
-    for line in open('s2anet_to_paddle_map.txt'):
+    for line in open('s2anet_to_paddle_map_fpn.txt'):
         elems = line.strip().split(' ')
         torch_key = elems[0]
         pd_key = elems[-1]
@@ -76,7 +75,7 @@ def convert_param():
             continue
         pd_k = s2anet_2_paddle_map[k]
         print('pd_key {} torch_key {} param.shape: {}'.format(pd_k, k, param.shape))
-        paddle_model_dict[pd_k] = param
+        paddle_model_dict[pd_k] = param.cpu().numpy()
 
     pickle.dump(paddle_model_dict, open('paddle_s2anet.pdparams', 'wb'), protocol=2)
    
@@ -84,9 +83,14 @@ def convert_param():
 def verify_pd():
     import paddle
     pdparam_path = 'paddle_s2anet.pdparams'
-    fpn = '/Users/liuhui29/Downloads/faster_rcnn_r50_fpn_1x_coco.pdparams'
-    param_state_dict = paddle.load(fpn)
+    #fpn = '/Users/liuhui29/Downloads/faster_rcnn_r50_fpn_1x_coco.pdparams'
+    param_state_dict = paddle.load(pdparam_path)
     print(param_state_dict.keys())
+
+    print(type(param_state_dict))
+    print('\n\n')
+    for k in param_state_dict.keys():
+        print(k, param_state_dict[k].shape, type(param_state_dict[k]))
 
 
 
@@ -101,7 +105,8 @@ if __name__ == "__main__":
 
     test_path = '/Users/liuhui29/Downloads/faster_rcnn_r50_fpn_1x_coco.pdparams'
     import paddle
-    #model_dict = paddle.load(test_path)
-    #print(type(model_dict))
-    #for k in model_dict.keys():
-    #    print(k)
+    model_dict = paddle.load(test_path)
+    print(type(model_dict))
+    print('\n\n')
+    for k in model_dict.keys():
+        print(k)
