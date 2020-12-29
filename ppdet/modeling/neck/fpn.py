@@ -50,9 +50,9 @@ class FPN(Layer):
         
         fan = out_channel * 3 * 3
         
-        # first make len(self.fpn_convs) == self.num_outs, len(self.lateral_convs) == self.num_outs
-        self.fpn_convs = []
+        # lateral_convs and fpn_convs
         self.lateral_convs = []
+        self.fpn_convs = []
 
         for i in range(min_level, max_level):
             if i == 3:
@@ -174,7 +174,7 @@ class FPN(Layer):
             
         # make self.spatial_scale same length as fpn_output
         for _ in range(len(fpn_output) - len(self.spatial_scale)):
-            self.spatial_scale.append(self.spatial_scale[-1])
+            self.spatial_scale.append(self.spatial_scale[-1] * 0.5)
             
         for i in range(len(fpn_output)):
             print('fpn out i', i, fpn_output[i].shape, self.spatial_scale[i])

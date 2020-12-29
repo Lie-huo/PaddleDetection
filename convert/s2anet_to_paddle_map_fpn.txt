@@ -279,3 +279,15 @@ neck.fpn_convs.3.conv.weight                                    neck.fpn_res0_su
 neck.fpn_convs.3.conv.bias                                      neck.fpn_res0_sum_extra.bias
 neck.fpn_convs.4.conv.weight                                    neck.fpn_res1_sum_extra.weight
 neck.fpn_convs.4.conv.bias                                      neck.fpn_res1_sum_extra.bias
+rbox_head.fam_reg_convs.0.conv.weight                           s2anet_head.fam_reg_convs.fam_reg_conv_0.weight
+rbox_head.fam_reg_convs.0.conv.bias                             s2anet_head.fam_reg_convs.fam_reg_conv_0.bias
+rbox_head.fam_reg_convs.1.conv.weight                           s2anet_head.fam_reg_convs.fam_reg_conv_1.weight
+rbox_head.fam_reg_convs.1.conv.bias                             s2anet_head.fam_reg_convs.fam_reg_conv_1.bias
+rbox_head.fam_cls_convs.0.conv.weight                           s2anet_head.fam_cls_convs.fam_cls_conv_0.weight
+rbox_head.fam_cls_convs.0.conv.bias                             s2anet_head.fam_cls_convs.fam_cls_conv_0.bias
+rbox_head.fam_cls_convs.1.conv.weight                           s2anet_head.fam_cls_convs.fam_cls_conv_1.weight
+rbox_head.fam_cls_convs.1.conv.bias                             s2anet_head.fam_cls_convs.fam_cls_conv_1.bias
+rbox_head.fam_reg.weight                                        s2anet_head.fam_reg.weight
+rbox_head.fam_reg.bias                                          s2anet_head.fam_reg.bias
+rbox_head.fam_cls.weight                                        s2anet_head.fam_cls.weight
+rbox_head.fam_cls.bias                                          s2anet_head.fam_cls.bias

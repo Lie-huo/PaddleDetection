@@ -22,10 +22,10 @@ import pickle
 
 
 def load_s2anet_torch(model_path):
-    load_model = torch.load(model_path, map_location=torch.device('cpu'))
+    torch_loaded_model = torch.load(model_path, map_location=torch.device('cpu'))
     
-    model_meta = load_model['meta']
-    model_state_dict = load_model['state_dict']
+    model_meta = torch_loaded_model['meta']
+    model_state_dict = torch_loaded_model['state_dict']
     # print(model_meta)
     for k in model_state_dict.keys():
         print(k)
@@ -97,7 +97,7 @@ def verify_pd():
 if __name__ == "__main__":
     model_path = '/Users/liuhui29/Downloads/s2anet_r50_fpn_1x_epoch_12_20200815.pth'
     #merge_dict()
-    #convert_param()
+    convert_param()
     verify_pd()
     sys.exit(0)
     

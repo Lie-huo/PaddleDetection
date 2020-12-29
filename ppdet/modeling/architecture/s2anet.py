@@ -73,13 +73,13 @@ class S2ANet(BaseArch):
     """
 
     __category__ = 'architecture'
-    __inject__ = ['backbone', 'neck']
+    __inject__ = ['backbone', 'neck', 's2anet_head']
 
-    def __init__(self, backbone, neck):#, s2anet_head):
+    def __init__(self, backbone, neck, s2anet_head):
         super(S2ANet, self).__init__()
         self.backbone = backbone
         self.neck = neck
-        #self.s2anet_head = s2anet_head
+        self.s2anet_head = s2anet_head
 
     def model_arch(self):
         
@@ -107,6 +107,7 @@ class S2ANet(BaseArch):
             print(k.shape, k.numpy().sum())
 
         # s2anet Head
+        '''
         print('anchor', self.anchor)
         print('body_feats', len(body_feats))
         self.anchor_list_center = []
@@ -128,6 +129,7 @@ class S2ANet(BaseArch):
         print('anchor convert finish!')
         print('create model anchor_out anchor_list_xywhr', len(self.anchor_list_xywhr))
         input('xxx')
+        '''
         self.s2anet_head_outs = self.s2anet_head(body_feats)
 
 

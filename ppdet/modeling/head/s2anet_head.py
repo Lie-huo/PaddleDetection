@@ -15,8 +15,10 @@
 import paddle
 from paddle import ParamAttr
 import paddle.nn as nn
+from paddle.nn import Conv2D
 import paddle.nn.functional as F
 from paddle.nn import ReLU
+from paddle.nn import Layer, Sequential
 from paddle.nn.initializer import Normal, XavierUniform
 from paddle.regularizer import L2Decay
 from ppdet.core.workspace import register
@@ -200,25 +202,27 @@ class S2ANetHead_FAM_CLS(nn.Layer):
 
 
 @register
-class S2ANetHead(nn.Layer):
+class S2ANetHead(Layer):
     __shared__ = ['num_classes']
     __inject__ = ['loss']
     
     def __init__(self,
-                 stacked_convs=4,
+                 stacked_convs=2,
                  feat_in=256,
                  feat_out=256,
-                 fam_feat_channels=256,
-                 num_classes=16,
-                 loss='S2ANetLoss'):
+                 num_classes=15,
+                 align_conv_type='AlignConv',
+                 with_ORconv=False,
+                 loss=None):
         super(S2ANetHead, self).__init__()
         self.stacked_convs = stacked_convs
         self.feat_in = feat_in
         self.feat_out = feat_out
-        self.fam_feat_channels = fam_feat_channels
         self.anchor_list = None
         self.num_classes = num_classes
-        self.num_classes = 16  # for debug
+        assert align_conv_type in ['AlignConv',]
+        self.align_conv_type = align_conv_type
+        self.with_ORconv = with_ORconv
         self.loss = loss
         
         self.fam_cls_convs = Sequential()
@@ -227,45 +231,49 @@ class S2ANetHead(nn.Layer):
         fan_conv = feat_out * 3 * 3
         
         for i in range(self.stacked_convs):
-            chan_in = self.feat_in if i == 0 else self.fam_feat_channels
+            chan_in = self.feat_in if i == 0 else self.feat_out
             # chan_in = self.feat_channels
+
             self.fam_cls_convs.add_sublayer(
                 'fam_cls_conv_{}'.format(i),
                 Conv2D(
-                    num_channels=chan_in,
-                    num_filters=self.fam_feat_channels,
-                    filter_size=3,
-                    act='relu',
+                    in_channels=chan_in,
+                    out_channels=self.feat_out,
+                    kernel_size=3,
                     padding=1,
-                    param_attr=ParamAttr(
-                        # name=conv_name+'_w',
-                        initializer=MSRA(
-                            uniform=False, fan_in=fan_conv)),
+                    weight_attr=ParamAttr(
+                        initializer=XavierUniform(fan_out=fan_conv)),
                     bias_attr=ParamAttr(
-                        # name=conv_name+'_b',
-                        learning_rate=2.,
+                        learning_rate=1.,
                         regularizer=L2Decay(0.))))
+
+            self.fam_cls_convs.add_sublayer('fam_cls_conv_{}_act'.format(i), ReLU())
             
             self.fam_reg_convs.add_sublayer(
-                'fam_reg_conv',
+                'fam_reg_conv_{}'.format(i),
                 Conv2D(
-                    num_channels=chan_in,
-                    num_filters=self.fam_feat_channels,
-                    filter_size=3,
-                    act='relu',
+                    in_channels=chan_in,
+                    out_channels=self.feat_out,
+                    kernel_size=3,
                     padding=1,
-                    param_attr=ParamAttr(
-                        # name=conv_name+'_w',
-                        initializer=MSRA(
-                            uniform=False, fan_in=fan_conv)),
+                    weight_attr=ParamAttr(
+                        initializer=XavierUniform(fan_out=fan_conv)),
                     bias_attr=ParamAttr(
-                        # name=conv_name+'_b',
-                        learning_rate=2.,
+                        learning_rate=1., # TODO: check lr
                         regularizer=L2Decay(0.))))
+            self.fam_reg_convs.add_sublayer('fam_reg_conv_{}_act'.format(i), ReLU())
         
-        self.fam_reg = Conv2D(self.fam_feat_channels, 5, 1)
-        self.fam_cls = Conv2D(self.fam_feat_channels, self.num_classes, 1)
-    
+        self.fam_reg = Conv2D(self.feat_out, 5, 1)
+        self.fam_cls = Conv2D(self.feat_out, self.num_classes, 1)
+        
+        
+        if self.with_ORconv:
+            self.or_conv = ORConv2d(self.feat_channels, int(self.feat_out / 8), kernel_size = 3, padding = 1,
+                                    arf_config = (1, 8))
+        else:
+            self.or_conv = Conv2D(self.feat_out, self.feat_out, kernel_size=3, padding=1)
+        self.or_pool = RotationInvariantPooling(256, 8)
+        
     def align_conv(self):
         pass
     
@@ -275,35 +283,52 @@ class S2ANetHead(nn.Layer):
         fam_reg_branch_list = []
         fam_cls_branch_list = []
         for i, feat in enumerate(feats):
-            print('i==', i)
+            print('i==', i, 'in feat', feat.shape, feat.sum())
             fam_cls_feat = self.fam_cls_convs(feat)
-            print('fam_cls_feat', fam_cls_feat.shape)
+            print('fam_cls_feat', fam_cls_feat.shape, fam_cls_feat.sum())
+
             fam_cls = self.fam_cls(fam_cls_feat)
             fam_cls = fam_cls.transpose([0, 2, 3, 1])
             fam_cls = fam_cls.reshape([fam_cls.shape[0], -1, self.num_classes])
             fam_cls_branch_list.append(fam_cls)
-            
+
             fam_reg_feat = self.fam_reg_convs(feat)
-            print('fam_reg_feat', fam_reg_feat.shape)
+            print('fam_reg_feat', fam_reg_feat.shape, fam_reg_feat.sum())
+            
             fam_reg = self.fam_reg(fam_reg_feat)
             fam_reg = fam_reg.transpose([0, 2, 3, 1])
             fam_reg = fam_reg.reshape([fam_reg.shape[0], -1, 5])
             fam_reg_branch_list.append(fam_reg)
             
-            print('fam_cls', fam_cls.shape)
-            print('fam_reg', fam_reg.shape)
+            print('fam_cls', fam_cls.shape, fam_cls.sum())
+            print('fam_reg', fam_reg.shape, fam_reg.sum())
+
+            if self.align_conv_type == 'AlignConv':
+                align_feat = self.align_conv(feat, refine_anchor.clone(), stride)
+            elif self.align_conv_type == 'DCN':
+                align_offset = self.align_conv_offset(x)
+                align_feat = self.align_conv(feat, align_offset)
+            elif self.align_conv_type == 'GA_DCN':
+                align_offset = self.align_conv_offset(fam_bbox_pred)
+                align_feat = self.align_conv(feat, align_offset)
+            elif self.align_conv_type == 'Conv':
+                align_feat = self.align_conv(feat)
+                
             input('debug')
         
         print('feats out')
         fam_reg_branch = paddle.concat(fam_reg_branch_list, axis=1)
         fam_cls_branch = paddle.concat(fam_cls_branch_list, axis=1)
         
-        print('fam_reg_branch:', fam_reg_branch.shape)
-        print('fam_cls_branch:', fam_cls_branch.shape)
+        print('fam_reg_branch:', fam_reg_branch.shape, fam_reg_branch.sum())
+        print('fam_cls_branch:', fam_cls_branch.shape, fam_cls_branch.sum())
+        
+        or_feat = self.or_conv(align_feat)
         
         return None
     
     def get_loss(self, inputs, head_outputs):
+        return {'loss': 0.1}
         return self.loss(inputs, head_outputs)
 
 

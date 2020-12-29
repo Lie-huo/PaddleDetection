@@ -9,7 +9,7 @@ load_static_weights: False
 S2ANet:
   backbone: ResNet
   neck: FPN
-  #s2anet_head: RPNHead
+  s2anet_head: S2ANetHead
 
 
 ResNet:
@@ -30,7 +30,15 @@ FPN:
   num_outs: 5
 
 
-RetinaHead:
+S2ANetHead:
+  stacked_convs: 2
+  feat_in: 256
+  feat_out: 256
+  num_classes: 15
+
+
+
+S2ANetHead1:
   num_convs_per_octave: 4
   num_chan: 256
   max_level: 5
