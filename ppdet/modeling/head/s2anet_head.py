@@ -161,44 +161,33 @@ def anchor2offset(anchors, kernel_size, stride):
     return offset_tensor
 
 
-class S2ANetHead_FAM_CLS(nn.Layer):
+
+
+class AlignConv(Layer):
+
     def __init__(self,
-                 feat_in=2048,
-                 feat_size=256,
-                 num_anchors=9):
-        super(S2ANetHead_FAM_CLS, self).__init__()
-        self.feat_in = feat_in
-        self.feat_size = feat_size
-        self.num_anchors = num_anchors
-    
-    def model_arch(self, ):
-        # Backbone
-        self.gbd = self.inputs
-        # print('inputs', self.inputs.shape)
-        bb_out = self.backbone(self.gbd)
-        print('bb_out', bb_out.shape)
-        self.gbd.update(bb_out)
-        
-        # RPN
-        rpn_head_out = self.rpn_head(self.gbd)
-        self.gbd.update(rpn_head_out)
-        
-        # Anchor
-        anchor_out = self.anchor(self.gbd)
-        self.gbd.update(anchor_out)
-        
-        # Proposal BBox
-        self.gbd['stage'] = 0
-        proposal_out = self.proposal(self.gbd)
-        self.gbd.update({'proposal_0': proposal_out})
-        
-        # BBox Head
-        bboxhead_out = self.bbox_head(self.gbd)
-        self.gbd.update({'bbox_head_0': bboxhead_out})
-        
-        if self.gbd['mode'] == 'infer':
-            bbox_out = self.proposal.post_process(self.gbd)
-            self.gbd.update(bbox_out)
+                 in_channels,
+                 out_channels,
+                 kernel_size=3,
+                 groups=1):
+        super(AlignConv, self).__init__()
+        self.kernel_size = kernel_size
+        self.deform_conv = paddle.vision.ops.DeformConv2D(in_channels,
+                                      out_channels,
+                                      kernel_size=kernel_size,
+                                      padding=(kernel_size - 1) // 2,
+                                      groups=groups,
+                                      weight_attr=None,
+                                      bias_attr=None,)
+        self.relu = nn.ReLU(inplace=True)
+
+    def init_weights(self):
+        normal_init(self.deform_conv, std=0.01)
+
+    def forward(self, x, anchors, stride):
+        offset = anchor2offset(anchors, self.kernel_size, stride)
+        x = self.relu(self.deform_conv(x, offset))
+        return x
 
 
 @register
@@ -212,7 +201,7 @@ class S2ANetHead(Layer):
                  feat_out=256,
                  num_classes=15,
                  align_conv_type='AlignConv',
-                 with_ORconv=False,
+                 with_ORConv=False,
                  loss=None):
         super(S2ANetHead, self).__init__()
         self.stacked_convs = stacked_convs
@@ -222,7 +211,7 @@ class S2ANetHead(Layer):
         self.num_classes = num_classes
         assert align_conv_type in ['AlignConv',]
         self.align_conv_type = align_conv_type
-        self.with_ORconv = with_ORconv
+        self.with_ORConv = with_ORConv
         self.loss = loss
         
         self.fam_cls_convs = Sequential()
@@ -232,7 +221,6 @@ class S2ANetHead(Layer):
         
         for i in range(self.stacked_convs):
             chan_in = self.feat_in if i == 0 else self.feat_out
-            # chan_in = self.feat_channels
 
             self.fam_cls_convs.add_sublayer(
                 'fam_cls_conv_{}'.format(i),
@@ -267,13 +255,59 @@ class S2ANetHead(Layer):
         self.fam_cls = Conv2D(self.feat_out, self.num_classes, 1)
         
         
-        if self.with_ORconv:
-            self.or_conv = ORConv2d(self.feat_channels, int(self.feat_out / 8), kernel_size = 3, padding = 1,
+        if self.with_ORConv:
+            self.or_conv = ORConv2d(self.feat_out, int(self.feat_out / 8), kernel_size = 3, padding = 1,
                                     arf_config = (1, 8))
         else:
             self.or_conv = Conv2D(self.feat_out, self.feat_out, kernel_size=3, padding=1)
-        self.or_pool = RotationInvariantPooling(256, 8)
+        # TODO: add
+        #self.or_pool = RotationInvariantPooling(256, 8)
+
+
+        # ODM
+        self.odm_cls_convs = Sequential()
+        self.odm_reg_convs = Sequential()
         
+        for i in range(self.stacked_convs):
+            #ch_in = int(self.feat_out / 8) if i == 0 and self.with_ORConv else self.feat_out
+            ch_in = int(self.feat_out / 8) if i == 0 else self.feat_out
+            
+            self.odm_cls_convs.add_sublayer(
+                'odm_cls_conv_{}'.format(i),
+                Conv2D(
+                    in_channels=ch_in,
+                    out_channels=self.feat_out,
+                    kernel_size=3,
+                    stride=1,
+                    padding=1,
+                    weight_attr=ParamAttr(
+                        initializer=XavierUniform(fan_out=fan_conv)),
+                    bias_attr=ParamAttr(
+                        learning_rate=1.,
+                        regularizer=L2Decay(0.))))
+
+            self.odm_cls_convs.add_sublayer('odm_cls_conv_{}_act'.format(i), ReLU())
+
+            self.odm_reg_convs.add_sublayer(
+                'odm_reg_conv_{}'.format(i),
+                Conv2D(
+                    in_channels=self.feat_out,
+                    out_channels=self.feat_out,
+                    kernel_size=3,
+                    stride=1,
+                    padding=1,
+                    weight_attr=ParamAttr(
+                        initializer=XavierUniform(fan_out=fan_conv)),
+                    bias_attr=ParamAttr(
+                        learning_rate=1.,
+                        regularizer=L2Decay(0.))))
+
+            self.odm_reg_convs.add_sublayer('odm_reg_conv_{}_act'.format(i), ReLU())
+
+        self.odm_cls = Conv2D(self.feat_out, self.num_classes, 3, padding=1)
+        self.odm_reg = Conv2D(self.feat_out, 5, 3, padding=1)
+
+
     def align_conv(self):
         pass
     
@@ -303,6 +337,7 @@ class S2ANetHead(Layer):
             print('fam_cls', fam_cls.shape, fam_cls.sum())
             print('fam_reg', fam_reg.shape, fam_reg.sum())
 
+            self.align_conv_type = "skip"
             if self.align_conv_type == 'AlignConv':
                 align_feat = self.align_conv(feat, refine_anchor.clone(), stride)
             elif self.align_conv_type == 'DCN':
@@ -313,8 +348,32 @@ class S2ANetHead(Layer):
                 align_feat = self.align_conv(feat, align_offset)
             elif self.align_conv_type == 'Conv':
                 align_feat = self.align_conv(feat)
+
+            '''
+            or_feat = self.or_conv(align_feat)
+            if self.with_ORConv:
+                odm_cls_feat = self.or_pool(or_feat)
+            else:
+                odm_cls_feat = or_feat
+            '''
+            np_odm_cls_feat = np.load('/Users/liuhui29/Downloads/npy_odm//odm_cls_feat_{}.npy'.format(i))
+            odm_cls_feat = paddle.to_tensor(np_odm_cls_feat)
+
+            np_odm_reg_feat = np.load('/Users/liuhui29/Downloads/npy_odm//odm_reg_feat_{}.npy'.format(i))
+            odm_reg_feat = paddle.to_tensor(np_odm_reg_feat)
+
+            print('skip alignconv')
+            print('odm_cls_feat', odm_cls_feat.shape, odm_cls_feat.sum())
+            print('odm_reg_feat', odm_reg_feat.shape, odm_reg_feat.sum())
+
+            odm_reg_feat = self.odm_reg_convs(odm_reg_feat)
+            odm_cls_feat = self.odm_cls_convs(odm_cls_feat)
+            odm_cls_score = self.odm_cls(odm_cls_feat)
+            odm_bbox_pred = self.odm_reg(odm_reg_feat)
+            print('odm_cls_score', odm_cls_score.shape, odm_cls_score.sum())
+            print('odm_bbox_pred', odm_bbox_pred.shape, odm_bbox_pred.sum())
                 
-            input('debug')
+            #input('debug')
         
         print('feats out')
         fam_reg_branch = paddle.concat(fam_reg_branch_list, axis=1)
@@ -323,8 +382,8 @@ class S2ANetHead(Layer):
         print('fam_reg_branch:', fam_reg_branch.shape, fam_reg_branch.sum())
         print('fam_cls_branch:', fam_cls_branch.shape, fam_cls_branch.sum())
         
-        or_feat = self.or_conv(align_feat)
         
+
         return None
     
     def get_loss(self, inputs, head_outputs):

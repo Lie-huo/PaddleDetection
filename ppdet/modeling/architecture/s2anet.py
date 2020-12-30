@@ -135,7 +135,7 @@ class S2ANet(BaseArch):
 
     def get_loss(self, ):
         loss = self.s2anet_head.get_loss(self.inputs, self.s2anet_head_outs)
-        total_loss = paddle.add_n(list(loss.values()))
+        #total_loss = paddle.add_n(list(loss.values()))
         loss.update({'loss': total_loss})
         return loss
 
