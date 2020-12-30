@@ -22,19 +22,16 @@ import pickle
 
 
 def load_s2anet_torch(model_path):
+    print('load model_path=', model_path)
     torch_loaded_model = torch.load(model_path, map_location=torch.device('cpu'))
     
     model_meta = torch_loaded_model['meta']
     model_state_dict = torch_loaded_model['state_dict']
     # print(model_meta)
     for k in model_state_dict.keys():
-        print(k)
-
-    key_list = ['backbone.layer4.2.bn3.running_mean', 'backbone.layer4.2.bn3.running_var', 'backbone.layer4.2.bn3.num_batches_tracked']
-    tmp_key = 'backbone.layer4.2.bn3.num_batches_tracked'
-    for tmp_key in key_list:
-        print(tmp_key, model_state_dict[tmp_key].shape)
-        print(model_state_dict[tmp_key].shape)
+        if k.find('or_') > 0:
+            print(k, model_state_dict[k].shape, model_state_dict[k].cpu().numpy().mean())
+    print('rbox_head.or_conv.indices\n', model_state_dict['rbox_head.or_conv.indices'].cpu().numpy()[:,:,:,1])
     return model_state_dict
 
 
@@ -50,10 +47,9 @@ def merge_dict():
         fout.write('{}{}\n'.format(t, pd_lsit[i]))
 
 
-def convert_param():
+def convert_param(model_path):
     paddle_model_dict = {}
     
-    model_path = '/Users/liuhui29/Downloads/s2anet_r50_fpn_1x_epoch_12_20200815.pth'
     torch_model_static = load_s2anet_torch(model_path)
     
     s2anet_2_paddle_map = {}
@@ -80,10 +76,8 @@ def convert_param():
     pickle.dump(paddle_model_dict, open('paddle_s2anet.pdparams', 'wb'), protocol=2)
    
    
-def verify_pd():
+def verify_pd(pdparam_path):
     import paddle
-    pdparam_path = 'paddle_s2anet.pdparams'
-    #fpn = '/Users/liuhui29/Downloads/faster_rcnn_r50_fpn_1x_coco.pdparams'
     param_state_dict = paddle.load(pdparam_path)
     print(param_state_dict.keys())
 
@@ -96,9 +90,13 @@ def verify_pd():
 
 if __name__ == "__main__":
     model_path = '/Users/liuhui29/Downloads/s2anet_r50_fpn_1x_epoch_12_20200815.pth'
+    model_path = '/Users/liuhui29/Downloads/epoch_12.pth'
+    #load_s2anet_torch(model_path)
     #merge_dict()
-    convert_param()
-    verify_pd()
+    convert_param(model_path)
+    pdparam_path = 'paddle_s2anet.pdparams'
+    # pdparam_path = '/Users/liuhui29/Downloads/faster_rcnn_r50_fpn_1x_coco.pdparams'
+    verify_pd(pdparam_path)
     sys.exit(0)
     
     #load_s2anet_torch(model_path)

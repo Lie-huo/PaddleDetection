@@ -26,23 +26,127 @@ from ppdet.modeling import ops
 import numpy as np
 
 
+
+
+class AnchorGenerator(object):
+    """
+    Examples:
+        >>> anchor = AnchorGenerator(9, [1.], [1.])
+        >>> all_anchors = anchor.grid_anchors((2, 2), device='cpu')
+        >>> print(all_anchors)
+        tensor([[ 0.,  0.,  8.,  8.],
+                [16.,  0., 24.,  8.],
+                [ 0., 16.,  8., 24.],
+                [16., 16., 24., 24.]])
+    """
+
+    def __init__(self, base_size, scales, ratios, scale_major=True, ctr=None):
+        self.base_size = base_size
+        self.scales = paddle.to_tensor(scales)
+        self.ratios = paddle.to_tensor(ratios)
+        self.scale_major = scale_major
+        self.ctr = ctr
+        self.base_anchors = self.gen_base_anchors()
+
+    @property
+    def num_base_anchors(self):
+        return self.base_anchors.shape[0]
+
+    def gen_base_anchors(self):
+        w = self.base_size
+        h = self.base_size
+        if self.ctr is None:
+            x_ctr = 0.5 * (w - 1)
+            y_ctr = 0.5 * (h - 1)
+        else:
+            x_ctr, y_ctr = self.ctr
+
+        h_ratios = paddle.sqrt(self.ratios)
+        w_ratios = 1 / h_ratios
+        if self.scale_major:
+            ws = (w * w_ratios[:] * self.scales[:]).reshape([-1])
+            hs = (h * h_ratios[:] * self.scales[:]).reshape([-1])
+        else:
+            ws = (w * self.scales[:] * w_ratios[:]).reshape([-1])
+            hs = (h * self.scales[:] * h_ratios[:]).reshape([-1])
+
+        # yapf: disable
+        base_anchors = paddle.stack(
+            [
+                x_ctr - 0.5 * (ws - 1), y_ctr - 0.5 * (hs - 1),
+                x_ctr + 0.5 * (ws - 1), y_ctr + 0.5 * (hs - 1)
+            ],
+            axis=-1)
+        #print(base_anchors)
+        base_anchors = paddle.round(base_anchors)
+        # yapf: enable
+
+        return base_anchors
+
+    def _meshgrid(self, x, y, row_major=True):
+        yy, xx = paddle.meshgrid(x, y)
+        yy = yy.reshape([-1])
+        xx = xx.reshape([-1])
+        if row_major:
+            return xx, yy
+        else:
+            return yy, xx
+
+    def grid_anchors(self, featmap_size, stride=16, device='gpu'):
+        # featmap_size*stride project it to original area
+        paddle.set_device(device)
+        base_anchors = self.base_anchors
+
+        feat_h, feat_w = featmap_size
+        shift_x = paddle.fluid.layers.range(0, feat_w, 1, 'int32') * stride
+        shift_y = paddle.fluid.layers.range(0, feat_h, 1, 'int32') * stride
+        shift_xx, shift_yy = self._meshgrid(shift_x, shift_y)
+        shifts = paddle.stack([shift_xx, shift_yy, shift_xx, shift_yy], axis=-1)
+        #shifts = shifts.type_as(base_anchors)
+        # first feat_w elements correspond to the first row of shifts
+        # add A anchors (1, A, 4) to K shifts (K, 1, 4) to get
+        # shifted anchors (K, A, 4), reshape to (K*A, 4)
+
+        all_anchors = base_anchors[ :, :] + shifts[:, :]
+        all_anchors = all_anchors.reshape([-1, 4])
+        # first A rows correspond to A anchors of (0, 0) in feature map,
+        # then (0, 1), (0, 2), ...
+        return all_anchors
+
+    def valid_flags(self, featmap_size, valid_size, device='gpu'):
+        feat_h, feat_w = featmap_size
+        valid_h, valid_w = valid_size
+        assert valid_h <= feat_h and valid_w <= feat_w
+        valid_x = paddle.zeros([feat_w], dtype='uint8')
+        valid_y = paddle.zeros([feat_h], dtype='uint8')
+        valid_x[:valid_w] = 1
+        valid_y[:valid_h] = 1
+        valid_xx, valid_yy = self._meshgrid(valid_x, valid_y)
+        valid = valid_xx & valid_yy
+        valid = valid[:, None].expand(
+            [valid.size(0), self.num_base_anchors]).reshape([-1])
+        return valid
+
+
 def delta2rbox(Rrois,
                deltas,
                means=[0, 0, 0, 0, 0],
                stds=[1, 1, 1, 1, 1],
-               max_shape=None,
-               wh_ratio_clip=16 / 1000):
+               wh_ratio_clip=16.0 / 1000.0):
     """
     :param Rrois: (cx, cy, w, h, theta)
     :param deltas: (dx, dy, dw, dh, dtheta)
     :param means:
     :param stds:
-    :param max_shape:
     :param wh_ratio_clip:
     :return:
     """
-    means = deltas.new_tensor(means).repeat(1, deltas.size(1) // 5)
-    stds = deltas.new_tensor(stds).repeat(1, deltas.size(1) // 5)
+    
+    #means = deltas.new_tensor(means).repeat(1, deltas.size(1) // 5)
+    #stds = deltas.new_tensor(stds).repeat(1, deltas.size(1) // 5)
+    
+    means = paddle.to_tensor(means)
+    stds = paddle.to_tensor(stds)
     denorm_deltas = deltas * stds + means
     
     dx = denorm_deltas[:, 0::5]
@@ -52,13 +156,16 @@ def delta2rbox(Rrois,
     dangle = denorm_deltas[:, 4::5]
     
     max_ratio = np.abs(np.log(wh_ratio_clip))
-    dw = dw.clamp(min=-max_ratio, max=max_ratio)
-    dh = dh.clamp(min=-max_ratio, max=max_ratio)
-    Rroi_x = (Rrois[:, 0]).unsqueeze(1).expand_as(dx)
-    Rroi_y = (Rrois[:, 1]).unsqueeze(1).expand_as(dy)
-    Rroi_w = (Rrois[:, 2]).unsqueeze(1).expand_as(dw)
-    Rroi_h = (Rrois[:, 3]).unsqueeze(1).expand_as(dh)
-    Rroi_angle = (Rrois[:, 4]).unsqueeze(1).expand_as(dangle)
+    dw = paddle.clip(dw, min=-max_ratio, max=max_ratio)
+    dh = paddle.clip(dh, min=-max_ratio, max=max_ratio)
+    
+    print('Rrois', Rrois.shape)
+    Rroi_x = Rrois[:, 0]
+    Rroi_y = Rrois[:, 1]
+    Rroi_w = Rrois[:, 2]
+    Rroi_h = Rrois[:, 3]
+    Rroi_angle = Rrois[:, 4]
+    
     gx = dx * Rroi_w * paddle.cos(Rroi_angle) \
          - dy * Rroi_h * paddle.sin(Rroi_angle) + Rroi_x
     gy = dx * Rroi_w * paddle.sin(Rroi_angle) \
@@ -69,7 +176,7 @@ def delta2rbox(Rrois,
     ga = np.pi * dangle + Rroi_angle
     ga = (ga + np.PI / 4) % np.PI - np.PI / 4
     
-    bboxes = paddle.stack([gx, gy, gw, gh, ga], dim=-1).view_as(deltas)
+    bboxes = paddle.stack([gx, gy, gw, gh, ga], axis=-1).view_as(deltas)
     return bboxes
 
 
@@ -84,12 +191,13 @@ def bbox_decode(bbox_preds,
     return:
         bboxes: [N,H,W,5]
     """
-    num_imgs, _, H, W = bbox_preds.shape
+    print('bbox_preds', bbox_preds.shape)
+    num_imgs, H, W = bbox_preds.shape
     bboxes_list = []
     for img_id in range(num_imgs):
         bbox_pred = bbox_preds[img_id]
         # bbox_pred.shape=[5,H,W]
-        bbox_delta = bbox_pred.permute(1, 2, 0).reshape(-1, 5)
+        bbox_delta = bbox_pred
         bboxes = delta2rbox(
             anchors,
             bbox_delta,
@@ -98,7 +206,7 @@ def bbox_decode(bbox_preds,
             wh_ratio_clip=1e-6)
         bboxes = bboxes.reshape(H, W, 5)
         bboxes_list.append(bboxes)
-    return paddle.stack(bboxes_list, dim=0)
+    return paddle.stack(bboxes_list, axis=0)
 
 
 def anchor2offset(anchors, kernel_size, stride):
@@ -161,6 +269,31 @@ def anchor2offset(anchors, kernel_size, stride):
     return offset_tensor
 
 
+def rect2rbox(bboxes):
+    """
+    :param bboxes: shape (n, 4) (xmin, ymin, xmax, ymax)
+    :return: dbboxes: shape (n, 5) (x_ctr, y_ctr, w, h, angle)
+    """
+    num_boxes = bboxes.shape[0]
+
+    x_ctr = (bboxes[:, 2]+bboxes[:, 0]) / 2.0
+    y_ctr = (bboxes[:, 3]+bboxes[:, 1]) / 2.0
+    edges1 = paddle.abs(bboxes[:, 2]-bboxes[:, 0])
+    edges2 = paddle.abs(bboxes[:, 3]-bboxes[:, 1])
+    angles = paddle.zeros([num_boxes], dtype=bboxes.dtype)
+
+    inds = edges1 < edges2
+
+    print('x_ctr', x_ctr.shape, y_ctr.shape, edges1.shape, edges2.shape)
+    rboxes = paddle.stack((x_ctr, y_ctr, edges1, edges2, angles), axis=1)
+    print('after stack rboxes', rboxes.shape)
+    print('inds', inds.shape, inds)
+    #rboxes[inds, 2] = edges2[inds]
+    #rboxes[inds, 3] = edges1[inds]
+    #rboxes[inds, 4] = np.pi / 2.0
+
+    return rboxes
+
 
 
 class AlignConv(Layer):
@@ -200,6 +333,11 @@ class S2ANetHead(Layer):
                  feat_in=256,
                  feat_out=256,
                  num_classes=15,
+                 anchor_strides=[8, 16, 32, 64, 128],
+                 anchor_scales=[4],
+                 anchor_ratios=[1.0],
+                 target_means=(.0, .0, .0, .0, .0),
+                 target_stds=(1.0, 1.0, 1.0, 1.0, 1.0),
                  align_conv_type='AlignConv',
                  with_ORConv=False,
                  loss=None):
@@ -209,10 +347,23 @@ class S2ANetHead(Layer):
         self.feat_out = feat_out
         self.anchor_list = None
         self.num_classes = num_classes
+        self.anchor_scales = anchor_scales
+        self.anchor_ratios = anchor_ratios
+        self.anchor_strides = anchor_strides
+        self.anchor_base_sizes = list(anchor_strides)
+        self.target_means = target_means
+        self.target_stds = target_stds
         assert align_conv_type in ['AlignConv',]
         self.align_conv_type = align_conv_type
         self.with_ORConv = with_ORConv
         self.loss = loss
+        
+        # anchor
+        self.anchor_generators = []
+        for anchor_base in self.anchor_base_sizes:
+            self.anchor_generators.append(
+                AnchorGenerator(anchor_base, anchor_scales, anchor_ratios))
+        self.base_anchors = dict()
         
         self.fam_cls_convs = Sequential()
         self.fam_reg_convs = Sequential()
@@ -336,6 +487,27 @@ class S2ANetHead(Layer):
             
             print('fam_cls', fam_cls.shape, fam_cls.sum())
             print('fam_reg', fam_reg.shape, fam_reg.sum())
+            
+            # prepare anchor
+            featmap_size = fam_reg.shape[-2:]
+            print(self.base_anchors)
+            if i in self.base_anchors.keys():
+                init_anchors = self.base_anchors[i]
+            else:
+                device = 'cpu'
+                init_anchors = self.anchor_generators[i].grid_anchors(
+                    featmap_size, self.anchor_strides[i], device=device)
+                init_anchors = rect2rbox(init_anchors)
+                self.base_anchors[i] = init_anchors
+
+            # TODO: do not backward
+            fam_reg1 = fam_reg
+            fam_reg1.stop_gradient = True
+            refine_anchor = bbox_decode(
+                            fam_reg,
+                            init_anchors,
+                            self.target_means,
+                            self.target_stds)
 
             self.align_conv_type = "skip"
             if self.align_conv_type == 'AlignConv':
