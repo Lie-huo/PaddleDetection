@@ -29,9 +29,9 @@ def load_s2anet_torch(model_path):
     model_state_dict = torch_loaded_model['state_dict']
     # print(model_meta)
     for k in model_state_dict.keys():
-        if k.find('or_') > 0:
-            print(k, model_state_dict[k].shape, model_state_dict[k].cpu().numpy().mean())
-    print('rbox_head.or_conv.indices\n', model_state_dict['rbox_head.or_conv.indices'].cpu().numpy()[:,:,:,1])
+        if k.find('or_') > 0 or True:
+            print(k, model_state_dict[k].shape, model_state_dict[k].cpu().numpy().sum())
+    #print('rbox_head.or_conv.indices\n', model_state_dict['rbox_head.or_conv.indices'].cpu().numpy()[:,:,:,1])
     return model_state_dict
 
 
@@ -70,6 +70,8 @@ def convert_param(model_path):
         if k not in s2anet_2_paddle_map:
             continue
         pd_k = s2anet_2_paddle_map[k]
+        if pd_k.find('align') > 0:
+            print('2021 param.cpu().numpy()', param.cpu().numpy().shape, param.cpu().numpy().sum())
         print('pd_key {} torch_key {} param.shape: {}'.format(pd_k, k, param.shape))
         paddle_model_dict[pd_k] = param.cpu().numpy()
 
@@ -89,9 +91,9 @@ def verify_pd(pdparam_path):
 
 
 if __name__ == "__main__":
-    model_path = '/Users/liuhui29/Downloads/s2anet_r50_fpn_1x_epoch_12_20200815.pth'
+    #model_path = '/Users/liuhui29/Downloads/s2anet_r50_fpn_1x_epoch_12_20200815.pth'
     model_path = '/Users/liuhui29/Downloads/epoch_12.pth'
-    #load_s2anet_torch(model_path)
+    load_s2anet_torch(model_path)
     #merge_dict()
     convert_param(model_path)
     pdparam_path = 'paddle_s2anet.pdparams'

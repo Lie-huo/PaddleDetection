@@ -291,6 +291,7 @@ rbox_head.fam_reg.weight                                        s2anet_head.fam_
 rbox_head.fam_reg.bias                                          s2anet_head.fam_reg.bias
 rbox_head.fam_cls.weight                                        s2anet_head.fam_cls.weight
 rbox_head.fam_cls.bias                                          s2anet_head.fam_cls.bias
+rbox_head.align_conv.deform_conv.weight                         s2anet_head.align_conv.align_conv.weight
 rbox_head.odm_reg_convs.0.conv.weight                           s2anet_head.odm_reg_convs.odm_reg_conv_0.weight
 rbox_head.odm_reg_convs.0.conv.bias                             s2anet_head.odm_reg_convs.odm_reg_conv_0.bias
 rbox_head.odm_reg_convs.1.conv.weight                           s2anet_head.odm_reg_convs.odm_reg_conv_1.weight
