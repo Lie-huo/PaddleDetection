@@ -27,7 +27,7 @@ class BaseArch(nn.Layer):
         if mode == 'train':
             out = self.get_loss()
         elif mode == 'infer':
-            out = self.get_pred(input_tensor is None)
+            out = self.get_pred()
         else:
             out = None
             raise "Now, only support train and infer mode!"

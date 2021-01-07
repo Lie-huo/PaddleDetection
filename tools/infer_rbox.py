@@ -31,10 +31,8 @@ import paddle
 from paddle.distributed import ParallelEnv
 from ppdet.core.workspace import load_config, merge_config, create
 from ppdet.utils.check import check_gpu, check_version, check_config
-from ppdet.utils.visualizer import visualize_results
 from ppdet.utils.cli import ArgsParser
 from ppdet.utils.checkpoint import load_weight
-from ppdet.utils.eval_utils import get_infer_results
 import logging
 FORMAT = '%(asctime)s-%(levelname)s: %(message)s'
 logging.basicConfig(level=logging.INFO, format=FORMAT)
@@ -119,6 +117,43 @@ def get_test_images(infer_dir, infer_img):
     return images
 
 
+def visual_rbox(image, catid2name, bbox_res, threshold):
+    from PIL import Image, ImageDraw
+    draw = ImageDraw.Draw(image)
+    
+    catid2color = {}
+    from ppdet.utils.colormap import colormap
+    color_list = colormap(rgb=True)[:40]
+    
+    for pred_bbox in bbox_res:
+        # label, score, x1,y1,x2,y2 ...
+        catid = int(pred_bbox[0])
+        score = pred_bbox[1]
+        if score < threshold:
+            continue
+        bbox = pred_bbox[2:]
+        pt_lst = [int(e) for e in bbox]
+        x1, y1, x2, y2, x3, y3, x4, y4 = pt_lst[0], pt_lst[1], pt_lst[2], pt_lst[3], pt_lst[4], \
+                                         pt_lst[5], pt_lst[6], pt_lst[7]
+
+        if catid not in catid2color:
+            idx = np.random.randint(len(color_list))
+            catid2color[catid] = color_list[idx]
+        color = tuple(catid2color[catid])
+        
+        draw.line(
+            [(x1, y1), (x2, y2), (x2, y2), (x3, y3),
+                 (x3, y3), (x4, y4), (x4, y4), (x1, y1)],
+            width=2,
+            fill=color)
+
+        text = "{} {:.2f}".format(catid2name[catid], score)
+        tw, th = draw.textsize(text)
+        draw.rectangle([(x1 + 1, y1 - th), (x1 + tw + 1, y1)], fill=color)
+        draw.text((x1 + 1, y1 - th), text, fill=(255, 255, 255))
+    
+    return image
+
 def run(FLAGS, cfg, place):
 
     # Model
@@ -150,13 +185,13 @@ def run(FLAGS, cfg, place):
         model.eval()
         outs = model(data, cfg.TestReader['inputs_def']['fields'], 'infer')
 
-        batch_res = get_infer_results([outs], outs.keys(), clsid2catid)
         logger.info('Infer iter {}'.format(iter_id))
-        bbox_res = None
-        mask_res = None
-
+        print('outs', outs)
         im_ids = outs['im_id']
+        bboxes = outs['bbox']
         bbox_num = outs['bbox_num']
+        print('im_ids', im_ids.shape, im_ids, 'bbox_num', bbox_num.shape, bbox_num, bboxes.shape)
+        input('vis rbox')
         start = 0
         for i, im_id in enumerate(im_ids):
             im_id = im_ids[i]
@@ -170,40 +205,18 @@ def run(FLAGS, cfg, place):
                 vdl_writer.add_image(
                     "original/frame_{}".format(vdl_image_frame),
                     original_image_np, vdl_image_step)
+            
 
-            if 'bbox' in batch_res:
-                bbox_res = batch_res['bbox'][start:end]
-            if 'mask' in batch_res:
-                mask_res = batch_res['mask'][start:end]
-            
-            def disp_res(img, bbox_res):
-                import cv2
-                img = cv2.imread('demo/P2594.png')
-                print('bbox_resbbox_resbbox_resbbox_resbbox_resbbox_resbbox_resbbox_res', bbox_res)
-                bbox_res = bbox_res[0]
-                print('bbox_res', bbox_res)
-                input('bbox_res')
-                
-                for bbox in bbox_res['bbox'][0][0:20]:
-                    print('bbox', bbox)
-                    pt_lst = [int(e) for e in bbox['bbox']]
-                    x1, y1, x2, y2, x3, y3, x4, y4 = pt_lst[0], pt_lst[1], pt_lst[2], pt_lst[3], pt_lst[4], \
-                                                     pt_lst[5], pt_lst[6], pt_lst[7]
-                    cv2.line(img, (x1, y1), (x2, y2), (0, 255, 0), 3)
-                    print('x1 y1 ', x1, y1, x2, y2)
-                    cv2.line(img, (x2, y2), (x3, y3), (0, 255, 0), 3)
-                    cv2.line(img, (x3, y3), (x4, y4), (0, 255, 0), 3)
-                    cv2.line(img, (x4, y4), (x1, y1), (0, 255, 0), 3)
-                    cls_name = 'cls_{}'.format(bbox['category_id'])
-                    cv2.putText(img, cls_name, (x1 + 10, y1 + 10), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 255, 255), 3)
-                
-                cv2.imwrite('res.jpg', img)
-                return img
-            
-            #image = disp_res(image, bbox_res)
-            image = visualize_results(image, bbox_res, mask_res,
-                                      int(im_id), catid2name,
-                                      FLAGS.draw_threshold)
+            catid2name1 = {}
+            name_lst = ['plane', 'ship', 'storage tank', 'baseball diamond', 'tennis court', 'basketball court',
+                        'ground track field', 'harbor', 'bridge', 'large vehicle', 'small vehicle', 'helicopter',
+                        'roundabout', 'soccer ball field', 'swimming pool']
+            for (ii,v) in enumerate(name_lst):
+                catid2name1[ii] = v
+            image = visual_rbox(image, catid2name1, bboxes[i, :, :], threshold=0.1)
+            #image = visualize_results(image, bbox_res, mask_res,
+            #                          int(im_id), catid2name,
+            #                          FLAGS.draw_threshold)
 
             # use VisualDL to log image with bbox
             if FLAGS.use_vdl:

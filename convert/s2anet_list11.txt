@@ -1,370 +1,2043 @@
 load model_path= /Users/liuhui29/Downloads/epoch_12.pth
-backbone.conv1.weight torch.Size([64, 3, 7, 7]) -0.00049506617
-backbone.bn1.weight torch.Size([64]) 0.2573824
-backbone.bn1.bias torch.Size([64]) 0.2107355
-backbone.bn1.running_mean torch.Size([64]) 0.0012164809
-backbone.bn1.running_var torch.Size([64]) 2.6527023
-backbone.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer1.0.conv1.weight torch.Size([64, 64, 1, 1]) -0.0043903124
-backbone.layer1.0.bn1.weight torch.Size([64]) 0.18792982
-backbone.layer1.0.bn1.bias torch.Size([64]) 0.030897457
-backbone.layer1.0.bn1.running_mean torch.Size([64]) -0.1486167
-backbone.layer1.0.bn1.running_var torch.Size([64]) 0.054060567
-backbone.layer1.0.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer1.0.conv2.weight torch.Size([64, 64, 3, 3]) 0.0007943304
-backbone.layer1.0.bn2.weight torch.Size([64]) 0.15951559
-backbone.layer1.0.bn2.bias torch.Size([64]) 0.106289215
-backbone.layer1.0.bn2.running_mean torch.Size([64]) 0.034108154
-backbone.layer1.0.bn2.running_var torch.Size([64]) 0.03181228
-backbone.layer1.0.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer1.0.conv3.weight torch.Size([256, 64, 1, 1]) 0.00041708388
-backbone.layer1.0.bn3.weight torch.Size([256]) 0.12681566
-backbone.layer1.0.bn3.bias torch.Size([256]) 0.029874101
-backbone.layer1.0.bn3.running_mean torch.Size([256]) 0.001541229
-backbone.layer1.0.bn3.running_var torch.Size([256]) 0.0063323546
-backbone.layer1.0.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer1.0.downsample.0.weight torch.Size([256, 64, 1, 1]) -0.003415382
-backbone.layer1.0.downsample.1.weight torch.Size([256]) 0.21013223
-backbone.layer1.0.downsample.1.bias torch.Size([256]) 0.029874101
-backbone.layer1.0.downsample.1.running_mean torch.Size([256]) -0.10826569
-backbone.layer1.0.downsample.1.running_var torch.Size([256]) 0.038960725
-backbone.layer1.0.downsample.1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer1.1.conv1.weight torch.Size([64, 256, 1, 1]) 0.0013456906
-backbone.layer1.1.bn1.weight torch.Size([64]) 0.1825278
-backbone.layer1.1.bn1.bias torch.Size([64]) -0.020242803
-backbone.layer1.1.bn1.running_mean torch.Size([64]) 0.022573903
-backbone.layer1.1.bn1.running_var torch.Size([64]) 0.024252107
-backbone.layer1.1.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer1.1.conv2.weight torch.Size([64, 64, 3, 3]) 4.9313836e-05
-backbone.layer1.1.bn2.weight torch.Size([64]) 0.18437776
-backbone.layer1.1.bn2.bias torch.Size([64]) -0.0026367884
-backbone.layer1.1.bn2.running_mean torch.Size([64]) -0.03975659
-backbone.layer1.1.bn2.running_var torch.Size([64]) 0.012729576
-backbone.layer1.1.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer1.1.conv3.weight torch.Size([256, 64, 1, 1]) -0.00018844302
-backbone.layer1.1.bn3.weight torch.Size([256]) 0.07706271
-backbone.layer1.1.bn3.bias torch.Size([256]) 0.00079449033
-backbone.layer1.1.bn3.running_mean torch.Size([256]) 0.00094655546
-backbone.layer1.1.bn3.running_var torch.Size([256]) 0.0013933826
-backbone.layer1.1.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer1.2.conv1.weight torch.Size([64, 256, 1, 1]) 0.00012130018
-backbone.layer1.2.bn1.weight torch.Size([64]) 0.18254882
-backbone.layer1.2.bn1.bias torch.Size([64]) -0.019393688
-backbone.layer1.2.bn1.running_mean torch.Size([64]) -0.0011464832
-backbone.layer1.2.bn1.running_var torch.Size([64]) 0.018808566
-backbone.layer1.2.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer1.2.conv2.weight torch.Size([64, 64, 3, 3]) -0.0008536674
-backbone.layer1.2.bn2.weight torch.Size([64]) 0.22176345
-backbone.layer1.2.bn2.bias torch.Size([64]) -0.048542522
-backbone.layer1.2.bn2.running_mean torch.Size([64]) -0.033550378
-backbone.layer1.2.bn2.running_var torch.Size([64]) 0.018148892
-backbone.layer1.2.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer1.2.conv3.weight torch.Size([256, 64, 1, 1]) -0.0025493202
-backbone.layer1.2.bn3.weight torch.Size([256]) 0.07432297
-backbone.layer1.2.bn3.bias torch.Size([256]) -0.011514703
-backbone.layer1.2.bn3.running_mean torch.Size([256]) -0.008746484
-backbone.layer1.2.bn3.running_var torch.Size([256]) 0.0010298998
-backbone.layer1.2.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer2.0.conv1.weight torch.Size([128, 256, 1, 1]) -0.0024014383
-backbone.layer2.0.bn1.weight torch.Size([128]) 0.2571381
-backbone.layer2.0.bn1.bias torch.Size([128]) -0.048764303
-backbone.layer2.0.bn1.running_mean torch.Size([128]) -0.07328865
-backbone.layer2.0.bn1.running_var torch.Size([128]) 0.024810685
-backbone.layer2.0.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer2.0.conv2.weight torch.Size([128, 128, 3, 3]) -0.0015040841
-backbone.layer2.0.bn2.weight torch.Size([128]) 0.24211094
-backbone.layer2.0.bn2.bias torch.Size([128]) 0.018937824
-backbone.layer2.0.bn2.running_mean torch.Size([128]) -0.04987563
-backbone.layer2.0.bn2.running_var torch.Size([128]) 0.030001018
-backbone.layer2.0.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer2.0.conv3.weight torch.Size([512, 128, 1, 1]) -0.0010096107
-backbone.layer2.0.bn3.weight torch.Size([512]) 0.111216426
-backbone.layer2.0.bn3.bias torch.Size([512]) 0.019503366
-backbone.layer2.0.bn3.running_mean torch.Size([512]) -0.0006630509
-backbone.layer2.0.bn3.running_var torch.Size([512]) 0.002364545
-backbone.layer2.0.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer2.0.downsample.0.weight torch.Size([512, 256, 1, 1]) -0.00025346858
-backbone.layer2.0.downsample.1.weight torch.Size([512]) 0.15134905
-backbone.layer2.0.downsample.1.bias torch.Size([512]) 0.019503366
-backbone.layer2.0.downsample.1.running_mean torch.Size([512]) -0.022320386
-backbone.layer2.0.downsample.1.running_var torch.Size([512]) 0.012600677
-backbone.layer2.0.downsample.1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer2.1.conv1.weight torch.Size([128, 512, 1, 1]) -0.0007712467
-backbone.layer2.1.bn1.weight torch.Size([128]) 0.16978246
-backbone.layer2.1.bn1.bias torch.Size([128]) 0.02966306
-backbone.layer2.1.bn1.running_mean torch.Size([128]) -0.0012458982
-backbone.layer2.1.bn1.running_var torch.Size([128]) 0.045456484
-backbone.layer2.1.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer2.1.conv2.weight torch.Size([128, 128, 3, 3]) -0.00051242637
-backbone.layer2.1.bn2.weight torch.Size([128]) 0.18499717
-backbone.layer2.1.bn2.bias torch.Size([128]) 0.008079635
-backbone.layer2.1.bn2.running_mean torch.Size([128]) 0.017960507
-backbone.layer2.1.bn2.running_var torch.Size([128]) 0.02159137
-backbone.layer2.1.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer2.1.conv3.weight torch.Size([512, 128, 1, 1]) -0.0018609972
-backbone.layer2.1.bn3.weight torch.Size([512]) 0.07534965
-backbone.layer2.1.bn3.bias torch.Size([512]) -0.019639362
-backbone.layer2.1.bn3.running_mean torch.Size([512]) -0.011377073
-backbone.layer2.1.bn3.running_var torch.Size([512]) 0.0016200125
-backbone.layer2.1.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer2.2.conv1.weight torch.Size([128, 512, 1, 1]) -0.0015452298
-backbone.layer2.2.bn1.weight torch.Size([128]) 0.20249562
-backbone.layer2.2.bn1.bias torch.Size([128]) -0.0006062295
-backbone.layer2.2.bn1.running_mean torch.Size([128]) -0.034743167
-backbone.layer2.2.bn1.running_var torch.Size([128]) 0.028473567
-backbone.layer2.2.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer2.2.conv2.weight torch.Size([128, 128, 3, 3]) -0.0011859173
-backbone.layer2.2.bn2.weight torch.Size([128]) 0.20719573
-backbone.layer2.2.bn2.bias torch.Size([128]) -0.0023129964
-backbone.layer2.2.bn2.running_mean torch.Size([128]) -0.013143765
-backbone.layer2.2.bn2.running_var torch.Size([128]) 0.021454986
-backbone.layer2.2.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer2.2.conv3.weight torch.Size([512, 128, 1, 1]) -0.0019900994
-backbone.layer2.2.bn3.weight torch.Size([512]) 0.099750385
-backbone.layer2.2.bn3.bias torch.Size([512]) -0.053790763
-backbone.layer2.2.bn3.running_mean torch.Size([512]) -0.0009871788
-backbone.layer2.2.bn3.running_var torch.Size([512]) 0.0014215745
-backbone.layer2.2.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer2.3.conv1.weight torch.Size([128, 512, 1, 1]) -0.002282496
-backbone.layer2.3.bn1.weight torch.Size([128]) 0.21386798
-backbone.layer2.3.bn1.bias torch.Size([128]) -0.028505672
-backbone.layer2.3.bn1.running_mean torch.Size([128]) -0.055767044
-backbone.layer2.3.bn1.running_var torch.Size([128]) 0.024066448
-backbone.layer2.3.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer2.3.conv2.weight torch.Size([128, 128, 3, 3]) -0.002142006
-backbone.layer2.3.bn2.weight torch.Size([128]) 0.23976931
-backbone.layer2.3.bn2.bias torch.Size([128]) -0.054686718
-backbone.layer2.3.bn2.running_mean torch.Size([128]) -0.04429319
-backbone.layer2.3.bn2.running_var torch.Size([128]) 0.015357634
-backbone.layer2.3.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer2.3.conv3.weight torch.Size([512, 128, 1, 1]) -0.00401247
-backbone.layer2.3.bn3.weight torch.Size([512]) 0.09200777
-backbone.layer2.3.bn3.bias torch.Size([512]) -0.06258711
-backbone.layer2.3.bn3.running_mean torch.Size([512]) -0.0039570564
-backbone.layer2.3.bn3.running_var torch.Size([512]) 0.0009917069
-backbone.layer2.3.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.0.conv1.weight torch.Size([256, 512, 1, 1]) -0.0028932353
-backbone.layer3.0.bn1.weight torch.Size([256]) 0.25930113
-backbone.layer3.0.bn1.bias torch.Size([256]) -0.118078224
-backbone.layer3.0.bn1.running_mean torch.Size([256]) -0.0841095
-backbone.layer3.0.bn1.running_var torch.Size([256]) 0.029999075
-backbone.layer3.0.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.0.conv2.weight torch.Size([256, 256, 3, 3]) -0.00094227795
-backbone.layer3.0.bn2.weight torch.Size([256]) 0.21533735
-backbone.layer3.0.bn2.bias torch.Size([256]) 0.028396938
-backbone.layer3.0.bn2.running_mean torch.Size([256]) -0.04115568
-backbone.layer3.0.bn2.running_var torch.Size([256]) 0.031682372
-backbone.layer3.0.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.0.conv3.weight torch.Size([1024, 256, 1, 1]) -0.0010016448
-backbone.layer3.0.bn3.weight torch.Size([1024]) 0.13688701
-backbone.layer3.0.bn3.bias torch.Size([1024]) -0.005525778
-backbone.layer3.0.bn3.running_mean torch.Size([1024]) -0.01216946
-backbone.layer3.0.bn3.running_var torch.Size([1024]) 0.0033408867
-backbone.layer3.0.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.0.downsample.0.weight torch.Size([1024, 512, 1, 1]) -0.00020448607
-backbone.layer3.0.downsample.1.weight torch.Size([1024]) 0.12002544
-backbone.layer3.0.downsample.1.bias torch.Size([1024]) -0.005525779
-backbone.layer3.0.downsample.1.running_mean torch.Size([1024]) 0.0020087971
-backbone.layer3.0.downsample.1.running_var torch.Size([1024]) 0.0085237045
-backbone.layer3.0.downsample.1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.1.conv1.weight torch.Size([256, 1024, 1, 1]) -0.0009918503
-backbone.layer3.1.bn1.weight torch.Size([256]) 0.17984927
-backbone.layer3.1.bn1.bias torch.Size([256]) -0.01438276
-backbone.layer3.1.bn1.running_mean torch.Size([256]) -0.046235472
-backbone.layer3.1.bn1.running_var torch.Size([256]) 0.02171949
-backbone.layer3.1.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.1.conv2.weight torch.Size([256, 256, 3, 3]) -0.0009250606
-backbone.layer3.1.bn2.weight torch.Size([256]) 0.2020168
-backbone.layer3.1.bn2.bias torch.Size([256]) -0.04868919
-backbone.layer3.1.bn2.running_mean torch.Size([256]) -0.031665206
-backbone.layer3.1.bn2.running_var torch.Size([256]) 0.022320516
-backbone.layer3.1.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.1.conv3.weight torch.Size([1024, 256, 1, 1]) -0.0019174981
-backbone.layer3.1.bn3.weight torch.Size([1024]) 0.10296738
-backbone.layer3.1.bn3.bias torch.Size([1024]) -0.04813919
-backbone.layer3.1.bn3.running_mean torch.Size([1024]) -0.012402126
-backbone.layer3.1.bn3.running_var torch.Size([1024]) 0.0014247188
-backbone.layer3.1.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.2.conv1.weight torch.Size([256, 1024, 1, 1]) -0.0009703305
-backbone.layer3.2.bn1.weight torch.Size([256]) 0.17803231
-backbone.layer3.2.bn1.bias torch.Size([256]) -0.0430862
-backbone.layer3.2.bn1.running_mean torch.Size([256]) -0.05040688
-backbone.layer3.2.bn1.running_var torch.Size([256]) 0.018276341
-backbone.layer3.2.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.2.conv2.weight torch.Size([256, 256, 3, 3]) -0.0012407992
-backbone.layer3.2.bn2.weight torch.Size([256]) 0.19728541
-backbone.layer3.2.bn2.bias torch.Size([256]) -0.06116838
-backbone.layer3.2.bn2.running_mean torch.Size([256]) -0.057436943
-backbone.layer3.2.bn2.running_var torch.Size([256]) 0.015368643
-backbone.layer3.2.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.2.conv3.weight torch.Size([1024, 256, 1, 1]) -0.0017816729
-backbone.layer3.2.bn3.weight torch.Size([1024]) 0.09044942
-backbone.layer3.2.bn3.bias torch.Size([1024]) -0.05364953
-backbone.layer3.2.bn3.running_mean torch.Size([1024]) -0.00976476
-backbone.layer3.2.bn3.running_var torch.Size([1024]) 0.0009704195
-backbone.layer3.2.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.3.conv1.weight torch.Size([256, 1024, 1, 1]) -0.0014348456
-backbone.layer3.3.bn1.weight torch.Size([256]) 0.18483657
-backbone.layer3.3.bn1.bias torch.Size([256]) -0.072276846
-backbone.layer3.3.bn1.running_mean torch.Size([256]) -0.059839603
-backbone.layer3.3.bn1.running_var torch.Size([256]) 0.016341068
-backbone.layer3.3.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.3.conv2.weight torch.Size([256, 256, 3, 3]) -0.0012942791
-backbone.layer3.3.bn2.weight torch.Size([256]) 0.18827654
-backbone.layer3.3.bn2.bias torch.Size([256]) -0.058464877
-backbone.layer3.3.bn2.running_mean torch.Size([256]) -0.05033048
-backbone.layer3.3.bn2.running_var torch.Size([256]) 0.010054742
-backbone.layer3.3.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.3.conv3.weight torch.Size([1024, 256, 1, 1]) -0.0022549545
-backbone.layer3.3.bn3.weight torch.Size([1024]) 0.086905435
-backbone.layer3.3.bn3.bias torch.Size([1024]) -0.058614645
-backbone.layer3.3.bn3.running_mean torch.Size([1024]) -0.012996213
-backbone.layer3.3.bn3.running_var torch.Size([1024]) 0.00074541435
-backbone.layer3.3.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.4.conv1.weight torch.Size([256, 1024, 1, 1]) -0.0015835364
-backbone.layer3.4.bn1.weight torch.Size([256]) 0.17800412
-backbone.layer3.4.bn1.bias torch.Size([256]) -0.08364086
-backbone.layer3.4.bn1.running_mean torch.Size([256]) -0.0670504
-backbone.layer3.4.bn1.running_var torch.Size([256]) 0.015063213
-backbone.layer3.4.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.4.conv2.weight torch.Size([256, 256, 3, 3]) -0.0012819706
-backbone.layer3.4.bn2.weight torch.Size([256]) 0.18417643
-backbone.layer3.4.bn2.bias torch.Size([256]) -0.07772903
-backbone.layer3.4.bn2.running_mean torch.Size([256]) -0.060569115
-backbone.layer3.4.bn2.running_var torch.Size([256]) 0.009036661
-backbone.layer3.4.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.4.conv3.weight torch.Size([1024, 256, 1, 1]) -0.0025169414
-backbone.layer3.4.bn3.weight torch.Size([1024]) 0.084900275
-backbone.layer3.4.bn3.bias torch.Size([1024]) -0.07733874
-backbone.layer3.4.bn3.running_mean torch.Size([1024]) -0.016658848
-backbone.layer3.4.bn3.running_var torch.Size([1024]) 0.0006943252
-backbone.layer3.4.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.5.conv1.weight torch.Size([256, 1024, 1, 1]) -0.0015374261
-backbone.layer3.5.bn1.weight torch.Size([256]) 0.18408316
-backbone.layer3.5.bn1.bias torch.Size([256]) -0.10830973
-backbone.layer3.5.bn1.running_mean torch.Size([256]) -0.056226328
-backbone.layer3.5.bn1.running_var torch.Size([256]) 0.014252217
-backbone.layer3.5.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.5.conv2.weight torch.Size([256, 256, 3, 3]) -0.0010831162
-backbone.layer3.5.bn2.weight torch.Size([256]) 0.1924218
-backbone.layer3.5.bn2.bias torch.Size([256]) -0.07919249
-backbone.layer3.5.bn2.running_mean torch.Size([256]) -0.05753474
-backbone.layer3.5.bn2.running_var torch.Size([256]) 0.011854451
-backbone.layer3.5.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer3.5.conv3.weight torch.Size([1024, 256, 1, 1]) -0.003544298
-backbone.layer3.5.bn3.weight torch.Size([1024]) 0.09490568
-backbone.layer3.5.bn3.bias torch.Size([1024]) -0.10337491
-backbone.layer3.5.bn3.running_mean torch.Size([1024]) -0.024746457
-backbone.layer3.5.bn3.running_var torch.Size([1024]) 0.0012736355
-backbone.layer3.5.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer4.0.conv1.weight torch.Size([512, 1024, 1, 1]) -0.0018062085
-backbone.layer4.0.bn1.weight torch.Size([512]) 0.20239776
-backbone.layer4.0.bn1.bias torch.Size([512]) -0.16092607
-backbone.layer4.0.bn1.running_mean torch.Size([512]) -0.070773035
-backbone.layer4.0.bn1.running_var torch.Size([512]) 0.013850168
-backbone.layer4.0.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer4.0.conv2.weight torch.Size([512, 512, 3, 3]) -0.0007214353
-backbone.layer4.0.bn2.weight torch.Size([512]) 0.17769219
-backbone.layer4.0.bn2.bias torch.Size([512]) -0.0639473
-backbone.layer4.0.bn2.running_mean torch.Size([512]) -0.059337683
-backbone.layer4.0.bn2.running_var torch.Size([512]) 0.013513955
-backbone.layer4.0.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer4.0.conv3.weight torch.Size([2048, 512, 1, 1]) -0.0013246189
-backbone.layer4.0.bn3.weight torch.Size([2048]) 0.31320783
-backbone.layer4.0.bn3.bias torch.Size([2048]) -0.048739024
-backbone.layer4.0.bn3.running_mean torch.Size([2048]) -0.011095587
-backbone.layer4.0.bn3.running_var torch.Size([2048]) 0.0013862501
-backbone.layer4.0.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer4.0.downsample.0.weight torch.Size([2048, 1024, 1, 1]) -0.0007062631
-backbone.layer4.0.downsample.1.weight torch.Size([2048]) 0.22915293
-backbone.layer4.0.downsample.1.bias torch.Size([2048]) -0.04873902
-backbone.layer4.0.downsample.1.running_mean torch.Size([2048]) -0.0030155336
-backbone.layer4.0.downsample.1.running_var torch.Size([2048]) 0.0016742169
-backbone.layer4.0.downsample.1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer4.1.conv1.weight torch.Size([512, 2048, 1, 1]) -0.0009306687
-backbone.layer4.1.bn1.weight torch.Size([512]) 0.17501533
-backbone.layer4.1.bn1.bias torch.Size([512]) -0.11333272
-backbone.layer4.1.bn1.running_mean torch.Size([512]) -0.28401694
-backbone.layer4.1.bn1.running_var torch.Size([512]) 0.14818665
-backbone.layer4.1.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer4.1.conv2.weight torch.Size([512, 512, 3, 3]) -0.0008957244
-backbone.layer4.1.bn2.weight torch.Size([512]) 0.18019153
-backbone.layer4.1.bn2.bias torch.Size([512]) -0.110061444
-backbone.layer4.1.bn2.running_mean torch.Size([512]) -0.09000859
-backbone.layer4.1.bn2.running_var torch.Size([512]) 0.012698019
-backbone.layer4.1.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer4.1.conv3.weight torch.Size([2048, 512, 1, 1]) -0.00063489337
-backbone.layer4.1.bn3.weight torch.Size([2048]) 0.30794668
-backbone.layer4.1.bn3.bias torch.Size([2048]) -0.06335628
-backbone.layer4.1.bn3.running_mean torch.Size([2048]) -0.0015776831
-backbone.layer4.1.bn3.running_var torch.Size([2048]) 0.00081761833
-backbone.layer4.1.bn3.num_batches_tracked torch.Size([]) 0.0
-backbone.layer4.2.conv1.weight torch.Size([512, 2048, 1, 1]) -0.0006178409
-backbone.layer4.2.bn1.weight torch.Size([512]) 0.18476366
-backbone.layer4.2.bn1.bias torch.Size([512]) -0.15350401
-backbone.layer4.2.bn1.running_mean torch.Size([512]) -0.34196797
-backbone.layer4.2.bn1.running_var torch.Size([512]) 0.2745816
-backbone.layer4.2.bn1.num_batches_tracked torch.Size([]) 0.0
-backbone.layer4.2.conv2.weight torch.Size([512, 512, 3, 3]) -0.0007531788
-backbone.layer4.2.bn2.weight torch.Size([512]) 0.17513512
-backbone.layer4.2.bn2.bias torch.Size([512]) -0.084559
-backbone.layer4.2.bn2.running_mean torch.Size([512]) -0.0868853
-backbone.layer4.2.bn2.running_var torch.Size([512]) 0.010883985
-backbone.layer4.2.bn2.num_batches_tracked torch.Size([]) 0.0
-backbone.layer4.2.conv3.weight torch.Size([2048, 512, 1, 1]) -0.0004780092
-backbone.layer4.2.bn3.weight torch.Size([2048]) 0.6169698
-backbone.layer4.2.bn3.bias torch.Size([2048]) 0.015760593
-backbone.layer4.2.bn3.running_mean torch.Size([2048]) -0.0056474414
-backbone.layer4.2.bn3.running_var torch.Size([2048]) 0.00095933105
-backbone.layer4.2.bn3.num_batches_tracked torch.Size([]) 0.0
-neck.lateral_convs.0.conv.weight torch.Size([256, 512, 1, 1]) -1.966563e-06
-neck.lateral_convs.0.conv.bias torch.Size([256]) -0.0024767844
-neck.lateral_convs.1.conv.weight torch.Size([256, 1024, 1, 1]) -9.301108e-05
-neck.lateral_convs.1.conv.bias torch.Size([256]) -0.0009113266
-neck.lateral_convs.2.conv.weight torch.Size([256, 2048, 1, 1]) -4.0865136e-05
-neck.lateral_convs.2.conv.bias torch.Size([256]) 0.0013350691
-neck.fpn_convs.0.conv.weight torch.Size([256, 256, 3, 3]) -2.3225884e-06
-neck.fpn_convs.0.conv.bias torch.Size([256]) -0.0017189288
-neck.fpn_convs.1.conv.weight torch.Size([256, 256, 3, 3]) -2.100056e-05
-neck.fpn_convs.1.conv.bias torch.Size([256]) -1.4332181e-06
-neck.fpn_convs.2.conv.weight torch.Size([256, 256, 3, 3]) -6.321905e-06
-neck.fpn_convs.2.conv.bias torch.Size([256]) 0.0016837567
-neck.fpn_convs.3.conv.weight torch.Size([256, 2048, 3, 3]) 5.8408364e-07
-neck.fpn_convs.3.conv.bias torch.Size([256]) 0.0016502946
-neck.fpn_convs.4.conv.weight torch.Size([256, 256, 3, 3]) -4.7777758e-06
-neck.fpn_convs.4.conv.bias torch.Size([256]) 0.0009519072
-rbox_head.fam_reg_convs.0.conv.weight torch.Size([256, 256, 3, 3]) -1.2626941e-05
-rbox_head.fam_reg_convs.0.conv.bias torch.Size([256]) -0.035161957
-rbox_head.fam_reg_convs.1.conv.weight torch.Size([256, 256, 3, 3]) -0.0015497473
-rbox_head.fam_reg_convs.1.conv.bias torch.Size([256]) 0.12742117
-rbox_head.fam_cls_convs.0.conv.weight torch.Size([256, 256, 3, 3]) 8.692645e-05
-rbox_head.fam_cls_convs.0.conv.bias torch.Size([256]) 0.028122004
-rbox_head.fam_cls_convs.1.conv.weight torch.Size([256, 256, 3, 3]) -0.00030634823
-rbox_head.fam_cls_convs.1.conv.bias torch.Size([256]) 0.064877
-rbox_head.fam_reg.weight torch.Size([5, 256, 1, 1]) -0.002908264
-rbox_head.fam_reg.bias torch.Size([5]) 0.043926448
-rbox_head.fam_cls.weight torch.Size([15, 256, 1, 1]) -0.009071608
-rbox_head.fam_cls.bias torch.Size([15]) -3.5683126
-rbox_head.align_conv.deform_conv.weight torch.Size([256, 256, 3, 3]) 2.1157764e-05
-rbox_head.or_conv.weight torch.Size([32, 256, 1, 3, 3]) -0.0014268538
-rbox_head.or_conv.bias torch.Size([256]) -0.0071773436
-rbox_head.or_conv.indices torch.Size([1, 3, 3, 8]) 5.0
-rbox_head.or_pool.conv.0.weight torch.Size([256, 32, 1, 1]) -2.1541491e-05
-rbox_head.or_pool.conv.0.bias torch.Size([256]) -0.0044429307
-rbox_head.or_pool.conv.1.weight torch.Size([256]) 1.0
+backbone.conv1.weight torch.Size([64, 3, 7, 7]) -4.6575823
+backbone.bn1.weight torch.Size([64]) 16.472473
+backbone.bn1.bias torch.Size([64]) 13.487072
+backbone.bn1.running_mean torch.Size([64]) 0.077854775
+backbone.bn1.running_var torch.Size([64]) 169.77295
+backbone.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer1.0.conv1.weight torch.Size([64, 64, 1, 1]) -17.98272
+backbone.layer1.0.bn1.weight torch.Size([64]) 12.027509
+backbone.layer1.0.bn1.bias torch.Size([64]) 1.9774373
+backbone.layer1.0.bn1.running_mean torch.Size([64]) -9.511469
+backbone.layer1.0.bn1.running_var torch.Size([64]) 3.4598763
+backbone.layer1.0.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer1.0.conv2.weight torch.Size([64, 64, 3, 3]) 29.282196
+backbone.layer1.0.bn2.weight torch.Size([64]) 10.208998
+backbone.layer1.0.bn2.bias torch.Size([64]) 6.80251
+backbone.layer1.0.bn2.running_mean torch.Size([64]) 2.182922
+backbone.layer1.0.bn2.running_var torch.Size([64]) 2.035986
+backbone.layer1.0.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer1.0.conv3.weight torch.Size([256, 64, 1, 1]) 6.8335023
+backbone.layer1.0.bn3.weight torch.Size([256]) 32.46481
+backbone.layer1.0.bn3.bias torch.Size([256]) 7.64777
+backbone.layer1.0.bn3.running_mean torch.Size([256]) 0.39455462
+backbone.layer1.0.bn3.running_var torch.Size([256]) 1.6210828
+backbone.layer1.0.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer1.0.downsample.0.weight torch.Size([256, 64, 1, 1]) -55.95762
+backbone.layer1.0.downsample.1.weight torch.Size([256]) 53.79385
+backbone.layer1.0.downsample.1.bias torch.Size([256]) 7.64777
+backbone.layer1.0.downsample.1.running_mean torch.Size([256]) -27.716017
+backbone.layer1.0.downsample.1.running_var torch.Size([256]) 9.973946
+backbone.layer1.0.downsample.1.num_batches_tracked torch.Size([]) 0
+backbone.layer1.1.conv1.weight torch.Size([64, 256, 1, 1]) 22.047794
+backbone.layer1.1.bn1.weight torch.Size([64]) 11.681779
+backbone.layer1.1.bn1.bias torch.Size([64]) -1.2955394
+backbone.layer1.1.bn1.running_mean torch.Size([64]) 1.4447298
+backbone.layer1.1.bn1.running_var torch.Size([64]) 1.5521349
+backbone.layer1.1.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer1.1.conv2.weight torch.Size([64, 64, 3, 3]) 1.8179053
+backbone.layer1.1.bn2.weight torch.Size([64]) 11.800177
+backbone.layer1.1.bn2.bias torch.Size([64]) -0.16875446
+backbone.layer1.1.bn2.running_mean torch.Size([64]) -2.5444217
+backbone.layer1.1.bn2.running_var torch.Size([64]) 0.81469285
+backbone.layer1.1.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer1.1.conv3.weight torch.Size([256, 64, 1, 1]) -3.0874505
+backbone.layer1.1.bn3.weight torch.Size([256]) 19.728054
+backbone.layer1.1.bn3.bias torch.Size([256]) 0.20338953
+backbone.layer1.1.bn3.running_mean torch.Size([256]) 0.2423182
+backbone.layer1.1.bn3.running_var torch.Size([256]) 0.35670593
+backbone.layer1.1.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer1.2.conv1.weight torch.Size([64, 256, 1, 1]) 1.9873822
+backbone.layer1.2.bn1.weight torch.Size([64]) 11.683125
+backbone.layer1.2.bn1.bias torch.Size([64]) -1.241196
+backbone.layer1.2.bn1.running_mean torch.Size([64]) -0.07337493
+backbone.layer1.2.bn1.running_var torch.Size([64]) 1.2037482
+backbone.layer1.2.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer1.2.conv2.weight torch.Size([64, 64, 3, 3]) -31.469595
+backbone.layer1.2.bn2.weight torch.Size([64]) 14.192861
+backbone.layer1.2.bn2.bias torch.Size([64]) -3.1067214
+backbone.layer1.2.bn2.running_mean torch.Size([64]) -2.1472242
+backbone.layer1.2.bn2.running_var torch.Size([64]) 1.1615291
+backbone.layer1.2.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer1.2.conv3.weight torch.Size([256, 64, 1, 1]) -41.768063
+backbone.layer1.2.bn3.weight torch.Size([256]) 19.02668
+backbone.layer1.2.bn3.bias torch.Size([256]) -2.947764
+backbone.layer1.2.bn3.running_mean torch.Size([256]) -2.2391
+backbone.layer1.2.bn3.running_var torch.Size([256]) 0.26365435
+backbone.layer1.2.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer2.0.conv1.weight torch.Size([128, 256, 1, 1]) -72.514015
+backbone.layer2.0.bn1.weight torch.Size([128]) 32.62928
+backbone.layer2.0.bn1.bias torch.Size([128]) -6.608481
+backbone.layer2.0.bn1.running_mean torch.Size([128]) -9.380947
+backbone.layer2.0.bn1.running_var torch.Size([128]) 3.1757677
+backbone.layer2.0.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer2.0.conv2.weight torch.Size([128, 128, 3, 3]) -202.8297
+backbone.layer2.0.bn2.weight torch.Size([128]) 30.78901
+backbone.layer2.0.bn2.bias torch.Size([128]) 2.3928041
+backbone.layer2.0.bn2.running_mean torch.Size([128]) -6.3840804
+backbone.layer2.0.bn2.running_var torch.Size([128]) 3.8401303
+backbone.layer2.0.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer2.0.conv3.weight torch.Size([512, 128, 1, 1]) -48.518387
+backbone.layer2.0.bn3.weight torch.Size([512]) 56.562927
+backbone.layer2.0.bn3.bias torch.Size([512]) 9.693787
+backbone.layer2.0.bn3.running_mean torch.Size([512]) -0.33948207
+backbone.layer2.0.bn3.running_var torch.Size([512]) 1.210647
+backbone.layer2.0.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer2.0.downsample.0.weight torch.Size([512, 256, 1, 1]) -38.322937
+backbone.layer2.0.downsample.1.weight torch.Size([512]) 75.88163
+backbone.layer2.0.downsample.1.bias torch.Size([512]) 9.693787
+backbone.layer2.0.downsample.1.running_mean torch.Size([512]) -11.428038
+backbone.layer2.0.downsample.1.running_var torch.Size([512]) 6.4515467
+backbone.layer2.0.downsample.1.num_batches_tracked torch.Size([]) 0
+backbone.layer2.1.conv1.weight torch.Size([128, 512, 1, 1]) -43.40139
+backbone.layer2.1.bn1.weight torch.Size([128]) 21.70782
+backbone.layer2.1.bn1.bias torch.Size([128]) 3.9538853
+backbone.layer2.1.bn1.running_mean torch.Size([128]) -0.15947497
+backbone.layer2.1.bn1.running_var torch.Size([128]) 5.81843
+backbone.layer2.1.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer2.1.conv2.weight torch.Size([128, 128, 3, 3]) -65.26249
+backbone.layer2.1.bn2.weight torch.Size([128]) 23.497135
+backbone.layer2.1.bn2.bias torch.Size([128]) 1.1525853
+backbone.layer2.1.bn2.running_mean torch.Size([128]) 2.298945
+backbone.layer2.1.bn2.running_var torch.Size([128]) 2.7636955
+backbone.layer2.1.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer2.1.conv3.weight torch.Size([512, 128, 1, 1]) -113.48192
+backbone.layer2.1.bn3.weight torch.Size([512]) 38.416885
+backbone.layer2.1.bn3.bias torch.Size([512]) -10.156578
+backbone.layer2.1.bn3.running_mean torch.Size([512]) -5.8250613
+backbone.layer2.1.bn3.running_var torch.Size([512]) 0.8294464
+backbone.layer2.1.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer2.2.conv1.weight torch.Size([128, 512, 1, 1]) -91.839806
+backbone.layer2.2.bn1.weight torch.Size([128]) 25.635983
+backbone.layer2.2.bn1.bias torch.Size([128]) -0.00088348985
+backbone.layer2.2.bn1.running_mean torch.Size([128]) -4.4471254
+backbone.layer2.2.bn1.running_var torch.Size([128]) 3.6446166
+backbone.layer2.2.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer2.2.conv2.weight torch.Size([128, 128, 3, 3]) -160.79543
+backbone.layer2.2.bn2.weight torch.Size([128]) 26.339928
+backbone.layer2.2.bn2.bias torch.Size([128]) -0.53315294
+backbone.layer2.2.bn2.running_mean torch.Size([128]) -1.6824019
+backbone.layer2.2.bn2.running_var torch.Size([128]) 2.7462382
+backbone.layer2.2.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer2.2.conv3.weight torch.Size([512, 128, 1, 1]) -119.1468
+backbone.layer2.2.bn3.weight torch.Size([512]) 50.997177
+backbone.layer2.2.bn3.bias torch.Size([512]) -27.535831
+backbone.layer2.2.bn3.running_mean torch.Size([512]) -0.5054355
+backbone.layer2.2.bn3.running_var torch.Size([512]) 0.72784615
+backbone.layer2.2.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer2.3.conv1.weight torch.Size([128, 512, 1, 1]) -139.25555
+backbone.layer2.3.bn1.weight torch.Size([128]) 27.205559
+backbone.layer2.3.bn1.bias torch.Size([128]) -3.857918
+backbone.layer2.3.bn1.running_mean torch.Size([128]) -7.1381817
+backbone.layer2.3.bn1.running_var torch.Size([128]) 3.0805054
+backbone.layer2.3.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer2.3.conv2.weight torch.Size([128, 128, 3, 3]) -294.1083
+backbone.layer2.3.bn2.weight torch.Size([128]) 30.656261
+backbone.layer2.3.bn2.bias torch.Size([128]) -7.230249
+backbone.layer2.3.bn2.running_mean torch.Size([128]) -5.6695285
+backbone.layer2.3.bn2.running_var torch.Size([128]) 1.9657772
+backbone.layer2.3.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer2.3.conv3.weight torch.Size([512, 128, 1, 1]) -238.53137
+backbone.layer2.3.bn3.weight torch.Size([512]) 46.885258
+backbone.layer2.3.bn3.bias torch.Size([512]) -31.756245
+backbone.layer2.3.bn3.running_mean torch.Size([512]) -2.026013
+backbone.layer2.3.bn3.running_var torch.Size([512]) 0.5077539
+backbone.layer2.3.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer3.0.conv1.weight torch.Size([256, 512, 1, 1]) -340.83276
+backbone.layer3.0.bn1.weight torch.Size([256]) 65.53542
+backbone.layer3.0.bn1.bias torch.Size([256]) -30.438713
+backbone.layer3.0.bn1.running_mean torch.Size([256]) -21.532032
+backbone.layer3.0.bn1.running_var torch.Size([256]) 7.6797633
+backbone.layer3.0.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.0.conv2.weight torch.Size([256, 256, 3, 3]) -496.50424
+backbone.layer3.0.bn2.weight torch.Size([256]) 54.020668
+backbone.layer3.0.bn2.bias torch.Size([256]) 7.4990277
+backbone.layer3.0.bn2.running_mean torch.Size([256]) -10.535854
+backbone.layer3.0.bn2.running_var torch.Size([256]) 8.110687
+backbone.layer3.0.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer3.0.conv3.weight torch.Size([1024, 256, 1, 1]) -239.13547
+backbone.layer3.0.bn3.weight torch.Size([1024]) 140.31439
+backbone.layer3.0.bn3.bias torch.Size([1024]) -6.2200007
+backbone.layer3.0.bn3.running_mean torch.Size([1024]) -12.461527
+backbone.layer3.0.bn3.running_var torch.Size([1024]) 3.421068
+backbone.layer3.0.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer3.0.downsample.0.weight torch.Size([1024, 512, 1, 1]) -102.04797
+backbone.layer3.0.downsample.1.weight torch.Size([1024]) 121.55403
+backbone.layer3.0.downsample.1.bias torch.Size([1024]) -6.2200003
+backbone.layer3.0.downsample.1.running_mean torch.Size([1024]) 2.0570083
+backbone.layer3.0.downsample.1.running_var torch.Size([1024]) 8.728273
+backbone.layer3.0.downsample.1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.1.conv1.weight torch.Size([256, 1024, 1, 1]) -237.26967
+backbone.layer3.1.bn1.weight torch.Size([256]) 45.111565
+backbone.layer3.1.bn1.bias torch.Size([256]) -3.910792
+backbone.layer3.1.bn1.running_mean torch.Size([256]) -11.836281
+backbone.layer3.1.bn1.running_var torch.Size([256]) 5.5601892
+backbone.layer3.1.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.1.conv2.weight torch.Size([256, 256, 3, 3]) -490.8065
+backbone.layer3.1.bn2.weight torch.Size([256]) 51.02382
+backbone.layer3.1.bn2.bias torch.Size([256]) -12.67731
+backbone.layer3.1.bn2.running_mean torch.Size([256]) -8.106293
+backbone.layer3.1.bn2.running_var torch.Size([256]) 5.714052
+backbone.layer3.1.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer3.1.conv3.weight torch.Size([1024, 256, 1, 1]) -470.86176
+backbone.layer3.1.bn3.weight torch.Size([1024]) 104.69222
+backbone.layer3.1.bn3.bias torch.Size([1024]) -49.70381
+backbone.layer3.1.bn3.running_mean torch.Size([1024]) -12.699777
+backbone.layer3.1.bn3.running_var torch.Size([1024]) 1.458912
+backbone.layer3.1.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer3.2.conv1.weight torch.Size([256, 1024, 1, 1]) -235.54349
+backbone.layer3.2.bn1.weight torch.Size([256]) 45.313034
+backbone.layer3.2.bn1.bias torch.Size([256]) -11.113916
+backbone.layer3.2.bn1.running_mean torch.Size([256]) -12.904161
+backbone.layer3.2.bn1.running_var torch.Size([256]) 4.6787434
+backbone.layer3.2.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.2.conv2.weight torch.Size([256, 256, 3, 3]) -693.81665
+backbone.layer3.2.bn2.weight torch.Size([256]) 50.254925
+backbone.layer3.2.bn2.bias torch.Size([256]) -16.121025
+backbone.layer3.2.bn2.running_mean torch.Size([256]) -14.703857
+backbone.layer3.2.bn2.running_var torch.Size([256]) 3.9343727
+backbone.layer3.2.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer3.2.conv3.weight torch.Size([1024, 256, 1, 1]) -427.77963
+backbone.layer3.2.bn3.weight torch.Size([1024]) 92.467896
+backbone.layer3.2.bn3.bias torch.Size([1024]) -55.423786
+backbone.layer3.2.bn3.running_mean torch.Size([1024]) -9.999114
+backbone.layer3.2.bn3.running_var torch.Size([1024]) 0.99370956
+backbone.layer3.2.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer3.3.conv1.weight torch.Size([256, 1024, 1, 1]) -339.3174
+backbone.layer3.3.bn1.weight torch.Size([256]) 46.925747
+backbone.layer3.3.bn1.bias torch.Size([256]) -18.686344
+backbone.layer3.3.bn1.running_mean torch.Size([256]) -15.318938
+backbone.layer3.3.bn1.running_var torch.Size([256]) 4.1833134
+backbone.layer3.3.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.3.conv2.weight torch.Size([256, 256, 3, 3]) -729.98334
+backbone.layer3.3.bn2.weight torch.Size([256]) 47.846603
+backbone.layer3.3.bn2.bias torch.Size([256]) -15.354654
+backbone.layer3.3.bn2.running_mean torch.Size([256]) -12.884603
+backbone.layer3.3.bn2.running_var torch.Size([256]) 2.574014
+backbone.layer3.3.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer3.3.conv3.weight torch.Size([1024, 256, 1, 1]) -542.49677
+backbone.layer3.3.bn3.weight torch.Size([1024]) 88.82103
+backbone.layer3.3.bn3.bias torch.Size([1024]) -60.723724
+backbone.layer3.3.bn3.running_mean torch.Size([1024]) -13.308122
+backbone.layer3.3.bn3.running_var torch.Size([1024]) 0.7633043
+backbone.layer3.3.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer3.4.conv1.weight torch.Size([256, 1024, 1, 1]) -393.09763
+backbone.layer3.4.bn1.weight torch.Size([256]) 45.882385
+backbone.layer3.4.bn1.bias torch.Size([256]) -21.576763
+backbone.layer3.4.bn1.running_mean torch.Size([256]) -17.164902
+backbone.layer3.4.bn1.running_var torch.Size([256]) 3.8561826
+backbone.layer3.4.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.4.conv2.weight torch.Size([256, 256, 3, 3]) -725.06323
+backbone.layer3.4.bn2.weight torch.Size([256]) 47.52991
+backbone.layer3.4.bn2.bias torch.Size([256]) -20.390007
+backbone.layer3.4.bn2.running_mean torch.Size([256]) -15.505693
+backbone.layer3.4.bn2.running_var torch.Size([256]) 2.3133852
+backbone.layer3.4.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer3.4.conv3.weight torch.Size([1024, 256, 1, 1]) -641.63043
+backbone.layer3.4.bn3.weight torch.Size([1024]) 88.41803
+backbone.layer3.4.bn3.bias torch.Size([1024]) -79.86858
+backbone.layer3.4.bn3.running_mean torch.Size([1024]) -17.05866
+backbone.layer3.4.bn3.running_var torch.Size([1024]) 0.710989
+backbone.layer3.4.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer3.5.conv1.weight torch.Size([256, 1024, 1, 1]) -400.5001
+backbone.layer3.5.bn1.weight torch.Size([256]) 47.512787
+backbone.layer3.5.bn1.bias torch.Size([256]) -27.531635
+backbone.layer3.5.bn1.running_mean torch.Size([256]) -14.39394
+backbone.layer3.5.bn1.running_var torch.Size([256]) 3.6485674
+backbone.layer3.5.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.5.conv2.weight torch.Size([256, 256, 3, 3]) -646.8608
+backbone.layer3.5.bn2.weight torch.Size([256]) 49.50718
+backbone.layer3.5.bn2.bias torch.Size([256]) -21.1696
+backbone.layer3.5.bn2.running_mean torch.Size([256]) -14.728893
+backbone.layer3.5.bn2.running_var torch.Size([256]) 3.0347395
+backbone.layer3.5.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer3.5.conv3.weight torch.Size([1024, 256, 1, 1]) -892.4388
+backbone.layer3.5.bn3.weight torch.Size([1024]) 99.48693
+backbone.layer3.5.bn3.bias torch.Size([1024]) -107.14017
+backbone.layer3.5.bn3.running_mean torch.Size([1024]) -25.340372
+backbone.layer3.5.bn3.running_var torch.Size([1024]) 1.3042028
+backbone.layer3.5.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer4.0.conv1.weight torch.Size([512, 1024, 1, 1]) -931.77454
+backbone.layer4.0.bn1.weight torch.Size([512]) 104.82697
+backbone.layer4.0.bn1.bias torch.Size([512]) -83.71473
+backbone.layer4.0.bn1.running_mean torch.Size([512]) -36.235794
+backbone.layer4.0.bn1.running_var torch.Size([512]) 7.091286
+backbone.layer4.0.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer4.0.conv2.weight torch.Size([512, 512, 3, 3]) -1650.8516
+backbone.layer4.0.bn2.weight torch.Size([512]) 92.49188
+backbone.layer4.0.bn2.bias torch.Size([512]) -33.35587
+backbone.layer4.0.bn2.running_mean torch.Size([512]) -30.380894
+backbone.layer4.0.bn2.running_var torch.Size([512]) 6.919145
+backbone.layer4.0.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer4.0.conv3.weight torch.Size([2048, 512, 1, 1]) -1365.2612
+backbone.layer4.0.bn3.weight torch.Size([2048]) 655.4883
+backbone.layer4.0.bn3.bias torch.Size([2048]) -100.62413
+backbone.layer4.0.bn3.running_mean torch.Size([2048]) -22.723763
+backbone.layer4.0.bn3.running_var torch.Size([2048]) 2.8390403
+backbone.layer4.0.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer4.0.downsample.0.weight torch.Size([2048, 1024, 1, 1]) -1307.4597
+backbone.layer4.0.downsample.1.weight torch.Size([2048]) 478.8551
+backbone.layer4.0.downsample.1.bias torch.Size([2048]) -100.62413
+backbone.layer4.0.downsample.1.running_mean torch.Size([2048]) -6.1758127
+backbone.layer4.0.downsample.1.running_var torch.Size([2048]) 3.4287963
+backbone.layer4.0.downsample.1.num_batches_tracked torch.Size([]) 0
+backbone.layer4.1.conv1.weight torch.Size([512, 2048, 1, 1]) -1036.1627
+backbone.layer4.1.bn1.weight torch.Size([512]) 92.08562
+backbone.layer4.1.bn1.bias torch.Size([512]) -59.04806
+backbone.layer4.1.bn1.running_mean torch.Size([512]) -145.41667
+backbone.layer4.1.bn1.running_var torch.Size([512]) 75.87157
+backbone.layer4.1.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer4.1.conv2.weight torch.Size([512, 512, 3, 3]) -2175.4292
+backbone.layer4.1.bn2.weight torch.Size([512]) 94.56941
+backbone.layer4.1.bn2.bias torch.Size([512]) -57.615208
+backbone.layer4.1.bn2.running_mean torch.Size([512]) -46.084396
+backbone.layer4.1.bn2.running_var torch.Size([512]) 6.5013857
+backbone.layer4.1.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer4.1.conv3.weight torch.Size([2048, 512, 1, 1]) -831.65546
+backbone.layer4.1.bn3.weight torch.Size([2048]) 644.73224
+backbone.layer4.1.bn3.bias torch.Size([2048]) -130.50522
+backbone.layer4.1.bn3.running_mean torch.Size([2048]) -3.231095
+backbone.layer4.1.bn3.running_var torch.Size([2048]) 1.6744823
+backbone.layer4.1.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer4.2.conv1.weight torch.Size([512, 2048, 1, 1]) -613.5674
+backbone.layer4.2.bn1.weight torch.Size([512]) 97.8969
+backbone.layer4.2.bn1.bias torch.Size([512]) -79.242645
+backbone.layer4.2.bn1.running_mean torch.Size([512]) -175.0876
+backbone.layer4.2.bn1.running_var torch.Size([512]) 140.58578
+backbone.layer4.2.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer4.2.conv2.weight torch.Size([512, 512, 3, 3]) -1869.3138
+backbone.layer4.2.bn2.weight torch.Size([512]) 91.46398
+backbone.layer4.2.bn2.bias torch.Size([512]) -44.614025
+backbone.layer4.2.bn2.running_mean torch.Size([512]) -44.485275
+backbone.layer4.2.bn2.running_var torch.Size([512]) 5.5726004
+backbone.layer4.2.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer4.2.conv3.weight torch.Size([2048, 512, 1, 1]) -636.4358
+backbone.layer4.2.bn3.weight torch.Size([2048]) 1290.4084
+backbone.layer4.2.bn3.bias torch.Size([2048]) 33.936058
+backbone.layer4.2.bn3.running_mean torch.Size([2048]) -11.56596
+backbone.layer4.2.bn3.running_var torch.Size([2048]) 1.96471
+backbone.layer4.2.bn3.num_batches_tracked torch.Size([]) 0
+neck.lateral_convs.0.conv.weight torch.Size([256, 512, 1, 1]) 12.294775
+neck.lateral_convs.0.conv.bias torch.Size([256]) -0.23039126
+neck.lateral_convs.1.conv.weight torch.Size([256, 1024, 1, 1]) 9.270195
+neck.lateral_convs.1.conv.bias torch.Size([256]) 0.048301786
+neck.lateral_convs.2.conv.weight torch.Size([256, 2048, 1, 1]) 16.479528
+neck.lateral_convs.2.conv.bias torch.Size([256]) -0.30144668
+neck.fpn_convs.0.conv.weight torch.Size([256, 256, 3, 3]) -21.224407
+neck.fpn_convs.0.conv.bias torch.Size([256]) -1.4722729
+neck.fpn_convs.1.conv.weight torch.Size([256, 256, 3, 3]) 31.523136
+neck.fpn_convs.1.conv.bias torch.Size([256]) -0.06070727
+neck.fpn_convs.2.conv.weight torch.Size([256, 256, 3, 3]) 10.313586
+neck.fpn_convs.2.conv.bias torch.Size([256]) 0.0783582
+neck.fpn_convs.3.conv.weight torch.Size([256, 2048, 3, 3]) 22.367174
+neck.fpn_convs.3.conv.bias torch.Size([256]) -0.124985315
+neck.fpn_convs.4.conv.weight torch.Size([256, 256, 3, 3]) 13.835276
+neck.fpn_convs.4.conv.bias torch.Size([256]) -0.11657562
+rbox_head.fam_reg_convs.0.conv.weight torch.Size([256, 256, 3, 3]) 115.45707
+rbox_head.fam_reg_convs.0.conv.bias torch.Size([256]) -8.156756
+rbox_head.fam_reg_convs.1.conv.weight torch.Size([256, 256, 3, 3]) -782.0708
+rbox_head.fam_reg_convs.1.conv.bias torch.Size([256]) 31.065678
+rbox_head.fam_cls_convs.0.conv.weight torch.Size([256, 256, 3, 3]) 11.833801
+rbox_head.fam_cls_convs.0.conv.bias torch.Size([256]) 7.4684057
+rbox_head.fam_cls_convs.1.conv.weight torch.Size([256, 256, 3, 3]) -191.10442
+rbox_head.fam_cls_convs.1.conv.bias torch.Size([256]) 14.1040745
+rbox_head.fam_reg.weight torch.Size([5, 256, 1, 1]) -3.0433958
+rbox_head.fam_reg.bias torch.Size([5]) 0.19166774
+rbox_head.fam_cls.weight torch.Size([15, 256, 1, 1]) -28.523602
+rbox_head.fam_cls.bias torch.Size([15]) -55.124264
+rbox_head.align_conv.weight torch.Size([256, 256, 3, 3]) -5.6555305
+rbox_head.align_conv.bias torch.Size([256]) 0.27799746
+rbox_head.or_conv.weight torch.Size([256, 256, 3, 3]) -7.199708
+rbox_head.or_conv.bias torch.Size([256]) 0.4232092
+rbox_head.or_pool.conv.0.weight torch.Size([256, 32, 1, 1]) -13.063075
+rbox_head.or_pool.conv.0.bias torch.Size([256]) -0.35764325
+rbox_head.or_pool.conv.1.weight torch.Size([256]) 256.0
 rbox_head.or_pool.conv.1.bias torch.Size([256]) 0.0
 rbox_head.or_pool.conv.1.running_mean torch.Size([256]) 0.0
-rbox_head.or_pool.conv.1.running_var torch.Size([256]) 1.0
-rbox_head.or_pool.conv.1.num_batches_tracked torch.Size([]) 0.0
-rbox_head.odm_reg_convs.0.conv.weight torch.Size([256, 256, 3, 3]) 0.0005882613
-rbox_head.odm_reg_convs.0.conv.bias torch.Size([256]) -0.007283905
-rbox_head.odm_reg_convs.1.conv.weight torch.Size([256, 256, 3, 3]) -0.0010187504
-rbox_head.odm_reg_convs.1.conv.bias torch.Size([256]) 0.03872454
-rbox_head.odm_cls_convs.0.conv.weight torch.Size([256, 32, 3, 3]) -0.0003804171
-rbox_head.odm_cls_convs.0.conv.bias torch.Size([256]) 0.014659839
-rbox_head.odm_cls_convs.1.conv.weight torch.Size([256, 256, 3, 3]) -0.0009315131
-rbox_head.odm_cls_convs.1.conv.bias torch.Size([256]) 0.0915764
-rbox_head.odm_cls.weight torch.Size([15, 256, 3, 3]) -0.004521475
-rbox_head.odm_cls.bias torch.Size([15]) -3.6201024
-rbox_head.odm_reg.weight torch.Size([5, 256, 3, 3]) 0.00066350854
-rbox_head.odm_reg.bias torch.Size([5]) 0.0047544586
+rbox_head.or_pool.conv.1.running_var torch.Size([256]) 256.0
+rbox_head.or_pool.conv.1.num_batches_tracked torch.Size([]) 0
+rbox_head.odm_reg_convs.0.conv.weight torch.Size([256, 256, 3, 3]) -3.6315026
+rbox_head.odm_reg_convs.0.conv.bias torch.Size([256]) -7.7873087
+rbox_head.odm_reg_convs.1.conv.weight torch.Size([256, 256, 3, 3]) -782.29016
+rbox_head.odm_reg_convs.1.conv.bias torch.Size([256]) 10.014979
+rbox_head.odm_cls_convs.0.conv.weight torch.Size([256, 256, 3, 3]) 16.842144
+rbox_head.odm_cls_convs.0.conv.bias torch.Size([256]) -3.1443574
+rbox_head.odm_cls_convs.1.conv.weight torch.Size([256, 256, 3, 3]) -724.1192
+rbox_head.odm_cls_convs.1.conv.bias torch.Size([256]) 19.38749
+rbox_head.odm_cls.weight torch.Size([15, 256, 3, 3]) -91.981
+rbox_head.odm_cls.bias torch.Size([15]) -54.762947
+rbox_head.odm_reg.weight torch.Size([5, 256, 3, 3]) 11.631216
+rbox_head.odm_reg.bias torch.Size([5]) 0.029560653
+load model_path= /Users/liuhui29/Downloads/epoch_12.pth
+backbone.conv1.weight torch.Size([64, 3, 7, 7]) -4.6575823
+backbone.bn1.weight torch.Size([64]) 16.472473
+backbone.bn1.bias torch.Size([64]) 13.487072
+backbone.bn1.running_mean torch.Size([64]) 0.077854775
+backbone.bn1.running_var torch.Size([64]) 169.77295
+backbone.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer1.0.conv1.weight torch.Size([64, 64, 1, 1]) -17.98272
+backbone.layer1.0.bn1.weight torch.Size([64]) 12.027509
+backbone.layer1.0.bn1.bias torch.Size([64]) 1.9774373
+backbone.layer1.0.bn1.running_mean torch.Size([64]) -9.511469
+backbone.layer1.0.bn1.running_var torch.Size([64]) 3.4598763
+backbone.layer1.0.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer1.0.conv2.weight torch.Size([64, 64, 3, 3]) 29.282196
+backbone.layer1.0.bn2.weight torch.Size([64]) 10.208998
+backbone.layer1.0.bn2.bias torch.Size([64]) 6.80251
+backbone.layer1.0.bn2.running_mean torch.Size([64]) 2.182922
+backbone.layer1.0.bn2.running_var torch.Size([64]) 2.035986
+backbone.layer1.0.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer1.0.conv3.weight torch.Size([256, 64, 1, 1]) 6.8335023
+backbone.layer1.0.bn3.weight torch.Size([256]) 32.46481
+backbone.layer1.0.bn3.bias torch.Size([256]) 7.64777
+backbone.layer1.0.bn3.running_mean torch.Size([256]) 0.39455462
+backbone.layer1.0.bn3.running_var torch.Size([256]) 1.6210828
+backbone.layer1.0.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer1.0.downsample.0.weight torch.Size([256, 64, 1, 1]) -55.95762
+backbone.layer1.0.downsample.1.weight torch.Size([256]) 53.79385
+backbone.layer1.0.downsample.1.bias torch.Size([256]) 7.64777
+backbone.layer1.0.downsample.1.running_mean torch.Size([256]) -27.716017
+backbone.layer1.0.downsample.1.running_var torch.Size([256]) 9.973946
+backbone.layer1.0.downsample.1.num_batches_tracked torch.Size([]) 0
+backbone.layer1.1.conv1.weight torch.Size([64, 256, 1, 1]) 22.047794
+backbone.layer1.1.bn1.weight torch.Size([64]) 11.681779
+backbone.layer1.1.bn1.bias torch.Size([64]) -1.2955394
+backbone.layer1.1.bn1.running_mean torch.Size([64]) 1.4447298
+backbone.layer1.1.bn1.running_var torch.Size([64]) 1.5521349
+backbone.layer1.1.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer1.1.conv2.weight torch.Size([64, 64, 3, 3]) 1.8179053
+backbone.layer1.1.bn2.weight torch.Size([64]) 11.800177
+backbone.layer1.1.bn2.bias torch.Size([64]) -0.16875446
+backbone.layer1.1.bn2.running_mean torch.Size([64]) -2.5444217
+backbone.layer1.1.bn2.running_var torch.Size([64]) 0.81469285
+backbone.layer1.1.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer1.1.conv3.weight torch.Size([256, 64, 1, 1]) -3.0874505
+backbone.layer1.1.bn3.weight torch.Size([256]) 19.728054
+backbone.layer1.1.bn3.bias torch.Size([256]) 0.20338953
+backbone.layer1.1.bn3.running_mean torch.Size([256]) 0.2423182
+backbone.layer1.1.bn3.running_var torch.Size([256]) 0.35670593
+backbone.layer1.1.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer1.2.conv1.weight torch.Size([64, 256, 1, 1]) 1.9873822
+backbone.layer1.2.bn1.weight torch.Size([64]) 11.683125
+backbone.layer1.2.bn1.bias torch.Size([64]) -1.241196
+backbone.layer1.2.bn1.running_mean torch.Size([64]) -0.07337493
+backbone.layer1.2.bn1.running_var torch.Size([64]) 1.2037482
+backbone.layer1.2.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer1.2.conv2.weight torch.Size([64, 64, 3, 3]) -31.469595
+backbone.layer1.2.bn2.weight torch.Size([64]) 14.192861
+backbone.layer1.2.bn2.bias torch.Size([64]) -3.1067214
+backbone.layer1.2.bn2.running_mean torch.Size([64]) -2.1472242
+backbone.layer1.2.bn2.running_var torch.Size([64]) 1.1615291
+backbone.layer1.2.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer1.2.conv3.weight torch.Size([256, 64, 1, 1]) -41.768063
+backbone.layer1.2.bn3.weight torch.Size([256]) 19.02668
+backbone.layer1.2.bn3.bias torch.Size([256]) -2.947764
+backbone.layer1.2.bn3.running_mean torch.Size([256]) -2.2391
+backbone.layer1.2.bn3.running_var torch.Size([256]) 0.26365435
+backbone.layer1.2.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer2.0.conv1.weight torch.Size([128, 256, 1, 1]) -72.514015
+backbone.layer2.0.bn1.weight torch.Size([128]) 32.62928
+backbone.layer2.0.bn1.bias torch.Size([128]) -6.608481
+backbone.layer2.0.bn1.running_mean torch.Size([128]) -9.380947
+backbone.layer2.0.bn1.running_var torch.Size([128]) 3.1757677
+backbone.layer2.0.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer2.0.conv2.weight torch.Size([128, 128, 3, 3]) -202.8297
+backbone.layer2.0.bn2.weight torch.Size([128]) 30.78901
+backbone.layer2.0.bn2.bias torch.Size([128]) 2.3928041
+backbone.layer2.0.bn2.running_mean torch.Size([128]) -6.3840804
+backbone.layer2.0.bn2.running_var torch.Size([128]) 3.8401303
+backbone.layer2.0.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer2.0.conv3.weight torch.Size([512, 128, 1, 1]) -48.518387
+backbone.layer2.0.bn3.weight torch.Size([512]) 56.562927
+backbone.layer2.0.bn3.bias torch.Size([512]) 9.693787
+backbone.layer2.0.bn3.running_mean torch.Size([512]) -0.33948207
+backbone.layer2.0.bn3.running_var torch.Size([512]) 1.210647
+backbone.layer2.0.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer2.0.downsample.0.weight torch.Size([512, 256, 1, 1]) -38.322937
+backbone.layer2.0.downsample.1.weight torch.Size([512]) 75.88163
+backbone.layer2.0.downsample.1.bias torch.Size([512]) 9.693787
+backbone.layer2.0.downsample.1.running_mean torch.Size([512]) -11.428038
+backbone.layer2.0.downsample.1.running_var torch.Size([512]) 6.4515467
+backbone.layer2.0.downsample.1.num_batches_tracked torch.Size([]) 0
+backbone.layer2.1.conv1.weight torch.Size([128, 512, 1, 1]) -43.40139
+backbone.layer2.1.bn1.weight torch.Size([128]) 21.70782
+backbone.layer2.1.bn1.bias torch.Size([128]) 3.9538853
+backbone.layer2.1.bn1.running_mean torch.Size([128]) -0.15947497
+backbone.layer2.1.bn1.running_var torch.Size([128]) 5.81843
+backbone.layer2.1.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer2.1.conv2.weight torch.Size([128, 128, 3, 3]) -65.26249
+backbone.layer2.1.bn2.weight torch.Size([128]) 23.497135
+backbone.layer2.1.bn2.bias torch.Size([128]) 1.1525853
+backbone.layer2.1.bn2.running_mean torch.Size([128]) 2.298945
+backbone.layer2.1.bn2.running_var torch.Size([128]) 2.7636955
+backbone.layer2.1.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer2.1.conv3.weight torch.Size([512, 128, 1, 1]) -113.48192
+backbone.layer2.1.bn3.weight torch.Size([512]) 38.416885
+backbone.layer2.1.bn3.bias torch.Size([512]) -10.156578
+backbone.layer2.1.bn3.running_mean torch.Size([512]) -5.8250613
+backbone.layer2.1.bn3.running_var torch.Size([512]) 0.8294464
+backbone.layer2.1.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer2.2.conv1.weight torch.Size([128, 512, 1, 1]) -91.839806
+backbone.layer2.2.bn1.weight torch.Size([128]) 25.635983
+backbone.layer2.2.bn1.bias torch.Size([128]) -0.00088348985
+backbone.layer2.2.bn1.running_mean torch.Size([128]) -4.4471254
+backbone.layer2.2.bn1.running_var torch.Size([128]) 3.6446166
+backbone.layer2.2.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer2.2.conv2.weight torch.Size([128, 128, 3, 3]) -160.79543
+backbone.layer2.2.bn2.weight torch.Size([128]) 26.339928
+backbone.layer2.2.bn2.bias torch.Size([128]) -0.53315294
+backbone.layer2.2.bn2.running_mean torch.Size([128]) -1.6824019
+backbone.layer2.2.bn2.running_var torch.Size([128]) 2.7462382
+backbone.layer2.2.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer2.2.conv3.weight torch.Size([512, 128, 1, 1]) -119.1468
+backbone.layer2.2.bn3.weight torch.Size([512]) 50.997177
+backbone.layer2.2.bn3.bias torch.Size([512]) -27.535831
+backbone.layer2.2.bn3.running_mean torch.Size([512]) -0.5054355
+backbone.layer2.2.bn3.running_var torch.Size([512]) 0.72784615
+backbone.layer2.2.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer2.3.conv1.weight torch.Size([128, 512, 1, 1]) -139.25555
+backbone.layer2.3.bn1.weight torch.Size([128]) 27.205559
+backbone.layer2.3.bn1.bias torch.Size([128]) -3.857918
+backbone.layer2.3.bn1.running_mean torch.Size([128]) -7.1381817
+backbone.layer2.3.bn1.running_var torch.Size([128]) 3.0805054
+backbone.layer2.3.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer2.3.conv2.weight torch.Size([128, 128, 3, 3]) -294.1083
+backbone.layer2.3.bn2.weight torch.Size([128]) 30.656261
+backbone.layer2.3.bn2.bias torch.Size([128]) -7.230249
+backbone.layer2.3.bn2.running_mean torch.Size([128]) -5.6695285
+backbone.layer2.3.bn2.running_var torch.Size([128]) 1.9657772
+backbone.layer2.3.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer2.3.conv3.weight torch.Size([512, 128, 1, 1]) -238.53137
+backbone.layer2.3.bn3.weight torch.Size([512]) 46.885258
+backbone.layer2.3.bn3.bias torch.Size([512]) -31.756245
+backbone.layer2.3.bn3.running_mean torch.Size([512]) -2.026013
+backbone.layer2.3.bn3.running_var torch.Size([512]) 0.5077539
+backbone.layer2.3.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer3.0.conv1.weight torch.Size([256, 512, 1, 1]) -340.83276
+backbone.layer3.0.bn1.weight torch.Size([256]) 65.53542
+backbone.layer3.0.bn1.bias torch.Size([256]) -30.438713
+backbone.layer3.0.bn1.running_mean torch.Size([256]) -21.532032
+backbone.layer3.0.bn1.running_var torch.Size([256]) 7.6797633
+backbone.layer3.0.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.0.conv2.weight torch.Size([256, 256, 3, 3]) -496.50424
+backbone.layer3.0.bn2.weight torch.Size([256]) 54.020668
+backbone.layer3.0.bn2.bias torch.Size([256]) 7.4990277
+backbone.layer3.0.bn2.running_mean torch.Size([256]) -10.535854
+backbone.layer3.0.bn2.running_var torch.Size([256]) 8.110687
+backbone.layer3.0.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer3.0.conv3.weight torch.Size([1024, 256, 1, 1]) -239.13547
+backbone.layer3.0.bn3.weight torch.Size([1024]) 140.31439
+backbone.layer3.0.bn3.bias torch.Size([1024]) -6.2200007
+backbone.layer3.0.bn3.running_mean torch.Size([1024]) -12.461527
+backbone.layer3.0.bn3.running_var torch.Size([1024]) 3.421068
+backbone.layer3.0.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer3.0.downsample.0.weight torch.Size([1024, 512, 1, 1]) -102.04797
+backbone.layer3.0.downsample.1.weight torch.Size([1024]) 121.55403
+backbone.layer3.0.downsample.1.bias torch.Size([1024]) -6.2200003
+backbone.layer3.0.downsample.1.running_mean torch.Size([1024]) 2.0570083
+backbone.layer3.0.downsample.1.running_var torch.Size([1024]) 8.728273
+backbone.layer3.0.downsample.1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.1.conv1.weight torch.Size([256, 1024, 1, 1]) -237.26967
+backbone.layer3.1.bn1.weight torch.Size([256]) 45.111565
+backbone.layer3.1.bn1.bias torch.Size([256]) -3.910792
+backbone.layer3.1.bn1.running_mean torch.Size([256]) -11.836281
+backbone.layer3.1.bn1.running_var torch.Size([256]) 5.5601892
+backbone.layer3.1.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.1.conv2.weight torch.Size([256, 256, 3, 3]) -490.8065
+backbone.layer3.1.bn2.weight torch.Size([256]) 51.02382
+backbone.layer3.1.bn2.bias torch.Size([256]) -12.67731
+backbone.layer3.1.bn2.running_mean torch.Size([256]) -8.106293
+backbone.layer3.1.bn2.running_var torch.Size([256]) 5.714052
+backbone.layer3.1.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer3.1.conv3.weight torch.Size([1024, 256, 1, 1]) -470.86176
+backbone.layer3.1.bn3.weight torch.Size([1024]) 104.69222
+backbone.layer3.1.bn3.bias torch.Size([1024]) -49.70381
+backbone.layer3.1.bn3.running_mean torch.Size([1024]) -12.699777
+backbone.layer3.1.bn3.running_var torch.Size([1024]) 1.458912
+backbone.layer3.1.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer3.2.conv1.weight torch.Size([256, 1024, 1, 1]) -235.54349
+backbone.layer3.2.bn1.weight torch.Size([256]) 45.313034
+backbone.layer3.2.bn1.bias torch.Size([256]) -11.113916
+backbone.layer3.2.bn1.running_mean torch.Size([256]) -12.904161
+backbone.layer3.2.bn1.running_var torch.Size([256]) 4.6787434
+backbone.layer3.2.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.2.conv2.weight torch.Size([256, 256, 3, 3]) -693.81665
+backbone.layer3.2.bn2.weight torch.Size([256]) 50.254925
+backbone.layer3.2.bn2.bias torch.Size([256]) -16.121025
+backbone.layer3.2.bn2.running_mean torch.Size([256]) -14.703857
+backbone.layer3.2.bn2.running_var torch.Size([256]) 3.9343727
+backbone.layer3.2.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer3.2.conv3.weight torch.Size([1024, 256, 1, 1]) -427.77963
+backbone.layer3.2.bn3.weight torch.Size([1024]) 92.467896
+backbone.layer3.2.bn3.bias torch.Size([1024]) -55.423786
+backbone.layer3.2.bn3.running_mean torch.Size([1024]) -9.999114
+backbone.layer3.2.bn3.running_var torch.Size([1024]) 0.99370956
+backbone.layer3.2.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer3.3.conv1.weight torch.Size([256, 1024, 1, 1]) -339.3174
+backbone.layer3.3.bn1.weight torch.Size([256]) 46.925747
+backbone.layer3.3.bn1.bias torch.Size([256]) -18.686344
+backbone.layer3.3.bn1.running_mean torch.Size([256]) -15.318938
+backbone.layer3.3.bn1.running_var torch.Size([256]) 4.1833134
+backbone.layer3.3.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.3.conv2.weight torch.Size([256, 256, 3, 3]) -729.98334
+backbone.layer3.3.bn2.weight torch.Size([256]) 47.846603
+backbone.layer3.3.bn2.bias torch.Size([256]) -15.354654
+backbone.layer3.3.bn2.running_mean torch.Size([256]) -12.884603
+backbone.layer3.3.bn2.running_var torch.Size([256]) 2.574014
+backbone.layer3.3.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer3.3.conv3.weight torch.Size([1024, 256, 1, 1]) -542.49677
+backbone.layer3.3.bn3.weight torch.Size([1024]) 88.82103
+backbone.layer3.3.bn3.bias torch.Size([1024]) -60.723724
+backbone.layer3.3.bn3.running_mean torch.Size([1024]) -13.308122
+backbone.layer3.3.bn3.running_var torch.Size([1024]) 0.7633043
+backbone.layer3.3.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer3.4.conv1.weight torch.Size([256, 1024, 1, 1]) -393.09763
+backbone.layer3.4.bn1.weight torch.Size([256]) 45.882385
+backbone.layer3.4.bn1.bias torch.Size([256]) -21.576763
+backbone.layer3.4.bn1.running_mean torch.Size([256]) -17.164902
+backbone.layer3.4.bn1.running_var torch.Size([256]) 3.8561826
+backbone.layer3.4.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.4.conv2.weight torch.Size([256, 256, 3, 3]) -725.06323
+backbone.layer3.4.bn2.weight torch.Size([256]) 47.52991
+backbone.layer3.4.bn2.bias torch.Size([256]) -20.390007
+backbone.layer3.4.bn2.running_mean torch.Size([256]) -15.505693
+backbone.layer3.4.bn2.running_var torch.Size([256]) 2.3133852
+backbone.layer3.4.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer3.4.conv3.weight torch.Size([1024, 256, 1, 1]) -641.63043
+backbone.layer3.4.bn3.weight torch.Size([1024]) 88.41803
+backbone.layer3.4.bn3.bias torch.Size([1024]) -79.86858
+backbone.layer3.4.bn3.running_mean torch.Size([1024]) -17.05866
+backbone.layer3.4.bn3.running_var torch.Size([1024]) 0.710989
+backbone.layer3.4.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer3.5.conv1.weight torch.Size([256, 1024, 1, 1]) -400.5001
+backbone.layer3.5.bn1.weight torch.Size([256]) 47.512787
+backbone.layer3.5.bn1.bias torch.Size([256]) -27.531635
+backbone.layer3.5.bn1.running_mean torch.Size([256]) -14.39394
+backbone.layer3.5.bn1.running_var torch.Size([256]) 3.6485674
+backbone.layer3.5.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer3.5.conv2.weight torch.Size([256, 256, 3, 3]) -646.8608
+backbone.layer3.5.bn2.weight torch.Size([256]) 49.50718
+backbone.layer3.5.bn2.bias torch.Size([256]) -21.1696
+backbone.layer3.5.bn2.running_mean torch.Size([256]) -14.728893
+backbone.layer3.5.bn2.running_var torch.Size([256]) 3.0347395
+backbone.layer3.5.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer3.5.conv3.weight torch.Size([1024, 256, 1, 1]) -892.4388
+backbone.layer3.5.bn3.weight torch.Size([1024]) 99.48693
+backbone.layer3.5.bn3.bias torch.Size([1024]) -107.14017
+backbone.layer3.5.bn3.running_mean torch.Size([1024]) -25.340372
+backbone.layer3.5.bn3.running_var torch.Size([1024]) 1.3042028
+backbone.layer3.5.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer4.0.conv1.weight torch.Size([512, 1024, 1, 1]) -931.77454
+backbone.layer4.0.bn1.weight torch.Size([512]) 104.82697
+backbone.layer4.0.bn1.bias torch.Size([512]) -83.71473
+backbone.layer4.0.bn1.running_mean torch.Size([512]) -36.235794
+backbone.layer4.0.bn1.running_var torch.Size([512]) 7.091286
+backbone.layer4.0.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer4.0.conv2.weight torch.Size([512, 512, 3, 3]) -1650.8516
+backbone.layer4.0.bn2.weight torch.Size([512]) 92.49188
+backbone.layer4.0.bn2.bias torch.Size([512]) -33.35587
+backbone.layer4.0.bn2.running_mean torch.Size([512]) -30.380894
+backbone.layer4.0.bn2.running_var torch.Size([512]) 6.919145
+backbone.layer4.0.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer4.0.conv3.weight torch.Size([2048, 512, 1, 1]) -1365.2612
+backbone.layer4.0.bn3.weight torch.Size([2048]) 655.4883
+backbone.layer4.0.bn3.bias torch.Size([2048]) -100.62413
+backbone.layer4.0.bn3.running_mean torch.Size([2048]) -22.723763
+backbone.layer4.0.bn3.running_var torch.Size([2048]) 2.8390403
+backbone.layer4.0.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer4.0.downsample.0.weight torch.Size([2048, 1024, 1, 1]) -1307.4597
+backbone.layer4.0.downsample.1.weight torch.Size([2048]) 478.8551
+backbone.layer4.0.downsample.1.bias torch.Size([2048]) -100.62413
+backbone.layer4.0.downsample.1.running_mean torch.Size([2048]) -6.1758127
+backbone.layer4.0.downsample.1.running_var torch.Size([2048]) 3.4287963
+backbone.layer4.0.downsample.1.num_batches_tracked torch.Size([]) 0
+backbone.layer4.1.conv1.weight torch.Size([512, 2048, 1, 1]) -1036.1627
+backbone.layer4.1.bn1.weight torch.Size([512]) 92.08562
+backbone.layer4.1.bn1.bias torch.Size([512]) -59.04806
+backbone.layer4.1.bn1.running_mean torch.Size([512]) -145.41667
+backbone.layer4.1.bn1.running_var torch.Size([512]) 75.87157
+backbone.layer4.1.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer4.1.conv2.weight torch.Size([512, 512, 3, 3]) -2175.4292
+backbone.layer4.1.bn2.weight torch.Size([512]) 94.56941
+backbone.layer4.1.bn2.bias torch.Size([512]) -57.615208
+backbone.layer4.1.bn2.running_mean torch.Size([512]) -46.084396
+backbone.layer4.1.bn2.running_var torch.Size([512]) 6.5013857
+backbone.layer4.1.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer4.1.conv3.weight torch.Size([2048, 512, 1, 1]) -831.65546
+backbone.layer4.1.bn3.weight torch.Size([2048]) 644.73224
+backbone.layer4.1.bn3.bias torch.Size([2048]) -130.50522
+backbone.layer4.1.bn3.running_mean torch.Size([2048]) -3.231095
+backbone.layer4.1.bn3.running_var torch.Size([2048]) 1.6744823
+backbone.layer4.1.bn3.num_batches_tracked torch.Size([]) 0
+backbone.layer4.2.conv1.weight torch.Size([512, 2048, 1, 1]) -613.5674
+backbone.layer4.2.bn1.weight torch.Size([512]) 97.8969
+backbone.layer4.2.bn1.bias torch.Size([512]) -79.242645
+backbone.layer4.2.bn1.running_mean torch.Size([512]) -175.0876
+backbone.layer4.2.bn1.running_var torch.Size([512]) 140.58578
+backbone.layer4.2.bn1.num_batches_tracked torch.Size([]) 0
+backbone.layer4.2.conv2.weight torch.Size([512, 512, 3, 3]) -1869.3138
+backbone.layer4.2.bn2.weight torch.Size([512]) 91.46398
+backbone.layer4.2.bn2.bias torch.Size([512]) -44.614025
+backbone.layer4.2.bn2.running_mean torch.Size([512]) -44.485275
+backbone.layer4.2.bn2.running_var torch.Size([512]) 5.5726004
+backbone.layer4.2.bn2.num_batches_tracked torch.Size([]) 0
+backbone.layer4.2.conv3.weight torch.Size([2048, 512, 1, 1]) -636.4358
+backbone.layer4.2.bn3.weight torch.Size([2048]) 1290.4084
+backbone.layer4.2.bn3.bias torch.Size([2048]) 33.936058
+backbone.layer4.2.bn3.running_mean torch.Size([2048]) -11.56596
+backbone.layer4.2.bn3.running_var torch.Size([2048]) 1.96471
+backbone.layer4.2.bn3.num_batches_tracked torch.Size([]) 0
+neck.lateral_convs.0.conv.weight torch.Size([256, 512, 1, 1]) 12.294775
+neck.lateral_convs.0.conv.bias torch.Size([256]) -0.23039126
+neck.lateral_convs.1.conv.weight torch.Size([256, 1024, 1, 1]) 9.270195
+neck.lateral_convs.1.conv.bias torch.Size([256]) 0.048301786
+neck.lateral_convs.2.conv.weight torch.Size([256, 2048, 1, 1]) 16.479528
+neck.lateral_convs.2.conv.bias torch.Size([256]) -0.30144668
+neck.fpn_convs.0.conv.weight torch.Size([256, 256, 3, 3]) -21.224407
+neck.fpn_convs.0.conv.bias torch.Size([256]) -1.4722729
+neck.fpn_convs.1.conv.weight torch.Size([256, 256, 3, 3]) 31.523136
+neck.fpn_convs.1.conv.bias torch.Size([256]) -0.06070727
+neck.fpn_convs.2.conv.weight torch.Size([256, 256, 3, 3]) 10.313586
+neck.fpn_convs.2.conv.bias torch.Size([256]) 0.0783582
+neck.fpn_convs.3.conv.weight torch.Size([256, 2048, 3, 3]) 22.367174
+neck.fpn_convs.3.conv.bias torch.Size([256]) -0.124985315
+neck.fpn_convs.4.conv.weight torch.Size([256, 256, 3, 3]) 13.835276
+neck.fpn_convs.4.conv.bias torch.Size([256]) -0.11657562
+rbox_head.fam_reg_convs.0.conv.weight torch.Size([256, 256, 3, 3]) 115.45707
+rbox_head.fam_reg_convs.0.conv.bias torch.Size([256]) -8.156756
+rbox_head.fam_reg_convs.1.conv.weight torch.Size([256, 256, 3, 3]) -782.0708
+rbox_head.fam_reg_convs.1.conv.bias torch.Size([256]) 31.065678
+rbox_head.fam_cls_convs.0.conv.weight torch.Size([256, 256, 3, 3]) 11.833801
+rbox_head.fam_cls_convs.0.conv.bias torch.Size([256]) 7.4684057
+rbox_head.fam_cls_convs.1.conv.weight torch.Size([256, 256, 3, 3]) -191.10442
+rbox_head.fam_cls_convs.1.conv.bias torch.Size([256]) 14.1040745
+rbox_head.fam_reg.weight torch.Size([5, 256, 1, 1]) -3.0433958
+rbox_head.fam_reg.bias torch.Size([5]) 0.19166774
+rbox_head.fam_cls.weight torch.Size([15, 256, 1, 1]) -28.523602
+rbox_head.fam_cls.bias torch.Size([15]) -55.124264
+rbox_head.align_conv.weight torch.Size([256, 256, 3, 3]) -5.6555305
+rbox_head.align_conv.bias torch.Size([256]) 0.27799746
+rbox_head.or_conv.weight torch.Size([256, 256, 3, 3]) -7.199708
+rbox_head.or_conv.bias torch.Size([256]) 0.4232092
+rbox_head.or_pool.conv.0.weight torch.Size([256, 32, 1, 1]) -13.063075
+rbox_head.or_pool.conv.0.bias torch.Size([256]) -0.35764325
+rbox_head.or_pool.conv.1.weight torch.Size([256]) 256.0
+rbox_head.or_pool.conv.1.bias torch.Size([256]) 0.0
+rbox_head.or_pool.conv.1.running_mean torch.Size([256]) 0.0
+rbox_head.or_pool.conv.1.running_var torch.Size([256]) 256.0
+rbox_head.or_pool.conv.1.num_batches_tracked torch.Size([]) 0
+rbox_head.odm_reg_convs.0.conv.weight torch.Size([256, 256, 3, 3]) -3.6315026
+rbox_head.odm_reg_convs.0.conv.bias torch.Size([256]) -7.7873087
+rbox_head.odm_reg_convs.1.conv.weight torch.Size([256, 256, 3, 3]) -782.29016
+rbox_head.odm_reg_convs.1.conv.bias torch.Size([256]) 10.014979
+rbox_head.odm_cls_convs.0.conv.weight torch.Size([256, 256, 3, 3]) 16.842144
+rbox_head.odm_cls_convs.0.conv.bias torch.Size([256]) -3.1443574
+rbox_head.odm_cls_convs.1.conv.weight torch.Size([256, 256, 3, 3]) -724.1192
+rbox_head.odm_cls_convs.1.conv.bias torch.Size([256]) 19.38749
+rbox_head.odm_cls.weight torch.Size([15, 256, 3, 3]) -91.981
+rbox_head.odm_cls.bias torch.Size([15]) -54.762947
+rbox_head.odm_reg.weight torch.Size([5, 256, 3, 3]) 11.631216
+rbox_head.odm_reg.bias torch.Size([5]) 0.029560653
+pd_k backbone.conv1.weight torch_k: backbone.conv1.conv1.conv.weight
+pd_k backbone.bn1.weight torch_k: backbone.conv1.conv1.norm.weight
+pd_k backbone.bn1.bias torch_k: backbone.conv1.conv1.norm.bias
+pd_k backbone.bn1.running_mean torch_k: backbone.conv1.conv1.norm._mean
+pd_k backbone.bn1.running_var torch_k: backbone.conv1.conv1.norm._variance
+pd_k backbone.layer1.0.conv1.weight torch_k: backbone.res2.res2a.branch2a.conv.weight
+pd_k backbone.layer1.0.bn1.weight torch_k: backbone.res2.res2a.branch2a.norm.weight
+pd_k backbone.layer1.0.bn1.bias torch_k: backbone.res2.res2a.branch2a.norm.bias
+pd_k backbone.layer1.0.bn1.running_mean torch_k: backbone.res2.res2a.branch2a.norm._mean
+pd_k backbone.layer1.0.bn1.running_var torch_k: backbone.res2.res2a.branch2a.norm._variance
+pd_k backbone.layer1.0.conv2.weight torch_k: backbone.res2.res2a.branch2b.conv.weight
+pd_k backbone.layer1.0.bn2.weight torch_k: backbone.res2.res2a.branch2b.norm.weight
+pd_k backbone.layer1.0.bn2.bias torch_k: backbone.res2.res2a.branch2b.norm.bias
+pd_k backbone.layer1.0.bn2.running_mean torch_k: backbone.res2.res2a.branch2b.norm._mean
+pd_k backbone.layer1.0.bn2.running_var torch_k: backbone.res2.res2a.branch2b.norm._variance
+pd_k backbone.layer1.0.conv3.weight torch_k: backbone.res2.res2a.branch2c.conv.weight
+pd_k backbone.layer1.0.bn3.weight torch_k: backbone.res2.res2a.branch2c.norm.weight
+pd_k backbone.layer1.0.bn3.bias torch_k: backbone.res2.res2a.branch2c.norm.bias
+pd_k backbone.layer1.0.bn3.running_mean torch_k: backbone.res2.res2a.branch2c.norm._mean
+pd_k backbone.layer1.0.bn3.running_var torch_k: backbone.res2.res2a.branch2c.norm._variance
+pd_k backbone.layer1.0.downsample.0.weight torch_k: backbone.res2.res2a.short.conv.weight
+pd_k backbone.layer1.0.downsample.1.weight torch_k: backbone.res2.res2a.short.norm.weight
+pd_k backbone.layer1.0.downsample.1.bias torch_k: backbone.res2.res2a.short.norm.bias
+pd_k backbone.layer1.0.downsample.1.running_mean torch_k: backbone.res2.res2a.short.norm._mean
+pd_k backbone.layer1.0.downsample.1.running_var torch_k: backbone.res2.res2a.short.norm._variance
+pd_k backbone.layer1.1.conv1.weight torch_k: backbone.res2.res2b.branch2a.conv.weight
+pd_k backbone.layer1.1.bn1.weight torch_k: backbone.res2.res2b.branch2a.norm.weight
+pd_k backbone.layer1.1.bn1.bias torch_k: backbone.res2.res2b.branch2a.norm.bias
+pd_k backbone.layer1.1.bn1.running_mean torch_k: backbone.res2.res2b.branch2a.norm._mean
+pd_k backbone.layer1.1.bn1.running_var torch_k: backbone.res2.res2b.branch2a.norm._variance
+pd_k backbone.layer1.1.conv2.weight torch_k: backbone.res2.res2b.branch2b.conv.weight
+pd_k backbone.layer1.1.bn2.weight torch_k: backbone.res2.res2b.branch2b.norm.weight
+pd_k backbone.layer1.1.bn2.bias torch_k: backbone.res2.res2b.branch2b.norm.bias
+pd_k backbone.layer1.1.bn2.running_mean torch_k: backbone.res2.res2b.branch2b.norm._mean
+pd_k backbone.layer1.1.bn2.running_var torch_k: backbone.res2.res2b.branch2b.norm._variance
+pd_k backbone.layer1.1.conv3.weight torch_k: backbone.res2.res2b.branch2c.conv.weight
+pd_k backbone.layer1.1.bn3.weight torch_k: backbone.res2.res2b.branch2c.norm.weight
+pd_k backbone.layer1.1.bn3.bias torch_k: backbone.res2.res2b.branch2c.norm.bias
+pd_k backbone.layer1.1.bn3.running_mean torch_k: backbone.res2.res2b.branch2c.norm._mean
+pd_k backbone.layer1.1.bn3.running_var torch_k: backbone.res2.res2b.branch2c.norm._variance
+pd_k backbone.layer1.2.conv1.weight torch_k: backbone.res2.res2c.branch2a.conv.weight
+pd_k backbone.layer1.2.bn1.weight torch_k: backbone.res2.res2c.branch2a.norm.weight
+pd_k backbone.layer1.2.bn1.bias torch_k: backbone.res2.res2c.branch2a.norm.bias
+pd_k backbone.layer1.2.bn1.running_mean torch_k: backbone.res2.res2c.branch2a.norm._mean
+pd_k backbone.layer1.2.bn1.running_var torch_k: backbone.res2.res2c.branch2a.norm._variance
+pd_k backbone.layer1.2.conv2.weight torch_k: backbone.res2.res2c.branch2b.conv.weight
+pd_k backbone.layer1.2.bn2.weight torch_k: backbone.res2.res2c.branch2b.norm.weight
+pd_k backbone.layer1.2.bn2.bias torch_k: backbone.res2.res2c.branch2b.norm.bias
+pd_k backbone.layer1.2.bn2.running_mean torch_k: backbone.res2.res2c.branch2b.norm._mean
+pd_k backbone.layer1.2.bn2.running_var torch_k: backbone.res2.res2c.branch2b.norm._variance
+pd_k backbone.layer1.2.conv3.weight torch_k: backbone.res2.res2c.branch2c.conv.weight
+pd_k backbone.layer1.2.bn3.weight torch_k: backbone.res2.res2c.branch2c.norm.weight
+pd_k backbone.layer1.2.bn3.bias torch_k: backbone.res2.res2c.branch2c.norm.bias
+pd_k backbone.layer1.2.bn3.running_mean torch_k: backbone.res2.res2c.branch2c.norm._mean
+pd_k backbone.layer1.2.bn3.running_var torch_k: backbone.res2.res2c.branch2c.norm._variance
+pd_k backbone.layer2.0.conv1.weight torch_k: backbone.res3.res3a.branch2a.conv.weight
+pd_k backbone.layer2.0.bn1.weight torch_k: backbone.res3.res3a.branch2a.norm.weight
+pd_k backbone.layer2.0.bn1.bias torch_k: backbone.res3.res3a.branch2a.norm.bias
+pd_k backbone.layer2.0.bn1.running_mean torch_k: backbone.res3.res3a.branch2a.norm._mean
+pd_k backbone.layer2.0.bn1.running_var torch_k: backbone.res3.res3a.branch2a.norm._variance
+pd_k backbone.layer2.0.conv2.weight torch_k: backbone.res3.res3a.branch2b.conv.weight
+pd_k backbone.layer2.0.bn2.weight torch_k: backbone.res3.res3a.branch2b.norm.weight
+pd_k backbone.layer2.0.bn2.bias torch_k: backbone.res3.res3a.branch2b.norm.bias
+pd_k backbone.layer2.0.bn2.running_mean torch_k: backbone.res3.res3a.branch2b.norm._mean
+pd_k backbone.layer2.0.bn2.running_var torch_k: backbone.res3.res3a.branch2b.norm._variance
+pd_k backbone.layer2.0.conv3.weight torch_k: backbone.res3.res3a.branch2c.conv.weight
+pd_k backbone.layer2.0.bn3.weight torch_k: backbone.res3.res3a.branch2c.norm.weight
+pd_k backbone.layer2.0.bn3.bias torch_k: backbone.res3.res3a.branch2c.norm.bias
+pd_k backbone.layer2.0.bn3.running_mean torch_k: backbone.res3.res3a.branch2c.norm._mean
+pd_k backbone.layer2.0.bn3.running_var torch_k: backbone.res3.res3a.branch2c.norm._variance
+pd_k backbone.layer2.0.downsample.0.weight torch_k: backbone.res3.res3a.short.conv.weight
+pd_k backbone.layer2.0.downsample.1.weight torch_k: backbone.res3.res3a.short.norm.weight
+pd_k backbone.layer2.0.downsample.1.bias torch_k: backbone.res3.res3a.short.norm.bias
+pd_k backbone.layer2.0.downsample.1.running_mean torch_k: backbone.res3.res3a.short.norm._mean
+pd_k backbone.layer2.0.downsample.1.running_var torch_k: backbone.res3.res3a.short.norm._variance
+pd_k backbone.layer2.1.conv1.weight torch_k: backbone.res3.res3b.branch2a.conv.weight
+pd_k backbone.layer2.1.bn1.weight torch_k: backbone.res3.res3b.branch2a.norm.weight
+pd_k backbone.layer2.1.bn1.bias torch_k: backbone.res3.res3b.branch2a.norm.bias
+pd_k backbone.layer2.1.bn1.running_mean torch_k: backbone.res3.res3b.branch2a.norm._mean
+pd_k backbone.layer2.1.bn1.running_var torch_k: backbone.res3.res3b.branch2a.norm._variance
+pd_k backbone.layer2.1.conv2.weight torch_k: backbone.res3.res3b.branch2b.conv.weight
+pd_k backbone.layer2.1.bn2.weight torch_k: backbone.res3.res3b.branch2b.norm.weight
+pd_k backbone.layer2.1.bn2.bias torch_k: backbone.res3.res3b.branch2b.norm.bias
+pd_k backbone.layer2.1.bn2.running_mean torch_k: backbone.res3.res3b.branch2b.norm._mean
+pd_k backbone.layer2.1.bn2.running_var torch_k: backbone.res3.res3b.branch2b.norm._variance
+pd_k backbone.layer2.1.conv3.weight torch_k: backbone.res3.res3b.branch2c.conv.weight
+pd_k backbone.layer2.1.bn3.weight torch_k: backbone.res3.res3b.branch2c.norm.weight
+pd_k backbone.layer2.1.bn3.bias torch_k: backbone.res3.res3b.branch2c.norm.bias
+pd_k backbone.layer2.1.bn3.running_mean torch_k: backbone.res3.res3b.branch2c.norm._mean
+pd_k backbone.layer2.1.bn3.running_var torch_k: backbone.res3.res3b.branch2c.norm._variance
+pd_k backbone.layer2.2.conv1.weight torch_k: backbone.res3.res3c.branch2a.conv.weight
+pd_k backbone.layer2.2.bn1.weight torch_k: backbone.res3.res3c.branch2a.norm.weight
+pd_k backbone.layer2.2.bn1.bias torch_k: backbone.res3.res3c.branch2a.norm.bias
+pd_k backbone.layer2.2.bn1.running_mean torch_k: backbone.res3.res3c.branch2a.norm._mean
+pd_k backbone.layer2.2.bn1.running_var torch_k: backbone.res3.res3c.branch2a.norm._variance
+pd_k backbone.layer2.2.conv2.weight torch_k: backbone.res3.res3c.branch2b.conv.weight
+pd_k backbone.layer2.2.bn2.weight torch_k: backbone.res3.res3c.branch2b.norm.weight
+pd_k backbone.layer2.2.bn2.bias torch_k: backbone.res3.res3c.branch2b.norm.bias
+pd_k backbone.layer2.2.bn2.running_mean torch_k: backbone.res3.res3c.branch2b.norm._mean
+pd_k backbone.layer2.2.bn2.running_var torch_k: backbone.res3.res3c.branch2b.norm._variance
+pd_k backbone.layer2.2.conv3.weight torch_k: backbone.res3.res3c.branch2c.conv.weight
+pd_k backbone.layer2.2.bn3.weight torch_k: backbone.res3.res3c.branch2c.norm.weight
+pd_k backbone.layer2.2.bn3.bias torch_k: backbone.res3.res3c.branch2c.norm.bias
+pd_k backbone.layer2.2.bn3.running_mean torch_k: backbone.res3.res3c.branch2c.norm._mean
+pd_k backbone.layer2.2.bn3.running_var torch_k: backbone.res3.res3c.branch2c.norm._variance
+pd_k backbone.layer2.3.conv1.weight torch_k: backbone.res3.res3d.branch2a.conv.weight
+pd_k backbone.layer2.3.bn1.weight torch_k: backbone.res3.res3d.branch2a.norm.weight
+pd_k backbone.layer2.3.bn1.bias torch_k: backbone.res3.res3d.branch2a.norm.bias
+pd_k backbone.layer2.3.bn1.running_mean torch_k: backbone.res3.res3d.branch2a.norm._mean
+pd_k backbone.layer2.3.bn1.running_var torch_k: backbone.res3.res3d.branch2a.norm._variance
+pd_k backbone.layer2.3.conv2.weight torch_k: backbone.res3.res3d.branch2b.conv.weight
+pd_k backbone.layer2.3.bn2.weight torch_k: backbone.res3.res3d.branch2b.norm.weight
+pd_k backbone.layer2.3.bn2.bias torch_k: backbone.res3.res3d.branch2b.norm.bias
+pd_k backbone.layer2.3.bn2.running_mean torch_k: backbone.res3.res3d.branch2b.norm._mean
+pd_k backbone.layer2.3.bn2.running_var torch_k: backbone.res3.res3d.branch2b.norm._variance
+pd_k backbone.layer2.3.conv3.weight torch_k: backbone.res3.res3d.branch2c.conv.weight
+pd_k backbone.layer2.3.bn3.weight torch_k: backbone.res3.res3d.branch2c.norm.weight
+pd_k backbone.layer2.3.bn3.bias torch_k: backbone.res3.res3d.branch2c.norm.bias
+pd_k backbone.layer2.3.bn3.running_mean torch_k: backbone.res3.res3d.branch2c.norm._mean
+pd_k backbone.layer2.3.bn3.running_var torch_k: backbone.res3.res3d.branch2c.norm._variance
+pd_k backbone.layer3.0.conv1.weight torch_k: backbone.res4.res4a.branch2a.conv.weight
+pd_k backbone.layer3.0.bn1.weight torch_k: backbone.res4.res4a.branch2a.norm.weight
+pd_k backbone.layer3.0.bn1.bias torch_k: backbone.res4.res4a.branch2a.norm.bias
+pd_k backbone.layer3.0.bn1.running_mean torch_k: backbone.res4.res4a.branch2a.norm._mean
+pd_k backbone.layer3.0.bn1.running_var torch_k: backbone.res4.res4a.branch2a.norm._variance
+pd_k backbone.layer3.0.conv2.weight torch_k: backbone.res4.res4a.branch2b.conv.weight
+pd_k backbone.layer3.0.bn2.weight torch_k: backbone.res4.res4a.branch2b.norm.weight
+pd_k backbone.layer3.0.bn2.bias torch_k: backbone.res4.res4a.branch2b.norm.bias
+pd_k backbone.layer3.0.bn2.running_mean torch_k: backbone.res4.res4a.branch2b.norm._mean
+pd_k backbone.layer3.0.bn2.running_var torch_k: backbone.res4.res4a.branch2b.norm._variance
+pd_k backbone.layer3.0.conv3.weight torch_k: backbone.res4.res4a.branch2c.conv.weight
+pd_k backbone.layer3.0.bn3.weight torch_k: backbone.res4.res4a.branch2c.norm.weight
+pd_k backbone.layer3.0.bn3.bias torch_k: backbone.res4.res4a.branch2c.norm.bias
+pd_k backbone.layer3.0.bn3.running_mean torch_k: backbone.res4.res4a.branch2c.norm._mean
+pd_k backbone.layer3.0.bn3.running_var torch_k: backbone.res4.res4a.branch2c.norm._variance
+pd_k backbone.layer3.0.downsample.0.weight torch_k: backbone.res4.res4a.short.conv.weight
+pd_k backbone.layer3.0.downsample.1.weight torch_k: backbone.res4.res4a.short.norm.weight
+pd_k backbone.layer3.0.downsample.1.bias torch_k: backbone.res4.res4a.short.norm.bias
+pd_k backbone.layer3.0.downsample.1.running_mean torch_k: backbone.res4.res4a.short.norm._mean
+pd_k backbone.layer3.0.downsample.1.running_var torch_k: backbone.res4.res4a.short.norm._variance
+pd_k backbone.layer3.1.conv1.weight torch_k: backbone.res4.res4b.branch2a.conv.weight
+pd_k backbone.layer3.1.bn1.weight torch_k: backbone.res4.res4b.branch2a.norm.weight
+pd_k backbone.layer3.1.bn1.bias torch_k: backbone.res4.res4b.branch2a.norm.bias
+pd_k backbone.layer3.1.bn1.running_mean torch_k: backbone.res4.res4b.branch2a.norm._mean
+pd_k backbone.layer3.1.bn1.running_var torch_k: backbone.res4.res4b.branch2a.norm._variance
+pd_k backbone.layer3.1.conv2.weight torch_k: backbone.res4.res4b.branch2b.conv.weight
+pd_k backbone.layer3.1.bn2.weight torch_k: backbone.res4.res4b.branch2b.norm.weight
+pd_k backbone.layer3.1.bn2.bias torch_k: backbone.res4.res4b.branch2b.norm.bias
+pd_k backbone.layer3.1.bn2.running_mean torch_k: backbone.res4.res4b.branch2b.norm._mean
+pd_k backbone.layer3.1.bn2.running_var torch_k: backbone.res4.res4b.branch2b.norm._variance
+pd_k backbone.layer3.1.conv3.weight torch_k: backbone.res4.res4b.branch2c.conv.weight
+pd_k backbone.layer3.1.bn3.weight torch_k: backbone.res4.res4b.branch2c.norm.weight
+pd_k backbone.layer3.1.bn3.bias torch_k: backbone.res4.res4b.branch2c.norm.bias
+pd_k backbone.layer3.1.bn3.running_mean torch_k: backbone.res4.res4b.branch2c.norm._mean
+pd_k backbone.layer3.1.bn3.running_var torch_k: backbone.res4.res4b.branch2c.norm._variance
+pd_k backbone.layer3.2.conv1.weight torch_k: backbone.res4.res4c.branch2a.conv.weight
+pd_k backbone.layer3.2.bn1.weight torch_k: backbone.res4.res4c.branch2a.norm.weight
+pd_k backbone.layer3.2.bn1.bias torch_k: backbone.res4.res4c.branch2a.norm.bias
+pd_k backbone.layer3.2.bn1.running_mean torch_k: backbone.res4.res4c.branch2a.norm._mean
+pd_k backbone.layer3.2.bn1.running_var torch_k: backbone.res4.res4c.branch2a.norm._variance
+pd_k backbone.layer3.2.conv2.weight torch_k: backbone.res4.res4c.branch2b.conv.weight
+pd_k backbone.layer3.2.bn2.weight torch_k: backbone.res4.res4c.branch2b.norm.weight
+pd_k backbone.layer3.2.bn2.bias torch_k: backbone.res4.res4c.branch2b.norm.bias
+pd_k backbone.layer3.2.bn2.running_mean torch_k: backbone.res4.res4c.branch2b.norm._mean
+pd_k backbone.layer3.2.bn2.running_var torch_k: backbone.res4.res4c.branch2b.norm._variance
+pd_k backbone.layer3.2.conv3.weight torch_k: backbone.res4.res4c.branch2c.conv.weight
+pd_k backbone.layer3.2.bn3.weight torch_k: backbone.res4.res4c.branch2c.norm.weight
+pd_k backbone.layer3.2.bn3.bias torch_k: backbone.res4.res4c.branch2c.norm.bias
+pd_k backbone.layer3.2.bn3.running_mean torch_k: backbone.res4.res4c.branch2c.norm._mean
+pd_k backbone.layer3.2.bn3.running_var torch_k: backbone.res4.res4c.branch2c.norm._variance
+pd_k backbone.layer3.3.conv1.weight torch_k: backbone.res4.res4d.branch2a.conv.weight
+pd_k backbone.layer3.3.bn1.weight torch_k: backbone.res4.res4d.branch2a.norm.weight
+pd_k backbone.layer3.3.bn1.bias torch_k: backbone.res4.res4d.branch2a.norm.bias
+pd_k backbone.layer3.3.bn1.running_mean torch_k: backbone.res4.res4d.branch2a.norm._mean
+pd_k backbone.layer3.3.bn1.running_var torch_k: backbone.res4.res4d.branch2a.norm._variance
+pd_k backbone.layer3.3.conv2.weight torch_k: backbone.res4.res4d.branch2b.conv.weight
+pd_k backbone.layer3.3.bn2.weight torch_k: backbone.res4.res4d.branch2b.norm.weight
+pd_k backbone.layer3.3.bn2.bias torch_k: backbone.res4.res4d.branch2b.norm.bias
+pd_k backbone.layer3.3.bn2.running_mean torch_k: backbone.res4.res4d.branch2b.norm._mean
+pd_k backbone.layer3.3.bn2.running_var torch_k: backbone.res4.res4d.branch2b.norm._variance
+pd_k backbone.layer3.3.conv3.weight torch_k: backbone.res4.res4d.branch2c.conv.weight
+pd_k backbone.layer3.3.bn3.weight torch_k: backbone.res4.res4d.branch2c.norm.weight
+pd_k backbone.layer3.3.bn3.bias torch_k: backbone.res4.res4d.branch2c.norm.bias
+pd_k backbone.layer3.3.bn3.running_mean torch_k: backbone.res4.res4d.branch2c.norm._mean
+pd_k backbone.layer3.3.bn3.running_var torch_k: backbone.res4.res4d.branch2c.norm._variance
+pd_k backbone.layer3.4.conv1.weight torch_k: backbone.res4.res4e.branch2a.conv.weight
+pd_k backbone.layer3.4.bn1.weight torch_k: backbone.res4.res4e.branch2a.norm.weight
+pd_k backbone.layer3.4.bn1.bias torch_k: backbone.res4.res4e.branch2a.norm.bias
+pd_k backbone.layer3.4.bn1.running_mean torch_k: backbone.res4.res4e.branch2a.norm._mean
+pd_k backbone.layer3.4.bn1.running_var torch_k: backbone.res4.res4e.branch2a.norm._variance
+pd_k backbone.layer3.4.conv2.weight torch_k: backbone.res4.res4e.branch2b.conv.weight
+pd_k backbone.layer3.4.bn2.weight torch_k: backbone.res4.res4e.branch2b.norm.weight
+pd_k backbone.layer3.4.bn2.bias torch_k: backbone.res4.res4e.branch2b.norm.bias
+pd_k backbone.layer3.4.bn2.running_mean torch_k: backbone.res4.res4e.branch2b.norm._mean
+pd_k backbone.layer3.4.bn2.running_var torch_k: backbone.res4.res4e.branch2b.norm._variance
+pd_k backbone.layer3.4.conv3.weight torch_k: backbone.res4.res4e.branch2c.conv.weight
+pd_k backbone.layer3.4.bn3.weight torch_k: backbone.res4.res4e.branch2c.norm.weight
+pd_k backbone.layer3.4.bn3.bias torch_k: backbone.res4.res4e.branch2c.norm.bias
+pd_k backbone.layer3.4.bn3.running_mean torch_k: backbone.res4.res4e.branch2c.norm._mean
+pd_k backbone.layer3.4.bn3.running_var torch_k: backbone.res4.res4e.branch2c.norm._variance
+pd_k backbone.layer3.5.conv1.weight torch_k: backbone.res4.res4f.branch2a.conv.weight
+pd_k backbone.layer3.5.bn1.weight torch_k: backbone.res4.res4f.branch2a.norm.weight
+pd_k backbone.layer3.5.bn1.bias torch_k: backbone.res4.res4f.branch2a.norm.bias
+pd_k backbone.layer3.5.bn1.running_mean torch_k: backbone.res4.res4f.branch2a.norm._mean
+pd_k backbone.layer3.5.bn1.running_var torch_k: backbone.res4.res4f.branch2a.norm._variance
+pd_k backbone.layer3.5.conv2.weight torch_k: backbone.res4.res4f.branch2b.conv.weight
+pd_k backbone.layer3.5.bn2.weight torch_k: backbone.res4.res4f.branch2b.norm.weight
+pd_k backbone.layer3.5.bn2.bias torch_k: backbone.res4.res4f.branch2b.norm.bias
+pd_k backbone.layer3.5.bn2.running_mean torch_k: backbone.res4.res4f.branch2b.norm._mean
+pd_k backbone.layer3.5.bn2.running_var torch_k: backbone.res4.res4f.branch2b.norm._variance
+pd_k backbone.layer3.5.conv3.weight torch_k: backbone.res4.res4f.branch2c.conv.weight
+pd_k backbone.layer3.5.bn3.weight torch_k: backbone.res4.res4f.branch2c.norm.weight
+pd_k backbone.layer3.5.bn3.bias torch_k: backbone.res4.res4f.branch2c.norm.bias
+pd_k backbone.layer3.5.bn3.running_mean torch_k: backbone.res4.res4f.branch2c.norm._mean
+pd_k backbone.layer3.5.bn3.running_var torch_k: backbone.res4.res4f.branch2c.norm._variance
+pd_k backbone.layer4.0.conv1.weight torch_k: backbone.res5.res5a.branch2a.conv.weight
+pd_k backbone.layer4.0.bn1.weight torch_k: backbone.res5.res5a.branch2a.norm.weight
+pd_k backbone.layer4.0.bn1.bias torch_k: backbone.res5.res5a.branch2a.norm.bias
+pd_k backbone.layer4.0.bn1.running_mean torch_k: backbone.res5.res5a.branch2a.norm._mean
+pd_k backbone.layer4.0.bn1.running_var torch_k: backbone.res5.res5a.branch2a.norm._variance
+pd_k backbone.layer4.0.conv2.weight torch_k: backbone.res5.res5a.branch2b.conv.weight
+pd_k backbone.layer4.0.bn2.weight torch_k: backbone.res5.res5a.branch2b.norm.weight
+pd_k backbone.layer4.0.bn2.bias torch_k: backbone.res5.res5a.branch2b.norm.bias
+pd_k backbone.layer4.0.bn2.running_mean torch_k: backbone.res5.res5a.branch2b.norm._mean
+pd_k backbone.layer4.0.bn2.running_var torch_k: backbone.res5.res5a.branch2b.norm._variance
+pd_k backbone.layer4.0.conv3.weight torch_k: backbone.res5.res5a.branch2c.conv.weight
+pd_k backbone.layer4.0.bn3.weight torch_k: backbone.res5.res5a.branch2c.norm.weight
+pd_k backbone.layer4.0.bn3.bias torch_k: backbone.res5.res5a.branch2c.norm.bias
+pd_k backbone.layer4.0.bn3.running_mean torch_k: backbone.res5.res5a.branch2c.norm._mean
+pd_k backbone.layer4.0.bn3.running_var torch_k: backbone.res5.res5a.branch2c.norm._variance
+pd_k backbone.layer4.0.downsample.0.weight torch_k: backbone.res5.res5a.short.conv.weight
+pd_k backbone.layer4.0.downsample.1.weight torch_k: backbone.res5.res5a.short.norm.weight
+pd_k backbone.layer4.0.downsample.1.bias torch_k: backbone.res5.res5a.short.norm.bias
+pd_k backbone.layer4.0.downsample.1.running_mean torch_k: backbone.res5.res5a.short.norm._mean
+pd_k backbone.layer4.0.downsample.1.running_var torch_k: backbone.res5.res5a.short.norm._variance
+pd_k backbone.layer4.1.conv1.weight torch_k: backbone.res5.res5b.branch2a.conv.weight
+pd_k backbone.layer4.1.bn1.weight torch_k: backbone.res5.res5b.branch2a.norm.weight
+pd_k backbone.layer4.1.bn1.bias torch_k: backbone.res5.res5b.branch2a.norm.bias
+pd_k backbone.layer4.1.bn1.running_mean torch_k: backbone.res5.res5b.branch2a.norm._mean
+pd_k backbone.layer4.1.bn1.running_var torch_k: backbone.res5.res5b.branch2a.norm._variance
+pd_k backbone.layer4.1.conv2.weight torch_k: backbone.res5.res5b.branch2b.conv.weight
+pd_k backbone.layer4.1.bn2.weight torch_k: backbone.res5.res5b.branch2b.norm.weight
+pd_k backbone.layer4.1.bn2.bias torch_k: backbone.res5.res5b.branch2b.norm.bias
+pd_k backbone.layer4.1.bn2.running_mean torch_k: backbone.res5.res5b.branch2b.norm._mean
+pd_k backbone.layer4.1.bn2.running_var torch_k: backbone.res5.res5b.branch2b.norm._variance
+pd_k backbone.layer4.1.conv3.weight torch_k: backbone.res5.res5b.branch2c.conv.weight
+pd_k backbone.layer4.1.bn3.weight torch_k: backbone.res5.res5b.branch2c.norm.weight
+pd_k backbone.layer4.1.bn3.bias torch_k: backbone.res5.res5b.branch2c.norm.bias
+pd_k backbone.layer4.1.bn3.running_mean torch_k: backbone.res5.res5b.branch2c.norm._mean
+pd_k backbone.layer4.1.bn3.running_var torch_k: backbone.res5.res5b.branch2c.norm._variance
+pd_k backbone.layer4.2.conv1.weight torch_k: backbone.res5.res5c.branch2a.conv.weight
+pd_k backbone.layer4.2.bn1.weight torch_k: backbone.res5.res5c.branch2a.norm.weight
+pd_k backbone.layer4.2.bn1.bias torch_k: backbone.res5.res5c.branch2a.norm.bias
+pd_k backbone.layer4.2.bn1.running_mean torch_k: backbone.res5.res5c.branch2a.norm._mean
+pd_k backbone.layer4.2.bn1.running_var torch_k: backbone.res5.res5c.branch2a.norm._variance
+pd_k backbone.layer4.2.conv2.weight torch_k: backbone.res5.res5c.branch2b.conv.weight
+pd_k backbone.layer4.2.bn2.weight torch_k: backbone.res5.res5c.branch2b.norm.weight
+pd_k backbone.layer4.2.bn2.bias torch_k: backbone.res5.res5c.branch2b.norm.bias
+pd_k backbone.layer4.2.bn2.running_mean torch_k: backbone.res5.res5c.branch2b.norm._mean
+pd_k backbone.layer4.2.bn2.running_var torch_k: backbone.res5.res5c.branch2b.norm._variance
+pd_k backbone.layer4.2.conv3.weight torch_k: backbone.res5.res5c.branch2c.conv.weight
+pd_k backbone.layer4.2.bn3.weight torch_k: backbone.res5.res5c.branch2c.norm.weight
+pd_k backbone.layer4.2.bn3.bias torch_k: backbone.res5.res5c.branch2c.norm.bias
+pd_k backbone.layer4.2.bn3.running_mean torch_k: backbone.res5.res5c.branch2c.norm._mean
+pd_k backbone.layer4.2.bn3.running_var torch_k: backbone.res5.res5c.branch2c.norm._variance
+pd_k neck.lateral_convs.0.conv.weight torch_k: neck.fpn_inner_res3_sum_lateral.weight
+pd_k neck.lateral_convs.0.conv.bias torch_k: neck.fpn_inner_res3_sum_lateral.bias
+pd_k neck.lateral_convs.1.conv.weight torch_k: neck.fpn_inner_res4_sum_lateral.weight
+pd_k neck.lateral_convs.1.conv.bias torch_k: neck.fpn_inner_res4_sum_lateral.bias
+pd_k neck.lateral_convs.2.conv.weight torch_k: neck.fpn_inner_res5_sum.weight
+pd_k neck.lateral_convs.2.conv.bias torch_k: neck.fpn_inner_res5_sum.bias
+pd_k neck.fpn_convs.0.conv.weight torch_k: neck.fpn_res3_sum.weight
+pd_k neck.fpn_convs.0.conv.bias torch_k: neck.fpn_res3_sum.bias
+pd_k neck.fpn_convs.1.conv.weight torch_k: neck.fpn_res4_sum.weight
+pd_k neck.fpn_convs.1.conv.bias torch_k: neck.fpn_res4_sum.bias
+pd_k neck.fpn_convs.2.conv.weight torch_k: neck.fpn_res5_sum.weight
+pd_k neck.fpn_convs.2.conv.bias torch_k: neck.fpn_res5_sum.bias
+pd_k neck.fpn_convs.3.conv.weight torch_k: neck.fpn_res0_sum_extra.weight
+pd_k neck.fpn_convs.3.conv.bias torch_k: neck.fpn_res0_sum_extra.bias
+pd_k neck.fpn_convs.4.conv.weight torch_k: neck.fpn_res1_sum_extra.weight
+pd_k neck.fpn_convs.4.conv.bias torch_k: neck.fpn_res1_sum_extra.bias
+pd_k rbox_head.fam_reg_convs.0.conv.weight torch_k: s2anet_head.fam_reg_convs.fam_reg_conv_0.weight
+pd_k rbox_head.fam_reg_convs.0.conv.bias torch_k: s2anet_head.fam_reg_convs.fam_reg_conv_0.bias
+pd_k rbox_head.fam_reg_convs.1.conv.weight torch_k: s2anet_head.fam_reg_convs.fam_reg_conv_1.weight
+pd_k rbox_head.fam_reg_convs.1.conv.bias torch_k: s2anet_head.fam_reg_convs.fam_reg_conv_1.bias
+pd_k rbox_head.fam_cls_convs.0.conv.weight torch_k: s2anet_head.fam_cls_convs.fam_cls_conv_0.weight
+pd_k rbox_head.fam_cls_convs.0.conv.bias torch_k: s2anet_head.fam_cls_convs.fam_cls_conv_0.bias
+pd_k rbox_head.fam_cls_convs.1.conv.weight torch_k: s2anet_head.fam_cls_convs.fam_cls_conv_1.weight
+pd_k rbox_head.fam_cls_convs.1.conv.bias torch_k: s2anet_head.fam_cls_convs.fam_cls_conv_1.bias
+pd_k rbox_head.fam_reg.weight torch_k: s2anet_head.fam_reg.weight
+pd_k rbox_head.fam_reg.bias torch_k: s2anet_head.fam_reg.bias
+pd_k rbox_head.fam_cls.weight torch_k: s2anet_head.fam_cls.weight
+pd_k rbox_head.fam_cls.bias torch_k: s2anet_head.fam_cls.bias
+pd_k rbox_head.align_conv.weight torch_k: s2anet_head.align_conv.weight
+pd_k rbox_head.align_conv.bias torch_k: s2anet_head.align_conv.bias
+pd_k rbox_head.or_conv.weight torch_k: s2anet_head.or_conv.weight
+pd_k rbox_head.or_conv.bias torch_k: s2anet_head.or_conv.bias
+pd_k rbox_head.odm_reg_convs.0.conv.weight torch_k: s2anet_head.odm_reg_convs.odm_reg_conv_0.weight
+pd_k rbox_head.odm_reg_convs.0.conv.bias torch_k: s2anet_head.odm_reg_convs.odm_reg_conv_0.bias
+pd_k rbox_head.odm_reg_convs.1.conv.weight torch_k: s2anet_head.odm_reg_convs.odm_reg_conv_1.weight
+pd_k rbox_head.odm_reg_convs.1.conv.bias torch_k: s2anet_head.odm_reg_convs.odm_reg_conv_1.bias
+pd_k rbox_head.odm_cls_convs.0.conv.weight torch_k: s2anet_head.odm_cls_convs.odm_cls_conv_0.weight
+pd_k rbox_head.odm_cls_convs.0.conv.bias torch_k: s2anet_head.odm_cls_convs.odm_cls_conv_0.bias
+pd_k rbox_head.odm_cls_convs.1.conv.weight torch_k: s2anet_head.odm_cls_convs.odm_cls_conv_1.weight
+pd_k rbox_head.odm_cls_convs.1.conv.bias torch_k: s2anet_head.odm_cls_convs.odm_cls_conv_1.bias
+pd_k rbox_head.odm_cls.weight torch_k: s2anet_head.odm_cls.weight
+pd_k rbox_head.odm_cls.bias torch_k: s2anet_head.odm_cls.bias
+pd_k rbox_head.odm_reg.weight torch_k: s2anet_head.odm_reg.weight
+pd_k rbox_head.odm_reg.bias torch_k: s2anet_head.odm_reg.bias
+now k is  backbone.conv1.weight
+pd_key backbone.conv1.conv1.conv.weight torch_key backbone.conv1.weight param.shape: torch.Size([64, 3, 7, 7])
+now k is  backbone.bn1.weight
+pd_key backbone.conv1.conv1.norm.weight torch_key backbone.bn1.weight param.shape: torch.Size([64])
+now k is  backbone.bn1.bias
+pd_key backbone.conv1.conv1.norm.bias torch_key backbone.bn1.bias param.shape: torch.Size([64])
+now k is  backbone.bn1.running_mean
+pd_key backbone.conv1.conv1.norm._mean torch_key backbone.bn1.running_mean param.shape: torch.Size([64])
+now k is  backbone.bn1.running_var
+pd_key backbone.conv1.conv1.norm._variance torch_key backbone.bn1.running_var param.shape: torch.Size([64])
+now k is  backbone.bn1.num_batches_tracked
+now k is  backbone.layer1.0.conv1.weight
+pd_key backbone.res2.res2a.branch2a.conv.weight torch_key backbone.layer1.0.conv1.weight param.shape: torch.Size([64, 64, 1, 1])
+now k is  backbone.layer1.0.bn1.weight
+pd_key backbone.res2.res2a.branch2a.norm.weight torch_key backbone.layer1.0.bn1.weight param.shape: torch.Size([64])
+now k is  backbone.layer1.0.bn1.bias
+pd_key backbone.res2.res2a.branch2a.norm.bias torch_key backbone.layer1.0.bn1.bias param.shape: torch.Size([64])
+now k is  backbone.layer1.0.bn1.running_mean
+pd_key backbone.res2.res2a.branch2a.norm._mean torch_key backbone.layer1.0.bn1.running_mean param.shape: torch.Size([64])
+now k is  backbone.layer1.0.bn1.running_var
+pd_key backbone.res2.res2a.branch2a.norm._variance torch_key backbone.layer1.0.bn1.running_var param.shape: torch.Size([64])
+now k is  backbone.layer1.0.bn1.num_batches_tracked
+now k is  backbone.layer1.0.conv2.weight
+pd_key backbone.res2.res2a.branch2b.conv.weight torch_key backbone.layer1.0.conv2.weight param.shape: torch.Size([64, 64, 3, 3])
+now k is  backbone.layer1.0.bn2.weight
+pd_key backbone.res2.res2a.branch2b.norm.weight torch_key backbone.layer1.0.bn2.weight param.shape: torch.Size([64])
+now k is  backbone.layer1.0.bn2.bias
+pd_key backbone.res2.res2a.branch2b.norm.bias torch_key backbone.layer1.0.bn2.bias param.shape: torch.Size([64])
+now k is  backbone.layer1.0.bn2.running_mean
+pd_key backbone.res2.res2a.branch2b.norm._mean torch_key backbone.layer1.0.bn2.running_mean param.shape: torch.Size([64])
+now k is  backbone.layer1.0.bn2.running_var
+pd_key backbone.res2.res2a.branch2b.norm._variance torch_key backbone.layer1.0.bn2.running_var param.shape: torch.Size([64])
+now k is  backbone.layer1.0.bn2.num_batches_tracked
+now k is  backbone.layer1.0.conv3.weight
+pd_key backbone.res2.res2a.branch2c.conv.weight torch_key backbone.layer1.0.conv3.weight param.shape: torch.Size([256, 64, 1, 1])
+now k is  backbone.layer1.0.bn3.weight
+pd_key backbone.res2.res2a.branch2c.norm.weight torch_key backbone.layer1.0.bn3.weight param.shape: torch.Size([256])
+now k is  backbone.layer1.0.bn3.bias
+pd_key backbone.res2.res2a.branch2c.norm.bias torch_key backbone.layer1.0.bn3.bias param.shape: torch.Size([256])
+now k is  backbone.layer1.0.bn3.running_mean
+pd_key backbone.res2.res2a.branch2c.norm._mean torch_key backbone.layer1.0.bn3.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer1.0.bn3.running_var
+pd_key backbone.res2.res2a.branch2c.norm._variance torch_key backbone.layer1.0.bn3.running_var param.shape: torch.Size([256])
+now k is  backbone.layer1.0.bn3.num_batches_tracked
+now k is  backbone.layer1.0.downsample.0.weight
+pd_key backbone.res2.res2a.short.conv.weight torch_key backbone.layer1.0.downsample.0.weight param.shape: torch.Size([256, 64, 1, 1])
+now k is  backbone.layer1.0.downsample.1.weight
+pd_key backbone.res2.res2a.short.norm.weight torch_key backbone.layer1.0.downsample.1.weight param.shape: torch.Size([256])
+now k is  backbone.layer1.0.downsample.1.bias
+pd_key backbone.res2.res2a.short.norm.bias torch_key backbone.layer1.0.downsample.1.bias param.shape: torch.Size([256])
+now k is  backbone.layer1.0.downsample.1.running_mean
+pd_key backbone.res2.res2a.short.norm._mean torch_key backbone.layer1.0.downsample.1.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer1.0.downsample.1.running_var
+pd_key backbone.res2.res2a.short.norm._variance torch_key backbone.layer1.0.downsample.1.running_var param.shape: torch.Size([256])
+now k is  backbone.layer1.0.downsample.1.num_batches_tracked
+now k is  backbone.layer1.1.conv1.weight
+pd_key backbone.res2.res2b.branch2a.conv.weight torch_key backbone.layer1.1.conv1.weight param.shape: torch.Size([64, 256, 1, 1])
+now k is  backbone.layer1.1.bn1.weight
+pd_key backbone.res2.res2b.branch2a.norm.weight torch_key backbone.layer1.1.bn1.weight param.shape: torch.Size([64])
+now k is  backbone.layer1.1.bn1.bias
+pd_key backbone.res2.res2b.branch2a.norm.bias torch_key backbone.layer1.1.bn1.bias param.shape: torch.Size([64])
+now k is  backbone.layer1.1.bn1.running_mean
+pd_key backbone.res2.res2b.branch2a.norm._mean torch_key backbone.layer1.1.bn1.running_mean param.shape: torch.Size([64])
+now k is  backbone.layer1.1.bn1.running_var
+pd_key backbone.res2.res2b.branch2a.norm._variance torch_key backbone.layer1.1.bn1.running_var param.shape: torch.Size([64])
+now k is  backbone.layer1.1.bn1.num_batches_tracked
+now k is  backbone.layer1.1.conv2.weight
+pd_key backbone.res2.res2b.branch2b.conv.weight torch_key backbone.layer1.1.conv2.weight param.shape: torch.Size([64, 64, 3, 3])
+now k is  backbone.layer1.1.bn2.weight
+pd_key backbone.res2.res2b.branch2b.norm.weight torch_key backbone.layer1.1.bn2.weight param.shape: torch.Size([64])
+now k is  backbone.layer1.1.bn2.bias
+pd_key backbone.res2.res2b.branch2b.norm.bias torch_key backbone.layer1.1.bn2.bias param.shape: torch.Size([64])
+now k is  backbone.layer1.1.bn2.running_mean
+pd_key backbone.res2.res2b.branch2b.norm._mean torch_key backbone.layer1.1.bn2.running_mean param.shape: torch.Size([64])
+now k is  backbone.layer1.1.bn2.running_var
+pd_key backbone.res2.res2b.branch2b.norm._variance torch_key backbone.layer1.1.bn2.running_var param.shape: torch.Size([64])
+now k is  backbone.layer1.1.bn2.num_batches_tracked
+now k is  backbone.layer1.1.conv3.weight
+pd_key backbone.res2.res2b.branch2c.conv.weight torch_key backbone.layer1.1.conv3.weight param.shape: torch.Size([256, 64, 1, 1])
+now k is  backbone.layer1.1.bn3.weight
+pd_key backbone.res2.res2b.branch2c.norm.weight torch_key backbone.layer1.1.bn3.weight param.shape: torch.Size([256])
+now k is  backbone.layer1.1.bn3.bias
+pd_key backbone.res2.res2b.branch2c.norm.bias torch_key backbone.layer1.1.bn3.bias param.shape: torch.Size([256])
+now k is  backbone.layer1.1.bn3.running_mean
+pd_key backbone.res2.res2b.branch2c.norm._mean torch_key backbone.layer1.1.bn3.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer1.1.bn3.running_var
+pd_key backbone.res2.res2b.branch2c.norm._variance torch_key backbone.layer1.1.bn3.running_var param.shape: torch.Size([256])
+now k is  backbone.layer1.1.bn3.num_batches_tracked
+now k is  backbone.layer1.2.conv1.weight
+pd_key backbone.res2.res2c.branch2a.conv.weight torch_key backbone.layer1.2.conv1.weight param.shape: torch.Size([64, 256, 1, 1])
+now k is  backbone.layer1.2.bn1.weight
+pd_key backbone.res2.res2c.branch2a.norm.weight torch_key backbone.layer1.2.bn1.weight param.shape: torch.Size([64])
+now k is  backbone.layer1.2.bn1.bias
+pd_key backbone.res2.res2c.branch2a.norm.bias torch_key backbone.layer1.2.bn1.bias param.shape: torch.Size([64])
+now k is  backbone.layer1.2.bn1.running_mean
+pd_key backbone.res2.res2c.branch2a.norm._mean torch_key backbone.layer1.2.bn1.running_mean param.shape: torch.Size([64])
+now k is  backbone.layer1.2.bn1.running_var
+pd_key backbone.res2.res2c.branch2a.norm._variance torch_key backbone.layer1.2.bn1.running_var param.shape: torch.Size([64])
+now k is  backbone.layer1.2.bn1.num_batches_tracked
+now k is  backbone.layer1.2.conv2.weight
+pd_key backbone.res2.res2c.branch2b.conv.weight torch_key backbone.layer1.2.conv2.weight param.shape: torch.Size([64, 64, 3, 3])
+now k is  backbone.layer1.2.bn2.weight
+pd_key backbone.res2.res2c.branch2b.norm.weight torch_key backbone.layer1.2.bn2.weight param.shape: torch.Size([64])
+now k is  backbone.layer1.2.bn2.bias
+pd_key backbone.res2.res2c.branch2b.norm.bias torch_key backbone.layer1.2.bn2.bias param.shape: torch.Size([64])
+now k is  backbone.layer1.2.bn2.running_mean
+pd_key backbone.res2.res2c.branch2b.norm._mean torch_key backbone.layer1.2.bn2.running_mean param.shape: torch.Size([64])
+now k is  backbone.layer1.2.bn2.running_var
+pd_key backbone.res2.res2c.branch2b.norm._variance torch_key backbone.layer1.2.bn2.running_var param.shape: torch.Size([64])
+now k is  backbone.layer1.2.bn2.num_batches_tracked
+now k is  backbone.layer1.2.conv3.weight
+pd_key backbone.res2.res2c.branch2c.conv.weight torch_key backbone.layer1.2.conv3.weight param.shape: torch.Size([256, 64, 1, 1])
+now k is  backbone.layer1.2.bn3.weight
+pd_key backbone.res2.res2c.branch2c.norm.weight torch_key backbone.layer1.2.bn3.weight param.shape: torch.Size([256])
+now k is  backbone.layer1.2.bn3.bias
+pd_key backbone.res2.res2c.branch2c.norm.bias torch_key backbone.layer1.2.bn3.bias param.shape: torch.Size([256])
+now k is  backbone.layer1.2.bn3.running_mean
+pd_key backbone.res2.res2c.branch2c.norm._mean torch_key backbone.layer1.2.bn3.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer1.2.bn3.running_var
+pd_key backbone.res2.res2c.branch2c.norm._variance torch_key backbone.layer1.2.bn3.running_var param.shape: torch.Size([256])
+now k is  backbone.layer1.2.bn3.num_batches_tracked
+now k is  backbone.layer2.0.conv1.weight
+pd_key backbone.res3.res3a.branch2a.conv.weight torch_key backbone.layer2.0.conv1.weight param.shape: torch.Size([128, 256, 1, 1])
+now k is  backbone.layer2.0.bn1.weight
+pd_key backbone.res3.res3a.branch2a.norm.weight torch_key backbone.layer2.0.bn1.weight param.shape: torch.Size([128])
+now k is  backbone.layer2.0.bn1.bias
+pd_key backbone.res3.res3a.branch2a.norm.bias torch_key backbone.layer2.0.bn1.bias param.shape: torch.Size([128])
+now k is  backbone.layer2.0.bn1.running_mean
+pd_key backbone.res3.res3a.branch2a.norm._mean torch_key backbone.layer2.0.bn1.running_mean param.shape: torch.Size([128])
+now k is  backbone.layer2.0.bn1.running_var
+pd_key backbone.res3.res3a.branch2a.norm._variance torch_key backbone.layer2.0.bn1.running_var param.shape: torch.Size([128])
+now k is  backbone.layer2.0.bn1.num_batches_tracked
+now k is  backbone.layer2.0.conv2.weight
+pd_key backbone.res3.res3a.branch2b.conv.weight torch_key backbone.layer2.0.conv2.weight param.shape: torch.Size([128, 128, 3, 3])
+now k is  backbone.layer2.0.bn2.weight
+pd_key backbone.res3.res3a.branch2b.norm.weight torch_key backbone.layer2.0.bn2.weight param.shape: torch.Size([128])
+now k is  backbone.layer2.0.bn2.bias
+pd_key backbone.res3.res3a.branch2b.norm.bias torch_key backbone.layer2.0.bn2.bias param.shape: torch.Size([128])
+now k is  backbone.layer2.0.bn2.running_mean
+pd_key backbone.res3.res3a.branch2b.norm._mean torch_key backbone.layer2.0.bn2.running_mean param.shape: torch.Size([128])
+now k is  backbone.layer2.0.bn2.running_var
+pd_key backbone.res3.res3a.branch2b.norm._variance torch_key backbone.layer2.0.bn2.running_var param.shape: torch.Size([128])
+now k is  backbone.layer2.0.bn2.num_batches_tracked
+now k is  backbone.layer2.0.conv3.weight
+pd_key backbone.res3.res3a.branch2c.conv.weight torch_key backbone.layer2.0.conv3.weight param.shape: torch.Size([512, 128, 1, 1])
+now k is  backbone.layer2.0.bn3.weight
+pd_key backbone.res3.res3a.branch2c.norm.weight torch_key backbone.layer2.0.bn3.weight param.shape: torch.Size([512])
+now k is  backbone.layer2.0.bn3.bias
+pd_key backbone.res3.res3a.branch2c.norm.bias torch_key backbone.layer2.0.bn3.bias param.shape: torch.Size([512])
+now k is  backbone.layer2.0.bn3.running_mean
+pd_key backbone.res3.res3a.branch2c.norm._mean torch_key backbone.layer2.0.bn3.running_mean param.shape: torch.Size([512])
+now k is  backbone.layer2.0.bn3.running_var
+pd_key backbone.res3.res3a.branch2c.norm._variance torch_key backbone.layer2.0.bn3.running_var param.shape: torch.Size([512])
+now k is  backbone.layer2.0.bn3.num_batches_tracked
+now k is  backbone.layer2.0.downsample.0.weight
+pd_key backbone.res3.res3a.short.conv.weight torch_key backbone.layer2.0.downsample.0.weight param.shape: torch.Size([512, 256, 1, 1])
+now k is  backbone.layer2.0.downsample.1.weight
+pd_key backbone.res3.res3a.short.norm.weight torch_key backbone.layer2.0.downsample.1.weight param.shape: torch.Size([512])
+now k is  backbone.layer2.0.downsample.1.bias
+pd_key backbone.res3.res3a.short.norm.bias torch_key backbone.layer2.0.downsample.1.bias param.shape: torch.Size([512])
+now k is  backbone.layer2.0.downsample.1.running_mean
+pd_key backbone.res3.res3a.short.norm._mean torch_key backbone.layer2.0.downsample.1.running_mean param.shape: torch.Size([512])
+now k is  backbone.layer2.0.downsample.1.running_var
+pd_key backbone.res3.res3a.short.norm._variance torch_key backbone.layer2.0.downsample.1.running_var param.shape: torch.Size([512])
+now k is  backbone.layer2.0.downsample.1.num_batches_tracked
+now k is  backbone.layer2.1.conv1.weight
+pd_key backbone.res3.res3b.branch2a.conv.weight torch_key backbone.layer2.1.conv1.weight param.shape: torch.Size([128, 512, 1, 1])
+now k is  backbone.layer2.1.bn1.weight
+pd_key backbone.res3.res3b.branch2a.norm.weight torch_key backbone.layer2.1.bn1.weight param.shape: torch.Size([128])
+now k is  backbone.layer2.1.bn1.bias
+pd_key backbone.res3.res3b.branch2a.norm.bias torch_key backbone.layer2.1.bn1.bias param.shape: torch.Size([128])
+now k is  backbone.layer2.1.bn1.running_mean
+pd_key backbone.res3.res3b.branch2a.norm._mean torch_key backbone.layer2.1.bn1.running_mean param.shape: torch.Size([128])
+now k is  backbone.layer2.1.bn1.running_var
+pd_key backbone.res3.res3b.branch2a.norm._variance torch_key backbone.layer2.1.bn1.running_var param.shape: torch.Size([128])
+now k is  backbone.layer2.1.bn1.num_batches_tracked
+now k is  backbone.layer2.1.conv2.weight
+pd_key backbone.res3.res3b.branch2b.conv.weight torch_key backbone.layer2.1.conv2.weight param.shape: torch.Size([128, 128, 3, 3])
+now k is  backbone.layer2.1.bn2.weight
+pd_key backbone.res3.res3b.branch2b.norm.weight torch_key backbone.layer2.1.bn2.weight param.shape: torch.Size([128])
+now k is  backbone.layer2.1.bn2.bias
+pd_key backbone.res3.res3b.branch2b.norm.bias torch_key backbone.layer2.1.bn2.bias param.shape: torch.Size([128])
+now k is  backbone.layer2.1.bn2.running_mean
+pd_key backbone.res3.res3b.branch2b.norm._mean torch_key backbone.layer2.1.bn2.running_mean param.shape: torch.Size([128])
+now k is  backbone.layer2.1.bn2.running_var
+pd_key backbone.res3.res3b.branch2b.norm._variance torch_key backbone.layer2.1.bn2.running_var param.shape: torch.Size([128])
+now k is  backbone.layer2.1.bn2.num_batches_tracked
+now k is  backbone.layer2.1.conv3.weight
+pd_key backbone.res3.res3b.branch2c.conv.weight torch_key backbone.layer2.1.conv3.weight param.shape: torch.Size([512, 128, 1, 1])
+now k is  backbone.layer2.1.bn3.weight
+pd_key backbone.res3.res3b.branch2c.norm.weight torch_key backbone.layer2.1.bn3.weight param.shape: torch.Size([512])
+now k is  backbone.layer2.1.bn3.bias
+pd_key backbone.res3.res3b.branch2c.norm.bias torch_key backbone.layer2.1.bn3.bias param.shape: torch.Size([512])
+now k is  backbone.layer2.1.bn3.running_mean
+pd_key backbone.res3.res3b.branch2c.norm._mean torch_key backbone.layer2.1.bn3.running_mean param.shape: torch.Size([512])
+now k is  backbone.layer2.1.bn3.running_var
+pd_key backbone.res3.res3b.branch2c.norm._variance torch_key backbone.layer2.1.bn3.running_var param.shape: torch.Size([512])
+now k is  backbone.layer2.1.bn3.num_batches_tracked
+now k is  backbone.layer2.2.conv1.weight
+pd_key backbone.res3.res3c.branch2a.conv.weight torch_key backbone.layer2.2.conv1.weight param.shape: torch.Size([128, 512, 1, 1])
+now k is  backbone.layer2.2.bn1.weight
+pd_key backbone.res3.res3c.branch2a.norm.weight torch_key backbone.layer2.2.bn1.weight param.shape: torch.Size([128])
+now k is  backbone.layer2.2.bn1.bias
+pd_key backbone.res3.res3c.branch2a.norm.bias torch_key backbone.layer2.2.bn1.bias param.shape: torch.Size([128])
+now k is  backbone.layer2.2.bn1.running_mean
+pd_key backbone.res3.res3c.branch2a.norm._mean torch_key backbone.layer2.2.bn1.running_mean param.shape: torch.Size([128])
+now k is  backbone.layer2.2.bn1.running_var
+pd_key backbone.res3.res3c.branch2a.norm._variance torch_key backbone.layer2.2.bn1.running_var param.shape: torch.Size([128])
+now k is  backbone.layer2.2.bn1.num_batches_tracked
+now k is  backbone.layer2.2.conv2.weight
+pd_key backbone.res3.res3c.branch2b.conv.weight torch_key backbone.layer2.2.conv2.weight param.shape: torch.Size([128, 128, 3, 3])
+now k is  backbone.layer2.2.bn2.weight
+pd_key backbone.res3.res3c.branch2b.norm.weight torch_key backbone.layer2.2.bn2.weight param.shape: torch.Size([128])
+now k is  backbone.layer2.2.bn2.bias
+pd_key backbone.res3.res3c.branch2b.norm.bias torch_key backbone.layer2.2.bn2.bias param.shape: torch.Size([128])
+now k is  backbone.layer2.2.bn2.running_mean
+pd_key backbone.res3.res3c.branch2b.norm._mean torch_key backbone.layer2.2.bn2.running_mean param.shape: torch.Size([128])
+now k is  backbone.layer2.2.bn2.running_var
+pd_key backbone.res3.res3c.branch2b.norm._variance torch_key backbone.layer2.2.bn2.running_var param.shape: torch.Size([128])
+now k is  backbone.layer2.2.bn2.num_batches_tracked
+now k is  backbone.layer2.2.conv3.weight
+pd_key backbone.res3.res3c.branch2c.conv.weight torch_key backbone.layer2.2.conv3.weight param.shape: torch.Size([512, 128, 1, 1])
+now k is  backbone.layer2.2.bn3.weight
+pd_key backbone.res3.res3c.branch2c.norm.weight torch_key backbone.layer2.2.bn3.weight param.shape: torch.Size([512])
+now k is  backbone.layer2.2.bn3.bias
+pd_key backbone.res3.res3c.branch2c.norm.bias torch_key backbone.layer2.2.bn3.bias param.shape: torch.Size([512])
+now k is  backbone.layer2.2.bn3.running_mean
+pd_key backbone.res3.res3c.branch2c.norm._mean torch_key backbone.layer2.2.bn3.running_mean param.shape: torch.Size([512])
+now k is  backbone.layer2.2.bn3.running_var
+pd_key backbone.res3.res3c.branch2c.norm._variance torch_key backbone.layer2.2.bn3.running_var param.shape: torch.Size([512])
+now k is  backbone.layer2.2.bn3.num_batches_tracked
+now k is  backbone.layer2.3.conv1.weight
+pd_key backbone.res3.res3d.branch2a.conv.weight torch_key backbone.layer2.3.conv1.weight param.shape: torch.Size([128, 512, 1, 1])
+now k is  backbone.layer2.3.bn1.weight
+pd_key backbone.res3.res3d.branch2a.norm.weight torch_key backbone.layer2.3.bn1.weight param.shape: torch.Size([128])
+now k is  backbone.layer2.3.bn1.bias
+pd_key backbone.res3.res3d.branch2a.norm.bias torch_key backbone.layer2.3.bn1.bias param.shape: torch.Size([128])
+now k is  backbone.layer2.3.bn1.running_mean
+pd_key backbone.res3.res3d.branch2a.norm._mean torch_key backbone.layer2.3.bn1.running_mean param.shape: torch.Size([128])
+now k is  backbone.layer2.3.bn1.running_var
+pd_key backbone.res3.res3d.branch2a.norm._variance torch_key backbone.layer2.3.bn1.running_var param.shape: torch.Size([128])
+now k is  backbone.layer2.3.bn1.num_batches_tracked
+now k is  backbone.layer2.3.conv2.weight
+pd_key backbone.res3.res3d.branch2b.conv.weight torch_key backbone.layer2.3.conv2.weight param.shape: torch.Size([128, 128, 3, 3])
+now k is  backbone.layer2.3.bn2.weight
+pd_key backbone.res3.res3d.branch2b.norm.weight torch_key backbone.layer2.3.bn2.weight param.shape: torch.Size([128])
+now k is  backbone.layer2.3.bn2.bias
+pd_key backbone.res3.res3d.branch2b.norm.bias torch_key backbone.layer2.3.bn2.bias param.shape: torch.Size([128])
+now k is  backbone.layer2.3.bn2.running_mean
+pd_key backbone.res3.res3d.branch2b.norm._mean torch_key backbone.layer2.3.bn2.running_mean param.shape: torch.Size([128])
+now k is  backbone.layer2.3.bn2.running_var
+pd_key backbone.res3.res3d.branch2b.norm._variance torch_key backbone.layer2.3.bn2.running_var param.shape: torch.Size([128])
+now k is  backbone.layer2.3.bn2.num_batches_tracked
+now k is  backbone.layer2.3.conv3.weight
+pd_key backbone.res3.res3d.branch2c.conv.weight torch_key backbone.layer2.3.conv3.weight param.shape: torch.Size([512, 128, 1, 1])
+now k is  backbone.layer2.3.bn3.weight
+pd_key backbone.res3.res3d.branch2c.norm.weight torch_key backbone.layer2.3.bn3.weight param.shape: torch.Size([512])
+now k is  backbone.layer2.3.bn3.bias
+pd_key backbone.res3.res3d.branch2c.norm.bias torch_key backbone.layer2.3.bn3.bias param.shape: torch.Size([512])
+now k is  backbone.layer2.3.bn3.running_mean
+pd_key backbone.res3.res3d.branch2c.norm._mean torch_key backbone.layer2.3.bn3.running_mean param.shape: torch.Size([512])
+now k is  backbone.layer2.3.bn3.running_var
+pd_key backbone.res3.res3d.branch2c.norm._variance torch_key backbone.layer2.3.bn3.running_var param.shape: torch.Size([512])
+now k is  backbone.layer2.3.bn3.num_batches_tracked
+now k is  backbone.layer3.0.conv1.weight
+pd_key backbone.res4.res4a.branch2a.conv.weight torch_key backbone.layer3.0.conv1.weight param.shape: torch.Size([256, 512, 1, 1])
+now k is  backbone.layer3.0.bn1.weight
+pd_key backbone.res4.res4a.branch2a.norm.weight torch_key backbone.layer3.0.bn1.weight param.shape: torch.Size([256])
+now k is  backbone.layer3.0.bn1.bias
+pd_key backbone.res4.res4a.branch2a.norm.bias torch_key backbone.layer3.0.bn1.bias param.shape: torch.Size([256])
+now k is  backbone.layer3.0.bn1.running_mean
+pd_key backbone.res4.res4a.branch2a.norm._mean torch_key backbone.layer3.0.bn1.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer3.0.bn1.running_var
+pd_key backbone.res4.res4a.branch2a.norm._variance torch_key backbone.layer3.0.bn1.running_var param.shape: torch.Size([256])
+now k is  backbone.layer3.0.bn1.num_batches_tracked
+now k is  backbone.layer3.0.conv2.weight
+pd_key backbone.res4.res4a.branch2b.conv.weight torch_key backbone.layer3.0.conv2.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  backbone.layer3.0.bn2.weight
+pd_key backbone.res4.res4a.branch2b.norm.weight torch_key backbone.layer3.0.bn2.weight param.shape: torch.Size([256])
+now k is  backbone.layer3.0.bn2.bias
+pd_key backbone.res4.res4a.branch2b.norm.bias torch_key backbone.layer3.0.bn2.bias param.shape: torch.Size([256])
+now k is  backbone.layer3.0.bn2.running_mean
+pd_key backbone.res4.res4a.branch2b.norm._mean torch_key backbone.layer3.0.bn2.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer3.0.bn2.running_var
+pd_key backbone.res4.res4a.branch2b.norm._variance torch_key backbone.layer3.0.bn2.running_var param.shape: torch.Size([256])
+now k is  backbone.layer3.0.bn2.num_batches_tracked
+now k is  backbone.layer3.0.conv3.weight
+pd_key backbone.res4.res4a.branch2c.conv.weight torch_key backbone.layer3.0.conv3.weight param.shape: torch.Size([1024, 256, 1, 1])
+now k is  backbone.layer3.0.bn3.weight
+pd_key backbone.res4.res4a.branch2c.norm.weight torch_key backbone.layer3.0.bn3.weight param.shape: torch.Size([1024])
+now k is  backbone.layer3.0.bn3.bias
+pd_key backbone.res4.res4a.branch2c.norm.bias torch_key backbone.layer3.0.bn3.bias param.shape: torch.Size([1024])
+now k is  backbone.layer3.0.bn3.running_mean
+pd_key backbone.res4.res4a.branch2c.norm._mean torch_key backbone.layer3.0.bn3.running_mean param.shape: torch.Size([1024])
+now k is  backbone.layer3.0.bn3.running_var
+pd_key backbone.res4.res4a.branch2c.norm._variance torch_key backbone.layer3.0.bn3.running_var param.shape: torch.Size([1024])
+now k is  backbone.layer3.0.bn3.num_batches_tracked
+now k is  backbone.layer3.0.downsample.0.weight
+pd_key backbone.res4.res4a.short.conv.weight torch_key backbone.layer3.0.downsample.0.weight param.shape: torch.Size([1024, 512, 1, 1])
+now k is  backbone.layer3.0.downsample.1.weight
+pd_key backbone.res4.res4a.short.norm.weight torch_key backbone.layer3.0.downsample.1.weight param.shape: torch.Size([1024])
+now k is  backbone.layer3.0.downsample.1.bias
+pd_key backbone.res4.res4a.short.norm.bias torch_key backbone.layer3.0.downsample.1.bias param.shape: torch.Size([1024])
+now k is  backbone.layer3.0.downsample.1.running_mean
+pd_key backbone.res4.res4a.short.norm._mean torch_key backbone.layer3.0.downsample.1.running_mean param.shape: torch.Size([1024])
+now k is  backbone.layer3.0.downsample.1.running_var
+pd_key backbone.res4.res4a.short.norm._variance torch_key backbone.layer3.0.downsample.1.running_var param.shape: torch.Size([1024])
+now k is  backbone.layer3.0.downsample.1.num_batches_tracked
+now k is  backbone.layer3.1.conv1.weight
+pd_key backbone.res4.res4b.branch2a.conv.weight torch_key backbone.layer3.1.conv1.weight param.shape: torch.Size([256, 1024, 1, 1])
+now k is  backbone.layer3.1.bn1.weight
+pd_key backbone.res4.res4b.branch2a.norm.weight torch_key backbone.layer3.1.bn1.weight param.shape: torch.Size([256])
+now k is  backbone.layer3.1.bn1.bias
+pd_key backbone.res4.res4b.branch2a.norm.bias torch_key backbone.layer3.1.bn1.bias param.shape: torch.Size([256])
+now k is  backbone.layer3.1.bn1.running_mean
+pd_key backbone.res4.res4b.branch2a.norm._mean torch_key backbone.layer3.1.bn1.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer3.1.bn1.running_var
+pd_key backbone.res4.res4b.branch2a.norm._variance torch_key backbone.layer3.1.bn1.running_var param.shape: torch.Size([256])
+now k is  backbone.layer3.1.bn1.num_batches_tracked
+now k is  backbone.layer3.1.conv2.weight
+pd_key backbone.res4.res4b.branch2b.conv.weight torch_key backbone.layer3.1.conv2.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  backbone.layer3.1.bn2.weight
+pd_key backbone.res4.res4b.branch2b.norm.weight torch_key backbone.layer3.1.bn2.weight param.shape: torch.Size([256])
+now k is  backbone.layer3.1.bn2.bias
+pd_key backbone.res4.res4b.branch2b.norm.bias torch_key backbone.layer3.1.bn2.bias param.shape: torch.Size([256])
+now k is  backbone.layer3.1.bn2.running_mean
+pd_key backbone.res4.res4b.branch2b.norm._mean torch_key backbone.layer3.1.bn2.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer3.1.bn2.running_var
+pd_key backbone.res4.res4b.branch2b.norm._variance torch_key backbone.layer3.1.bn2.running_var param.shape: torch.Size([256])
+now k is  backbone.layer3.1.bn2.num_batches_tracked
+now k is  backbone.layer3.1.conv3.weight
+pd_key backbone.res4.res4b.branch2c.conv.weight torch_key backbone.layer3.1.conv3.weight param.shape: torch.Size([1024, 256, 1, 1])
+now k is  backbone.layer3.1.bn3.weight
+pd_key backbone.res4.res4b.branch2c.norm.weight torch_key backbone.layer3.1.bn3.weight param.shape: torch.Size([1024])
+now k is  backbone.layer3.1.bn3.bias
+pd_key backbone.res4.res4b.branch2c.norm.bias torch_key backbone.layer3.1.bn3.bias param.shape: torch.Size([1024])
+now k is  backbone.layer3.1.bn3.running_mean
+pd_key backbone.res4.res4b.branch2c.norm._mean torch_key backbone.layer3.1.bn3.running_mean param.shape: torch.Size([1024])
+now k is  backbone.layer3.1.bn3.running_var
+pd_key backbone.res4.res4b.branch2c.norm._variance torch_key backbone.layer3.1.bn3.running_var param.shape: torch.Size([1024])
+now k is  backbone.layer3.1.bn3.num_batches_tracked
+now k is  backbone.layer3.2.conv1.weight
+pd_key backbone.res4.res4c.branch2a.conv.weight torch_key backbone.layer3.2.conv1.weight param.shape: torch.Size([256, 1024, 1, 1])
+now k is  backbone.layer3.2.bn1.weight
+pd_key backbone.res4.res4c.branch2a.norm.weight torch_key backbone.layer3.2.bn1.weight param.shape: torch.Size([256])
+now k is  backbone.layer3.2.bn1.bias
+pd_key backbone.res4.res4c.branch2a.norm.bias torch_key backbone.layer3.2.bn1.bias param.shape: torch.Size([256])
+now k is  backbone.layer3.2.bn1.running_mean
+pd_key backbone.res4.res4c.branch2a.norm._mean torch_key backbone.layer3.2.bn1.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer3.2.bn1.running_var
+pd_key backbone.res4.res4c.branch2a.norm._variance torch_key backbone.layer3.2.bn1.running_var param.shape: torch.Size([256])
+now k is  backbone.layer3.2.bn1.num_batches_tracked
+now k is  backbone.layer3.2.conv2.weight
+pd_key backbone.res4.res4c.branch2b.conv.weight torch_key backbone.layer3.2.conv2.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  backbone.layer3.2.bn2.weight
+pd_key backbone.res4.res4c.branch2b.norm.weight torch_key backbone.layer3.2.bn2.weight param.shape: torch.Size([256])
+now k is  backbone.layer3.2.bn2.bias
+pd_key backbone.res4.res4c.branch2b.norm.bias torch_key backbone.layer3.2.bn2.bias param.shape: torch.Size([256])
+now k is  backbone.layer3.2.bn2.running_mean
+pd_key backbone.res4.res4c.branch2b.norm._mean torch_key backbone.layer3.2.bn2.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer3.2.bn2.running_var
+pd_key backbone.res4.res4c.branch2b.norm._variance torch_key backbone.layer3.2.bn2.running_var param.shape: torch.Size([256])
+now k is  backbone.layer3.2.bn2.num_batches_tracked
+now k is  backbone.layer3.2.conv3.weight
+pd_key backbone.res4.res4c.branch2c.conv.weight torch_key backbone.layer3.2.conv3.weight param.shape: torch.Size([1024, 256, 1, 1])
+now k is  backbone.layer3.2.bn3.weight
+pd_key backbone.res4.res4c.branch2c.norm.weight torch_key backbone.layer3.2.bn3.weight param.shape: torch.Size([1024])
+now k is  backbone.layer3.2.bn3.bias
+pd_key backbone.res4.res4c.branch2c.norm.bias torch_key backbone.layer3.2.bn3.bias param.shape: torch.Size([1024])
+now k is  backbone.layer3.2.bn3.running_mean
+pd_key backbone.res4.res4c.branch2c.norm._mean torch_key backbone.layer3.2.bn3.running_mean param.shape: torch.Size([1024])
+now k is  backbone.layer3.2.bn3.running_var
+pd_key backbone.res4.res4c.branch2c.norm._variance torch_key backbone.layer3.2.bn3.running_var param.shape: torch.Size([1024])
+now k is  backbone.layer3.2.bn3.num_batches_tracked
+now k is  backbone.layer3.3.conv1.weight
+pd_key backbone.res4.res4d.branch2a.conv.weight torch_key backbone.layer3.3.conv1.weight param.shape: torch.Size([256, 1024, 1, 1])
+now k is  backbone.layer3.3.bn1.weight
+pd_key backbone.res4.res4d.branch2a.norm.weight torch_key backbone.layer3.3.bn1.weight param.shape: torch.Size([256])
+now k is  backbone.layer3.3.bn1.bias
+pd_key backbone.res4.res4d.branch2a.norm.bias torch_key backbone.layer3.3.bn1.bias param.shape: torch.Size([256])
+now k is  backbone.layer3.3.bn1.running_mean
+pd_key backbone.res4.res4d.branch2a.norm._mean torch_key backbone.layer3.3.bn1.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer3.3.bn1.running_var
+pd_key backbone.res4.res4d.branch2a.norm._variance torch_key backbone.layer3.3.bn1.running_var param.shape: torch.Size([256])
+now k is  backbone.layer3.3.bn1.num_batches_tracked
+now k is  backbone.layer3.3.conv2.weight
+pd_key backbone.res4.res4d.branch2b.conv.weight torch_key backbone.layer3.3.conv2.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  backbone.layer3.3.bn2.weight
+pd_key backbone.res4.res4d.branch2b.norm.weight torch_key backbone.layer3.3.bn2.weight param.shape: torch.Size([256])
+now k is  backbone.layer3.3.bn2.bias
+pd_key backbone.res4.res4d.branch2b.norm.bias torch_key backbone.layer3.3.bn2.bias param.shape: torch.Size([256])
+now k is  backbone.layer3.3.bn2.running_mean
+pd_key backbone.res4.res4d.branch2b.norm._mean torch_key backbone.layer3.3.bn2.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer3.3.bn2.running_var
+pd_key backbone.res4.res4d.branch2b.norm._variance torch_key backbone.layer3.3.bn2.running_var param.shape: torch.Size([256])
+now k is  backbone.layer3.3.bn2.num_batches_tracked
+now k is  backbone.layer3.3.conv3.weight
+pd_key backbone.res4.res4d.branch2c.conv.weight torch_key backbone.layer3.3.conv3.weight param.shape: torch.Size([1024, 256, 1, 1])
+now k is  backbone.layer3.3.bn3.weight
+pd_key backbone.res4.res4d.branch2c.norm.weight torch_key backbone.layer3.3.bn3.weight param.shape: torch.Size([1024])
+now k is  backbone.layer3.3.bn3.bias
+pd_key backbone.res4.res4d.branch2c.norm.bias torch_key backbone.layer3.3.bn3.bias param.shape: torch.Size([1024])
+now k is  backbone.layer3.3.bn3.running_mean
+pd_key backbone.res4.res4d.branch2c.norm._mean torch_key backbone.layer3.3.bn3.running_mean param.shape: torch.Size([1024])
+now k is  backbone.layer3.3.bn3.running_var
+pd_key backbone.res4.res4d.branch2c.norm._variance torch_key backbone.layer3.3.bn3.running_var param.shape: torch.Size([1024])
+now k is  backbone.layer3.3.bn3.num_batches_tracked
+now k is  backbone.layer3.4.conv1.weight
+pd_key backbone.res4.res4e.branch2a.conv.weight torch_key backbone.layer3.4.conv1.weight param.shape: torch.Size([256, 1024, 1, 1])
+now k is  backbone.layer3.4.bn1.weight
+pd_key backbone.res4.res4e.branch2a.norm.weight torch_key backbone.layer3.4.bn1.weight param.shape: torch.Size([256])
+now k is  backbone.layer3.4.bn1.bias
+pd_key backbone.res4.res4e.branch2a.norm.bias torch_key backbone.layer3.4.bn1.bias param.shape: torch.Size([256])
+now k is  backbone.layer3.4.bn1.running_mean
+pd_key backbone.res4.res4e.branch2a.norm._mean torch_key backbone.layer3.4.bn1.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer3.4.bn1.running_var
+pd_key backbone.res4.res4e.branch2a.norm._variance torch_key backbone.layer3.4.bn1.running_var param.shape: torch.Size([256])
+now k is  backbone.layer3.4.bn1.num_batches_tracked
+now k is  backbone.layer3.4.conv2.weight
+pd_key backbone.res4.res4e.branch2b.conv.weight torch_key backbone.layer3.4.conv2.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  backbone.layer3.4.bn2.weight
+pd_key backbone.res4.res4e.branch2b.norm.weight torch_key backbone.layer3.4.bn2.weight param.shape: torch.Size([256])
+now k is  backbone.layer3.4.bn2.bias
+pd_key backbone.res4.res4e.branch2b.norm.bias torch_key backbone.layer3.4.bn2.bias param.shape: torch.Size([256])
+now k is  backbone.layer3.4.bn2.running_mean
+pd_key backbone.res4.res4e.branch2b.norm._mean torch_key backbone.layer3.4.bn2.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer3.4.bn2.running_var
+pd_key backbone.res4.res4e.branch2b.norm._variance torch_key backbone.layer3.4.bn2.running_var param.shape: torch.Size([256])
+now k is  backbone.layer3.4.bn2.num_batches_tracked
+now k is  backbone.layer3.4.conv3.weight
+pd_key backbone.res4.res4e.branch2c.conv.weight torch_key backbone.layer3.4.conv3.weight param.shape: torch.Size([1024, 256, 1, 1])
+now k is  backbone.layer3.4.bn3.weight
+pd_key backbone.res4.res4e.branch2c.norm.weight torch_key backbone.layer3.4.bn3.weight param.shape: torch.Size([1024])
+now k is  backbone.layer3.4.bn3.bias
+pd_key backbone.res4.res4e.branch2c.norm.bias torch_key backbone.layer3.4.bn3.bias param.shape: torch.Size([1024])
+now k is  backbone.layer3.4.bn3.running_mean
+pd_key backbone.res4.res4e.branch2c.norm._mean torch_key backbone.layer3.4.bn3.running_mean param.shape: torch.Size([1024])
+now k is  backbone.layer3.4.bn3.running_var
+pd_key backbone.res4.res4e.branch2c.norm._variance torch_key backbone.layer3.4.bn3.running_var param.shape: torch.Size([1024])
+now k is  backbone.layer3.4.bn3.num_batches_tracked
+now k is  backbone.layer3.5.conv1.weight
+pd_key backbone.res4.res4f.branch2a.conv.weight torch_key backbone.layer3.5.conv1.weight param.shape: torch.Size([256, 1024, 1, 1])
+now k is  backbone.layer3.5.bn1.weight
+pd_key backbone.res4.res4f.branch2a.norm.weight torch_key backbone.layer3.5.bn1.weight param.shape: torch.Size([256])
+now k is  backbone.layer3.5.bn1.bias
+pd_key backbone.res4.res4f.branch2a.norm.bias torch_key backbone.layer3.5.bn1.bias param.shape: torch.Size([256])
+now k is  backbone.layer3.5.bn1.running_mean
+pd_key backbone.res4.res4f.branch2a.norm._mean torch_key backbone.layer3.5.bn1.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer3.5.bn1.running_var
+pd_key backbone.res4.res4f.branch2a.norm._variance torch_key backbone.layer3.5.bn1.running_var param.shape: torch.Size([256])
+now k is  backbone.layer3.5.bn1.num_batches_tracked
+now k is  backbone.layer3.5.conv2.weight
+pd_key backbone.res4.res4f.branch2b.conv.weight torch_key backbone.layer3.5.conv2.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  backbone.layer3.5.bn2.weight
+pd_key backbone.res4.res4f.branch2b.norm.weight torch_key backbone.layer3.5.bn2.weight param.shape: torch.Size([256])
+now k is  backbone.layer3.5.bn2.bias
+pd_key backbone.res4.res4f.branch2b.norm.bias torch_key backbone.layer3.5.bn2.bias param.shape: torch.Size([256])
+now k is  backbone.layer3.5.bn2.running_mean
+pd_key backbone.res4.res4f.branch2b.norm._mean torch_key backbone.layer3.5.bn2.running_mean param.shape: torch.Size([256])
+now k is  backbone.layer3.5.bn2.running_var
+pd_key backbone.res4.res4f.branch2b.norm._variance torch_key backbone.layer3.5.bn2.running_var param.shape: torch.Size([256])
+now k is  backbone.layer3.5.bn2.num_batches_tracked
+now k is  backbone.layer3.5.conv3.weight
+pd_key backbone.res4.res4f.branch2c.conv.weight torch_key backbone.layer3.5.conv3.weight param.shape: torch.Size([1024, 256, 1, 1])
+now k is  backbone.layer3.5.bn3.weight
+pd_key backbone.res4.res4f.branch2c.norm.weight torch_key backbone.layer3.5.bn3.weight param.shape: torch.Size([1024])
+now k is  backbone.layer3.5.bn3.bias
+pd_key backbone.res4.res4f.branch2c.norm.bias torch_key backbone.layer3.5.bn3.bias param.shape: torch.Size([1024])
+now k is  backbone.layer3.5.bn3.running_mean
+pd_key backbone.res4.res4f.branch2c.norm._mean torch_key backbone.layer3.5.bn3.running_mean param.shape: torch.Size([1024])
+now k is  backbone.layer3.5.bn3.running_var
+pd_key backbone.res4.res4f.branch2c.norm._variance torch_key backbone.layer3.5.bn3.running_var param.shape: torch.Size([1024])
+now k is  backbone.layer3.5.bn3.num_batches_tracked
+now k is  backbone.layer4.0.conv1.weight
+pd_key backbone.res5.res5a.branch2a.conv.weight torch_key backbone.layer4.0.conv1.weight param.shape: torch.Size([512, 1024, 1, 1])
+now k is  backbone.layer4.0.bn1.weight
+pd_key backbone.res5.res5a.branch2a.norm.weight torch_key backbone.layer4.0.bn1.weight param.shape: torch.Size([512])
+now k is  backbone.layer4.0.bn1.bias
+pd_key backbone.res5.res5a.branch2a.norm.bias torch_key backbone.layer4.0.bn1.bias param.shape: torch.Size([512])
+now k is  backbone.layer4.0.bn1.running_mean
+pd_key backbone.res5.res5a.branch2a.norm._mean torch_key backbone.layer4.0.bn1.running_mean param.shape: torch.Size([512])
+now k is  backbone.layer4.0.bn1.running_var
+pd_key backbone.res5.res5a.branch2a.norm._variance torch_key backbone.layer4.0.bn1.running_var param.shape: torch.Size([512])
+now k is  backbone.layer4.0.bn1.num_batches_tracked
+now k is  backbone.layer4.0.conv2.weight
+pd_key backbone.res5.res5a.branch2b.conv.weight torch_key backbone.layer4.0.conv2.weight param.shape: torch.Size([512, 512, 3, 3])
+now k is  backbone.layer4.0.bn2.weight
+pd_key backbone.res5.res5a.branch2b.norm.weight torch_key backbone.layer4.0.bn2.weight param.shape: torch.Size([512])
+now k is  backbone.layer4.0.bn2.bias
+pd_key backbone.res5.res5a.branch2b.norm.bias torch_key backbone.layer4.0.bn2.bias param.shape: torch.Size([512])
+now k is  backbone.layer4.0.bn2.running_mean
+pd_key backbone.res5.res5a.branch2b.norm._mean torch_key backbone.layer4.0.bn2.running_mean param.shape: torch.Size([512])
+now k is  backbone.layer4.0.bn2.running_var
+pd_key backbone.res5.res5a.branch2b.norm._variance torch_key backbone.layer4.0.bn2.running_var param.shape: torch.Size([512])
+now k is  backbone.layer4.0.bn2.num_batches_tracked
+now k is  backbone.layer4.0.conv3.weight
+pd_key backbone.res5.res5a.branch2c.conv.weight torch_key backbone.layer4.0.conv3.weight param.shape: torch.Size([2048, 512, 1, 1])
+now k is  backbone.layer4.0.bn3.weight
+pd_key backbone.res5.res5a.branch2c.norm.weight torch_key backbone.layer4.0.bn3.weight param.shape: torch.Size([2048])
+now k is  backbone.layer4.0.bn3.bias
+pd_key backbone.res5.res5a.branch2c.norm.bias torch_key backbone.layer4.0.bn3.bias param.shape: torch.Size([2048])
+now k is  backbone.layer4.0.bn3.running_mean
+pd_key backbone.res5.res5a.branch2c.norm._mean torch_key backbone.layer4.0.bn3.running_mean param.shape: torch.Size([2048])
+now k is  backbone.layer4.0.bn3.running_var
+pd_key backbone.res5.res5a.branch2c.norm._variance torch_key backbone.layer4.0.bn3.running_var param.shape: torch.Size([2048])
+now k is  backbone.layer4.0.bn3.num_batches_tracked
+now k is  backbone.layer4.0.downsample.0.weight
+pd_key backbone.res5.res5a.short.conv.weight torch_key backbone.layer4.0.downsample.0.weight param.shape: torch.Size([2048, 1024, 1, 1])
+now k is  backbone.layer4.0.downsample.1.weight
+pd_key backbone.res5.res5a.short.norm.weight torch_key backbone.layer4.0.downsample.1.weight param.shape: torch.Size([2048])
+now k is  backbone.layer4.0.downsample.1.bias
+pd_key backbone.res5.res5a.short.norm.bias torch_key backbone.layer4.0.downsample.1.bias param.shape: torch.Size([2048])
+now k is  backbone.layer4.0.downsample.1.running_mean
+pd_key backbone.res5.res5a.short.norm._mean torch_key backbone.layer4.0.downsample.1.running_mean param.shape: torch.Size([2048])
+now k is  backbone.layer4.0.downsample.1.running_var
+pd_key backbone.res5.res5a.short.norm._variance torch_key backbone.layer4.0.downsample.1.running_var param.shape: torch.Size([2048])
+now k is  backbone.layer4.0.downsample.1.num_batches_tracked
+now k is  backbone.layer4.1.conv1.weight
+pd_key backbone.res5.res5b.branch2a.conv.weight torch_key backbone.layer4.1.conv1.weight param.shape: torch.Size([512, 2048, 1, 1])
+now k is  backbone.layer4.1.bn1.weight
+pd_key backbone.res5.res5b.branch2a.norm.weight torch_key backbone.layer4.1.bn1.weight param.shape: torch.Size([512])
+now k is  backbone.layer4.1.bn1.bias
+pd_key backbone.res5.res5b.branch2a.norm.bias torch_key backbone.layer4.1.bn1.bias param.shape: torch.Size([512])
+now k is  backbone.layer4.1.bn1.running_mean
+pd_key backbone.res5.res5b.branch2a.norm._mean torch_key backbone.layer4.1.bn1.running_mean param.shape: torch.Size([512])
+now k is  backbone.layer4.1.bn1.running_var
+pd_key backbone.res5.res5b.branch2a.norm._variance torch_key backbone.layer4.1.bn1.running_var param.shape: torch.Size([512])
+now k is  backbone.layer4.1.bn1.num_batches_tracked
+now k is  backbone.layer4.1.conv2.weight
+pd_key backbone.res5.res5b.branch2b.conv.weight torch_key backbone.layer4.1.conv2.weight param.shape: torch.Size([512, 512, 3, 3])
+now k is  backbone.layer4.1.bn2.weight
+pd_key backbone.res5.res5b.branch2b.norm.weight torch_key backbone.layer4.1.bn2.weight param.shape: torch.Size([512])
+now k is  backbone.layer4.1.bn2.bias
+pd_key backbone.res5.res5b.branch2b.norm.bias torch_key backbone.layer4.1.bn2.bias param.shape: torch.Size([512])
+now k is  backbone.layer4.1.bn2.running_mean
+pd_key backbone.res5.res5b.branch2b.norm._mean torch_key backbone.layer4.1.bn2.running_mean param.shape: torch.Size([512])
+now k is  backbone.layer4.1.bn2.running_var
+pd_key backbone.res5.res5b.branch2b.norm._variance torch_key backbone.layer4.1.bn2.running_var param.shape: torch.Size([512])
+now k is  backbone.layer4.1.bn2.num_batches_tracked
+now k is  backbone.layer4.1.conv3.weight
+pd_key backbone.res5.res5b.branch2c.conv.weight torch_key backbone.layer4.1.conv3.weight param.shape: torch.Size([2048, 512, 1, 1])
+now k is  backbone.layer4.1.bn3.weight
+pd_key backbone.res5.res5b.branch2c.norm.weight torch_key backbone.layer4.1.bn3.weight param.shape: torch.Size([2048])
+now k is  backbone.layer4.1.bn3.bias
+pd_key backbone.res5.res5b.branch2c.norm.bias torch_key backbone.layer4.1.bn3.bias param.shape: torch.Size([2048])
+now k is  backbone.layer4.1.bn3.running_mean
+pd_key backbone.res5.res5b.branch2c.norm._mean torch_key backbone.layer4.1.bn3.running_mean param.shape: torch.Size([2048])
+now k is  backbone.layer4.1.bn3.running_var
+pd_key backbone.res5.res5b.branch2c.norm._variance torch_key backbone.layer4.1.bn3.running_var param.shape: torch.Size([2048])
+now k is  backbone.layer4.1.bn3.num_batches_tracked
+now k is  backbone.layer4.2.conv1.weight
+pd_key backbone.res5.res5c.branch2a.conv.weight torch_key backbone.layer4.2.conv1.weight param.shape: torch.Size([512, 2048, 1, 1])
+now k is  backbone.layer4.2.bn1.weight
+pd_key backbone.res5.res5c.branch2a.norm.weight torch_key backbone.layer4.2.bn1.weight param.shape: torch.Size([512])
+now k is  backbone.layer4.2.bn1.bias
+pd_key backbone.res5.res5c.branch2a.norm.bias torch_key backbone.layer4.2.bn1.bias param.shape: torch.Size([512])
+now k is  backbone.layer4.2.bn1.running_mean
+pd_key backbone.res5.res5c.branch2a.norm._mean torch_key backbone.layer4.2.bn1.running_mean param.shape: torch.Size([512])
+now k is  backbone.layer4.2.bn1.running_var
+pd_key backbone.res5.res5c.branch2a.norm._variance torch_key backbone.layer4.2.bn1.running_var param.shape: torch.Size([512])
+now k is  backbone.layer4.2.bn1.num_batches_tracked
+now k is  backbone.layer4.2.conv2.weight
+pd_key backbone.res5.res5c.branch2b.conv.weight torch_key backbone.layer4.2.conv2.weight param.shape: torch.Size([512, 512, 3, 3])
+now k is  backbone.layer4.2.bn2.weight
+pd_key backbone.res5.res5c.branch2b.norm.weight torch_key backbone.layer4.2.bn2.weight param.shape: torch.Size([512])
+now k is  backbone.layer4.2.bn2.bias
+pd_key backbone.res5.res5c.branch2b.norm.bias torch_key backbone.layer4.2.bn2.bias param.shape: torch.Size([512])
+now k is  backbone.layer4.2.bn2.running_mean
+pd_key backbone.res5.res5c.branch2b.norm._mean torch_key backbone.layer4.2.bn2.running_mean param.shape: torch.Size([512])
+now k is  backbone.layer4.2.bn2.running_var
+pd_key backbone.res5.res5c.branch2b.norm._variance torch_key backbone.layer4.2.bn2.running_var param.shape: torch.Size([512])
+now k is  backbone.layer4.2.bn2.num_batches_tracked
+now k is  backbone.layer4.2.conv3.weight
+pd_key backbone.res5.res5c.branch2c.conv.weight torch_key backbone.layer4.2.conv3.weight param.shape: torch.Size([2048, 512, 1, 1])
+now k is  backbone.layer4.2.bn3.weight
+pd_key backbone.res5.res5c.branch2c.norm.weight torch_key backbone.layer4.2.bn3.weight param.shape: torch.Size([2048])
+now k is  backbone.layer4.2.bn3.bias
+pd_key backbone.res5.res5c.branch2c.norm.bias torch_key backbone.layer4.2.bn3.bias param.shape: torch.Size([2048])
+now k is  backbone.layer4.2.bn3.running_mean
+pd_key backbone.res5.res5c.branch2c.norm._mean torch_key backbone.layer4.2.bn3.running_mean param.shape: torch.Size([2048])
+now k is  backbone.layer4.2.bn3.running_var
+pd_key backbone.res5.res5c.branch2c.norm._variance torch_key backbone.layer4.2.bn3.running_var param.shape: torch.Size([2048])
+now k is  backbone.layer4.2.bn3.num_batches_tracked
+now k is  neck.lateral_convs.0.conv.weight
+pd_key neck.fpn_inner_res3_sum_lateral.weight torch_key neck.lateral_convs.0.conv.weight param.shape: torch.Size([256, 512, 1, 1])
+now k is  neck.lateral_convs.0.conv.bias
+pd_key neck.fpn_inner_res3_sum_lateral.bias torch_key neck.lateral_convs.0.conv.bias param.shape: torch.Size([256])
+now k is  neck.lateral_convs.1.conv.weight
+pd_key neck.fpn_inner_res4_sum_lateral.weight torch_key neck.lateral_convs.1.conv.weight param.shape: torch.Size([256, 1024, 1, 1])
+now k is  neck.lateral_convs.1.conv.bias
+pd_key neck.fpn_inner_res4_sum_lateral.bias torch_key neck.lateral_convs.1.conv.bias param.shape: torch.Size([256])
+now k is  neck.lateral_convs.2.conv.weight
+pd_key neck.fpn_inner_res5_sum.weight torch_key neck.lateral_convs.2.conv.weight param.shape: torch.Size([256, 2048, 1, 1])
+now k is  neck.lateral_convs.2.conv.bias
+pd_key neck.fpn_inner_res5_sum.bias torch_key neck.lateral_convs.2.conv.bias param.shape: torch.Size([256])
+now k is  neck.fpn_convs.0.conv.weight
+pd_key neck.fpn_res3_sum.weight torch_key neck.fpn_convs.0.conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  neck.fpn_convs.0.conv.bias
+pd_key neck.fpn_res3_sum.bias torch_key neck.fpn_convs.0.conv.bias param.shape: torch.Size([256])
+now k is  neck.fpn_convs.1.conv.weight
+pd_key neck.fpn_res4_sum.weight torch_key neck.fpn_convs.1.conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  neck.fpn_convs.1.conv.bias
+pd_key neck.fpn_res4_sum.bias torch_key neck.fpn_convs.1.conv.bias param.shape: torch.Size([256])
+now k is  neck.fpn_convs.2.conv.weight
+pd_key neck.fpn_res5_sum.weight torch_key neck.fpn_convs.2.conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  neck.fpn_convs.2.conv.bias
+pd_key neck.fpn_res5_sum.bias torch_key neck.fpn_convs.2.conv.bias param.shape: torch.Size([256])
+now k is  neck.fpn_convs.3.conv.weight
+pd_key neck.fpn_res0_sum_extra.weight torch_key neck.fpn_convs.3.conv.weight param.shape: torch.Size([256, 2048, 3, 3])
+now k is  neck.fpn_convs.3.conv.bias
+pd_key neck.fpn_res0_sum_extra.bias torch_key neck.fpn_convs.3.conv.bias param.shape: torch.Size([256])
+now k is  neck.fpn_convs.4.conv.weight
+pd_key neck.fpn_res1_sum_extra.weight torch_key neck.fpn_convs.4.conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  neck.fpn_convs.4.conv.bias
+pd_key neck.fpn_res1_sum_extra.bias torch_key neck.fpn_convs.4.conv.bias param.shape: torch.Size([256])
+now k is  rbox_head.fam_reg_convs.0.conv.weight
+pd_key s2anet_head.fam_reg_convs.fam_reg_conv_0.weight torch_key rbox_head.fam_reg_convs.0.conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  rbox_head.fam_reg_convs.0.conv.bias
+pd_key s2anet_head.fam_reg_convs.fam_reg_conv_0.bias torch_key rbox_head.fam_reg_convs.0.conv.bias param.shape: torch.Size([256])
+now k is  rbox_head.fam_reg_convs.1.conv.weight
+pd_key s2anet_head.fam_reg_convs.fam_reg_conv_1.weight torch_key rbox_head.fam_reg_convs.1.conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  rbox_head.fam_reg_convs.1.conv.bias
+pd_key s2anet_head.fam_reg_convs.fam_reg_conv_1.bias torch_key rbox_head.fam_reg_convs.1.conv.bias param.shape: torch.Size([256])
+now k is  rbox_head.fam_cls_convs.0.conv.weight
+pd_key s2anet_head.fam_cls_convs.fam_cls_conv_0.weight torch_key rbox_head.fam_cls_convs.0.conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  rbox_head.fam_cls_convs.0.conv.bias
+pd_key s2anet_head.fam_cls_convs.fam_cls_conv_0.bias torch_key rbox_head.fam_cls_convs.0.conv.bias param.shape: torch.Size([256])
+now k is  rbox_head.fam_cls_convs.1.conv.weight
+pd_key s2anet_head.fam_cls_convs.fam_cls_conv_1.weight torch_key rbox_head.fam_cls_convs.1.conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  rbox_head.fam_cls_convs.1.conv.bias
+pd_key s2anet_head.fam_cls_convs.fam_cls_conv_1.bias torch_key rbox_head.fam_cls_convs.1.conv.bias param.shape: torch.Size([256])
+now k is  rbox_head.fam_reg.weight
+pd_key s2anet_head.fam_reg.weight torch_key rbox_head.fam_reg.weight param.shape: torch.Size([5, 256, 1, 1])
+now k is  rbox_head.fam_reg.bias
+pd_key s2anet_head.fam_reg.bias torch_key rbox_head.fam_reg.bias param.shape: torch.Size([5])
+now k is  rbox_head.fam_cls.weight
+pd_key s2anet_head.fam_cls.weight torch_key rbox_head.fam_cls.weight param.shape: torch.Size([15, 256, 1, 1])
+now k is  rbox_head.fam_cls.bias
+pd_key s2anet_head.fam_cls.bias torch_key rbox_head.fam_cls.bias param.shape: torch.Size([15])
+now k is  rbox_head.align_conv.weight
+2021 param.cpu().numpy() (256, 256, 3, 3) -5.6555305
+pd_key s2anet_head.align_conv.weight torch_key rbox_head.align_conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  rbox_head.align_conv.bias
+2021 param.cpu().numpy() (256,) 0.27799746
+pd_key s2anet_head.align_conv.bias torch_key rbox_head.align_conv.bias param.shape: torch.Size([256])
+now k is  rbox_head.or_conv.weight
+pd_key s2anet_head.or_conv.weight torch_key rbox_head.or_conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  rbox_head.or_conv.bias
+pd_key s2anet_head.or_conv.bias torch_key rbox_head.or_conv.bias param.shape: torch.Size([256])
+now k is  rbox_head.or_pool.conv.0.weight
+now k is  rbox_head.or_pool.conv.0.bias
+now k is  rbox_head.or_pool.conv.1.weight
+now k is  rbox_head.or_pool.conv.1.bias
+now k is  rbox_head.or_pool.conv.1.running_mean
+now k is  rbox_head.or_pool.conv.1.running_var
+now k is  rbox_head.or_pool.conv.1.num_batches_tracked
+now k is  rbox_head.odm_reg_convs.0.conv.weight
+pd_key s2anet_head.odm_reg_convs.odm_reg_conv_0.weight torch_key rbox_head.odm_reg_convs.0.conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  rbox_head.odm_reg_convs.0.conv.bias
+pd_key s2anet_head.odm_reg_convs.odm_reg_conv_0.bias torch_key rbox_head.odm_reg_convs.0.conv.bias param.shape: torch.Size([256])
+now k is  rbox_head.odm_reg_convs.1.conv.weight
+pd_key s2anet_head.odm_reg_convs.odm_reg_conv_1.weight torch_key rbox_head.odm_reg_convs.1.conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  rbox_head.odm_reg_convs.1.conv.bias
+pd_key s2anet_head.odm_reg_convs.odm_reg_conv_1.bias torch_key rbox_head.odm_reg_convs.1.conv.bias param.shape: torch.Size([256])
+now k is  rbox_head.odm_cls_convs.0.conv.weight
+pd_key s2anet_head.odm_cls_convs.odm_cls_conv_0.weight torch_key rbox_head.odm_cls_convs.0.conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  rbox_head.odm_cls_convs.0.conv.bias
+pd_key s2anet_head.odm_cls_convs.odm_cls_conv_0.bias torch_key rbox_head.odm_cls_convs.0.conv.bias param.shape: torch.Size([256])
+now k is  rbox_head.odm_cls_convs.1.conv.weight
+pd_key s2anet_head.odm_cls_convs.odm_cls_conv_1.weight torch_key rbox_head.odm_cls_convs.1.conv.weight param.shape: torch.Size([256, 256, 3, 3])
+now k is  rbox_head.odm_cls_convs.1.conv.bias
+pd_key s2anet_head.odm_cls_convs.odm_cls_conv_1.bias torch_key rbox_head.odm_cls_convs.1.conv.bias param.shape: torch.Size([256])
+now k is  rbox_head.odm_cls.weight
+pd_key s2anet_head.odm_cls.weight torch_key rbox_head.odm_cls.weight param.shape: torch.Size([15, 256, 3, 3])
+now k is  rbox_head.odm_cls.bias
+pd_key s2anet_head.odm_cls.bias torch_key rbox_head.odm_cls.bias param.shape: torch.Size([15])
+now k is  rbox_head.odm_reg.weight
+pd_key s2anet_head.odm_reg.weight torch_key rbox_head.odm_reg.weight param.shape: torch.Size([5, 256, 3, 3])
+now k is  rbox_head.odm_reg.bias
+pd_key s2anet_head.odm_reg.bias torch_key rbox_head.odm_reg.bias param.shape: torch.Size([5])
+dict_keys(['backbone.conv1.conv1.conv.weight', 'backbone.conv1.conv1.norm.weight', 'backbone.conv1.conv1.norm.bias', 'backbone.conv1.conv1.norm._mean', 'backbone.conv1.conv1.norm._variance', 'backbone.res2.res2a.branch2a.conv.weight', 'backbone.res2.res2a.branch2a.norm.weight', 'backbone.res2.res2a.branch2a.norm.bias', 'backbone.res2.res2a.branch2a.norm._mean', 'backbone.res2.res2a.branch2a.norm._variance', 'backbone.res2.res2a.branch2b.conv.weight', 'backbone.res2.res2a.branch2b.norm.weight', 'backbone.res2.res2a.branch2b.norm.bias', 'backbone.res2.res2a.branch2b.norm._mean', 'backbone.res2.res2a.branch2b.norm._variance', 'backbone.res2.res2a.branch2c.conv.weight', 'backbone.res2.res2a.branch2c.norm.weight', 'backbone.res2.res2a.branch2c.norm.bias', 'backbone.res2.res2a.branch2c.norm._mean', 'backbone.res2.res2a.branch2c.norm._variance', 'backbone.res2.res2a.short.conv.weight', 'backbone.res2.res2a.short.norm.weight', 'backbone.res2.res2a.short.norm.bias', 'backbone.res2.res2a.short.norm._mean', 'backbone.res2.res2a.short.norm._variance', 'backbone.res2.res2b.branch2a.conv.weight', 'backbone.res2.res2b.branch2a.norm.weight', 'backbone.res2.res2b.branch2a.norm.bias', 'backbone.res2.res2b.branch2a.norm._mean', 'backbone.res2.res2b.branch2a.norm._variance', 'backbone.res2.res2b.branch2b.conv.weight', 'backbone.res2.res2b.branch2b.norm.weight', 'backbone.res2.res2b.branch2b.norm.bias', 'backbone.res2.res2b.branch2b.norm._mean', 'backbone.res2.res2b.branch2b.norm._variance', 'backbone.res2.res2b.branch2c.conv.weight', 'backbone.res2.res2b.branch2c.norm.weight', 'backbone.res2.res2b.branch2c.norm.bias', 'backbone.res2.res2b.branch2c.norm._mean', 'backbone.res2.res2b.branch2c.norm._variance', 'backbone.res2.res2c.branch2a.conv.weight', 'backbone.res2.res2c.branch2a.norm.weight', 'backbone.res2.res2c.branch2a.norm.bias', 'backbone.res2.res2c.branch2a.norm._mean', 'backbone.res2.res2c.branch2a.norm._variance', 'backbone.res2.res2c.branch2b.conv.weight', 'backbone.res2.res2c.branch2b.norm.weight', 'backbone.res2.res2c.branch2b.norm.bias', 'backbone.res2.res2c.branch2b.norm._mean', 'backbone.res2.res2c.branch2b.norm._variance', 'backbone.res2.res2c.branch2c.conv.weight', 'backbone.res2.res2c.branch2c.norm.weight', 'backbone.res2.res2c.branch2c.norm.bias', 'backbone.res2.res2c.branch2c.norm._mean', 'backbone.res2.res2c.branch2c.norm._variance', 'backbone.res3.res3a.branch2a.conv.weight', 'backbone.res3.res3a.branch2a.norm.weight', 'backbone.res3.res3a.branch2a.norm.bias', 'backbone.res3.res3a.branch2a.norm._mean', 'backbone.res3.res3a.branch2a.norm._variance', 'backbone.res3.res3a.branch2b.conv.weight', 'backbone.res3.res3a.branch2b.norm.weight', 'backbone.res3.res3a.branch2b.norm.bias', 'backbone.res3.res3a.branch2b.norm._mean', 'backbone.res3.res3a.branch2b.norm._variance', 'backbone.res3.res3a.branch2c.conv.weight', 'backbone.res3.res3a.branch2c.norm.weight', 'backbone.res3.res3a.branch2c.norm.bias', 'backbone.res3.res3a.branch2c.norm._mean', 'backbone.res3.res3a.branch2c.norm._variance', 'backbone.res3.res3a.short.conv.weight', 'backbone.res3.res3a.short.norm.weight', 'backbone.res3.res3a.short.norm.bias', 'backbone.res3.res3a.short.norm._mean', 'backbone.res3.res3a.short.norm._variance', 'backbone.res3.res3b.branch2a.conv.weight', 'backbone.res3.res3b.branch2a.norm.weight', 'backbone.res3.res3b.branch2a.norm.bias', 'backbone.res3.res3b.branch2a.norm._mean', 'backbone.res3.res3b.branch2a.norm._variance', 'backbone.res3.res3b.branch2b.conv.weight', 'backbone.res3.res3b.branch2b.norm.weight', 'backbone.res3.res3b.branch2b.norm.bias', 'backbone.res3.res3b.branch2b.norm._mean', 'backbone.res3.res3b.branch2b.norm._variance', 'backbone.res3.res3b.branch2c.conv.weight', 'backbone.res3.res3b.branch2c.norm.weight', 'backbone.res3.res3b.branch2c.norm.bias', 'backbone.res3.res3b.branch2c.norm._mean', 'backbone.res3.res3b.branch2c.norm._variance', 'backbone.res3.res3c.branch2a.conv.weight', 'backbone.res3.res3c.branch2a.norm.weight', 'backbone.res3.res3c.branch2a.norm.bias', 'backbone.res3.res3c.branch2a.norm._mean', 'backbone.res3.res3c.branch2a.norm._variance', 'backbone.res3.res3c.branch2b.conv.weight', 'backbone.res3.res3c.branch2b.norm.weight', 'backbone.res3.res3c.branch2b.norm.bias', 'backbone.res3.res3c.branch2b.norm._mean', 'backbone.res3.res3c.branch2b.norm._variance', 'backbone.res3.res3c.branch2c.conv.weight', 'backbone.res3.res3c.branch2c.norm.weight', 'backbone.res3.res3c.branch2c.norm.bias', 'backbone.res3.res3c.branch2c.norm._mean', 'backbone.res3.res3c.branch2c.norm._variance', 'backbone.res3.res3d.branch2a.conv.weight', 'backbone.res3.res3d.branch2a.norm.weight', 'backbone.res3.res3d.branch2a.norm.bias', 'backbone.res3.res3d.branch2a.norm._mean', 'backbone.res3.res3d.branch2a.norm._variance', 'backbone.res3.res3d.branch2b.conv.weight', 'backbone.res3.res3d.branch2b.norm.weight', 'backbone.res3.res3d.branch2b.norm.bias', 'backbone.res3.res3d.branch2b.norm._mean', 'backbone.res3.res3d.branch2b.norm._variance', 'backbone.res3.res3d.branch2c.conv.weight', 'backbone.res3.res3d.branch2c.norm.weight', 'backbone.res3.res3d.branch2c.norm.bias', 'backbone.res3.res3d.branch2c.norm._mean', 'backbone.res3.res3d.branch2c.norm._variance', 'backbone.res4.res4a.branch2a.conv.weight', 'backbone.res4.res4a.branch2a.norm.weight', 'backbone.res4.res4a.branch2a.norm.bias', 'backbone.res4.res4a.branch2a.norm._mean', 'backbone.res4.res4a.branch2a.norm._variance', 'backbone.res4.res4a.branch2b.conv.weight', 'backbone.res4.res4a.branch2b.norm.weight', 'backbone.res4.res4a.branch2b.norm.bias', 'backbone.res4.res4a.branch2b.norm._mean', 'backbone.res4.res4a.branch2b.norm._variance', 'backbone.res4.res4a.branch2c.conv.weight', 'backbone.res4.res4a.branch2c.norm.weight', 'backbone.res4.res4a.branch2c.norm.bias', 'backbone.res4.res4a.branch2c.norm._mean', 'backbone.res4.res4a.branch2c.norm._variance', 'backbone.res4.res4a.short.conv.weight', 'backbone.res4.res4a.short.norm.weight', 'backbone.res4.res4a.short.norm.bias', 'backbone.res4.res4a.short.norm._mean', 'backbone.res4.res4a.short.norm._variance', 'backbone.res4.res4b.branch2a.conv.weight', 'backbone.res4.res4b.branch2a.norm.weight', 'backbone.res4.res4b.branch2a.norm.bias', 'backbone.res4.res4b.branch2a.norm._mean', 'backbone.res4.res4b.branch2a.norm._variance', 'backbone.res4.res4b.branch2b.conv.weight', 'backbone.res4.res4b.branch2b.norm.weight', 'backbone.res4.res4b.branch2b.norm.bias', 'backbone.res4.res4b.branch2b.norm._mean', 'backbone.res4.res4b.branch2b.norm._variance', 'backbone.res4.res4b.branch2c.conv.weight', 'backbone.res4.res4b.branch2c.norm.weight', 'backbone.res4.res4b.branch2c.norm.bias', 'backbone.res4.res4b.branch2c.norm._mean', 'backbone.res4.res4b.branch2c.norm._variance', 'backbone.res4.res4c.branch2a.conv.weight', 'backbone.res4.res4c.branch2a.norm.weight', 'backbone.res4.res4c.branch2a.norm.bias', 'backbone.res4.res4c.branch2a.norm._mean', 'backbone.res4.res4c.branch2a.norm._variance', 'backbone.res4.res4c.branch2b.conv.weight', 'backbone.res4.res4c.branch2b.norm.weight', 'backbone.res4.res4c.branch2b.norm.bias', 'backbone.res4.res4c.branch2b.norm._mean', 'backbone.res4.res4c.branch2b.norm._variance', 'backbone.res4.res4c.branch2c.conv.weight', 'backbone.res4.res4c.branch2c.norm.weight', 'backbone.res4.res4c.branch2c.norm.bias', 'backbone.res4.res4c.branch2c.norm._mean', 'backbone.res4.res4c.branch2c.norm._variance', 'backbone.res4.res4d.branch2a.conv.weight', 'backbone.res4.res4d.branch2a.norm.weight', 'backbone.res4.res4d.branch2a.norm.bias', 'backbone.res4.res4d.branch2a.norm._mean', 'backbone.res4.res4d.branch2a.norm._variance', 'backbone.res4.res4d.branch2b.conv.weight', 'backbone.res4.res4d.branch2b.norm.weight', 'backbone.res4.res4d.branch2b.norm.bias', 'backbone.res4.res4d.branch2b.norm._mean', 'backbone.res4.res4d.branch2b.norm._variance', 'backbone.res4.res4d.branch2c.conv.weight', 'backbone.res4.res4d.branch2c.norm.weight', 'backbone.res4.res4d.branch2c.norm.bias', 'backbone.res4.res4d.branch2c.norm._mean', 'backbone.res4.res4d.branch2c.norm._variance', 'backbone.res4.res4e.branch2a.conv.weight', 'backbone.res4.res4e.branch2a.norm.weight', 'backbone.res4.res4e.branch2a.norm.bias', 'backbone.res4.res4e.branch2a.norm._mean', 'backbone.res4.res4e.branch2a.norm._variance', 'backbone.res4.res4e.branch2b.conv.weight', 'backbone.res4.res4e.branch2b.norm.weight', 'backbone.res4.res4e.branch2b.norm.bias', 'backbone.res4.res4e.branch2b.norm._mean', 'backbone.res4.res4e.branch2b.norm._variance', 'backbone.res4.res4e.branch2c.conv.weight', 'backbone.res4.res4e.branch2c.norm.weight', 'backbone.res4.res4e.branch2c.norm.bias', 'backbone.res4.res4e.branch2c.norm._mean', 'backbone.res4.res4e.branch2c.norm._variance', 'backbone.res4.res4f.branch2a.conv.weight', 'backbone.res4.res4f.branch2a.norm.weight', 'backbone.res4.res4f.branch2a.norm.bias', 'backbone.res4.res4f.branch2a.norm._mean', 'backbone.res4.res4f.branch2a.norm._variance', 'backbone.res4.res4f.branch2b.conv.weight', 'backbone.res4.res4f.branch2b.norm.weight', 'backbone.res4.res4f.branch2b.norm.bias', 'backbone.res4.res4f.branch2b.norm._mean', 'backbone.res4.res4f.branch2b.norm._variance', 'backbone.res4.res4f.branch2c.conv.weight', 'backbone.res4.res4f.branch2c.norm.weight', 'backbone.res4.res4f.branch2c.norm.bias', 'backbone.res4.res4f.branch2c.norm._mean', 'backbone.res4.res4f.branch2c.norm._variance', 'backbone.res5.res5a.branch2a.conv.weight', 'backbone.res5.res5a.branch2a.norm.weight', 'backbone.res5.res5a.branch2a.norm.bias', 'backbone.res5.res5a.branch2a.norm._mean', 'backbone.res5.res5a.branch2a.norm._variance', 'backbone.res5.res5a.branch2b.conv.weight', 'backbone.res5.res5a.branch2b.norm.weight', 'backbone.res5.res5a.branch2b.norm.bias', 'backbone.res5.res5a.branch2b.norm._mean', 'backbone.res5.res5a.branch2b.norm._variance', 'backbone.res5.res5a.branch2c.conv.weight', 'backbone.res5.res5a.branch2c.norm.weight', 'backbone.res5.res5a.branch2c.norm.bias', 'backbone.res5.res5a.branch2c.norm._mean', 'backbone.res5.res5a.branch2c.norm._variance', 'backbone.res5.res5a.short.conv.weight', 'backbone.res5.res5a.short.norm.weight', 'backbone.res5.res5a.short.norm.bias', 'backbone.res5.res5a.short.norm._mean', 'backbone.res5.res5a.short.norm._variance', 'backbone.res5.res5b.branch2a.conv.weight', 'backbone.res5.res5b.branch2a.norm.weight', 'backbone.res5.res5b.branch2a.norm.bias', 'backbone.res5.res5b.branch2a.norm._mean', 'backbone.res5.res5b.branch2a.norm._variance', 'backbone.res5.res5b.branch2b.conv.weight', 'backbone.res5.res5b.branch2b.norm.weight', 'backbone.res5.res5b.branch2b.norm.bias', 'backbone.res5.res5b.branch2b.norm._mean', 'backbone.res5.res5b.branch2b.norm._variance', 'backbone.res5.res5b.branch2c.conv.weight', 'backbone.res5.res5b.branch2c.norm.weight', 'backbone.res5.res5b.branch2c.norm.bias', 'backbone.res5.res5b.branch2c.norm._mean', 'backbone.res5.res5b.branch2c.norm._variance', 'backbone.res5.res5c.branch2a.conv.weight', 'backbone.res5.res5c.branch2a.norm.weight', 'backbone.res5.res5c.branch2a.norm.bias', 'backbone.res5.res5c.branch2a.norm._mean', 'backbone.res5.res5c.branch2a.norm._variance', 'backbone.res5.res5c.branch2b.conv.weight', 'backbone.res5.res5c.branch2b.norm.weight', 'backbone.res5.res5c.branch2b.norm.bias', 'backbone.res5.res5c.branch2b.norm._mean', 'backbone.res5.res5c.branch2b.norm._variance', 'backbone.res5.res5c.branch2c.conv.weight', 'backbone.res5.res5c.branch2c.norm.weight', 'backbone.res5.res5c.branch2c.norm.bias', 'backbone.res5.res5c.branch2c.norm._mean', 'backbone.res5.res5c.branch2c.norm._variance', 'neck.fpn_inner_res3_sum_lateral.weight', 'neck.fpn_inner_res3_sum_lateral.bias', 'neck.fpn_inner_res4_sum_lateral.weight', 'neck.fpn_inner_res4_sum_lateral.bias', 'neck.fpn_inner_res5_sum.weight', 'neck.fpn_inner_res5_sum.bias', 'neck.fpn_res3_sum.weight', 'neck.fpn_res3_sum.bias', 'neck.fpn_res4_sum.weight', 'neck.fpn_res4_sum.bias', 'neck.fpn_res5_sum.weight', 'neck.fpn_res5_sum.bias', 'neck.fpn_res0_sum_extra.weight', 'neck.fpn_res0_sum_extra.bias', 'neck.fpn_res1_sum_extra.weight', 'neck.fpn_res1_sum_extra.bias', 's2anet_head.fam_reg_convs.fam_reg_conv_0.weight', 's2anet_head.fam_reg_convs.fam_reg_conv_0.bias', 's2anet_head.fam_reg_convs.fam_reg_conv_1.weight', 's2anet_head.fam_reg_convs.fam_reg_conv_1.bias', 's2anet_head.fam_cls_convs.fam_cls_conv_0.weight', 's2anet_head.fam_cls_convs.fam_cls_conv_0.bias', 's2anet_head.fam_cls_convs.fam_cls_conv_1.weight', 's2anet_head.fam_cls_convs.fam_cls_conv_1.bias', 's2anet_head.fam_reg.weight', 's2anet_head.fam_reg.bias', 's2anet_head.fam_cls.weight', 's2anet_head.fam_cls.bias', 's2anet_head.align_conv.weight', 's2anet_head.align_conv.bias', 's2anet_head.or_conv.weight', 's2anet_head.or_conv.bias', 's2anet_head.odm_reg_convs.odm_reg_conv_0.weight', 's2anet_head.odm_reg_convs.odm_reg_conv_0.bias', 's2anet_head.odm_reg_convs.odm_reg_conv_1.weight', 's2anet_head.odm_reg_convs.odm_reg_conv_1.bias', 's2anet_head.odm_cls_convs.odm_cls_conv_0.weight', 's2anet_head.odm_cls_convs.odm_cls_conv_0.bias', 's2anet_head.odm_cls_convs.odm_cls_conv_1.weight', 's2anet_head.odm_cls_convs.odm_cls_conv_1.bias', 's2anet_head.odm_cls.weight', 's2anet_head.odm_cls.bias', 's2anet_head.odm_reg.weight', 's2anet_head.odm_reg.bias'])
+<class 'dict'>
+
+
+
+backbone.conv1.conv1.conv.weight (64, 3, 7, 7) <class 'numpy.ndarray'>
+backbone.conv1.conv1.norm.weight (64,) <class 'numpy.ndarray'>
+backbone.conv1.conv1.norm.bias (64,) <class 'numpy.ndarray'>
+backbone.conv1.conv1.norm._mean (64,) <class 'numpy.ndarray'>
+backbone.conv1.conv1.norm._variance (64,) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2a.conv.weight (64, 64, 1, 1) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2a.norm.weight (64,) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2a.norm.bias (64,) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2a.norm._mean (64,) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2a.norm._variance (64,) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2b.conv.weight (64, 64, 3, 3) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2b.norm.weight (64,) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2b.norm.bias (64,) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2b.norm._mean (64,) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2b.norm._variance (64,) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2c.conv.weight (256, 64, 1, 1) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2c.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2c.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2c.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res2.res2a.branch2c.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res2.res2a.short.conv.weight (256, 64, 1, 1) <class 'numpy.ndarray'>
+backbone.res2.res2a.short.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res2.res2a.short.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res2.res2a.short.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res2.res2a.short.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2a.conv.weight (64, 256, 1, 1) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2a.norm.weight (64,) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2a.norm.bias (64,) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2a.norm._mean (64,) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2a.norm._variance (64,) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2b.conv.weight (64, 64, 3, 3) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2b.norm.weight (64,) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2b.norm.bias (64,) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2b.norm._mean (64,) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2b.norm._variance (64,) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2c.conv.weight (256, 64, 1, 1) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2c.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2c.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2c.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res2.res2b.branch2c.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2a.conv.weight (64, 256, 1, 1) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2a.norm.weight (64,) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2a.norm.bias (64,) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2a.norm._mean (64,) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2a.norm._variance (64,) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2b.conv.weight (64, 64, 3, 3) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2b.norm.weight (64,) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2b.norm.bias (64,) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2b.norm._mean (64,) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2b.norm._variance (64,) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2c.conv.weight (256, 64, 1, 1) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2c.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2c.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2c.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res2.res2c.branch2c.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2a.conv.weight (128, 256, 1, 1) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2a.norm.weight (128,) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2a.norm.bias (128,) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2a.norm._mean (128,) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2a.norm._variance (128,) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2b.conv.weight (128, 128, 3, 3) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2b.norm.weight (128,) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2b.norm.bias (128,) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2b.norm._mean (128,) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2b.norm._variance (128,) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2c.conv.weight (512, 128, 1, 1) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2c.norm.weight (512,) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2c.norm.bias (512,) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2c.norm._mean (512,) <class 'numpy.ndarray'>
+backbone.res3.res3a.branch2c.norm._variance (512,) <class 'numpy.ndarray'>
+backbone.res3.res3a.short.conv.weight (512, 256, 1, 1) <class 'numpy.ndarray'>
+backbone.res3.res3a.short.norm.weight (512,) <class 'numpy.ndarray'>
+backbone.res3.res3a.short.norm.bias (512,) <class 'numpy.ndarray'>
+backbone.res3.res3a.short.norm._mean (512,) <class 'numpy.ndarray'>
+backbone.res3.res3a.short.norm._variance (512,) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2a.conv.weight (128, 512, 1, 1) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2a.norm.weight (128,) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2a.norm.bias (128,) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2a.norm._mean (128,) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2a.norm._variance (128,) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2b.conv.weight (128, 128, 3, 3) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2b.norm.weight (128,) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2b.norm.bias (128,) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2b.norm._mean (128,) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2b.norm._variance (128,) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2c.conv.weight (512, 128, 1, 1) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2c.norm.weight (512,) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2c.norm.bias (512,) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2c.norm._mean (512,) <class 'numpy.ndarray'>
+backbone.res3.res3b.branch2c.norm._variance (512,) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2a.conv.weight (128, 512, 1, 1) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2a.norm.weight (128,) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2a.norm.bias (128,) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2a.norm._mean (128,) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2a.norm._variance (128,) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2b.conv.weight (128, 128, 3, 3) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2b.norm.weight (128,) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2b.norm.bias (128,) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2b.norm._mean (128,) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2b.norm._variance (128,) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2c.conv.weight (512, 128, 1, 1) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2c.norm.weight (512,) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2c.norm.bias (512,) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2c.norm._mean (512,) <class 'numpy.ndarray'>
+backbone.res3.res3c.branch2c.norm._variance (512,) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2a.conv.weight (128, 512, 1, 1) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2a.norm.weight (128,) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2a.norm.bias (128,) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2a.norm._mean (128,) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2a.norm._variance (128,) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2b.conv.weight (128, 128, 3, 3) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2b.norm.weight (128,) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2b.norm.bias (128,) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2b.norm._mean (128,) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2b.norm._variance (128,) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2c.conv.weight (512, 128, 1, 1) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2c.norm.weight (512,) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2c.norm.bias (512,) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2c.norm._mean (512,) <class 'numpy.ndarray'>
+backbone.res3.res3d.branch2c.norm._variance (512,) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2a.conv.weight (256, 512, 1, 1) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2a.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2a.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2a.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2a.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2b.conv.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2b.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2b.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2b.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2b.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2c.conv.weight (1024, 256, 1, 1) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2c.norm.weight (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2c.norm.bias (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2c.norm._mean (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4a.branch2c.norm._variance (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4a.short.conv.weight (1024, 512, 1, 1) <class 'numpy.ndarray'>
+backbone.res4.res4a.short.norm.weight (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4a.short.norm.bias (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4a.short.norm._mean (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4a.short.norm._variance (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2a.conv.weight (256, 1024, 1, 1) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2a.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2a.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2a.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2a.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2b.conv.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2b.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2b.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2b.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2b.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2c.conv.weight (1024, 256, 1, 1) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2c.norm.weight (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2c.norm.bias (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2c.norm._mean (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4b.branch2c.norm._variance (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2a.conv.weight (256, 1024, 1, 1) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2a.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2a.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2a.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2a.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2b.conv.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2b.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2b.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2b.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2b.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2c.conv.weight (1024, 256, 1, 1) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2c.norm.weight (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2c.norm.bias (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2c.norm._mean (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4c.branch2c.norm._variance (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2a.conv.weight (256, 1024, 1, 1) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2a.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2a.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2a.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2a.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2b.conv.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2b.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2b.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2b.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2b.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2c.conv.weight (1024, 256, 1, 1) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2c.norm.weight (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2c.norm.bias (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2c.norm._mean (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4d.branch2c.norm._variance (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2a.conv.weight (256, 1024, 1, 1) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2a.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2a.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2a.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2a.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2b.conv.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2b.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2b.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2b.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2b.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2c.conv.weight (1024, 256, 1, 1) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2c.norm.weight (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2c.norm.bias (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2c.norm._mean (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4e.branch2c.norm._variance (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2a.conv.weight (256, 1024, 1, 1) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2a.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2a.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2a.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2a.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2b.conv.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2b.norm.weight (256,) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2b.norm.bias (256,) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2b.norm._mean (256,) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2b.norm._variance (256,) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2c.conv.weight (1024, 256, 1, 1) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2c.norm.weight (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2c.norm.bias (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2c.norm._mean (1024,) <class 'numpy.ndarray'>
+backbone.res4.res4f.branch2c.norm._variance (1024,) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2a.conv.weight (512, 1024, 1, 1) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2a.norm.weight (512,) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2a.norm.bias (512,) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2a.norm._mean (512,) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2a.norm._variance (512,) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2b.conv.weight (512, 512, 3, 3) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2b.norm.weight (512,) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2b.norm.bias (512,) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2b.norm._mean (512,) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2b.norm._variance (512,) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2c.conv.weight (2048, 512, 1, 1) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2c.norm.weight (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2c.norm.bias (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2c.norm._mean (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5a.branch2c.norm._variance (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5a.short.conv.weight (2048, 1024, 1, 1) <class 'numpy.ndarray'>
+backbone.res5.res5a.short.norm.weight (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5a.short.norm.bias (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5a.short.norm._mean (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5a.short.norm._variance (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2a.conv.weight (512, 2048, 1, 1) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2a.norm.weight (512,) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2a.norm.bias (512,) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2a.norm._mean (512,) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2a.norm._variance (512,) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2b.conv.weight (512, 512, 3, 3) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2b.norm.weight (512,) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2b.norm.bias (512,) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2b.norm._mean (512,) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2b.norm._variance (512,) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2c.conv.weight (2048, 512, 1, 1) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2c.norm.weight (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2c.norm.bias (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2c.norm._mean (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5b.branch2c.norm._variance (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2a.conv.weight (512, 2048, 1, 1) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2a.norm.weight (512,) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2a.norm.bias (512,) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2a.norm._mean (512,) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2a.norm._variance (512,) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2b.conv.weight (512, 512, 3, 3) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2b.norm.weight (512,) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2b.norm.bias (512,) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2b.norm._mean (512,) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2b.norm._variance (512,) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2c.conv.weight (2048, 512, 1, 1) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2c.norm.weight (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2c.norm.bias (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2c.norm._mean (2048,) <class 'numpy.ndarray'>
+backbone.res5.res5c.branch2c.norm._variance (2048,) <class 'numpy.ndarray'>
+neck.fpn_inner_res3_sum_lateral.weight (256, 512, 1, 1) <class 'numpy.ndarray'>
+neck.fpn_inner_res3_sum_lateral.bias (256,) <class 'numpy.ndarray'>
+neck.fpn_inner_res4_sum_lateral.weight (256, 1024, 1, 1) <class 'numpy.ndarray'>
+neck.fpn_inner_res4_sum_lateral.bias (256,) <class 'numpy.ndarray'>
+neck.fpn_inner_res5_sum.weight (256, 2048, 1, 1) <class 'numpy.ndarray'>
+neck.fpn_inner_res5_sum.bias (256,) <class 'numpy.ndarray'>
+neck.fpn_res3_sum.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+neck.fpn_res3_sum.bias (256,) <class 'numpy.ndarray'>
+neck.fpn_res4_sum.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+neck.fpn_res4_sum.bias (256,) <class 'numpy.ndarray'>
+neck.fpn_res5_sum.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+neck.fpn_res5_sum.bias (256,) <class 'numpy.ndarray'>
+neck.fpn_res0_sum_extra.weight (256, 2048, 3, 3) <class 'numpy.ndarray'>
+neck.fpn_res0_sum_extra.bias (256,) <class 'numpy.ndarray'>
+neck.fpn_res1_sum_extra.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+neck.fpn_res1_sum_extra.bias (256,) <class 'numpy.ndarray'>
+s2anet_head.fam_reg_convs.fam_reg_conv_0.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+s2anet_head.fam_reg_convs.fam_reg_conv_0.bias (256,) <class 'numpy.ndarray'>
+s2anet_head.fam_reg_convs.fam_reg_conv_1.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+s2anet_head.fam_reg_convs.fam_reg_conv_1.bias (256,) <class 'numpy.ndarray'>
+s2anet_head.fam_cls_convs.fam_cls_conv_0.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+s2anet_head.fam_cls_convs.fam_cls_conv_0.bias (256,) <class 'numpy.ndarray'>
+s2anet_head.fam_cls_convs.fam_cls_conv_1.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+s2anet_head.fam_cls_convs.fam_cls_conv_1.bias (256,) <class 'numpy.ndarray'>
+s2anet_head.fam_reg.weight (5, 256, 1, 1) <class 'numpy.ndarray'>
+s2anet_head.fam_reg.bias (5,) <class 'numpy.ndarray'>
+s2anet_head.fam_cls.weight (15, 256, 1, 1) <class 'numpy.ndarray'>
+s2anet_head.fam_cls.bias (15,) <class 'numpy.ndarray'>
+s2anet_head.align_conv.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+s2anet_head.align_conv.bias (256,) <class 'numpy.ndarray'>
+s2anet_head.or_conv.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+s2anet_head.or_conv.bias (256,) <class 'numpy.ndarray'>
+s2anet_head.odm_reg_convs.odm_reg_conv_0.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+s2anet_head.odm_reg_convs.odm_reg_conv_0.bias (256,) <class 'numpy.ndarray'>
+s2anet_head.odm_reg_convs.odm_reg_conv_1.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+s2anet_head.odm_reg_convs.odm_reg_conv_1.bias (256,) <class 'numpy.ndarray'>
+s2anet_head.odm_cls_convs.odm_cls_conv_0.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+s2anet_head.odm_cls_convs.odm_cls_conv_0.bias (256,) <class 'numpy.ndarray'>
+s2anet_head.odm_cls_convs.odm_cls_conv_1.weight (256, 256, 3, 3) <class 'numpy.ndarray'>
+s2anet_head.odm_cls_convs.odm_cls_conv_1.bias (256,) <class 'numpy.ndarray'>
+s2anet_head.odm_cls.weight (15, 256, 3, 3) <class 'numpy.ndarray'>
+s2anet_head.odm_cls.bias (15,) <class 'numpy.ndarray'>
+s2anet_head.odm_reg.weight (5, 256, 3, 3) <class 'numpy.ndarray'>
+s2anet_head.odm_reg.bias (5,) <class 'numpy.ndarray'>

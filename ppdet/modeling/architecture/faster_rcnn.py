@@ -65,6 +65,7 @@ class FasterRCNN(BaseArch):
         if self.inputs['mode'] == 'infer':
             bbox_pred, bboxes = self.bbox_head.get_prediction(
                 self.bbox_head_out, rois)
+            print('bbox_pred.', bbox_pred, 'bboxes', bboxes)
             # Refine bbox by the output from bbox_head at test stage
             self.bboxes = self.bbox_post_process(bbox_pred, bboxes,
                                                  self.inputs['im_shape'],
@@ -94,10 +95,13 @@ class FasterRCNN(BaseArch):
 
     def get_pred(self, return_numpy=True):
         bbox, bbox_num = self.bboxes
+        print('bbox', bbox.shape, 'bbox_num', bbox_num, 'im_id', self.inputs['im_id'].shape)
+        
         output = {
             'bbox': bbox.numpy(),
             'bbox_num': bbox_num.numpy(),
             'im_id': self.inputs['im_id'].numpy()
         }
-
+        print('output array', output['bbox'].shape, output['bbox_num'].shape, output['im_id'].shape)
+        input('21111')
         return output

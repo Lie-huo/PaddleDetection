@@ -50,9 +50,11 @@ def get_infer_results(outs_res, eval_type, catid):
     if 'bbox' in eval_type:
         box_res = []
         for outs in outs_res:
-            box_res += get_det_res(outs['bbox'], outs['bbox_num'],
-                                   outs['im_id'], catid)
-        infer_res['bbox'] = box_res
+            print('xxxx outs', outs)
+            print(outs['bbox'], outs['bbox_num'], outs['im_id'], catid)
+            input('eval_typeeval_typeeval_typeeval_typeeval_type')
+            box_res += get_det_res(outs['bbox'], outs['bbox_num'], outs['im_id'], catid)
+        infer_res['bbox'] = outs_res
 
     if 'mask' in eval_type:
         seg_res = []

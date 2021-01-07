@@ -1,255 +1,1031 @@
-i== 0 <paddle.nn.layer.conv.Conv2D object at 0x7fb756a15470>
-i== 1 <paddle.nn.layer.conv.Conv2D object at 0x7fb756a156b0>
-i== 2 <paddle.nn.layer.conv.Conv2D object at 0x7fb756a158f0>
+i== 0 <paddle.nn.layer.conv.Conv2D object at 0x7f8f1a1119b0>
+i== 1 <paddle.nn.layer.conv.Conv2D object at 0x7f8f1a111bf0>
+i== 2 <paddle.nn.layer.conv.Conv2D object at 0x7f8f1a111e30>
 extra_levels==== 2
 k== 0 [256, 512, 1, 1]
 k== 1 [256, 1024, 1, 1]
 k== 2 [256, 2048, 1, 1]
-model <ppdet.modeling.architecture.s2anet.S2ANet object at 0x7fb756a3b530>
-state_dict 140425409312048 []
-state_dict 140425306106480 []
-state_dict 140425408084880 []
-state_dict 140425408084496 []
-state_dict 140425408374736 ['backbone.conv1.conv1.conv.weight']
-state_dict 140425408375120 ['backbone.conv1.conv1.norm.weight', 'backbone.conv1.conv1.norm.bias', 'backbone.conv1.conv1.norm._mean', 'backbone.conv1.conv1.norm._variance']
-state_dict 140425408375696 []
-state_dict 140425408375888 []
-state_dict 140425408376080 []
-state_dict 140425408376272 []
-state_dict 140425408376368 ['backbone.res2.res2a.short.conv.weight']
-state_dict 140425408376464 ['backbone.res2.res2a.short.norm.weight', 'backbone.res2.res2a.short.norm.bias', 'backbone.res2.res2a.short.norm._mean', 'backbone.res2.res2a.short.norm._variance']
-state_dict 140425408450832 []
-state_dict 140425408450928 ['backbone.res2.res2a.branch2a.conv.weight']
-state_dict 140425408451024 ['backbone.res2.res2a.branch2a.norm.weight', 'backbone.res2.res2a.branch2a.norm.bias', 'backbone.res2.res2a.branch2a.norm._mean', 'backbone.res2.res2a.branch2a.norm._variance']
-state_dict 140425408451600 []
-state_dict 140425408451696 ['backbone.res2.res2a.branch2b.conv.weight']
-state_dict 140425408451792 ['backbone.res2.res2a.branch2b.norm.weight', 'backbone.res2.res2a.branch2b.norm.bias', 'backbone.res2.res2a.branch2b.norm._mean', 'backbone.res2.res2a.branch2b.norm._variance']
-state_dict 140425408452368 []
-state_dict 140425408452464 ['backbone.res2.res2a.branch2c.conv.weight']
-state_dict 140425408452560 ['backbone.res2.res2a.branch2c.norm.weight', 'backbone.res2.res2a.branch2c.norm.bias', 'backbone.res2.res2a.branch2c.norm._mean', 'backbone.res2.res2a.branch2c.norm._variance']
-state_dict 140425408453136 []
-state_dict 140425408453232 []
-state_dict 140425408453328 ['backbone.res2.res2b.branch2a.conv.weight']
-state_dict 140425408453424 ['backbone.res2.res2b.branch2a.norm.weight', 'backbone.res2.res2b.branch2a.norm.bias', 'backbone.res2.res2b.branch2a.norm._mean', 'backbone.res2.res2b.branch2a.norm._variance']
-state_dict 140425408454000 []
-state_dict 140425408454096 ['backbone.res2.res2b.branch2b.conv.weight']
-state_dict 140425408454192 ['backbone.res2.res2b.branch2b.norm.weight', 'backbone.res2.res2b.branch2b.norm.bias', 'backbone.res2.res2b.branch2b.norm._mean', 'backbone.res2.res2b.branch2b.norm._variance']
-state_dict 140425408495792 []
-state_dict 140425408495888 ['backbone.res2.res2b.branch2c.conv.weight']
-state_dict 140425408495984 ['backbone.res2.res2b.branch2c.norm.weight', 'backbone.res2.res2b.branch2c.norm.bias', 'backbone.res2.res2b.branch2c.norm._mean', 'backbone.res2.res2b.branch2c.norm._variance']
-state_dict 140425408496560 []
-state_dict 140425408496656 []
-state_dict 140425408496752 ['backbone.res2.res2c.branch2a.conv.weight']
-state_dict 140425408496848 ['backbone.res2.res2c.branch2a.norm.weight', 'backbone.res2.res2c.branch2a.norm.bias', 'backbone.res2.res2c.branch2a.norm._mean', 'backbone.res2.res2c.branch2a.norm._variance']
-state_dict 140425408497424 []
-state_dict 140425408497520 ['backbone.res2.res2c.branch2b.conv.weight']
-state_dict 140425408497616 ['backbone.res2.res2c.branch2b.norm.weight', 'backbone.res2.res2c.branch2b.norm.bias', 'backbone.res2.res2c.branch2b.norm._mean', 'backbone.res2.res2c.branch2b.norm._variance']
-state_dict 140425408498192 []
-state_dict 140425408498288 ['backbone.res2.res2c.branch2c.conv.weight']
-state_dict 140425408498384 ['backbone.res2.res2c.branch2c.norm.weight', 'backbone.res2.res2c.branch2c.norm.bias', 'backbone.res2.res2c.branch2c.norm._mean', 'backbone.res2.res2c.branch2c.norm._variance']
-state_dict 140425408498960 []
-state_dict 140425408499056 []
-state_dict 140425408499152 []
-state_dict 140425408499248 ['backbone.res3.res3a.short.conv.weight']
-state_dict 140425408499344 ['backbone.res3.res3a.short.norm.weight', 'backbone.res3.res3a.short.norm.bias', 'backbone.res3.res3a.short.norm._mean', 'backbone.res3.res3a.short.norm._variance']
-state_dict 140425408549136 []
-state_dict 140425408549232 ['backbone.res3.res3a.branch2a.conv.weight']
-state_dict 140425408549328 ['backbone.res3.res3a.branch2a.norm.weight', 'backbone.res3.res3a.branch2a.norm.bias', 'backbone.res3.res3a.branch2a.norm._mean', 'backbone.res3.res3a.branch2a.norm._variance']
-state_dict 140425408549904 []
-state_dict 140425408550000 ['backbone.res3.res3a.branch2b.conv.weight']
-state_dict 140425408550096 ['backbone.res3.res3a.branch2b.norm.weight', 'backbone.res3.res3a.branch2b.norm.bias', 'backbone.res3.res3a.branch2b.norm._mean', 'backbone.res3.res3a.branch2b.norm._variance']
-state_dict 140425408550672 []
-state_dict 140425408550768 ['backbone.res3.res3a.branch2c.conv.weight']
-state_dict 140425408550864 ['backbone.res3.res3a.branch2c.norm.weight', 'backbone.res3.res3a.branch2c.norm.bias', 'backbone.res3.res3a.branch2c.norm._mean', 'backbone.res3.res3a.branch2c.norm._variance']
-state_dict 140425408551440 []
-state_dict 140425408551536 []
-state_dict 140425408551632 ['backbone.res3.res3b.branch2a.conv.weight']
-state_dict 140425408551728 ['backbone.res3.res3b.branch2a.norm.weight', 'backbone.res3.res3b.branch2a.norm.bias', 'backbone.res3.res3b.branch2a.norm._mean', 'backbone.res3.res3b.branch2a.norm._variance']
-state_dict 140425408552304 []
-state_dict 140425408552400 ['backbone.res3.res3b.branch2b.conv.weight']
-state_dict 140425408552496 ['backbone.res3.res3b.branch2b.norm.weight', 'backbone.res3.res3b.branch2b.norm.bias', 'backbone.res3.res3b.branch2b.norm._mean', 'backbone.res3.res3b.branch2b.norm._variance']
-state_dict 140425408606384 []
-state_dict 140425408606480 ['backbone.res3.res3b.branch2c.conv.weight']
-state_dict 140425408606576 ['backbone.res3.res3b.branch2c.norm.weight', 'backbone.res3.res3b.branch2c.norm.bias', 'backbone.res3.res3b.branch2c.norm._mean', 'backbone.res3.res3b.branch2c.norm._variance']
-state_dict 140425408607152 []
-state_dict 140425408607248 []
-state_dict 140425408607344 ['backbone.res3.res3c.branch2a.conv.weight']
-state_dict 140425408607440 ['backbone.res3.res3c.branch2a.norm.weight', 'backbone.res3.res3c.branch2a.norm.bias', 'backbone.res3.res3c.branch2a.norm._mean', 'backbone.res3.res3c.branch2a.norm._variance']
-state_dict 140425408608016 []
-state_dict 140425408608112 ['backbone.res3.res3c.branch2b.conv.weight']
-state_dict 140425408608208 ['backbone.res3.res3c.branch2b.norm.weight', 'backbone.res3.res3c.branch2b.norm.bias', 'backbone.res3.res3c.branch2b.norm._mean', 'backbone.res3.res3c.branch2b.norm._variance']
-state_dict 140425408608784 []
-state_dict 140425408608880 ['backbone.res3.res3c.branch2c.conv.weight']
-state_dict 140425408608976 ['backbone.res3.res3c.branch2c.norm.weight', 'backbone.res3.res3c.branch2c.norm.bias', 'backbone.res3.res3c.branch2c.norm._mean', 'backbone.res3.res3c.branch2c.norm._variance']
-state_dict 140425408609552 []
-state_dict 140425408609648 []
-state_dict 140425408609744 ['backbone.res3.res3d.branch2a.conv.weight']
-state_dict 140425408609840 ['backbone.res3.res3d.branch2a.norm.weight', 'backbone.res3.res3d.branch2a.norm.bias', 'backbone.res3.res3d.branch2a.norm._mean', 'backbone.res3.res3d.branch2a.norm._variance']
-state_dict 140425408676016 []
-state_dict 140425408676112 ['backbone.res3.res3d.branch2b.conv.weight']
-state_dict 140425408676208 ['backbone.res3.res3d.branch2b.norm.weight', 'backbone.res3.res3d.branch2b.norm.bias', 'backbone.res3.res3d.branch2b.norm._mean', 'backbone.res3.res3d.branch2b.norm._variance']
-state_dict 140425408676784 []
-state_dict 140425408676880 ['backbone.res3.res3d.branch2c.conv.weight']
-state_dict 140425408676976 ['backbone.res3.res3d.branch2c.norm.weight', 'backbone.res3.res3d.branch2c.norm.bias', 'backbone.res3.res3d.branch2c.norm._mean', 'backbone.res3.res3d.branch2c.norm._variance']
-state_dict 140425408677552 []
-state_dict 140425408677648 []
-state_dict 140425408677744 []
-state_dict 140425408677840 ['backbone.res4.res4a.short.conv.weight']
-state_dict 140425408677936 ['backbone.res4.res4a.short.norm.weight', 'backbone.res4.res4a.short.norm.bias', 'backbone.res4.res4a.short.norm._mean', 'backbone.res4.res4a.short.norm._variance']
-state_dict 140425408678512 []
-state_dict 140425408678608 ['backbone.res4.res4a.branch2a.conv.weight']
-state_dict 140425408678704 ['backbone.res4.res4a.branch2a.norm.weight', 'backbone.res4.res4a.branch2a.norm.bias', 'backbone.res4.res4a.branch2a.norm._mean', 'backbone.res4.res4a.branch2a.norm._variance']
-state_dict 140425408679280 []
-state_dict 140425408679376 ['backbone.res4.res4a.branch2b.conv.weight']
-state_dict 140425408679472 ['backbone.res4.res4a.branch2b.norm.weight', 'backbone.res4.res4a.branch2b.norm.bias', 'backbone.res4.res4a.branch2b.norm._mean', 'backbone.res4.res4a.branch2b.norm._variance']
-state_dict 140425408745648 []
-state_dict 140425408745744 ['backbone.res4.res4a.branch2c.conv.weight']
-state_dict 140425408745840 ['backbone.res4.res4a.branch2c.norm.weight', 'backbone.res4.res4a.branch2c.norm.bias', 'backbone.res4.res4a.branch2c.norm._mean', 'backbone.res4.res4a.branch2c.norm._variance']
-state_dict 140425408746416 []
-state_dict 140425408746512 []
-state_dict 140425408746608 ['backbone.res4.res4b.branch2a.conv.weight']
-state_dict 140425408746704 ['backbone.res4.res4b.branch2a.norm.weight', 'backbone.res4.res4b.branch2a.norm.bias', 'backbone.res4.res4b.branch2a.norm._mean', 'backbone.res4.res4b.branch2a.norm._variance']
-state_dict 140425408747280 []
-state_dict 140425408747376 ['backbone.res4.res4b.branch2b.conv.weight']
-state_dict 140425408747472 ['backbone.res4.res4b.branch2b.norm.weight', 'backbone.res4.res4b.branch2b.norm.bias', 'backbone.res4.res4b.branch2b.norm._mean', 'backbone.res4.res4b.branch2b.norm._variance']
-state_dict 140425408748048 []
-state_dict 140425408748144 ['backbone.res4.res4b.branch2c.conv.weight']
-state_dict 140425408748240 ['backbone.res4.res4b.branch2c.norm.weight', 'backbone.res4.res4b.branch2c.norm.bias', 'backbone.res4.res4b.branch2c.norm._mean', 'backbone.res4.res4b.branch2c.norm._variance']
-state_dict 140425408748816 []
-state_dict 140425408748912 []
-state_dict 140425408749008 ['backbone.res4.res4c.branch2a.conv.weight']
-state_dict 140425408749104 ['backbone.res4.res4c.branch2a.norm.weight', 'backbone.res4.res4c.branch2a.norm.bias', 'backbone.res4.res4c.branch2a.norm._mean', 'backbone.res4.res4c.branch2a.norm._variance']
-state_dict 140425408827568 []
-state_dict 140425408827664 ['backbone.res4.res4c.branch2b.conv.weight']
-state_dict 140425408827760 ['backbone.res4.res4c.branch2b.norm.weight', 'backbone.res4.res4c.branch2b.norm.bias', 'backbone.res4.res4c.branch2b.norm._mean', 'backbone.res4.res4c.branch2b.norm._variance']
-state_dict 140425408828336 []
-state_dict 140425408828432 ['backbone.res4.res4c.branch2c.conv.weight']
-state_dict 140425408828528 ['backbone.res4.res4c.branch2c.norm.weight', 'backbone.res4.res4c.branch2c.norm.bias', 'backbone.res4.res4c.branch2c.norm._mean', 'backbone.res4.res4c.branch2c.norm._variance']
-state_dict 140425408829104 []
-state_dict 140425408829200 []
-state_dict 140425408829296 ['backbone.res4.res4d.branch2a.conv.weight']
-state_dict 140425408829392 ['backbone.res4.res4d.branch2a.norm.weight', 'backbone.res4.res4d.branch2a.norm.bias', 'backbone.res4.res4d.branch2a.norm._mean', 'backbone.res4.res4d.branch2a.norm._variance']
-state_dict 140425408829968 []
-state_dict 140425408830064 ['backbone.res4.res4d.branch2b.conv.weight']
-state_dict 140425408830160 ['backbone.res4.res4d.branch2b.norm.weight', 'backbone.res4.res4d.branch2b.norm.bias', 'backbone.res4.res4d.branch2b.norm._mean', 'backbone.res4.res4d.branch2b.norm._variance']
-state_dict 140425408830736 []
-state_dict 140425408830832 ['backbone.res4.res4d.branch2c.conv.weight']
-state_dict 140425408830928 ['backbone.res4.res4d.branch2c.norm.weight', 'backbone.res4.res4d.branch2c.norm.bias', 'backbone.res4.res4d.branch2c.norm._mean', 'backbone.res4.res4d.branch2c.norm._variance']
-state_dict 140425408901200 []
-state_dict 140425408901296 []
-state_dict 140425408901392 ['backbone.res4.res4e.branch2a.conv.weight']
-state_dict 140425408901488 ['backbone.res4.res4e.branch2a.norm.weight', 'backbone.res4.res4e.branch2a.norm.bias', 'backbone.res4.res4e.branch2a.norm._mean', 'backbone.res4.res4e.branch2a.norm._variance']
-state_dict 140425408902064 []
-state_dict 140425408902160 ['backbone.res4.res4e.branch2b.conv.weight']
-state_dict 140425408902256 ['backbone.res4.res4e.branch2b.norm.weight', 'backbone.res4.res4e.branch2b.norm.bias', 'backbone.res4.res4e.branch2b.norm._mean', 'backbone.res4.res4e.branch2b.norm._variance']
-state_dict 140425408902832 []
-state_dict 140425408902928 ['backbone.res4.res4e.branch2c.conv.weight']
-state_dict 140425408903024 ['backbone.res4.res4e.branch2c.norm.weight', 'backbone.res4.res4e.branch2c.norm.bias', 'backbone.res4.res4e.branch2c.norm._mean', 'backbone.res4.res4e.branch2c.norm._variance']
-state_dict 140425408903600 []
-state_dict 140425408903696 []
-state_dict 140425408903792 ['backbone.res4.res4f.branch2a.conv.weight']
-state_dict 140425408903888 ['backbone.res4.res4f.branch2a.norm.weight', 'backbone.res4.res4f.branch2a.norm.bias', 'backbone.res4.res4f.branch2a.norm._mean', 'backbone.res4.res4f.branch2a.norm._variance']
-state_dict 140425408904464 []
-state_dict 140425408904560 ['backbone.res4.res4f.branch2b.conv.weight']
-state_dict 140425408904656 ['backbone.res4.res4f.branch2b.norm.weight', 'backbone.res4.res4f.branch2b.norm.bias', 'backbone.res4.res4f.branch2b.norm._mean', 'backbone.res4.res4f.branch2b.norm._variance']
-state_dict 140425408987216 []
-state_dict 140425408987312 ['backbone.res4.res4f.branch2c.conv.weight']
-state_dict 140425408987408 ['backbone.res4.res4f.branch2c.norm.weight', 'backbone.res4.res4f.branch2c.norm.bias', 'backbone.res4.res4f.branch2c.norm._mean', 'backbone.res4.res4f.branch2c.norm._variance']
-state_dict 140425408987984 []
-state_dict 140425408988080 []
-state_dict 140425408988176 []
-state_dict 140425408988272 ['backbone.res5.res5a.short.conv.weight']
-state_dict 140425408988368 ['backbone.res5.res5a.short.norm.weight', 'backbone.res5.res5a.short.norm.bias', 'backbone.res5.res5a.short.norm._mean', 'backbone.res5.res5a.short.norm._variance']
-state_dict 140425408988944 []
-state_dict 140425408989040 ['backbone.res5.res5a.branch2a.conv.weight']
-state_dict 140425408989136 ['backbone.res5.res5a.branch2a.norm.weight', 'backbone.res5.res5a.branch2a.norm.bias', 'backbone.res5.res5a.branch2a.norm._mean', 'backbone.res5.res5a.branch2a.norm._variance']
-state_dict 140425408989712 []
-state_dict 140425408989808 ['backbone.res5.res5a.branch2b.conv.weight']
-state_dict 140425408989904 ['backbone.res5.res5a.branch2b.norm.weight', 'backbone.res5.res5a.branch2b.norm.bias', 'backbone.res5.res5a.branch2b.norm._mean', 'backbone.res5.res5a.branch2b.norm._variance']
-state_dict 140425408990480 []
-state_dict 140425408990576 ['backbone.res5.res5a.branch2c.conv.weight']
-state_dict 140425408990672 ['backbone.res5.res5a.branch2c.norm.weight', 'backbone.res5.res5a.branch2c.norm.bias', 'backbone.res5.res5a.branch2c.norm._mean', 'backbone.res5.res5a.branch2c.norm._variance']
-state_dict 140425409077328 []
-state_dict 140425409077424 []
-state_dict 140425409077520 ['backbone.res5.res5b.branch2a.conv.weight']
-state_dict 140425409077616 ['backbone.res5.res5b.branch2a.norm.weight', 'backbone.res5.res5b.branch2a.norm.bias', 'backbone.res5.res5b.branch2a.norm._mean', 'backbone.res5.res5b.branch2a.norm._variance']
-state_dict 140425409078192 []
-state_dict 140425409078288 ['backbone.res5.res5b.branch2b.conv.weight']
-state_dict 140425409078384 ['backbone.res5.res5b.branch2b.norm.weight', 'backbone.res5.res5b.branch2b.norm.bias', 'backbone.res5.res5b.branch2b.norm._mean', 'backbone.res5.res5b.branch2b.norm._variance']
-state_dict 140425409078960 []
-state_dict 140425409079056 ['backbone.res5.res5b.branch2c.conv.weight']
-state_dict 140425409079152 ['backbone.res5.res5b.branch2c.norm.weight', 'backbone.res5.res5b.branch2c.norm.bias', 'backbone.res5.res5b.branch2c.norm._mean', 'backbone.res5.res5b.branch2c.norm._variance']
-state_dict 140425409079728 []
-state_dict 140425409079824 []
-state_dict 140425409079920 ['backbone.res5.res5c.branch2a.conv.weight']
-state_dict 140425409080016 ['backbone.res5.res5c.branch2a.norm.weight', 'backbone.res5.res5c.branch2a.norm.bias', 'backbone.res5.res5c.branch2a.norm._mean', 'backbone.res5.res5c.branch2a.norm._variance']
-state_dict 140425409080592 []
-state_dict 140425409080688 ['backbone.res5.res5c.branch2b.conv.weight']
-state_dict 140425409080784 ['backbone.res5.res5c.branch2b.norm.weight', 'backbone.res5.res5c.branch2b.norm.bias', 'backbone.res5.res5c.branch2b.norm._mean', 'backbone.res5.res5c.branch2b.norm._variance']
-state_dict 140425409155152 []
-state_dict 140425409155248 ['backbone.res5.res5c.branch2c.conv.weight']
-state_dict 140425409155344 ['backbone.res5.res5c.branch2c.norm.weight', 'backbone.res5.res5c.branch2c.norm.bias', 'backbone.res5.res5c.branch2c.norm._mean', 'backbone.res5.res5c.branch2c.norm._variance']
-state_dict 140425409155920 []
-state_dict 140425409156112 ['neck.fpn_inner_res3_sum_lateral.weight', 'neck.fpn_inner_res3_sum_lateral.bias']
-state_dict 140425409156208 ['neck.fpn_res3_sum.weight', 'neck.fpn_res3_sum.bias']
-state_dict 140425409156496 ['neck.fpn_inner_res4_sum_lateral.weight', 'neck.fpn_inner_res4_sum_lateral.bias']
-state_dict 140425409156784 ['neck.fpn_res4_sum.weight', 'neck.fpn_res4_sum.bias']
-state_dict 140425409157072 ['neck.fpn_inner_res5_sum.weight', 'neck.fpn_inner_res5_sum.bias']
-state_dict 140425409157360 ['neck.fpn_res5_sum.weight', 'neck.fpn_res5_sum.bias']
-state_dict 140425409158128 ['neck.fpn_res0_sum_extra.weight', 'neck.fpn_res0_sum_extra.bias']
-state_dict 140425409158224 ['neck.fpn_res1_sum_extra.weight', 'neck.fpn_res1_sum_extra.bias']
-state_dict 140425409158512 []
-state_dict 140425409158896 []
-state_dict 140425409159088 ['s2anet_head.fam_cls_convs.fam_cls_conv_0.weight', 's2anet_head.fam_cls_convs.fam_cls_conv_0.bias']
-state_dict 140425409228976 []
-state_dict 140425409229648 ['s2anet_head.fam_cls_convs.fam_cls_conv_1.weight', 's2anet_head.fam_cls_convs.fam_cls_conv_1.bias']
-state_dict 140425409229744 []
-state_dict 140425409158992 []
-state_dict 140425409229264 ['s2anet_head.fam_reg_convs.fam_reg_conv_0.weight', 's2anet_head.fam_reg_convs.fam_reg_conv_0.bias']
-state_dict 140425409229360 []
-state_dict 140425409230032 ['s2anet_head.fam_reg_convs.fam_reg_conv_1.weight', 's2anet_head.fam_reg_convs.fam_reg_conv_1.bias']
-state_dict 140425409230128 []
-state_dict 140425409230416 ['s2anet_head.fam_reg.weight', 's2anet_head.fam_reg.bias']
-state_dict 140425409230704 ['s2anet_head.fam_cls.weight', 's2anet_head.fam_cls.bias']
-state_dict 140425409230992 ['s2anet_head.or_conv.weight', 's2anet_head.or_conv.bias']
-state_dict 140425409231376 []
-state_dict 140425409231568 ['s2anet_head.align_conv.align_conv.weight']
-state_dict 140425409231760 []
-state_dict 140425409232048 ['s2anet_head.odm_cls_convs.odm_cls_conv_0.weight', 's2anet_head.odm_cls_convs.odm_cls_conv_0.bias']
-state_dict 140425409232144 []
-state_dict 140425409232816 ['s2anet_head.odm_cls_convs.odm_cls_conv_1.weight', 's2anet_head.odm_cls_convs.odm_cls_conv_1.bias']
-state_dict 140425409310800 []
-state_dict 140425409231952 []
-state_dict 140425409232432 ['s2anet_head.odm_reg_convs.odm_reg_conv_0.weight', 's2anet_head.odm_reg_convs.odm_reg_conv_0.bias']
-state_dict 140425409232528 []
-state_dict 140425409311088 ['s2anet_head.odm_reg_convs.odm_reg_conv_1.weight', 's2anet_head.odm_reg_convs.odm_reg_conv_1.bias']
-state_dict 140425409311184 []
-state_dict 140425409311472 ['s2anet_head.odm_cls.weight', 's2anet_head.odm_cls.bias']
-state_dict 140425409311760 ['s2anet_head.odm_reg.weight', 's2anet_head.odm_reg.bias']
+model <ppdet.modeling.architecture.s2anet.S2ANet object at 0x7f8f1a136e30>
+state_dict 140252594531888 []
+state_dict 140252593434896 []
+state_dict 140252518640144 []
+state_dict 140252593315664 []
+state_dict 140252593626384 ['backbone.conv1.conv1.conv.weight']
+state_dict 140252593626768 ['backbone.conv1.conv1.norm.weight', 'backbone.conv1.conv1.norm.bias', 'backbone.conv1.conv1.norm._mean', 'backbone.conv1.conv1.norm._variance']
+state_dict 140252593684752 []
+state_dict 140252593684944 []
+state_dict 140252593685136 []
+state_dict 140252593685328 []
+state_dict 140252593685424 ['backbone.res2.res2a.short.conv.weight']
+state_dict 140252593685520 ['backbone.res2.res2a.short.norm.weight', 'backbone.res2.res2a.short.norm.bias', 'backbone.res2.res2a.short.norm._mean', 'backbone.res2.res2a.short.norm._variance']
+state_dict 140252593686096 []
+state_dict 140252593686192 ['backbone.res2.res2a.branch2a.conv.weight']
+state_dict 140252593686288 ['backbone.res2.res2a.branch2a.norm.weight', 'backbone.res2.res2a.branch2a.norm.bias', 'backbone.res2.res2a.branch2a.norm._mean', 'backbone.res2.res2a.branch2a.norm._variance']
+state_dict 140252593686864 []
+state_dict 140252593686960 ['backbone.res2.res2a.branch2b.conv.weight']
+state_dict 140252593687056 ['backbone.res2.res2a.branch2b.norm.weight', 'backbone.res2.res2a.branch2b.norm.bias', 'backbone.res2.res2a.branch2b.norm._mean', 'backbone.res2.res2a.branch2b.norm._variance']
+state_dict 140252593687632 []
+state_dict 140252593687728 ['backbone.res2.res2a.branch2c.conv.weight']
+state_dict 140252593687824 ['backbone.res2.res2a.branch2c.norm.weight', 'backbone.res2.res2a.branch2c.norm.bias', 'backbone.res2.res2a.branch2c.norm._mean', 'backbone.res2.res2a.branch2c.norm._variance']
+state_dict 140252593688400 []
+state_dict 140252593688496 []
+state_dict 140252593737808 ['backbone.res2.res2b.branch2a.conv.weight']
+state_dict 140252593737904 ['backbone.res2.res2b.branch2a.norm.weight', 'backbone.res2.res2b.branch2a.norm.bias', 'backbone.res2.res2b.branch2a.norm._mean', 'backbone.res2.res2b.branch2a.norm._variance']
+state_dict 140252593738480 []
+state_dict 140252593738576 ['backbone.res2.res2b.branch2b.conv.weight']
+state_dict 140252593738672 ['backbone.res2.res2b.branch2b.norm.weight', 'backbone.res2.res2b.branch2b.norm.bias', 'backbone.res2.res2b.branch2b.norm._mean', 'backbone.res2.res2b.branch2b.norm._variance']
+state_dict 140252593739248 []
+state_dict 140252593739344 ['backbone.res2.res2b.branch2c.conv.weight']
+state_dict 140252593739440 ['backbone.res2.res2b.branch2c.norm.weight', 'backbone.res2.res2b.branch2c.norm.bias', 'backbone.res2.res2b.branch2c.norm._mean', 'backbone.res2.res2b.branch2c.norm._variance']
+state_dict 140252593740016 []
+state_dict 140252593740112 []
+state_dict 140252593740208 ['backbone.res2.res2c.branch2a.conv.weight']
+state_dict 140252593740304 ['backbone.res2.res2c.branch2a.norm.weight', 'backbone.res2.res2c.branch2a.norm.bias', 'backbone.res2.res2c.branch2a.norm._mean', 'backbone.res2.res2c.branch2a.norm._variance']
+state_dict 140252593740880 []
+state_dict 140252593740976 ['backbone.res2.res2c.branch2b.conv.weight']
+state_dict 140252593741072 ['backbone.res2.res2c.branch2b.norm.weight', 'backbone.res2.res2c.branch2b.norm.bias', 'backbone.res2.res2c.branch2b.norm._mean', 'backbone.res2.res2c.branch2b.norm._variance']
+state_dict 140252593741648 []
+state_dict 140252593741744 ['backbone.res2.res2c.branch2c.conv.weight']
+state_dict 140252593786960 ['backbone.res2.res2c.branch2c.norm.weight', 'backbone.res2.res2c.branch2c.norm.bias', 'backbone.res2.res2c.branch2c.norm._mean', 'backbone.res2.res2c.branch2c.norm._variance']
+state_dict 140252593787536 []
+state_dict 140252593787632 []
+state_dict 140252593787728 []
+state_dict 140252593787824 ['backbone.res3.res3a.short.conv.weight']
+state_dict 140252593787920 ['backbone.res3.res3a.short.norm.weight', 'backbone.res3.res3a.short.norm.bias', 'backbone.res3.res3a.short.norm._mean', 'backbone.res3.res3a.short.norm._variance']
+state_dict 140252593788496 []
+state_dict 140252593788592 ['backbone.res3.res3a.branch2a.conv.weight']
+state_dict 140252593788688 ['backbone.res3.res3a.branch2a.norm.weight', 'backbone.res3.res3a.branch2a.norm.bias', 'backbone.res3.res3a.branch2a.norm._mean', 'backbone.res3.res3a.branch2a.norm._variance']
+state_dict 140252593789264 []
+state_dict 140252593789360 ['backbone.res3.res3a.branch2b.conv.weight']
+state_dict 140252593789456 ['backbone.res3.res3a.branch2b.norm.weight', 'backbone.res3.res3a.branch2b.norm.bias', 'backbone.res3.res3a.branch2b.norm._mean', 'backbone.res3.res3a.branch2b.norm._variance']
+state_dict 140252593790032 []
+state_dict 140252593790128 ['backbone.res3.res3a.branch2c.conv.weight']
+state_dict 140252593790224 ['backbone.res3.res3a.branch2c.norm.weight', 'backbone.res3.res3a.branch2c.norm.bias', 'backbone.res3.res3a.branch2c.norm._mean', 'backbone.res3.res3a.branch2c.norm._variance']
+state_dict 140252593790800 []
+state_dict 140252593790896 []
+state_dict 140252593840208 ['backbone.res3.res3b.branch2a.conv.weight']
+state_dict 140252593840304 ['backbone.res3.res3b.branch2a.norm.weight', 'backbone.res3.res3b.branch2a.norm.bias', 'backbone.res3.res3b.branch2a.norm._mean', 'backbone.res3.res3b.branch2a.norm._variance']
+state_dict 140252593840880 []
+state_dict 140252593840976 ['backbone.res3.res3b.branch2b.conv.weight']
+state_dict 140252593841072 ['backbone.res3.res3b.branch2b.norm.weight', 'backbone.res3.res3b.branch2b.norm.bias', 'backbone.res3.res3b.branch2b.norm._mean', 'backbone.res3.res3b.branch2b.norm._variance']
+state_dict 140252593841648 []
+state_dict 140252593841744 ['backbone.res3.res3b.branch2c.conv.weight']
+state_dict 140252593841840 ['backbone.res3.res3b.branch2c.norm.weight', 'backbone.res3.res3b.branch2c.norm.bias', 'backbone.res3.res3b.branch2c.norm._mean', 'backbone.res3.res3b.branch2c.norm._variance']
+state_dict 140252593842416 []
+state_dict 140252593842512 []
+state_dict 140252593842608 ['backbone.res3.res3c.branch2a.conv.weight']
+state_dict 140252593842704 ['backbone.res3.res3c.branch2a.norm.weight', 'backbone.res3.res3c.branch2a.norm.bias', 'backbone.res3.res3c.branch2a.norm._mean', 'backbone.res3.res3c.branch2a.norm._variance']
+state_dict 140252593843280 []
+state_dict 140252593843376 ['backbone.res3.res3c.branch2b.conv.weight']
+state_dict 140252593843472 ['backbone.res3.res3c.branch2b.norm.weight', 'backbone.res3.res3c.branch2b.norm.bias', 'backbone.res3.res3c.branch2b.norm._mean', 'backbone.res3.res3c.branch2b.norm._variance']
+state_dict 140252593844048 []
+state_dict 140252593844144 ['backbone.res3.res3c.branch2c.conv.weight']
+state_dict 140252593905744 ['backbone.res3.res3c.branch2c.norm.weight', 'backbone.res3.res3c.branch2c.norm.bias', 'backbone.res3.res3c.branch2c.norm._mean', 'backbone.res3.res3c.branch2c.norm._variance']
+state_dict 140252593906320 []
+state_dict 140252593906416 []
+state_dict 140252593906512 ['backbone.res3.res3d.branch2a.conv.weight']
+state_dict 140252593906608 ['backbone.res3.res3d.branch2a.norm.weight', 'backbone.res3.res3d.branch2a.norm.bias', 'backbone.res3.res3d.branch2a.norm._mean', 'backbone.res3.res3d.branch2a.norm._variance']
+state_dict 140252593907184 []
+state_dict 140252593907280 ['backbone.res3.res3d.branch2b.conv.weight']
+state_dict 140252593907376 ['backbone.res3.res3d.branch2b.norm.weight', 'backbone.res3.res3d.branch2b.norm.bias', 'backbone.res3.res3d.branch2b.norm._mean', 'backbone.res3.res3d.branch2b.norm._variance']
+state_dict 140252593907952 []
+state_dict 140252593908048 ['backbone.res3.res3d.branch2c.conv.weight']
+state_dict 140252593908144 ['backbone.res3.res3d.branch2c.norm.weight', 'backbone.res3.res3d.branch2c.norm.bias', 'backbone.res3.res3d.branch2c.norm._mean', 'backbone.res3.res3d.branch2c.norm._variance']
+state_dict 140252593908720 []
+state_dict 140252593908816 []
+state_dict 140252593908912 []
+state_dict 140252593909008 ['backbone.res4.res4a.short.conv.weight']
+state_dict 140252593909104 ['backbone.res4.res4a.short.norm.weight', 'backbone.res4.res4a.short.norm.bias', 'backbone.res4.res4a.short.norm._mean', 'backbone.res4.res4a.short.norm._variance']
+state_dict 140252593909680 []
+state_dict 140252593971280 ['backbone.res4.res4a.branch2a.conv.weight']
+state_dict 140252593971376 ['backbone.res4.res4a.branch2a.norm.weight', 'backbone.res4.res4a.branch2a.norm.bias', 'backbone.res4.res4a.branch2a.norm._mean', 'backbone.res4.res4a.branch2a.norm._variance']
+state_dict 140252593971952 []
+state_dict 140252593972048 ['backbone.res4.res4a.branch2b.conv.weight']
+state_dict 140252593972144 ['backbone.res4.res4a.branch2b.norm.weight', 'backbone.res4.res4a.branch2b.norm.bias', 'backbone.res4.res4a.branch2b.norm._mean', 'backbone.res4.res4a.branch2b.norm._variance']
+state_dict 140252593972720 []
+state_dict 140252593972816 ['backbone.res4.res4a.branch2c.conv.weight']
+state_dict 140252593972912 ['backbone.res4.res4a.branch2c.norm.weight', 'backbone.res4.res4a.branch2c.norm.bias', 'backbone.res4.res4a.branch2c.norm._mean', 'backbone.res4.res4a.branch2c.norm._variance']
+state_dict 140252593973488 []
+state_dict 140252593973584 []
+state_dict 140252593973680 ['backbone.res4.res4b.branch2a.conv.weight']
+state_dict 140252593973776 ['backbone.res4.res4b.branch2a.norm.weight', 'backbone.res4.res4b.branch2a.norm.bias', 'backbone.res4.res4b.branch2a.norm._mean', 'backbone.res4.res4b.branch2a.norm._variance']
+state_dict 140252593974352 []
+state_dict 140252593974448 ['backbone.res4.res4b.branch2b.conv.weight']
+state_dict 140252593974544 ['backbone.res4.res4b.branch2b.norm.weight', 'backbone.res4.res4b.branch2b.norm.bias', 'backbone.res4.res4b.branch2b.norm._mean', 'backbone.res4.res4b.branch2b.norm._variance']
+state_dict 140252593975120 []
+state_dict 140252593975216 ['backbone.res4.res4b.branch2c.conv.weight']
+state_dict 140252594040912 ['backbone.res4.res4b.branch2c.norm.weight', 'backbone.res4.res4b.branch2c.norm.bias', 'backbone.res4.res4b.branch2c.norm._mean', 'backbone.res4.res4b.branch2c.norm._variance']
+state_dict 140252594041488 []
+state_dict 140252594041584 []
+state_dict 140252594041680 ['backbone.res4.res4c.branch2a.conv.weight']
+state_dict 140252594041776 ['backbone.res4.res4c.branch2a.norm.weight', 'backbone.res4.res4c.branch2a.norm.bias', 'backbone.res4.res4c.branch2a.norm._mean', 'backbone.res4.res4c.branch2a.norm._variance']
+state_dict 140252594042352 []
+state_dict 140252594042448 ['backbone.res4.res4c.branch2b.conv.weight']
+state_dict 140252594042544 ['backbone.res4.res4c.branch2b.norm.weight', 'backbone.res4.res4c.branch2b.norm.bias', 'backbone.res4.res4c.branch2b.norm._mean', 'backbone.res4.res4c.branch2b.norm._variance']
+state_dict 140252594043120 []
+state_dict 140252594043216 ['backbone.res4.res4c.branch2c.conv.weight']
+state_dict 140252594043312 ['backbone.res4.res4c.branch2c.norm.weight', 'backbone.res4.res4c.branch2c.norm.bias', 'backbone.res4.res4c.branch2c.norm._mean', 'backbone.res4.res4c.branch2c.norm._variance']
+state_dict 140252594043888 []
+state_dict 140252594043984 []
+state_dict 140252594044080 ['backbone.res4.res4d.branch2a.conv.weight']
+state_dict 140252594044176 ['backbone.res4.res4d.branch2a.norm.weight', 'backbone.res4.res4d.branch2a.norm.bias', 'backbone.res4.res4d.branch2a.norm._mean', 'backbone.res4.res4d.branch2a.norm._variance']
+state_dict 140252594044752 []
+state_dict 140252594044848 ['backbone.res4.res4d.branch2b.conv.weight']
+state_dict 140252594122928 ['backbone.res4.res4d.branch2b.norm.weight', 'backbone.res4.res4d.branch2b.norm.bias', 'backbone.res4.res4d.branch2b.norm._mean', 'backbone.res4.res4d.branch2b.norm._variance']
+state_dict 140252594123408 []
+state_dict 140252594123504 ['backbone.res4.res4d.branch2c.conv.weight']
+state_dict 140252594123600 ['backbone.res4.res4d.branch2c.norm.weight', 'backbone.res4.res4d.branch2c.norm.bias', 'backbone.res4.res4d.branch2c.norm._mean', 'backbone.res4.res4d.branch2c.norm._variance']
+state_dict 140252594124176 []
+state_dict 140252594124272 []
+state_dict 140252594124368 ['backbone.res4.res4e.branch2a.conv.weight']
+state_dict 140252594124464 ['backbone.res4.res4e.branch2a.norm.weight', 'backbone.res4.res4e.branch2a.norm.bias', 'backbone.res4.res4e.branch2a.norm._mean', 'backbone.res4.res4e.branch2a.norm._variance']
+state_dict 140252594125040 []
+state_dict 140252594125136 ['backbone.res4.res4e.branch2b.conv.weight']
+state_dict 140252594125232 ['backbone.res4.res4e.branch2b.norm.weight', 'backbone.res4.res4e.branch2b.norm.bias', 'backbone.res4.res4e.branch2b.norm._mean', 'backbone.res4.res4e.branch2b.norm._variance']
+state_dict 140252594125808 []
+state_dict 140252594125904 ['backbone.res4.res4e.branch2c.conv.weight']
+state_dict 140252594126000 ['backbone.res4.res4e.branch2c.norm.weight', 'backbone.res4.res4e.branch2c.norm.bias', 'backbone.res4.res4e.branch2c.norm._mean', 'backbone.res4.res4e.branch2c.norm._variance']
+state_dict 140252594126576 []
+state_dict 140252594126672 []
+state_dict 140252594126768 ['backbone.res4.res4f.branch2a.conv.weight']
+state_dict 140252594208848 ['backbone.res4.res4f.branch2a.norm.weight', 'backbone.res4.res4f.branch2a.norm.bias', 'backbone.res4.res4f.branch2a.norm._mean', 'backbone.res4.res4f.branch2a.norm._variance']
+state_dict 140252594209424 []
+state_dict 140252594209520 ['backbone.res4.res4f.branch2b.conv.weight']
+state_dict 140252594209616 ['backbone.res4.res4f.branch2b.norm.weight', 'backbone.res4.res4f.branch2b.norm.bias', 'backbone.res4.res4f.branch2b.norm._mean', 'backbone.res4.res4f.branch2b.norm._variance']
+state_dict 140252594210192 []
+state_dict 140252594210288 ['backbone.res4.res4f.branch2c.conv.weight']
+state_dict 140252594210384 ['backbone.res4.res4f.branch2c.norm.weight', 'backbone.res4.res4f.branch2c.norm.bias', 'backbone.res4.res4f.branch2c.norm._mean', 'backbone.res4.res4f.branch2c.norm._variance']
+state_dict 140252594210960 []
+state_dict 140252594211056 []
+state_dict 140252594211152 []
+state_dict 140252594211248 ['backbone.res5.res5a.short.conv.weight']
+state_dict 140252594211344 ['backbone.res5.res5a.short.norm.weight', 'backbone.res5.res5a.short.norm.bias', 'backbone.res5.res5a.short.norm._mean', 'backbone.res5.res5a.short.norm._variance']
+state_dict 140252594211920 []
+state_dict 140252594212016 ['backbone.res5.res5a.branch2a.conv.weight']
+state_dict 140252594212112 ['backbone.res5.res5a.branch2a.norm.weight', 'backbone.res5.res5a.branch2a.norm.bias', 'backbone.res5.res5a.branch2a.norm._mean', 'backbone.res5.res5a.branch2a.norm._variance']
+state_dict 140252594212688 []
+state_dict 140252594212784 ['backbone.res5.res5a.branch2b.conv.weight']
+state_dict 140252594290768 ['backbone.res5.res5a.branch2b.norm.weight', 'backbone.res5.res5a.branch2b.norm.bias', 'backbone.res5.res5a.branch2b.norm._mean', 'backbone.res5.res5a.branch2b.norm._variance']
+state_dict 140252594291344 []
+state_dict 140252594291440 ['backbone.res5.res5a.branch2c.conv.weight']
+state_dict 140252594291536 ['backbone.res5.res5a.branch2c.norm.weight', 'backbone.res5.res5a.branch2c.norm.bias', 'backbone.res5.res5a.branch2c.norm._mean', 'backbone.res5.res5a.branch2c.norm._variance']
+state_dict 140252594292112 []
+state_dict 140252594292208 []
+state_dict 140252594292304 ['backbone.res5.res5b.branch2a.conv.weight']
+state_dict 140252594292400 ['backbone.res5.res5b.branch2a.norm.weight', 'backbone.res5.res5b.branch2a.norm.bias', 'backbone.res5.res5b.branch2a.norm._mean', 'backbone.res5.res5b.branch2a.norm._variance']
+state_dict 140252594292976 []
+state_dict 140252594293072 ['backbone.res5.res5b.branch2b.conv.weight']
+state_dict 140252594293168 ['backbone.res5.res5b.branch2b.norm.weight', 'backbone.res5.res5b.branch2b.norm.bias', 'backbone.res5.res5b.branch2b.norm._mean', 'backbone.res5.res5b.branch2b.norm._variance']
+state_dict 140252594293744 []
+state_dict 140252594293840 ['backbone.res5.res5b.branch2c.conv.weight']
+state_dict 140252594293936 ['backbone.res5.res5b.branch2c.norm.weight', 'backbone.res5.res5b.branch2c.norm.bias', 'backbone.res5.res5b.branch2c.norm._mean', 'backbone.res5.res5b.branch2c.norm._variance']
+state_dict 140252594294512 []
+state_dict 140252594294608 []
+state_dict 140252594294704 ['backbone.res5.res5c.branch2a.conv.weight']
+state_dict 140252594376880 ['backbone.res5.res5c.branch2a.norm.weight', 'backbone.res5.res5c.branch2a.norm.bias', 'backbone.res5.res5c.branch2a.norm._mean', 'backbone.res5.res5c.branch2a.norm._variance']
+state_dict 140252594377360 []
+state_dict 140252594377456 ['backbone.res5.res5c.branch2b.conv.weight']
+state_dict 140252594377552 ['backbone.res5.res5c.branch2b.norm.weight', 'backbone.res5.res5c.branch2b.norm.bias', 'backbone.res5.res5c.branch2b.norm._mean', 'backbone.res5.res5c.branch2b.norm._variance']
+state_dict 140252594378128 []
+state_dict 140252594378224 ['backbone.res5.res5c.branch2c.conv.weight']
+state_dict 140252594378320 ['backbone.res5.res5c.branch2c.norm.weight', 'backbone.res5.res5c.branch2c.norm.bias', 'backbone.res5.res5c.branch2c.norm._mean', 'backbone.res5.res5c.branch2c.norm._variance']
+state_dict 140252594378896 []
+state_dict 140252594379088 ['neck.fpn_inner_res3_sum_lateral.weight', 'neck.fpn_inner_res3_sum_lateral.bias']
+state_dict 140252594379184 ['neck.fpn_res3_sum.weight', 'neck.fpn_res3_sum.bias']
+state_dict 140252594379472 ['neck.fpn_inner_res4_sum_lateral.weight', 'neck.fpn_inner_res4_sum_lateral.bias']
+state_dict 140252594379760 ['neck.fpn_res4_sum.weight', 'neck.fpn_res4_sum.bias']
+state_dict 140252594380048 ['neck.fpn_inner_res5_sum.weight', 'neck.fpn_inner_res5_sum.bias']
+state_dict 140252594380336 ['neck.fpn_res5_sum.weight', 'neck.fpn_res5_sum.bias']
+state_dict 140252594446704 ['neck.fpn_res0_sum_extra.weight', 'neck.fpn_res0_sum_extra.bias']
+state_dict 140252594446800 ['neck.fpn_res1_sum_extra.weight', 'neck.fpn_res1_sum_extra.bias']
+state_dict 140252594447088 []
+state_dict 140252594447472 []
+state_dict 140252594447664 ['s2anet_head.fam_cls_convs.fam_cls_conv_0.weight', 's2anet_head.fam_cls_convs.fam_cls_conv_0.bias']
+state_dict 140252594447760 []
+state_dict 140252594448528 ['s2anet_head.fam_cls_convs.fam_cls_conv_1.weight', 's2anet_head.fam_cls_convs.fam_cls_conv_1.bias']
+state_dict 140252594448624 []
+state_dict 140252594447568 []
+state_dict 140252594448144 ['s2anet_head.fam_reg_convs.fam_reg_conv_0.weight', 's2anet_head.fam_reg_convs.fam_reg_conv_0.bias']
+state_dict 140252594448240 []
+state_dict 140252594448912 ['s2anet_head.fam_reg_convs.fam_reg_conv_1.weight', 's2anet_head.fam_reg_convs.fam_reg_conv_1.bias']
+state_dict 140252594449008 []
+state_dict 140252594449296 ['s2anet_head.fam_reg.weight', 's2anet_head.fam_reg.bias']
+state_dict 140252594449584 ['s2anet_head.fam_cls.weight', 's2anet_head.fam_cls.bias']
+state_dict 140252594449872 ['s2anet_head.align_conv.weight', 's2anet_head.align_conv.bias']
+state_dict 140252594450160 ['s2anet_head.or_conv.weight', 's2anet_head.or_conv.bias']
+state_dict 140252594528336 []
+state_dict 140252594529488 []
+state_dict 140252594528528 ['s2anet_head.or_pool.conv.0.weight', 's2anet_head.or_pool.conv.0.bias']
+state_dict 140252594528912 ['s2anet_head.or_pool.conv.1.weight', 's2anet_head.or_pool.conv.1.bias', 's2anet_head.or_pool.conv.1._mean', 's2anet_head.or_pool.conv.1._variance']
+state_dict 140252594529584 []
+state_dict 140252594529776 ['s2anet_head.odm_cls_convs.odm_cls_conv_0.weight', 's2anet_head.odm_cls_convs.odm_cls_conv_0.bias']
+state_dict 140252594529872 []
+state_dict 140252594530544 ['s2anet_head.odm_cls_convs.odm_cls_conv_1.weight', 's2anet_head.odm_cls_convs.odm_cls_conv_1.bias']
+state_dict 140252594530640 []
+state_dict 140252594529680 []
+state_dict 140252594530160 ['s2anet_head.odm_reg_convs.odm_reg_conv_0.weight', 's2anet_head.odm_reg_convs.odm_reg_conv_0.bias']
+state_dict 140252594530256 []
+state_dict 140252594530928 ['s2anet_head.odm_reg_convs.odm_reg_conv_1.weight', 's2anet_head.odm_reg_convs.odm_reg_conv_1.bias']
+state_dict 140252594531024 []
+state_dict 140252594531312 ['s2anet_head.odm_cls.weight', 's2anet_head.odm_cls.bias']
+state_dict 140252594531600 ['s2anet_head.odm_reg.weight', 's2anet_head.odm_reg.bias']
 /Users/liuhui29/Desktop/work/code/work_push/ppdet_2.0_s2anet/PaddleDetection/ppdet/core/workspace.py:146: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3,and in 3.9 it will stop working
   isinstance(merge_dct[k], collections.Mapping)):
 /Users/liuhui29/Desktop/work/code/work_push/ppdet_2.0_s2anet/PaddleDetection/ppdet/data/transform/operator.py:133: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
   "image height.".format(im.shape[0], sample['h']))
-2021-01-02 19:45:12,481-WARNING: The actual image height: 2786 is not equal to the height: 360.0 in annotation, and update sample['h'] by actual image height.
+2021-01-05 18:52:34,917-WARNING: The actual image height: 2786 is not equal to the height: 360.0 in annotation, and update sample['h'] by actual image height.
 /Users/liuhui29/Desktop/work/code/work_push/ppdet_2.0_s2anet/PaddleDetection/ppdet/data/transform/operator.py:141: DeprecationWarning: The 'warn' method is deprecated, use 'warning' instead
   "image width.".format(im.shape[1], sample['w']))
-2021-01-02 19:45:12,481-WARNING: The actual image width: 1613 is not equal to the width: 640.0 in annotation, and update sample['w'] by actual image width.
-2021-01-02 19:45:12,743-WARNING: DataLoader reader thread raised an exception.
+2021-01-05 18:52:34,918-WARNING: The actual image width: 1613 is not equal to the width: 640.0 in annotation, and update sample['w'] by actual image width.
 ------------------------------
 loading annotations into memory...
 Done (t=0.00s)
 creating index...
 index created!
-Traceback (most recent call last):
-  File "dygraph_print.py", line 139, in <module>
-    main()
-  File "dygraph_print.py", line 135, in main
-    run(FLAGS, cfg, place)
-  File "dygraph_print.py", line 71, in run
-    data = next(iter(eval_loader))
-  File "/Users/liuhui29/opt/anaconda3/envs/paddle2/lib/python3.7/site-packages/paddle/fluid/dataloader/dataloader_iter.py", line 356, in __next__
-    return self._reader.read_next_var_list()
-SystemError: (Fatal) Blocking queue is killed because the data reader raises an exception.
-  [Hint: Expected killed_ != true, but received killed_:1 == true:1.] (at /home/teamcity/work/ef54dc8a5b211854/paddle/fluid/operators/reader/blocking_queue.h:154)
-  [Hint: If you need C++ stacktraces for debugging, please set `FLAGS_call_stack_level=2`.]
-
+inputs [1, 3, 1024, 608] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [-1089864.25000000])
+<class 'paddle.VarBase'> [1, 3, 1024, 608] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [-1089864.25000000])
+inputs [1, 3, 1024, 608] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [-1093875.25000000])
+dy_parameter 140252593626384 weight [64, 3, 7, 7]
+dy_parameter 140252593626768 weight [64]
+dy_parameter 140252593626768 bias [64]
+dy_parameter 140252593626768 _mean [64]
+dy_parameter 140252593626768 _variance [64]
+dy_parameter 140252593685424 weight [256, 64, 1, 1]
+dy_parameter 140252593685520 weight [256]
+dy_parameter 140252593685520 bias [256]
+dy_parameter 140252593685520 _mean [256]
+dy_parameter 140252593685520 _variance [256]
+dy_parameter 140252593686192 weight [64, 64, 1, 1]
+dy_parameter 140252593686288 weight [64]
+dy_parameter 140252593686288 bias [64]
+dy_parameter 140252593686288 _mean [64]
+dy_parameter 140252593686288 _variance [64]
+dy_parameter 140252593686960 weight [64, 64, 3, 3]
+dy_parameter 140252593687056 weight [64]
+dy_parameter 140252593687056 bias [64]
+dy_parameter 140252593687056 _mean [64]
+dy_parameter 140252593687056 _variance [64]
+dy_parameter 140252593687728 weight [256, 64, 1, 1]
+dy_parameter 140252593687824 weight [256]
+dy_parameter 140252593687824 bias [256]
+dy_parameter 140252593687824 _mean [256]
+dy_parameter 140252593687824 _variance [256]
+dy_parameter 140252593737808 weight [64, 256, 1, 1]
+dy_parameter 140252593737904 weight [64]
+dy_parameter 140252593737904 bias [64]
+dy_parameter 140252593737904 _mean [64]
+dy_parameter 140252593737904 _variance [64]
+dy_parameter 140252593738576 weight [64, 64, 3, 3]
+dy_parameter 140252593738672 weight [64]
+dy_parameter 140252593738672 bias [64]
+dy_parameter 140252593738672 _mean [64]
+dy_parameter 140252593738672 _variance [64]
+dy_parameter 140252593739344 weight [256, 64, 1, 1]
+dy_parameter 140252593739440 weight [256]
+dy_parameter 140252593739440 bias [256]
+dy_parameter 140252593739440 _mean [256]
+dy_parameter 140252593739440 _variance [256]
+dy_parameter 140252593740208 weight [64, 256, 1, 1]
+dy_parameter 140252593740304 weight [64]
+dy_parameter 140252593740304 bias [64]
+dy_parameter 140252593740304 _mean [64]
+dy_parameter 140252593740304 _variance [64]
+dy_parameter 140252593740976 weight [64, 64, 3, 3]
+dy_parameter 140252593741072 weight [64]
+dy_parameter 140252593741072 bias [64]
+dy_parameter 140252593741072 _mean [64]
+dy_parameter 140252593741072 _variance [64]
+dy_parameter 140252593741744 weight [256, 64, 1, 1]
+dy_parameter 140252593786960 weight [256]
+dy_parameter 140252593786960 bias [256]
+dy_parameter 140252593786960 _mean [256]
+dy_parameter 140252593786960 _variance [256]
+dy_parameter 140252593787824 weight [512, 256, 1, 1]
+dy_parameter 140252593787920 weight [512]
+dy_parameter 140252593787920 bias [512]
+dy_parameter 140252593787920 _mean [512]
+dy_parameter 140252593787920 _variance [512]
+dy_parameter 140252593788592 weight [128, 256, 1, 1]
+dy_parameter 140252593788688 weight [128]
+dy_parameter 140252593788688 bias [128]
+dy_parameter 140252593788688 _mean [128]
+dy_parameter 140252593788688 _variance [128]
+dy_parameter 140252593789360 weight [128, 128, 3, 3]
+dy_parameter 140252593789456 weight [128]
+dy_parameter 140252593789456 bias [128]
+dy_parameter 140252593789456 _mean [128]
+dy_parameter 140252593789456 _variance [128]
+dy_parameter 140252593790128 weight [512, 128, 1, 1]
+dy_parameter 140252593790224 weight [512]
+dy_parameter 140252593790224 bias [512]
+dy_parameter 140252593790224 _mean [512]
+dy_parameter 140252593790224 _variance [512]
+dy_parameter 140252593840208 weight [128, 512, 1, 1]
+dy_parameter 140252593840304 weight [128]
+dy_parameter 140252593840304 bias [128]
+dy_parameter 140252593840304 _mean [128]
+dy_parameter 140252593840304 _variance [128]
+dy_parameter 140252593840976 weight [128, 128, 3, 3]
+dy_parameter 140252593841072 weight [128]
+dy_parameter 140252593841072 bias [128]
+dy_parameter 140252593841072 _mean [128]
+dy_parameter 140252593841072 _variance [128]
+dy_parameter 140252593841744 weight [512, 128, 1, 1]
+dy_parameter 140252593841840 weight [512]
+dy_parameter 140252593841840 bias [512]
+dy_parameter 140252593841840 _mean [512]
+dy_parameter 140252593841840 _variance [512]
+dy_parameter 140252593842608 weight [128, 512, 1, 1]
+dy_parameter 140252593842704 weight [128]
+dy_parameter 140252593842704 bias [128]
+dy_parameter 140252593842704 _mean [128]
+dy_parameter 140252593842704 _variance [128]
+dy_parameter 140252593843376 weight [128, 128, 3, 3]
+dy_parameter 140252593843472 weight [128]
+dy_parameter 140252593843472 bias [128]
+dy_parameter 140252593843472 _mean [128]
+dy_parameter 140252593843472 _variance [128]
+dy_parameter 140252593844144 weight [512, 128, 1, 1]
+dy_parameter 140252593905744 weight [512]
+dy_parameter 140252593905744 bias [512]
+dy_parameter 140252593905744 _mean [512]
+dy_parameter 140252593905744 _variance [512]
+dy_parameter 140252593906512 weight [128, 512, 1, 1]
+dy_parameter 140252593906608 weight [128]
+dy_parameter 140252593906608 bias [128]
+dy_parameter 140252593906608 _mean [128]
+dy_parameter 140252593906608 _variance [128]
+dy_parameter 140252593907280 weight [128, 128, 3, 3]
+dy_parameter 140252593907376 weight [128]
+dy_parameter 140252593907376 bias [128]
+dy_parameter 140252593907376 _mean [128]
+dy_parameter 140252593907376 _variance [128]
+dy_parameter 140252593908048 weight [512, 128, 1, 1]
+dy_parameter 140252593908144 weight [512]
+dy_parameter 140252593908144 bias [512]
+dy_parameter 140252593908144 _mean [512]
+dy_parameter 140252593908144 _variance [512]
+dy_parameter 140252593909008 weight [1024, 512, 1, 1]
+dy_parameter 140252593909104 weight [1024]
+dy_parameter 140252593909104 bias [1024]
+dy_parameter 140252593909104 _mean [1024]
+dy_parameter 140252593909104 _variance [1024]
+dy_parameter 140252593971280 weight [256, 512, 1, 1]
+dy_parameter 140252593971376 weight [256]
+dy_parameter 140252593971376 bias [256]
+dy_parameter 140252593971376 _mean [256]
+dy_parameter 140252593971376 _variance [256]
+dy_parameter 140252593972048 weight [256, 256, 3, 3]
+dy_parameter 140252593972144 weight [256]
+dy_parameter 140252593972144 bias [256]
+dy_parameter 140252593972144 _mean [256]
+dy_parameter 140252593972144 _variance [256]
+dy_parameter 140252593972816 weight [1024, 256, 1, 1]
+dy_parameter 140252593972912 weight [1024]
+dy_parameter 140252593972912 bias [1024]
+dy_parameter 140252593972912 _mean [1024]
+dy_parameter 140252593972912 _variance [1024]
+dy_parameter 140252593973680 weight [256, 1024, 1, 1]
+dy_parameter 140252593973776 weight [256]
+dy_parameter 140252593973776 bias [256]
+dy_parameter 140252593973776 _mean [256]
+dy_parameter 140252593973776 _variance [256]
+dy_parameter 140252593974448 weight [256, 256, 3, 3]
+dy_parameter 140252593974544 weight [256]
+dy_parameter 140252593974544 bias [256]
+dy_parameter 140252593974544 _mean [256]
+dy_parameter 140252593974544 _variance [256]
+dy_parameter 140252593975216 weight [1024, 256, 1, 1]
+dy_parameter 140252594040912 weight [1024]
+dy_parameter 140252594040912 bias [1024]
+dy_parameter 140252594040912 _mean [1024]
+dy_parameter 140252594040912 _variance [1024]
+dy_parameter 140252594041680 weight [256, 1024, 1, 1]
+dy_parameter 140252594041776 weight [256]
+dy_parameter 140252594041776 bias [256]
+dy_parameter 140252594041776 _mean [256]
+dy_parameter 140252594041776 _variance [256]
+dy_parameter 140252594042448 weight [256, 256, 3, 3]
+dy_parameter 140252594042544 weight [256]
+dy_parameter 140252594042544 bias [256]
+dy_parameter 140252594042544 _mean [256]
+dy_parameter 140252594042544 _variance [256]
+dy_parameter 140252594043216 weight [1024, 256, 1, 1]
+dy_parameter 140252594043312 weight [1024]
+dy_parameter 140252594043312 bias [1024]
+dy_parameter 140252594043312 _mean [1024]
+dy_parameter 140252594043312 _variance [1024]
+dy_parameter 140252594044080 weight [256, 1024, 1, 1]
+dy_parameter 140252594044176 weight [256]
+dy_parameter 140252594044176 bias [256]
+dy_parameter 140252594044176 _mean [256]
+dy_parameter 140252594044176 _variance [256]
+dy_parameter 140252594044848 weight [256, 256, 3, 3]
+dy_parameter 140252594122928 weight [256]
+dy_parameter 140252594122928 bias [256]
+dy_parameter 140252594122928 _mean [256]
+dy_parameter 140252594122928 _variance [256]
+dy_parameter 140252594123504 weight [1024, 256, 1, 1]
+dy_parameter 140252594123600 weight [1024]
+dy_parameter 140252594123600 bias [1024]
+dy_parameter 140252594123600 _mean [1024]
+dy_parameter 140252594123600 _variance [1024]
+dy_parameter 140252594124368 weight [256, 1024, 1, 1]
+dy_parameter 140252594124464 weight [256]
+dy_parameter 140252594124464 bias [256]
+dy_parameter 140252594124464 _mean [256]
+dy_parameter 140252594124464 _variance [256]
+dy_parameter 140252594125136 weight [256, 256, 3, 3]
+dy_parameter 140252594125232 weight [256]
+dy_parameter 140252594125232 bias [256]
+dy_parameter 140252594125232 _mean [256]
+dy_parameter 140252594125232 _variance [256]
+dy_parameter 140252594125904 weight [1024, 256, 1, 1]
+dy_parameter 140252594126000 weight [1024]
+dy_parameter 140252594126000 bias [1024]
+dy_parameter 140252594126000 _mean [1024]
+dy_parameter 140252594126000 _variance [1024]
+dy_parameter 140252594126768 weight [256, 1024, 1, 1]
+dy_parameter 140252594208848 weight [256]
+dy_parameter 140252594208848 bias [256]
+dy_parameter 140252594208848 _mean [256]
+dy_parameter 140252594208848 _variance [256]
+dy_parameter 140252594209520 weight [256, 256, 3, 3]
+dy_parameter 140252594209616 weight [256]
+dy_parameter 140252594209616 bias [256]
+dy_parameter 140252594209616 _mean [256]
+dy_parameter 140252594209616 _variance [256]
+dy_parameter 140252594210288 weight [1024, 256, 1, 1]
+dy_parameter 140252594210384 weight [1024]
+dy_parameter 140252594210384 bias [1024]
+dy_parameter 140252594210384 _mean [1024]
+dy_parameter 140252594210384 _variance [1024]
+dy_parameter 140252594211248 weight [2048, 1024, 1, 1]
+dy_parameter 140252594211344 weight [2048]
+dy_parameter 140252594211344 bias [2048]
+dy_parameter 140252594211344 _mean [2048]
+dy_parameter 140252594211344 _variance [2048]
+dy_parameter 140252594212016 weight [512, 1024, 1, 1]
+dy_parameter 140252594212112 weight [512]
+dy_parameter 140252594212112 bias [512]
+dy_parameter 140252594212112 _mean [512]
+dy_parameter 140252594212112 _variance [512]
+dy_parameter 140252594212784 weight [512, 512, 3, 3]
+dy_parameter 140252594290768 weight [512]
+dy_parameter 140252594290768 bias [512]
+dy_parameter 140252594290768 _mean [512]
+dy_parameter 140252594290768 _variance [512]
+dy_parameter 140252594291440 weight [2048, 512, 1, 1]
+dy_parameter 140252594291536 weight [2048]
+dy_parameter 140252594291536 bias [2048]
+dy_parameter 140252594291536 _mean [2048]
+dy_parameter 140252594291536 _variance [2048]
+dy_parameter 140252594292304 weight [512, 2048, 1, 1]
+dy_parameter 140252594292400 weight [512]
+dy_parameter 140252594292400 bias [512]
+dy_parameter 140252594292400 _mean [512]
+dy_parameter 140252594292400 _variance [512]
+dy_parameter 140252594293072 weight [512, 512, 3, 3]
+dy_parameter 140252594293168 weight [512]
+dy_parameter 140252594293168 bias [512]
+dy_parameter 140252594293168 _mean [512]
+dy_parameter 140252594293168 _variance [512]
+dy_parameter 140252594293840 weight [2048, 512, 1, 1]
+dy_parameter 140252594293936 weight [2048]
+dy_parameter 140252594293936 bias [2048]
+dy_parameter 140252594293936 _mean [2048]
+dy_parameter 140252594293936 _variance [2048]
+dy_parameter 140252594294704 weight [512, 2048, 1, 1]
+dy_parameter 140252594376880 weight [512]
+dy_parameter 140252594376880 bias [512]
+dy_parameter 140252594376880 _mean [512]
+dy_parameter 140252594376880 _variance [512]
+dy_parameter 140252594377456 weight [512, 512, 3, 3]
+dy_parameter 140252594377552 weight [512]
+dy_parameter 140252594377552 bias [512]
+dy_parameter 140252594377552 _mean [512]
+dy_parameter 140252594377552 _variance [512]
+dy_parameter 140252594378224 weight [2048, 512, 1, 1]
+dy_parameter 140252594378320 weight [2048]
+dy_parameter 140252594378320 bias [2048]
+dy_parameter 140252594378320 _mean [2048]
+dy_parameter 140252594378320 _variance [2048]
+len body_feats 4
+[1, 256, 256, 152] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [18450684.])
+[1, 512, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [48328748.])
+[1, 1024, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [264703888.])
+[1, 2048, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [397175648.])
+forward of fpn [1, 256, 256, 152]
+forward of fpn [1, 512, 128, 76]
+forward of fpn [1, 1024, 64, 38]
+forward of fpn [1, 2048, 32, 19]
+fpn min_level 1 4
+dy_parameter 140252594379088 weight [256, 512, 1, 1]
+dy_parameter 140252594379088 bias [256]
+dy_parameter 140252594379472 weight [256, 1024, 1, 1]
+dy_parameter 140252594379472 bias [256]
+dy_parameter 140252594380048 weight [256, 2048, 1, 1]
+dy_parameter 140252594380048 bias [256]
+len(laterals) 3
+now i 2
+now i 1
+fpn_convs before last i= 0 [256, 256, 3, 3]
+fpn_convs before last i= 1 [256, 256, 3, 3]
+fpn_convs before last i= 2 [256, 256, 3, 3]
+fpn_convs before last i= 3 [256, 2048, 3, 3]
+fpn_convs before last i= 4 [256, 256, 3, 3]
+dy_parameter 140252594379184 weight [256, 256, 3, 3]
+dy_parameter 140252594379184 bias [256]
+dy_parameter 140252594379760 weight [256, 256, 3, 3]
+dy_parameter 140252594379760 bias [256]
+dy_parameter 140252594380336 weight [256, 256, 3, 3]
+dy_parameter 140252594380336 bias [256]
+dy_parameter 140252594446704 weight [256, 2048, 3, 3]
+dy_parameter 140252594446704 bias [256]
+dy_parameter 140252594446800 weight [256, 256, 3, 3]
+dy_parameter 140252594446800 bias [256]
+fpn out i 0 [1, 256, 128, 76] 0.25
+fpn out i 1 [1, 256, 64, 38] 0.125
+fpn out i 2 [1, 256, 32, 19] 0.0625
+fpn out i 3 [1, 256, 16, 10] 0.03125
+fpn out i 4 [1, 256, 8, 5] 0.015625
+debug after FPN
+[1, 256, 128, 76] 86202960.0
+[1, 256, 64, 38] 31841342.0
+[1, 256, 32, 19] 3574406.8
+[1, 256, 16, 10] 335801.38
+[1, 256, 8, 5] -4353.086
+feats 5
+e [1, 256, 128, 76]
+e [1, 256, 64, 38]
+e [1, 256, 32, 19]
+e [1, 256, 16, 10]
+e [1, 256, 8, 5]
+i== 0 in feat [1, 256, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [86202960.])
+dy_parameter 140252594447664 weight [256, 256, 3, 3]
+dy_parameter 140252594447664 bias [256]
+dy_parameter 140252594448528 weight [256, 256, 3, 3]
+dy_parameter 140252594448528 bias [256]
+fam_cls_feat [1, 256, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [307308416.])
+dy_parameter 140252594449584 weight [15, 256, 1, 1]
+dy_parameter 140252594449584 bias [15]
+dy_parameter 140252594448144 weight [256, 256, 3, 3]
+dy_parameter 140252594448144 bias [256]
+dy_parameter 140252594448912 weight [256, 256, 3, 3]
+dy_parameter 140252594448912 bias [256]
+fam_reg_feat [1, 256, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [378166912.])
+dy_parameter 140252594449296 weight [5, 256, 1, 1]
+dy_parameter 140252594449296 bias [5]
+fam_cls [1, 128, 76, 15] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-12082164.])
+fam_reg [1, 128, 76, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [1910296.50000000])
+featmap_size  [128, 76]
+init_anchors before rect2rbox featmap_size [128, 76] (128, 76, 4) 15856640.0
+x_ctr (9728,) (9728,) (9728,) (9728,)
+init_anchors after rect2rbox (9728, 5) 8531456.0
+(9728, 5) 8531456.0
+before bbox_decode [1, 128, 76, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [1910296.50000000])
+2021 debug anchor init_anchors (9728, 5) 8531456.0 175.4
+2021 debug anchor init_anchors (9728, 5) 8531456.0 175.4
+bbox_preds [1, 128, 76, 5]
+deltas <class 'paddle.VarBase'> [9728, 5]
+<class 'paddle.VarBase'> [9728] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [24026376.])
+<class 'paddle.VarBase'> [9728] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [34650600.])
+<class 'paddle.VarBase'> [9728] Tensor(shape=[1], dtype=float64, place=CPUPlace, stop_gradient=True,
+       [0.30156793])
+<class 'paddle.VarBase'> [9728] Tensor(shape=[1], dtype=float64, place=CPUPlace, stop_gradient=True,
+       [280145363774.73559570])
+<class 'paddle.VarBase'> [9728] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [7629.10839844])
+bboxes [9728, 5]
+refine_anchor: [1, 128, 76, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [280204410880.]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [5760804.50000000])
+self.align_conv_type Conv
+dy_parameter 140252594449872 weight [256, 256, 3, 3]
+dy_parameter 140252594449872 bias [256]
+dy_parameter 140252594450160 weight [256, 256, 3, 3]
+dy_parameter 140252594450160 bias [256]
+odm_cls_feat paddle [1, 256, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [1402387.50000000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [0.56318682])
+odm_reg_feat paddle [1, 256, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [1402387.50000000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [0.56318682])
+odm_cls_feat [1, 256, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [1402387.50000000])
+odm_reg_feat [1, 256, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [1402387.50000000])
+dy_parameter 140252594530160 weight [256, 256, 3, 3]
+dy_parameter 140252594530160 bias [256]
+dy_parameter 140252594530928 weight [256, 256, 3, 3]
+dy_parameter 140252594530928 bias [256]
+dy_parameter 140252594529776 weight [256, 256, 3, 3]
+dy_parameter 140252594529776 bias [256]
+dy_parameter 140252594530544 weight [256, 256, 3, 3]
+dy_parameter 140252594530544 bias [256]
+dy_parameter 140252594531312 weight [15, 256, 3, 3]
+dy_parameter 140252594531312 bias [15]
+dy_parameter 140252594531600 weight [5, 256, 3, 3]
+dy_parameter 140252594531600 bias [5]
+odm_cls_score [1, 15, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [15038756.])
+odm_bbox_pred [1, 5, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [1473565.50000000])
+i== 1 in feat [1, 256, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [31841350.])
+dy_parameter 140252594447664 weight [256, 256, 3, 3]
+dy_parameter 140252594447664 bias [256]
+dy_parameter 140252594448528 weight [256, 256, 3, 3]
+dy_parameter 140252594448528 bias [256]
+fam_cls_feat [1, 256, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [116170144.])
+dy_parameter 140252594449584 weight [15, 256, 1, 1]
+dy_parameter 140252594449584 bias [15]
+dy_parameter 140252594448144 weight [256, 256, 3, 3]
+dy_parameter 140252594448144 bias [256]
+dy_parameter 140252594448912 weight [256, 256, 3, 3]
+dy_parameter 140252594448912 bias [256]
+fam_reg_feat [1, 256, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [82791784.])
+dy_parameter 140252594449296 weight [5, 256, 1, 1]
+dy_parameter 140252594449296 bias [5]
+fam_cls [1, 64, 38, 15] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-2015450.25000000])
+fam_reg [1, 64, 38, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-1596391.50000000])
+featmap_size  [64, 38]
+init_anchors before rect2rbox featmap_size [64, 38] (64, 38, 4) 3964160.0
+x_ctr (2432,) (2432,) (2432,) (2432,)
+init_anchors after rect2rbox (2432, 5) 2288512.0
+(9728, 5) 8531456.0
+(2432, 5) 2288512.0
+before bbox_decode [1, 64, 38, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [-1596391.50000000])
+2021 debug anchor init_anchors (2432, 5) 2288512.0 188.2
+2021 debug anchor init_anchors (2432, 5) 2288512.0 188.2
+bbox_preds [1, 64, 38, 5]
+deltas <class 'paddle.VarBase'> [2432, 5]
+<class 'paddle.VarBase'> [2432] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [-22173800.])
+<class 'paddle.VarBase'> [2432] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [17443150.])
+<class 'paddle.VarBase'> [2432] Tensor(shape=[1], dtype=float64, place=CPUPlace, stop_gradient=True,
+       [951551131.73572290])
+<class 'paddle.VarBase'> [2432] Tensor(shape=[1], dtype=float64, place=CPUPlace, stop_gradient=True,
+       [15377237750.24209023])
+<class 'paddle.VarBase'> [2432] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [1882.46557617])
+bboxes [2432, 5]
+refine_anchor: [1, 64, 38, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [16324061184.]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [1342439.37500000])
+self.align_conv_type Conv
+dy_parameter 140252594449872 weight [256, 256, 3, 3]
+dy_parameter 140252594449872 bias [256]
+dy_parameter 140252594450160 weight [256, 256, 3, 3]
+dy_parameter 140252594450160 bias [256]
+odm_cls_feat paddle [1, 256, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [6931282.]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [11.13297462])
+odm_reg_feat paddle [1, 256, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [6931282.]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [11.13297462])
+odm_cls_feat [1, 256, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [6931282.])
+odm_reg_feat [1, 256, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [6931282.])
+dy_parameter 140252594530160 weight [256, 256, 3, 3]
+dy_parameter 140252594530160 bias [256]
+dy_parameter 140252594530928 weight [256, 256, 3, 3]
+dy_parameter 140252594530928 bias [256]
+dy_parameter 140252594529776 weight [256, 256, 3, 3]
+dy_parameter 140252594529776 bias [256]
+dy_parameter 140252594530544 weight [256, 256, 3, 3]
+dy_parameter 140252594530544 bias [256]
+dy_parameter 140252594531312 weight [15, 256, 3, 3]
+dy_parameter 140252594531312 bias [15]
+dy_parameter 140252594531600 weight [5, 256, 3, 3]
+dy_parameter 140252594531600 bias [5]
+odm_cls_score [1, 15, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [347201.25000000])
+odm_bbox_pred [1, 5, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-78112.12500000])
+i== 2 in feat [1, 256, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [3574405.75000000])
+dy_parameter 140252594447664 weight [256, 256, 3, 3]
+dy_parameter 140252594447664 bias [256]
+dy_parameter 140252594448528 weight [256, 256, 3, 3]
+dy_parameter 140252594448528 bias [256]
+fam_cls_feat [1, 256, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [19976942.])
+dy_parameter 140252594449584 weight [15, 256, 1, 1]
+dy_parameter 140252594449584 bias [15]
+dy_parameter 140252594448144 weight [256, 256, 3, 3]
+dy_parameter 140252594448144 bias [256]
+dy_parameter 140252594448912 weight [256, 256, 3, 3]
+dy_parameter 140252594448912 bias [256]
+fam_reg_feat [1, 256, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [20986604.])
+dy_parameter 140252594449296 weight [5, 256, 1, 1]
+dy_parameter 140252594449296 bias [5]
+fam_cls [1, 32, 19, 15] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [57001.92968750])
+fam_reg [1, 32, 19, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [310782.28125000])
+featmap_size  [32, 19]
+init_anchors before rect2rbox featmap_size [32, 19] (32, 19, 4) 991040.0
+x_ctr (608,) (608,) (608,) (608,)
+init_anchors after rect2rbox (608, 5) 649952.0
+(9728, 5) 8531456.0
+(2432, 5) 2288512.0
+(608, 5) 649952.0
+before bbox_decode [1, 32, 19, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [310782.28125000])
+2021 debug anchor init_anchors (608, 5) 649952.0 213.8
+2021 debug anchor init_anchors (608, 5) 649952.0 213.8
+bbox_preds [1, 32, 19, 5]
+deltas <class 'paddle.VarBase'> [608, 5]
+<class 'paddle.VarBase'> [608] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [4353853.50000000])
+<class 'paddle.VarBase'> [608] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [57518448.])
+<class 'paddle.VarBase'> [608] Tensor(shape=[1], dtype=float64, place=CPUPlace, stop_gradient=True,
+       [0.07721598])
+<class 'paddle.VarBase'> [608] Tensor(shape=[1], dtype=float64, place=CPUPlace, stop_gradient=True,
+       [69293188070.70324707])
+<class 'paddle.VarBase'> [608] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [496.08078003])
+bboxes [608, 5]
+refine_anchor: [1, 32, 19, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [69355077632.]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [22814170.])
+self.align_conv_type Conv
+dy_parameter 140252594449872 weight [256, 256, 3, 3]
+dy_parameter 140252594449872 bias [256]
+dy_parameter 140252594450160 weight [256, 256, 3, 3]
+dy_parameter 140252594450160 bias [256]
+odm_cls_feat paddle [1, 256, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-2632648.]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-16.91412735])
+odm_reg_feat paddle [1, 256, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-2632648.]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-16.91412735])
+odm_cls_feat [1, 256, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-2632648.])
+odm_reg_feat [1, 256, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-2632648.])
+dy_parameter 140252594530160 weight [256, 256, 3, 3]
+dy_parameter 140252594530160 bias [256]
+dy_parameter 140252594530928 weight [256, 256, 3, 3]
+dy_parameter 140252594530928 bias [256]
+dy_parameter 140252594529776 weight [256, 256, 3, 3]
+dy_parameter 140252594529776 bias [256]
+dy_parameter 140252594530544 weight [256, 256, 3, 3]
+dy_parameter 140252594530544 bias [256]
+dy_parameter 140252594531312 weight [15, 256, 3, 3]
+dy_parameter 140252594531312 bias [15]
+dy_parameter 140252594531600 weight [5, 256, 3, 3]
+dy_parameter 140252594531600 bias [5]
+odm_cls_score [1, 15, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-421403.68750000])
+odm_bbox_pred [1, 5, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-326098.06250000])
+i== 3 in feat [1, 256, 16, 10] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [335801.31250000])
+dy_parameter 140252594447664 weight [256, 256, 3, 3]
+dy_parameter 140252594447664 bias [256]
+dy_parameter 140252594448528 weight [256, 256, 3, 3]
+dy_parameter 140252594448528 bias [256]
+fam_cls_feat [1, 256, 16, 10] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [6372509.])
+dy_parameter 140252594449584 weight [15, 256, 1, 1]
+dy_parameter 140252594449584 bias [15]
+dy_parameter 140252594448144 weight [256, 256, 3, 3]
+dy_parameter 140252594448144 bias [256]
+dy_parameter 140252594448912 weight [256, 256, 3, 3]
+dy_parameter 140252594448912 bias [256]
+fam_reg_feat [1, 256, 16, 10] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [4454274.])
+dy_parameter 140252594449296 weight [5, 256, 1, 1]
+dy_parameter 140252594449296 bias [5]
+fam_cls [1, 16, 10, 15] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-53913.])
+fam_reg [1, 16, 10, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-492.73046875])
+featmap_size  [16, 10]
+init_anchors before rect2rbox featmap_size [16, 10] (16, 10, 4) 265920.0
+x_ctr (160,) (160,) (160,) (160,)
+init_anchors after rect2rbox (160, 5) 214560.0
+(9728, 5) 8531456.0
+(2432, 5) 2288512.0
+(608, 5) 649952.0
+(160, 5) 214560.0
+before bbox_decode [1, 16, 10, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [-492.73046875])
+2021 debug anchor init_anchors (160, 5) 214560.0 268.2
+2021 debug anchor init_anchors (160, 5) 214560.0 268.2
+bbox_preds [1, 16, 10, 5]
+deltas <class 'paddle.VarBase'> [160, 5]
+<class 'paddle.VarBase'> [160] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [3952298.25000000])
+<class 'paddle.VarBase'> [160] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [10466126.])
+<class 'paddle.VarBase'> [160] Tensor(shape=[1], dtype=float64, place=CPUPlace, stop_gradient=True,
+       [0.04079999])
+<class 'paddle.VarBase'> [160] Tensor(shape=[1], dtype=float64, place=CPUPlace, stop_gradient=True,
+       [34429171404.68485260])
+<class 'paddle.VarBase'> [160] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [115.04092407])
+bboxes [160, 5]
+refine_anchor: [1, 16, 10, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [34443587584.]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [43054484.])
+self.align_conv_type Conv
+dy_parameter 140252594449872 weight [256, 256, 3, 3]
+dy_parameter 140252594449872 bias [256]
+dy_parameter 140252594450160 weight [256, 256, 3, 3]
+dy_parameter 140252594450160 bias [256]
+odm_cls_feat paddle [1, 256, 16, 10] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-808524.18750000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-19.73934364])
+odm_reg_feat paddle [1, 256, 16, 10] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-808524.18750000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-19.73934364])
+odm_cls_feat [1, 256, 16, 10] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-808524.18750000])
+odm_reg_feat [1, 256, 16, 10] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-808524.18750000])
+dy_parameter 140252594530160 weight [256, 256, 3, 3]
+dy_parameter 140252594530160 bias [256]
+dy_parameter 140252594530928 weight [256, 256, 3, 3]
+dy_parameter 140252594530928 bias [256]
+dy_parameter 140252594529776 weight [256, 256, 3, 3]
+dy_parameter 140252594529776 bias [256]
+dy_parameter 140252594530544 weight [256, 256, 3, 3]
+dy_parameter 140252594530544 bias [256]
+dy_parameter 140252594531312 weight [15, 256, 3, 3]
+dy_parameter 140252594531312 bias [15]
+dy_parameter 140252594531600 weight [5, 256, 3, 3]
+dy_parameter 140252594531600 bias [5]
+odm_cls_score [1, 15, 16, 10] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [178134.18750000])
+odm_bbox_pred [1, 5, 16, 10] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-61641.21875000])
+i== 4 in feat [1, 256, 8, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-4353.09375000])
+dy_parameter 140252594447664 weight [256, 256, 3, 3]
+dy_parameter 140252594447664 bias [256]
+dy_parameter 140252594448528 weight [256, 256, 3, 3]
+dy_parameter 140252594448528 bias [256]
+fam_cls_feat [1, 256, 8, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [1390661.62500000])
+dy_parameter 140252594449584 weight [15, 256, 1, 1]
+dy_parameter 140252594449584 bias [15]
+dy_parameter 140252594448144 weight [256, 256, 3, 3]
+dy_parameter 140252594448144 bias [256]
+dy_parameter 140252594448912 weight [256, 256, 3, 3]
+dy_parameter 140252594448912 bias [256]
+fam_reg_feat [1, 256, 8, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [1182990.75000000])
+dy_parameter 140252594449296 weight [5, 256, 1, 1]
+dy_parameter 140252594449296 bias [5]
+fam_cls [1, 8, 5, 15] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [26097.77539062])
+fam_reg [1, 8, 5, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-18732.25390625])
+featmap_size  [8, 5]
+init_anchors before rect2rbox featmap_size [8, 5] (8, 5, 4) 66480.0
+x_ctr (40,) (40,) (40,) (40,)
+init_anchors after rect2rbox (40, 5) 74120.0
+(9728, 5) 8531456.0
+(2432, 5) 2288512.0
+(608, 5) 649952.0
+(160, 5) 214560.0
+(40, 5) 74120.0
+before bbox_decode [1, 8, 5, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [-18732.25390625])
+2021 debug anchor init_anchors (40, 5) 74120.0 370.6
+2021 debug anchor init_anchors (40, 5) 74120.0 370.6
+bbox_preds [1, 8, 5, 5]
+deltas <class 'paddle.VarBase'> [40, 5]
+<class 'paddle.VarBase'> [40] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [1211309.75000000])
+<class 'paddle.VarBase'> [40] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [2266177.50000000])
+<class 'paddle.VarBase'> [40] Tensor(shape=[1], dtype=float64, place=CPUPlace, stop_gradient=True,
+       [0.02044000])
+<class 'paddle.VarBase'> [40] Tensor(shape=[1], dtype=float64, place=CPUPlace, stop_gradient=True,
+       [3758398373.39507866])
+<class 'paddle.VarBase'> [40] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [33.13194275])
+bboxes [40, 5]
+refine_anchor: [1, 8, 5, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [3761875968.]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=True,
+       [18809380.])
+self.align_conv_type Conv
+dy_parameter 140252594449872 weight [256, 256, 3, 3]
+dy_parameter 140252594449872 bias [256]
+dy_parameter 140252594450160 weight [256, 256, 3, 3]
+dy_parameter 140252594450160 bias [256]
+odm_cls_feat paddle [1, 256, 8, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-218619.14062500]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-21.34952736])
+odm_reg_feat paddle [1, 256, 8, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-218619.14062500]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-21.34952736])
+odm_cls_feat [1, 256, 8, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-218619.14062500])
+odm_reg_feat [1, 256, 8, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-218619.14062500])
+dy_parameter 140252594530160 weight [256, 256, 3, 3]
+dy_parameter 140252594530160 bias [256]
+dy_parameter 140252594530928 weight [256, 256, 3, 3]
+dy_parameter 140252594530928 bias [256]
+dy_parameter 140252594529776 weight [256, 256, 3, 3]
+dy_parameter 140252594529776 bias [256]
+dy_parameter 140252594530544 weight [256, 256, 3, 3]
+dy_parameter 140252594530544 bias [256]
+dy_parameter 140252594531312 weight [15, 256, 3, 3]
+dy_parameter 140252594531312 bias [15]
+dy_parameter 140252594531600 weight [5, 256, 3, 3]
+dy_parameter 140252594531600 bias [5]
+odm_cls_score [1, 15, 8, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [15947.91601562])
+odm_bbox_pred [1, 5, 8, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-10824.84472656])
+feats out
+odm_reg_branch_list  eee [1, 5, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [1473565.50000000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [30.29535866])
+odm_reg_branch_list  eee [1, 5, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-78112.12500000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-6.42367697])
+odm_reg_branch_list  eee [1, 5, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-326098.06250000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-107.26909637])
+odm_reg_branch_list  eee [1, 5, 16, 10] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-61641.21875000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-77.05152130])
+odm_reg_branch_list  eee [1, 5, 8, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-10824.84472656]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-54.12422180])
+odm_cls_branch_list  eee [1, 15, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [15038756.]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [103.06166077])
+odm_cls_branch_list  eee [1, 15, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [347201.25000000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [9.51754570])
+odm_cls_branch_list  eee [1, 15, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-421403.68750000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-46.20656586])
+odm_cls_branch_list  eee [1, 15, 16, 10] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [178134.18750000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [74.22257996])
+odm_cls_branch_list  eee [1, 15, 8, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [15947.91601562]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [26.57986069])
+odm_cls_branch_list [1, 15, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [15038756.]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [103.06166077])
+odm_cls_branch_list [1, 15, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [347201.25000000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [9.51754570])
+odm_cls_branch_list [1, 15, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-421403.68750000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-46.20656586])
+odm_cls_branch_list [1, 15, 16, 10] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [178134.18750000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [74.22257996])
+odm_cls_branch_list [1, 15, 8, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [15947.91601562]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [26.57986069])
+odm_reg_branch_list [1, 5, 128, 76] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [1473565.50000000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [30.29535866])
+odm_reg_branch_list [1, 5, 64, 38] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-78112.12500000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-6.42367697])
+odm_reg_branch_list [1, 5, 32, 19] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-326098.06250000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-107.26909637])
+odm_reg_branch_list [1, 5, 16, 10] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-61641.21875000]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-77.05152130])
+odm_reg_branch_list [1, 5, 8, 5] Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-10824.84472656]) Tensor(shape=[1], dtype=float32, place=CPUPlace, stop_gradient=False,
+       [-54.12422180])

@@ -15,7 +15,7 @@
 import paddle
 from paddle import ParamAttr
 import paddle.nn as nn
-from paddle.nn import Conv2D
+from paddle.nn import Conv2D, BatchNorm2D
 import paddle.nn.functional as F
 from paddle.nn import ReLU
 from paddle.nn import Layer, Sequential
@@ -24,6 +24,30 @@ from paddle.regularizer import L2Decay
 from ppdet.core.workspace import register
 from ppdet.modeling import ops
 import numpy as np
+from shapely.geometry import Polygon
+
+
+class RotationInvariantPooling(Layer):
+    def __init__(self, nInputPlane, nOrientation=8):
+        super(RotationInvariantPooling, self).__init__()
+        self.nInputPlane = nInputPlane
+        self.nOrientation = nOrientation
+        
+        hiddent_dim = int(nInputPlane / nOrientation)
+        self.conv = nn.Sequential(
+            Conv2D(hiddent_dim, nInputPlane, 1, 1),
+            BatchNorm2D(nInputPlane),
+        )
+    
+    def forward(self, x):
+        # x: [N, c, 1, w]
+        ## first, max_pooling along orientation.
+        N, c, h, w = x.shape
+        x = paddle.reshape(x, [N, -1, self.nOrientation, h, w])
+        x, _ = paddle.max(x, axis=2, keepdim=False)  # [N, nInputPlane/nOrientation, 1, w]
+        # MODIFIED
+        # x = self.conv(x) # [N, nInputPlane, 1, w]
+        return x
 
 
 class AnchorGenerator_paddle(object):
@@ -288,8 +312,7 @@ def delta2rbox_pd(Rrois,
     """
     means = paddle.to_tensor(means)
     stds = paddle.to_tensor(stds)
-    H, W, C = deltas.shape
-    deltas = paddle.reshape(deltas, [-1, C])
+    deltas = paddle.reshape(deltas, [-1, deltas.shape[-1]])
     print('deltas', type(deltas), deltas.shape)
     denorm_deltas = deltas * stds + means
 
@@ -303,11 +326,13 @@ def delta2rbox_pd(Rrois,
     dw = paddle.clip(dw, min=-max_ratio, max=max_ratio)
     dh = paddle.clip(dh, min=-max_ratio, max=max_ratio)
 
+    print('RroisRroisRroisRroisRrois', Rrois.shape)
     Rroi_x = Rrois[:, 0]
     Rroi_y = Rrois[:, 1]
     Rroi_w = Rrois[:, 2]
     Rroi_h = Rrois[:, 3]
     Rroi_angle = Rrois[:, 4]
+
 
     gx = dx * Rroi_w * paddle.cos(Rroi_angle) - dy * Rroi_h * paddle.sin(Rroi_angle) + Rroi_x
     gy = dx * Rroi_w * paddle.sin(Rroi_angle) + dy * Rroi_h * paddle.cos(Rroi_angle) + Rroi_y
@@ -476,7 +501,9 @@ class AlignConv(Layer):
                                                            bias_attr=None)
 
     def forward(self, x, refine_anchors, stride):
-        print('2021_debug align conv forward x',x.shape, x.sum(), 'refine_anchors', refine_anchors.shape, refine_anchors.sum(), stride)
+        print('2021_debug align conv forward x',x.shape, x.sum(), x.mean(), 'refine_anchors', refine_anchors.shape,
+              refine_anchors.sum(), refine_anchors.mean(), stride)
+        np.save('demo/2021_debug_refine_anchors_{}.npy'.format(x.shape[2]), refine_anchors.numpy())
         offset = anchor2offset(refine_anchors, self.kernel_size, stride)
         print('2021_debug offset', offset.shape, offset.mean())
         # 12.479357
@@ -484,18 +511,308 @@ class AlignConv(Layer):
 
 
         # debug
-        np.save('demo/2021_debug_x_{}'.format(x.shape[2]), x.numpy())
-        np.save('demo/2021_debug_offset_{}'.format(x.shape[2]), offset.numpy())
+        np.save('demo/2021_debug_x_{}.npy'.format(x.shape[2]), x.numpy())
+        np.save('demo/2021_debug_offset_{}.npy'.format(x.shape[2]), offset.numpy())
 
-        x_np = np.load('/Users/liuhui29/Downloads/npy_2021/2021_debug_x_{}.npy'.format(x.shape[2]))
-        x = paddle.to_tensor(x_np, dtype=x.dtype)
-        offset_np = np.load('/Users/liuhui29/Downloads/npy_2021/2021_debug_offset_{}.npy'.format(x.shape[2]))
-        offset = paddle.to_tensor(offset_np, dtype=refine_anchors.dtype)
-        x0 =self.align_conv(x, offset)
-        print('2021_debug offset dcn not relu ', x0.shape, x0.mean())
+        #x_np = np.load('/Users/liuhui29/Downloads/npy_2021/2021_debug_x_{}.npy'.format(x.shape[2]))
+        #x = paddle.to_tensor(x_np, dtype=x.dtype)
+        #offset_np = np.load('/Users/liuhui29/Downloads/npy_2021/2021_debug_offset_{}.npy'.format(x.shape[2]))
+        #offset = paddle.to_tensor(offset_np, dtype=refine_anchors.dtype)
+        #x0 =self.align_conv(x, offset)
+        #print('2021_debug offset dcn not relu ', x0.shape, x0.mean())
         x = F.relu(self.align_conv(x, offset))
         print('2021_debug offset dcn', x.shape, x.mean())
+        np.save('demo/2021_debug_offset_dcn_{}.npy'.format(x.shape[2]), x.numpy())
         return x
+
+def get_refine_anchors(featmap_sizes,
+                       refine_anchors,
+                       img_metas,
+                       is_train=False):
+    num_imgs = len(img_metas)
+    num_levels = len(featmap_sizes)
+
+    refine_anchors_list = []
+    for img_id, img_meta in enumerate(img_metas):
+        mlvl_refine_anchors = []
+        for i in range(num_levels):
+            refine_anchor = refine_anchors[i][img_id].reshape(-1, 5)
+            mlvl_refine_anchors.append(refine_anchor)
+        refine_anchors_list.append(mlvl_refine_anchors)
+
+    valid_flag_list = []
+    if is_train:
+        for img_id, img_meta in enumerate(img_metas):
+            multi_level_flags = []
+            for i in range(num_levels):
+                anchor_stride = self.anchor_strides[i]
+                feat_h, feat_w = featmap_sizes[i]
+                h, w, _ = img_meta['pad_shape']
+                valid_feat_h = min(int(np.ceil(h / anchor_stride)), feat_h)
+                valid_feat_w = min(int(np.ceil(w / anchor_stride)), feat_w)
+                flags = self.anchor_generators[i].valid_flags(
+                    (feat_h, feat_w), (valid_feat_h, valid_feat_w),
+                    device=device)
+                multi_level_flags.append(flags)
+            valid_flag_list.append(multi_level_flags)
+    return refine_anchors_list, valid_flag_list
+
+
+# NMS
+
+def cal_line_length(point1, point2):
+    import math
+    return math.sqrt(
+        math.pow(point1[0] - point2[0], 2) + math.pow(point1[1] - point2[1], 2))
+
+def get_best_begin_point_single(coordinate):
+    x1, y1, x2, y2, x3, y3, x4, y4 = coordinate
+    xmin = min(x1, x2, x3, x4)
+    ymin = min(y1, y2, y3, y4)
+    xmax = max(x1, x2, x3, x4)
+    ymax = max(y1, y2, y3, y4)
+    combinate = [[[x1, y1], [x2, y2], [x3, y3], [x4, y4]],
+                 [[x2, y2], [x3, y3], [x4, y4], [x1, y1]],
+                 [[x3, y3], [x4, y4], [x1, y1], [x2, y2]],
+                 [[x4, y4], [x1, y1], [x2, y2], [x3, y3]]]
+    dst_coordinate = [[xmin, ymin], [xmax, ymin], [xmax, ymax], [xmin, ymax]]
+    force = 100000000.0
+    force_flag = 0
+    for i in range(4):
+        temp_force = cal_line_length(combinate[i][0], dst_coordinate[0]) \
+                     + cal_line_length(combinate[i][1], dst_coordinate[1]) \
+                     + cal_line_length(combinate[i][2], dst_coordinate[2]) \
+                     + cal_line_length(combinate[i][3], dst_coordinate[3])
+        if temp_force < force:
+            force = temp_force
+            force_flag = i
+    if force_flag != 0:
+        pass
+        # print("choose one direction!")
+    return np.array(combinate[force_flag]).reshape(8)
+
+def rbox2poly_single(rrect):
+    """
+    rrect:[x_ctr,y_ctr,w,h,angle]
+    to
+    poly:[x0,y0,x1,y1,x2,y2,x3,y3]
+    """
+    x_ctr, y_ctr, width, height, angle = rrect[:5]
+    tl_x, tl_y, br_x, br_y = -width / 2, -height / 2, width / 2, height / 2
+    rect = np.array([[tl_x, br_x, br_x, tl_x], [tl_y, tl_y, br_y, br_y]])
+    R = np.array([[np.cos(angle), -np.sin(angle)],
+                  [np.sin(angle), np.cos(angle)]])
+    poly = R.dot(rect)
+    x0, x1, x2, x3 = poly[0, :4] + x_ctr
+    y0, y1, y2, y3 = poly[1, :4] + y_ctr
+    poly = np.array([x0, y0, x1, y1, x2, y2, x3, y3], dtype=np.float32)
+    poly = get_best_begin_point_single(poly)
+    return poly
+
+def cpu_nms(boxes, scores, score_threshold, iou_threshold, max_num=None):
+    """
+    :param boxes:[N, 8] / 'N' means not sure
+    :param scores:[N, 1]
+    :param score_threshold: float
+    :param iou_threshold:a scalar
+    :param max_num:
+    :return:keep_index
+    """
+    # boxes format : [x1, y1, x2, y2, x3, y3, x4, y4]
+    assert isinstance(boxes, np.ndarray)
+    assert isinstance(scores, np.ndarray)
+    assert boxes.ndim == 2
+    assert scores.ndim == 1
+    assert boxes.shape[-1] == 8
+    assert len(boxes) == len(scores)
+    
+    box_copy = boxes.copy()
+    score_copy = scores.copy()
+    
+    ignore_mask = np.where(score_copy < score_threshold)[0]
+    score_copy[ignore_mask] = 0.
+    
+    keep_index = []
+    while np.sum(score_copy) > 0.:
+        # mark reserved box
+        max_score_index = np.argmax(score_copy)
+        box1 = box_copy[[max_score_index]]
+        keep_index.append(max_score_index)
+        score_copy[max_score_index] = 0.
+        ious = cpu_iou(box1, box_copy)
+        # mark unuseful box
+        # keep_mask shape [N,] / 'N' means uncertain
+        del_index = np.greater(ious, iou_threshold)
+        score_copy[del_index] = 0.
+    
+    if max_num is not None and len(keep_index) > max_num:
+        keep_index = keep_index[: max_num]
+    
+    return keep_index
+
+
+def cpu_iou(bbox1, bbox2):
+    """
+    :param bbox1: [[xmin, ymin, xmax, ymax], ...]
+    :param bbox2: [[xmin, ymin, xmax, ymax], ...]
+    :return:
+    """
+    assert isinstance(bbox1, np.ndarray)
+    assert isinstance(bbox2, np.ndarray)
+    assert bbox1.ndim == 2
+    assert bbox2.ndim == 2
+    assert bbox1.shape[-1] == bbox2.shape[-1] == 8
+    
+    iou_out_lst = []
+    poly1 = Polygon(bbox1[0].reshape(-1, 2))
+    for i in range(bbox2.shape[0]):
+        poly2 = Polygon(bbox2[i].reshape(-1, 2))
+        inter = poly1.intersection(poly2)
+        union = poly1.union(poly2)
+        iou = inter.area / union.area
+        iou_out_lst.append(iou)
+    iou_out = np.array(iou_out_lst)
+    return iou_out
+
+
+def nms_rotated(dets_rboxes, scores, score_thresh=0.05, nms_thresh=0.3):
+    """
+    """
+    print('dets_rboxes', dets_rboxes.shape)
+    print('scores', scores.shape)
+    print('score_thresh', score_thresh, 'nms_thresh', nms_thresh)
+    assert isinstance(dets_rboxes, np.ndarray)
+    assert isinstance(scores, np.ndarray)
+    
+    dets_ploy = []
+    for e in dets_rboxes:
+        dets_ploy_s = rbox2poly_single(e)
+        dets_ploy.append(dets_ploy_s)
+    dets_ploy = np.array(dets_ploy)
+    
+    scores_max_idx = np.argmax(scores, axis=1)
+    print('scores_max_idx', scores_max_idx.shape, scores_max_idx)
+    scores_max = np.max(scores, axis=1)
+    print('scores_max', scores_max.shape, scores_max)
+    nms_keep_index = cpu_nms(dets_ploy, scores_max, score_thresh, nms_thresh)
+    det_bboxes = dets_ploy[nms_keep_index, :]
+    det_labels = scores_max_idx[nms_keep_index]
+    det_scores = scores_max[nms_keep_index]
+    return det_bboxes, det_labels, det_scores
+
+
+def get_bboxes_single(cls_score_list,
+                      bbox_pred_list,
+                      mlvl_anchors,
+                      scale_factor,
+                      cfg,
+                      cls_out_channels=15,
+                      rescale=True,
+                      use_sigmoid_cls=True):
+    """
+    img_shape (1024, 593, 3) scale_factor 0.36755204594400576 rescale True
+    """
+    print('len(cls_score_list) ', len(cls_score_list), len(bbox_pred_list), len(mlvl_anchors))
+    assert len(cls_score_list) == len(bbox_pred_list) == len(mlvl_anchors)
+    
+    mlvl_bboxes = []
+    mlvl_scores = []
+    idx = 0
+    
+    for cls_score, bbox_pred, anchors in zip(cls_score_list, bbox_pred_list, mlvl_anchors):
+        cls_score = cls_score[0, :, :, :]
+        bbox_pred = bbox_pred[0, :, :, :]
+        anchors = anchors[0, :, :, :]
+        print('cls_score', cls_score.shape, 'bbox_pred', bbox_pred.shape, 'anchors', anchors.shape)
+        assert cls_score.shape[-2:] == bbox_pred.shape[-2:]
+        
+        cls_score = paddle.transpose(cls_score, [1, 2, 0])
+        cls_score = paddle.reshape(cls_score, [-1, cls_out_channels])
+        print('anchors anchors anchors', anchors.shape, bbox_pred.shape, cls_score.shape)
+        use_sigmoid_cls = True
+        if use_sigmoid_cls:
+            scores = F.sigmoid(cls_score)
+        else:
+            scores = F.softmax(cls_score, axis=-1)
+        
+        bbox_pred = paddle.transpose(bbox_pred, [1, 2, 0])
+        bbox_pred = paddle.reshape(bbox_pred, [-1, 5])
+
+        #anchors = paddle.transpose(anchors, [1, 2, 0])
+        anchors = paddle.reshape(anchors, [-1, 5])
+        
+        ### anchors = rect2rbox(anchors)
+        nms_pre = cfg.get('nms_pre', -1)
+        if nms_pre > 0 and scores.shape[0] > nms_pre:
+            # Get maximum scores for foreground classes.
+            if use_sigmoid_cls:
+                max_scores = paddle.max(scores, axis=1)
+            else:
+                max_scores = paddle.max(scores[:, :], axis=1)
+            topk_val, topk_inds = paddle.topk(max_scores, nms_pre)
+            print(topk_inds)
+            anchors = paddle.gather(anchors, topk_inds)
+            bbox_pred = paddle.gather(bbox_pred, topk_inds)
+            scores = paddle.gather(scores, topk_inds)
+        target_means = (.0, .0, .0, .0, .0),
+        target_stds = (1.0, 1.0, 1.0, 1.0, 1.0)
+        print('xxx delta2rbox_pd', anchors.shape, bbox_pred.shape)
+        bboxes = delta2rbox_pd(anchors, bbox_pred, target_means,
+                               target_stds)
+        
+        mlvl_bboxes.append(bboxes)
+        mlvl_scores.append(scores)
+        
+        idx += 1
+    
+    mlvl_bboxes = paddle.concat(mlvl_bboxes, axis=0)
+    
+    if rescale:
+        mlvl_bboxes[:, 0:4] /= paddle.to_tensor(scale_factor[0])
+    mlvl_scores = paddle.concat(mlvl_scores)
+    if use_sigmoid_cls:
+        # Add a dummy background class to the front when using sigmoid
+        padding = paddle.zeros([mlvl_scores.shape[0], 1], dtype=mlvl_scores.dtype)
+        mlvl_scores = paddle.concat([padding, mlvl_scores], axis=1)
+
+
+    print('error', mlvl_bboxes.shape, mlvl_scores.shape )
+    print('cfg', cfg)
+    if True:
+        np_mlvl_scores = np.load('/Users/liuhui29/Downloads/npy0106/get_bbox/mlvl_scores.npy')
+        print('aaaaaaaa   diff of np_mlvl_scores', np_mlvl_scores.shape, mlvl_scores.numpy().shape)
+        print('diff of np_mlvl_scores', np_mlvl_scores.shape, mlvl_scores.numpy().shape,
+              np.sum(np.abs(np_mlvl_scores - mlvl_scores.numpy())))
+        
+        print('np_mlvl_scores:', np_mlvl_scores[0:5, :])
+        print('mlvl_scores:', mlvl_scores[0:5, :])
+        
+        np_mlvl_bboxes = np.load('/Users/liuhui29/Downloads/npy0106/get_bbox/mlvl_bboxes.npy')
+        print('np_mlvl_bboxes', np_mlvl_bboxes[0:5, :])
+        print('mlvl_bboxes pd', mlvl_bboxes.numpy()[0:5, :])
+        print('diff of mlvl_bboxes', np_mlvl_bboxes.shape, mlvl_bboxes.numpy().shape,
+              np.sum(np.abs(np_mlvl_bboxes - mlvl_bboxes.numpy())))
+
+    nms_top_k = 2000
+    keep_top_k = 200
+
+    dets_ploy = []
+    for e in mlvl_bboxes.numpy():
+        dets_ploy_s = rbox2poly_single(e)
+        dets_ploy.append(dets_ploy_s)
+    dets_ploy = np.array(dets_ploy)
+    dets_ploy = paddle.to_tensor(dets_ploy)
+    dets_ploy = paddle.reshape(dets_ploy, [1, dets_ploy.shape[0], dets_ploy.shape[1]])
+    mlvl_scores = paddle.transpose(mlvl_scores, [1, 0])
+    mlvl_scores = paddle.reshape(mlvl_scores, [1, mlvl_scores.shape[0], mlvl_scores.shape[1]])
+
+    score_threshold = 0.05
+    output, nms_rois_num, index = ops.multiclass_nms(dets_ploy, mlvl_scores, score_threshold, nms_top_k, keep_top_k,
+                                    nms_threshold=0.3)
+    
+    #det_bboxes, det_labels, det_scores = nms_rotated(mlvl_bboxes.numpy(), mlvl_scores.numpy(),0.1, 0.5)
+    print('nms', output.shape, nms_rois_num)
+    return output, nms_rois_num
 
 
 @register
@@ -507,7 +824,7 @@ class S2ANetHead(Layer):
                  stacked_convs=2,
                  feat_in=256,
                  feat_out=256,
-                 num_classes=15,
+                 num_classes=16,
                  anchor_strides=[8, 16, 32, 64, 128],
                  anchor_scales=[4],
                  anchor_ratios=[1.0],
@@ -529,11 +846,17 @@ class S2ANetHead(Layer):
         self.anchor_base_sizes = list(anchor_strides)
         self.target_means = target_means
         self.target_stds = target_stds
-        assert align_conv_type in ['AlignConv',]
+        assert align_conv_type in ['AlignConv', 'Conv']
         self.align_conv_type = align_conv_type
         self.align_conv_size = align_conv_size
         self.with_ORConv = with_ORConv
         self.loss = loss
+
+        self.use_sigmoid_cls = True
+        if self.use_sigmoid_cls:
+            self.cls_out_channels = num_classes - 1
+        else:
+            self.cls_out_channels = num_classes
         
         # anchor
         self.anchor_generators = []
@@ -580,27 +903,36 @@ class S2ANetHead(Layer):
             self.fam_reg_convs.add_sublayer('fam_reg_conv_{}_act'.format(i), ReLU())
         
         self.fam_reg = Conv2D(self.feat_out, 5, 1)
-        self.fam_cls = Conv2D(self.feat_out, self.num_classes, 1)
+        self.fam_cls = Conv2D(self.feat_out, self.cls_out_channels, 1)
         
+        print('self.align_conv_type', self.align_conv_type)
+        if self.align_conv_type == "AlignConv":
+            self.align_conv = AlignConv(self.feat_out, self.feat_out, self.align_conv_size)
+        elif self.align_conv_type == "Conv":
+            self.align_conv = Conv2D(self.feat_out, self.feat_out, self.align_conv_size,
+                                     padding=(self.align_conv_size - 1) // 2)
+
         
         if self.with_ORConv:
             self.or_conv = ORConv2d(self.feat_out, int(self.feat_out / 8), kernel_size = 3, padding = 1,
                                     arf_config = (1, 8))
         else:
-            self.or_conv = Conv2D(self.feat_out, self.feat_out, kernel_size=3, padding=1)
+            self.or_conv = Conv2D(self.feat_out, self.feat_out, kernel_size=3, padding=1,
+                                  weight_attr=ParamAttr(
+                                      initializer=XavierUniform(fan_out=fan_conv)),
+                                  bias_attr=ParamAttr(
+                                      learning_rate=1.,  # TODO: check lr
+                                      regularizer=L2Decay(0.)))
         # TODO: add
-        #self.or_pool = RotationInvariantPooling(256, 8)
-
-        if self.align_conv_type == "AlignConv":
-            self.align_conv = AlignConv(self.feat_out, self.feat_out, self.align_conv_size)
-
+        self.or_pool = RotationInvariantPooling(256, 8)
+        
         # ODM
         self.odm_cls_convs = Sequential()
         self.odm_reg_convs = Sequential()
         
         for i in range(self.stacked_convs):
-            #ch_in = int(self.feat_out / 8) if i == 0 and self.with_ORConv else self.feat_out
-            ch_in = int(self.feat_out / 8) if i == 0 else self.feat_out
+            ch_in = int(self.feat_out / 8) if i == 0 and self.with_ORConv else self.feat_out
+            #ch_in = int(self.feat_out / 8) if i == 0 else self.feat_out
             
             self.odm_cls_convs.add_sublayer(
                 'odm_cls_conv_{}'.format(i),
@@ -634,15 +966,26 @@ class S2ANetHead(Layer):
 
             self.odm_reg_convs.add_sublayer('odm_reg_conv_{}_act'.format(i), ReLU())
 
-        self.odm_cls = Conv2D(self.feat_out, self.num_classes, 3, padding=1)
+        self.odm_cls = Conv2D(self.feat_out, self.cls_out_channels, 3, padding=1)
         self.odm_reg = Conv2D(self.feat_out, 5, 3, padding=1)
+        
+        self.refine_anchor_list = []
 
 
     def forward(self, feats):
         print('feats', len(feats))
+        for e in feats:
+            sha = e.shape
+            print('e', e.shape)
+            np.save('convert/pd_npy/feat_{}.npy'.format(sha[2]), e.numpy())
+            #input('2020-0104')
         
         fam_reg_branch_list = []
         fam_cls_branch_list = []
+
+        odm_reg_branch_list = []
+        odm_cls_branch_list = []
+
         for i, feat in enumerate(feats):
             print('i==', i, 'in feat', feat.shape, feat.sum())
             fam_cls_feat = self.fam_cls_convs(feat)
@@ -650,7 +993,7 @@ class S2ANetHead(Layer):
 
             fam_cls = self.fam_cls(fam_cls_feat)
             fam_cls = fam_cls.transpose([0, 2, 3, 1])
-            fam_cls_reshape = fam_cls.reshape([fam_cls.shape[0], -1, self.num_classes])
+            fam_cls_reshape = fam_cls.reshape([fam_cls.shape[0], -1, self.cls_out_channels])
             fam_cls_branch_list.append(fam_cls_reshape)
 
             fam_reg_feat = self.fam_reg_convs(feat)
@@ -667,8 +1010,8 @@ class S2ANetHead(Layer):
             # prepare anchor
             featmap_size = feat.shape[-2:]
             print('featmap_size ', featmap_size)
-            if i in self.base_anchors.keys():
-                init_anchors = self.base_anchors[i]
+            if (i,featmap_size[0]) in self.base_anchors.keys():
+                init_anchors = self.base_anchors[(i,featmap_size[0])]
                 print('init_anchors before 11111 rect2rbox', init_anchors.shape, init_anchors.sum())
             else:
                 init_anchors = self.anchor_generators[i].grid_anchors(
@@ -678,7 +1021,7 @@ class S2ANetHead(Layer):
                 init_anchors = rect2rbox(init_anchors)
                 print('init_anchors after rect2rbox', init_anchors.shape, init_anchors.sum())
                 np.save('demo/init_anchors_rect2rbox_{}'.format(featmap_size[0]), init_anchors)
-                self.base_anchors[i] = init_anchors
+                self.base_anchors[(i,featmap_size[0])] = init_anchors
 
             for e in self.base_anchors.keys():
                 anchor_tmp = self.base_anchors[e]
@@ -688,12 +1031,20 @@ class S2ANetHead(Layer):
             fam_reg1 = fam_reg
             fam_reg1.stop_gradient = True
             print('before bbox_decode', fam_reg1.shape, fam_reg1.sum())
-            np.save('demo/fam_reg_{}'.format(featmap_size[0]), fam_reg.cpu().numpy())
+            print('2021 debug anchor init_anchors', init_anchors.shape, init_anchors.sum(), init_anchors.mean())
+            #init_anchors = np.load('/Users/liuhui29/Downloads/npy_2021/2021_debug_anchors_{}.npy'.format(featmap_size[0]))
+            #print('load 2021 init_anchors', init_anchors.shape, init_anchors.sum())
+            #init_anchors = init_anchors.reshape(-1, 5)
+            print('2021 debug anchor init_anchors', init_anchors.shape, init_anchors.sum(), init_anchors.mean())
+            #np.save('demo/2021_debug_anchor_{}'.format(featmap_size[0]), init_anchors)
+            #np.save('demo/fam_reg_{}'.format(featmap_size[0]), fam_reg.cpu().numpy())
             refine_anchor = bbox_decode(
                             fam_reg1,
                             init_anchors,
                             self.target_means,
                             self.target_stds)
+
+            self.refine_anchor_list.append(refine_anchor)
             print('refine_anchor:', refine_anchor.shape, refine_anchor.sum(), refine_anchor.mean())
             print('self.align_conv_type', self.align_conv_type)
             #input('xxxx')
@@ -701,7 +1052,7 @@ class S2ANetHead(Layer):
             if self.align_conv_type == 'AlignConv':
                 print('refine_anchor', refine_anchor.shape, refine_anchor.sum(), 'self.anchor_strides[i]', self.anchor_strides[i])
                 align_feat = self.align_conv(feat, refine_anchor.clone(), self.anchor_strides[i])
-                print('align_feat', align_feat.shape)
+                print('align_feat', align_feat.shape, align_feat.sum(), align_feat.mean())
             elif self.align_conv_type == 'DCN':
                 align_offset = self.align_conv_offset(x)
                 align_feat = self.align_conv(feat, align_offset)
@@ -711,18 +1062,18 @@ class S2ANetHead(Layer):
             elif self.align_conv_type == 'Conv':
                 align_feat = self.align_conv(feat)
 
-            '''
             or_feat = self.or_conv(align_feat)
-            if self.with_ORConv:
-                odm_cls_feat = self.or_pool(or_feat)
-            else:
-                odm_cls_feat = or_feat
-            '''
-            np_odm_cls_feat = np.load('/Users/liuhui29/Downloads/npy_odm/odm_cls_feat_{}.npy'.format(i))
-            odm_cls_feat = paddle.to_tensor(np_odm_cls_feat)
+            odm_reg_feat = or_feat
+            odm_cls_feat = or_feat
+            
+            print('odm_cls_feat paddle', odm_cls_feat.shape, odm_cls_feat.sum(), odm_cls_feat.mean())
+            print('odm_reg_feat paddle', odm_reg_feat.shape, odm_reg_feat.sum(), odm_reg_feat.mean())
+            
+            #np_odm_cls_feat = np.load('/Users/liuhui29/Downloads/npy_odm/odm_cls_feat_{}.npy'.format(i))
+            #odm_cls_feat = paddle.to_tensor(np_odm_cls_feat)
 
-            np_odm_reg_feat = np.load('/Users/liuhui29/Downloads/npy_odm/odm_reg_feat_{}.npy'.format(i))
-            odm_reg_feat = paddle.to_tensor(np_odm_reg_feat)
+            #np_odm_reg_feat = np.load('/Users/liuhui29/Downloads/npy_odm/odm_reg_feat_{}.npy'.format(i))
+            #odm_reg_feat = paddle.to_tensor(np_odm_reg_feat)
 
             print('odm_cls_feat', odm_cls_feat.shape, odm_cls_feat.sum())
             print('odm_reg_feat', odm_reg_feat.shape, odm_reg_feat.sum())
@@ -734,16 +1085,52 @@ class S2ANetHead(Layer):
             print('odm_cls_score', odm_cls_score.shape, odm_cls_score.sum())
             print('odm_bbox_pred', odm_bbox_pred.shape, odm_bbox_pred.sum())
                 
-            #input('debug')
+            odm_reg_branch_list.append(odm_bbox_pred)
+            odm_cls_branch_list.append(odm_cls_score)
         
         print('feats out')
-        fam_reg_branch = paddle.concat(fam_reg_branch_list, axis=1)
-        fam_cls_branch = paddle.concat(fam_cls_branch_list, axis=1)
+        #fam_reg_branch = paddle.concat(fam_reg_branch_list, axis=1)
+        #fam_cls_branch = paddle.concat(fam_cls_branch_list, axis=1)
         
-        print('fam_reg_branch:', fam_reg_branch.shape, fam_reg_branch.sum())
-        print('fam_cls_branch:', fam_cls_branch.shape, fam_cls_branch.sum())
+        #print('fam_reg_branch:', fam_reg_branch.shape, fam_reg_branch.sum())
+        #print('fam_cls_branch:', fam_cls_branch.shape, fam_cls_branch.sum())
+        
+        print('*'*64)
+        for e in odm_reg_branch_list:
+            print('odm_reg_branch_list  eee', e.shape, e.sum(), e.mean())
+        for e in odm_cls_branch_list:
+            print('odm_cls_branch_list  eee', e.shape, e.sum(), e.mean())
+        #odm_reg_branch = paddle.concat(odm_reg_branch_list, axis=1)
+        #odm_cls_branch = paddle.concat(odm_cls_branch_list, axis=1)
 
-        return None
+
+        self.fam_cls_branch_list = fam_cls_branch_list
+        self.fam_reg_branch_list = fam_reg_branch_list
+        self.odm_cls_branch_list = odm_cls_branch_list
+        self.odm_reg_branch_list = odm_reg_branch_list
+        print('*' * 64)
+        for e in odm_cls_branch_list:
+            print('odm_cls_branch_list', e.shape, e.sum(), e.mean())
+        for e in odm_reg_branch_list:
+            print('odm_reg_branch_list', e.shape, e.sum(), e.mean())
+        print('*' * 64)
+        return (fam_cls_branch_list, fam_reg_branch_list, odm_cls_branch_list, odm_reg_branch_list)
+
+    def get_prediction(self, inputs):
+    
+        featmap_sizes = [featmap.shape[-2:] for featmap in self.odm_cls_branch_list]
+        num_levels = len(self.odm_cls_branch_list)
+
+        refine_anchors = self.refine_anchor_list
+        im_shape = inputs['im_shape'].numpy()
+        print('im_shape', im_shape)
+        scale_factor = inputs['scale_factor'].numpy()
+        print('scale_factor', scale_factor)
+        cfg = {'nms_pre': 2000, 'min_bbox_size': 0, 'score_thr': 0.1, 'max_per_img': 2000}
+        pred_out, pred_bbox_num = get_bboxes_single(self.odm_cls_branch_list, self.odm_reg_branch_list, refine_anchors,
+                                      scale_factor[0], cfg, cls_out_channels=self.cls_out_channels, rescale=True)
+        
+        return pred_out, pred_bbox_num
     
     def get_loss(self, inputs, head_outputs):
         return {'loss': 0.1}

@@ -84,9 +84,12 @@ class S2ANet(BaseArch):
     def model_arch(self):
         
         print('inputs', self.inputs['image'].shape, self.inputs['image'].sum())
+        print(type(self.inputs['image']), self.inputs['image'].shape, self.inputs['image'].sum())
+        np.save('demo/pd_input_image.npy', self.inputs['image'].numpy())
         np_s2anet_in_img = np.load('demo/extract_feat_in_img.npy')
         self.inputs['image'] = paddle.to_tensor(np_s2anet_in_img)
         print('inputs', self.inputs['image'].shape, self.inputs['image'].sum())
+        #input('xxx')
         
         # Backbone
         body_feats = self.backbone(self.inputs)
@@ -107,40 +110,24 @@ class S2ANet(BaseArch):
             print(k.shape, k.numpy().sum())
 
         # s2anet Head
-        '''
-        print('anchor', self.anchor)
-        print('body_feats', len(body_feats))
-        self.anchor_list_center = []
-        self.anchor_list_xywh = []
-        self.np_anchor_list_x1y1x2y2 = []
-        for feat in body_feats:
-            anchor_center, anchor_xywh = self.anchor(feat)
-            self.anchor_list_center.append(anchor_center)
-            self.anchor_list_xywh.append(anchor_xywh)
-            anchor_x1y1x2y2 = anchor_xywh.numpy()
-            anchor_x1y1x2y2[..., 2] = anchor_x1y1x2y2[..., 2] + anchor_x1y1x2y2[..., 0]
-            anchor_x1y1x2y2[..., 3] = anchor_x1y1x2y2[..., 3] + anchor_x1y1x2y2[..., 1]
-            self.np_anchor_list_x1y1x2y2.append(anchor_x1y1x2y2)
-            print('anchor_out:', anchor_center.shape, anchor_xywh.shape)
-
-        print('create model anchor_out np_anchor_list_x1y1x2y2', len(self.np_anchor_list_x1y1x2y2))
-
-        self.anchor_list_xywhr = rect2rbox(self.np_anchor_list_x1y1x2y2)
-        print('anchor convert finish!')
-        print('create model anchor_out anchor_list_xywhr', len(self.anchor_list_xywhr))
-        input('xxx')
-        '''
         self.s2anet_head_outs = self.s2anet_head(body_feats)
 
 
     def get_loss(self, ):
         loss = self.s2anet_head.get_loss(self.inputs, self.s2anet_head_outs)
-        #total_loss = paddle.add_n(list(loss.values()))
+        total_loss = paddle.add_n(list(loss.values()))
         loss.update({'loss': total_loss})
         return loss
 
-    def get_pred(self):
-        #output = self.s2anet_head.get_prediction(body_feats, spatial_scale,
-        #                                       im_info)
-        output = None
+    def get_pred(self, return_numpy=True):
+        pred_out = self.s2anet_head.get_prediction(self.inputs)
+
+        output = {
+            'bbox': np.array([pred_out[0].numpy()]),
+            'bbox_num': np.array([pred_out[1].numpy()]),
+            'im_id': self.inputs['im_id'].numpy()
+        }
+        print('output array', output['bbox'], output['bbox_num'], output['im_id'])
+        print('get_pred out', output)
+        input('21111')
         return output

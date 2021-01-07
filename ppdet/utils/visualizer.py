@@ -75,28 +75,46 @@ def draw_bbox(image, im_id, catid2name, bboxes, threshold):
 
     catid2color = {}
     color_list = colormap(rgb=True)[:40]
-    for dt in np.array(bboxes):
-        if im_id != dt['image_id']:
+    print('bboxes draw_bbox', type(bboxes), bboxes[0]['bbox'].shape)
+    input('dddd')
+    pred_im_id = bboxes[0]['im_id']
+    for dt in np.array(bboxes[0]['bbox']):
+        if im_id != pred_im_id:
             continue
-        catid, bbox, score = dt['category_id'], dt['bbox'], dt['score']
+        # 标签label，置信度confidence，...
+        print('dt', dt)
+        catid = int(dt[0])
+        score = dt[1]
+        bbox = dt[2:]
         if score < threshold:
             continue
-
-        xmin, ymin, w, h = bbox
-        xmax = xmin + w
-        ymax = ymin + h
 
         if catid not in catid2color:
             idx = np.random.randint(len(color_list))
             catid2color[catid] = color_list[idx]
         color = tuple(catid2color[catid])
-
-        # draw bbox
-        draw.line(
-            [(xmin, ymin), (xmin, ymax), (xmax, ymax), (xmax, ymin),
-             (xmin, ymin)],
-            width=2,
-            fill=color)
+        
+        if bbox.shape[0] == 4:
+            xmin, ymin, w, h = bbox
+            xmax = xmin + w
+            ymax = ymin + h
+            
+            # draw bbox
+            draw.line(
+                [(xmin, ymin), (xmin, ymax), (xmax, ymax), (xmax, ymin),
+                 (xmin, ymin)],
+                width=2,
+                fill=color)
+        elif bbox.shape[0] == 8:
+            x1,y1,x2,y2,x3,y3,x4,y4 = bbox
+            print('bbox', bbox)
+            input('ssssss')
+            # draw bbox
+            draw.line(
+                [(x1, y1), (x2, y2), (x2, y2), (x3, y3),
+                 (x3, y3), (x4, y4), (x4, y4), (x1, y1)],
+                width=2,
+                fill=color)
 
         # draw label
         text = "{} {:.2f}".format(catid2name[catid], score)
