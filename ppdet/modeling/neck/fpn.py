@@ -88,14 +88,8 @@ class FPN(Layer):
                         learning_rate=2., regularizer=L2Decay(0.))))
             self.fpn_convs.append(fpn_conv)
 
-
-        for i in range(len(self.fpn_convs)):
-            print('i==', i, self.fpn_convs[i])
-
-        # has_extra_convs == True
         highest_backbone_level = 4
         extra_levels = self.num_outs - highest_backbone_level + self.min_level
-        print('extra_levels====', extra_levels)
         if self.has_extra_convs and extra_levels >= 1:
             for i in range(extra_levels):
                 if i == 0 and self.extra_convs_on_inputs:

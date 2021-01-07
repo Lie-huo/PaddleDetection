@@ -39,6 +39,13 @@ logging.basicConfig(level=logging.INFO, format=FORMAT)
 logger = logging.getLogger(__name__)
 
 
+catid2name = {}
+name_lst = ['plane', 'ship', 'storage tank', 'baseball diamond', 'tennis court', 'basketball court',
+            'ground track field', 'harbor', 'bridge', 'large vehicle', 'small vehicle', 'helicopter',
+            'roundabout', 'soccer ball field', 'swimming pool']
+for (ii,v) in enumerate(name_lst):
+    catid2name[ii] = v
+
 def parse_args():
     parser = ArgsParser()
     parser.add_argument(
@@ -154,6 +161,7 @@ def visual_rbox(image, catid2name, bbox_res, threshold):
     
     return image
 
+
 def run(FLAGS, cfg, place):
 
     # Model
@@ -173,8 +181,6 @@ def run(FLAGS, cfg, place):
     anno_file = dataset.get_anno()
     with_background = cfg.with_background
     use_default_label = dataset.use_default_label
-    clsid2catid, catid2name = get_category_info(anno_file, with_background,
-                                                use_default_label)
 
     # Init Model
     load_weight(model, cfg.weights)
@@ -186,12 +192,11 @@ def run(FLAGS, cfg, place):
         outs = model(data, cfg.TestReader['inputs_def']['fields'], 'infer')
 
         logger.info('Infer iter {}'.format(iter_id))
-        print('outs', outs)
+        #print('outs', outs)
         im_ids = outs['im_id']
         bboxes = outs['bbox']
         bbox_num = outs['bbox_num']
         print('im_ids', im_ids.shape, im_ids, 'bbox_num', bbox_num.shape, bbox_num, bboxes.shape)
-        input('vis rbox')
         start = 0
         for i, im_id in enumerate(im_ids):
             im_id = im_ids[i]
@@ -206,17 +211,7 @@ def run(FLAGS, cfg, place):
                     "original/frame_{}".format(vdl_image_frame),
                     original_image_np, vdl_image_step)
             
-
-            catid2name1 = {}
-            name_lst = ['plane', 'ship', 'storage tank', 'baseball diamond', 'tennis court', 'basketball court',
-                        'ground track field', 'harbor', 'bridge', 'large vehicle', 'small vehicle', 'helicopter',
-                        'roundabout', 'soccer ball field', 'swimming pool']
-            for (ii,v) in enumerate(name_lst):
-                catid2name1[ii] = v
-            image = visual_rbox(image, catid2name1, bboxes[i, :, :], threshold=0.1)
-            #image = visualize_results(image, bbox_res, mask_res,
-            #                          int(im_id), catid2name,
-            #                          FLAGS.draw_threshold)
+            image = visual_rbox(image, catid2name, bboxes[i, :, :], threshold=0.1)
 
             # use VisualDL to log image with bbox
             if FLAGS.use_vdl:

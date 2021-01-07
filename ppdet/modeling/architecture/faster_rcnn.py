@@ -103,5 +103,4 @@ class FasterRCNN(BaseArch):
             'im_id': self.inputs['im_id'].numpy()
         }
         print('output array', output['bbox'].shape, output['bbox_num'].shape, output['im_id'].shape)
-        input('21111')
         return output

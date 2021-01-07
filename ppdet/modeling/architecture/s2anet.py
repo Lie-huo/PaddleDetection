@@ -82,15 +82,6 @@ class S2ANet(BaseArch):
         self.s2anet_head = s2anet_head
 
     def model_arch(self):
-        
-        print('inputs', self.inputs['image'].shape, self.inputs['image'].sum())
-        print(type(self.inputs['image']), self.inputs['image'].shape, self.inputs['image'].sum())
-        np.save('demo/pd_input_image.npy', self.inputs['image'].numpy())
-        np_s2anet_in_img = np.load('demo/extract_feat_in_img.npy')
-        self.inputs['image'] = paddle.to_tensor(np_s2anet_in_img)
-        print('inputs', self.inputs['image'].shape, self.inputs['image'].sum())
-        #input('xxx')
-        
         # Backbone
         body_feats = self.backbone(self.inputs)
         spatial_scale = 0.0625
@@ -127,7 +118,6 @@ class S2ANet(BaseArch):
             'bbox_num': np.array([pred_out[1].numpy()]),
             'im_id': self.inputs['im_id'].numpy()
         }
-        print('output array', output['bbox'], output['bbox_num'], output['im_id'])
-        print('get_pred out', output)
-        input('21111')
+        #print('output array', output['bbox'], output['bbox_num'], output['im_id'])
+        #print('get_pred out', output)
         return output

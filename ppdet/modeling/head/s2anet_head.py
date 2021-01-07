@@ -326,13 +326,11 @@ def delta2rbox_pd(Rrois,
     dw = paddle.clip(dw, min=-max_ratio, max=max_ratio)
     dh = paddle.clip(dh, min=-max_ratio, max=max_ratio)
 
-    print('RroisRroisRroisRroisRrois', Rrois.shape)
     Rroi_x = Rrois[:, 0]
     Rroi_y = Rrois[:, 1]
     Rroi_w = Rrois[:, 2]
     Rroi_h = Rrois[:, 3]
     Rroi_angle = Rrois[:, 4]
-
 
     gx = dx * Rroi_w * paddle.cos(Rroi_angle) - dy * Rroi_h * paddle.sin(Rroi_angle) + Rroi_x
     gy = dx * Rroi_w * paddle.sin(Rroi_angle) + dy * Rroi_h * paddle.cos(Rroi_angle) + Rroi_y
@@ -342,12 +340,9 @@ def delta2rbox_pd(Rrois,
     ga = (ga + np.pi / 4) % np.pi - np.pi / 4
     ga = paddle.to_tensor(ga)
 
-    for d in [gx, gy, gw, gh, ga]:
-        print(type(d), d.shape, d.sum())
     gw = paddle.to_tensor(gw, dtype='float32')
     gh = paddle.to_tensor(gh, dtype='float32')
     bboxes = paddle.stack([gx, gy, gw, gh, ga], axis=-1)
-    print('bboxes', bboxes.shape)
     return bboxes
 
 
@@ -501,28 +496,11 @@ class AlignConv(Layer):
                                                            bias_attr=None)
 
     def forward(self, x, refine_anchors, stride):
-        print('2021_debug align conv forward x',x.shape, x.sum(), x.mean(), 'refine_anchors', refine_anchors.shape,
-              refine_anchors.sum(), refine_anchors.mean(), stride)
-        np.save('demo/2021_debug_refine_anchors_{}.npy'.format(x.shape[2]), refine_anchors.numpy())
         offset = anchor2offset(refine_anchors, self.kernel_size, stride)
         print('2021_debug offset', offset.shape, offset.mean())
         # 12.479357
         print('2021_debug', self.align_conv.weight.shape, self.align_conv.weight.sum())
-
-
-        # debug
-        np.save('demo/2021_debug_x_{}.npy'.format(x.shape[2]), x.numpy())
-        np.save('demo/2021_debug_offset_{}.npy'.format(x.shape[2]), offset.numpy())
-
-        #x_np = np.load('/Users/liuhui29/Downloads/npy_2021/2021_debug_x_{}.npy'.format(x.shape[2]))
-        #x = paddle.to_tensor(x_np, dtype=x.dtype)
-        #offset_np = np.load('/Users/liuhui29/Downloads/npy_2021/2021_debug_offset_{}.npy'.format(x.shape[2]))
-        #offset = paddle.to_tensor(offset_np, dtype=refine_anchors.dtype)
-        #x0 =self.align_conv(x, offset)
-        #print('2021_debug offset dcn not relu ', x0.shape, x0.mean())
         x = F.relu(self.align_conv(x, offset))
-        print('2021_debug offset dcn', x.shape, x.mean())
-        np.save('demo/2021_debug_offset_dcn_{}.npy'.format(x.shape[2]), x.numpy())
         return x
 
 def get_refine_anchors(featmap_sizes,
@@ -723,12 +701,10 @@ def get_bboxes_single(cls_score_list,
         cls_score = cls_score[0, :, :, :]
         bbox_pred = bbox_pred[0, :, :, :]
         anchors = anchors[0, :, :, :]
-        print('cls_score', cls_score.shape, 'bbox_pred', bbox_pred.shape, 'anchors', anchors.shape)
         assert cls_score.shape[-2:] == bbox_pred.shape[-2:]
         
         cls_score = paddle.transpose(cls_score, [1, 2, 0])
         cls_score = paddle.reshape(cls_score, [-1, cls_out_channels])
-        print('anchors anchors anchors', anchors.shape, bbox_pred.shape, cls_score.shape)
         use_sigmoid_cls = True
         if use_sigmoid_cls:
             scores = F.sigmoid(cls_score)
@@ -756,7 +732,6 @@ def get_bboxes_single(cls_score_list,
             scores = paddle.gather(scores, topk_inds)
         target_means = (.0, .0, .0, .0, .0),
         target_stds = (1.0, 1.0, 1.0, 1.0, 1.0)
-        print('xxx delta2rbox_pd', anchors.shape, bbox_pred.shape)
         bboxes = delta2rbox_pd(anchors, bbox_pred, target_means,
                                target_stds)
         
@@ -778,20 +753,6 @@ def get_bboxes_single(cls_score_list,
 
     print('error', mlvl_bboxes.shape, mlvl_scores.shape )
     print('cfg', cfg)
-    if True:
-        np_mlvl_scores = np.load('/Users/liuhui29/Downloads/npy0106/get_bbox/mlvl_scores.npy')
-        print('aaaaaaaa   diff of np_mlvl_scores', np_mlvl_scores.shape, mlvl_scores.numpy().shape)
-        print('diff of np_mlvl_scores', np_mlvl_scores.shape, mlvl_scores.numpy().shape,
-              np.sum(np.abs(np_mlvl_scores - mlvl_scores.numpy())))
-        
-        print('np_mlvl_scores:', np_mlvl_scores[0:5, :])
-        print('mlvl_scores:', mlvl_scores[0:5, :])
-        
-        np_mlvl_bboxes = np.load('/Users/liuhui29/Downloads/npy0106/get_bbox/mlvl_bboxes.npy')
-        print('np_mlvl_bboxes', np_mlvl_bboxes[0:5, :])
-        print('mlvl_bboxes pd', mlvl_bboxes.numpy()[0:5, :])
-        print('diff of mlvl_bboxes', np_mlvl_bboxes.shape, mlvl_bboxes.numpy().shape,
-              np.sum(np.abs(np_mlvl_bboxes - mlvl_bboxes.numpy())))
 
     nms_top_k = 2000
     keep_top_k = 200
@@ -973,13 +934,6 @@ class S2ANetHead(Layer):
 
 
     def forward(self, feats):
-        print('feats', len(feats))
-        for e in feats:
-            sha = e.shape
-            print('e', e.shape)
-            np.save('convert/pd_npy/feat_{}.npy'.format(sha[2]), e.numpy())
-            #input('2020-0104')
-        
         fam_reg_branch_list = []
         fam_cls_branch_list = []
 
@@ -1030,14 +984,8 @@ class S2ANetHead(Layer):
             # TODO: do not backward
             fam_reg1 = fam_reg
             fam_reg1.stop_gradient = True
-            print('before bbox_decode', fam_reg1.shape, fam_reg1.sum())
+
             print('2021 debug anchor init_anchors', init_anchors.shape, init_anchors.sum(), init_anchors.mean())
-            #init_anchors = np.load('/Users/liuhui29/Downloads/npy_2021/2021_debug_anchors_{}.npy'.format(featmap_size[0]))
-            #print('load 2021 init_anchors', init_anchors.shape, init_anchors.sum())
-            #init_anchors = init_anchors.reshape(-1, 5)
-            print('2021 debug anchor init_anchors', init_anchors.shape, init_anchors.sum(), init_anchors.mean())
-            #np.save('demo/2021_debug_anchor_{}'.format(featmap_size[0]), init_anchors)
-            #np.save('demo/fam_reg_{}'.format(featmap_size[0]), fam_reg.cpu().numpy())
             refine_anchor = bbox_decode(
                             fam_reg1,
                             init_anchors,
@@ -1045,9 +993,6 @@ class S2ANetHead(Layer):
                             self.target_stds)
 
             self.refine_anchor_list.append(refine_anchor)
-            print('refine_anchor:', refine_anchor.shape, refine_anchor.sum(), refine_anchor.mean())
-            print('self.align_conv_type', self.align_conv_type)
-            #input('xxxx')
 
             if self.align_conv_type == 'AlignConv':
                 print('refine_anchor', refine_anchor.shape, refine_anchor.sum(), 'self.anchor_strides[i]', self.anchor_strides[i])
@@ -1069,12 +1014,6 @@ class S2ANetHead(Layer):
             print('odm_cls_feat paddle', odm_cls_feat.shape, odm_cls_feat.sum(), odm_cls_feat.mean())
             print('odm_reg_feat paddle', odm_reg_feat.shape, odm_reg_feat.sum(), odm_reg_feat.mean())
             
-            #np_odm_cls_feat = np.load('/Users/liuhui29/Downloads/npy_odm/odm_cls_feat_{}.npy'.format(i))
-            #odm_cls_feat = paddle.to_tensor(np_odm_cls_feat)
-
-            #np_odm_reg_feat = np.load('/Users/liuhui29/Downloads/npy_odm/odm_reg_feat_{}.npy'.format(i))
-            #odm_reg_feat = paddle.to_tensor(np_odm_reg_feat)
-
             print('odm_cls_feat', odm_cls_feat.shape, odm_cls_feat.sum())
             print('odm_reg_feat', odm_reg_feat.shape, odm_reg_feat.sum())
 
