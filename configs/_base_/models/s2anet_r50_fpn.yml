@@ -10,6 +10,8 @@ S2ANet:
   backbone: ResNet
   neck: FPN
   s2anet_head: S2ANetHead
+  # post process
+  s2anet_bbox_post_process: S2ANetBBoxPostProcess
 
 
 ResNet:
@@ -66,3 +68,12 @@ S2ANetHead1:
     pre_nms_top_n: 1000
     detections_per_im: 100
     nms_eta: 1.0
+
+S2ANetBBoxPostProcess:
+  nms_pre: 2000
+  min_bbox_size: 0.0
+  nms:
+    name: MultiClassNMS
+    keep_top_k: 100
+    score_threshold: 0.05
+    nms_threshold: 0.5

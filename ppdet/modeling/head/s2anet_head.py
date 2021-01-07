@@ -679,17 +679,14 @@ def nms_rotated(dets_rboxes, scores, score_thresh=0.05, nms_thresh=0.3):
     return det_bboxes, det_labels, det_scores
 
 
-def get_bboxes_single(cls_score_list,
-                      bbox_pred_list,
-                      mlvl_anchors,
-                      scale_factor,
-                      cfg,
-                      cls_out_channels=15,
-                      rescale=True,
-                      use_sigmoid_cls=True):
-    """
-    img_shape (1024, 593, 3) scale_factor 0.36755204594400576 rescale True
-    """
+def get_bboxes(cls_score_list,
+               bbox_pred_list,
+               mlvl_anchors,
+               nms_pre,
+               scale_factor,
+               cls_out_channels,
+               rescale,
+               use_sigmoid_cls):
     print('len(cls_score_list) ', len(cls_score_list), len(bbox_pred_list), len(mlvl_anchors))
     assert len(cls_score_list) == len(bbox_pred_list) == len(mlvl_anchors)
     
@@ -717,8 +714,6 @@ def get_bboxes_single(cls_score_list,
         #anchors = paddle.transpose(anchors, [1, 2, 0])
         anchors = paddle.reshape(anchors, [-1, 5])
         
-        ### anchors = rect2rbox(anchors)
-        nms_pre = cfg.get('nms_pre', -1)
         if nms_pre > 0 and scores.shape[0] > nms_pre:
             # Get maximum scores for foreground classes.
             if use_sigmoid_cls:
@@ -750,30 +745,20 @@ def get_bboxes_single(cls_score_list,
         padding = paddle.zeros([mlvl_scores.shape[0], 1], dtype=mlvl_scores.dtype)
         mlvl_scores = paddle.concat([padding, mlvl_scores], axis=1)
 
-
-    print('error', mlvl_bboxes.shape, mlvl_scores.shape )
-    print('cfg', cfg)
-
-    nms_top_k = 2000
-    keep_top_k = 200
-
-    dets_ploy = []
-    for e in mlvl_bboxes.numpy():
-        dets_ploy_s = rbox2poly_single(e)
-        dets_ploy.append(dets_ploy_s)
-    dets_ploy = np.array(dets_ploy)
-    dets_ploy = paddle.to_tensor(dets_ploy)
-    dets_ploy = paddle.reshape(dets_ploy, [1, dets_ploy.shape[0], dets_ploy.shape[1]])
+    det_ploys = [rbox2poly_single(e) for e in mlvl_bboxes.numpy()]
+    det_ploys = np.array(det_ploys)
+    det_ploys = paddle.to_tensor(det_ploys)
+    det_ploys = paddle.reshape(det_ploys, [1, det_ploys.shape[0], det_ploys.shape[1]])
     mlvl_scores = paddle.transpose(mlvl_scores, [1, 0])
     mlvl_scores = paddle.reshape(mlvl_scores, [1, mlvl_scores.shape[0], mlvl_scores.shape[1]])
-
-    score_threshold = 0.05
-    output, nms_rois_num, index = ops.multiclass_nms(dets_ploy, mlvl_scores, score_threshold, nms_top_k, keep_top_k,
-                                    nms_threshold=0.3)
+    det_scores = mlvl_scores
+    #score_threshold = 0.05
+    #output, nms_rois_num, index = ops.multiclass_nms(dets_ploy, mlvl_scores, score_threshold, nms_top_k, keep_top_k,
+    #                                nms_threshold=0.3)
     
     #det_bboxes, det_labels, det_scores = nms_rotated(mlvl_bboxes.numpy(), mlvl_scores.numpy(),0.1, 0.5)
-    print('nms', output.shape, nms_rois_num)
-    return output, nms_rois_num
+    #print('nms', output.shape, nms_rois_num)
+    return det_ploys, det_scores
 
 
 @register
@@ -1055,21 +1040,13 @@ class S2ANetHead(Layer):
         print('*' * 64)
         return (fam_cls_branch_list, fam_reg_branch_list, odm_cls_branch_list, odm_reg_branch_list)
 
-    def get_prediction(self, inputs):
-    
-        featmap_sizes = [featmap.shape[-2:] for featmap in self.odm_cls_branch_list]
-        num_levels = len(self.odm_cls_branch_list)
-
+    def get_prediction(self, nms_pre, scale_factor):
         refine_anchors = self.refine_anchor_list
-        im_shape = inputs['im_shape'].numpy()
-        print('im_shape', im_shape)
-        scale_factor = inputs['scale_factor'].numpy()
-        print('scale_factor', scale_factor)
-        cfg = {'nms_pre': 2000, 'min_bbox_size': 0, 'score_thr': 0.1, 'max_per_img': 2000}
-        pred_out, pred_bbox_num = get_bboxes_single(self.odm_cls_branch_list, self.odm_reg_branch_list, refine_anchors,
-                                      scale_factor[0], cfg, cls_out_channels=self.cls_out_channels, rescale=True)
+        det_ploys, det_scores = get_bboxes(self.odm_cls_branch_list, self.odm_reg_branch_list, refine_anchors,
+                                           nms_pre, scale_factor, cls_out_channels=self.cls_out_channels, rescale=True,
+                                           use_sigmoid_cls=True)
         
-        return pred_out, pred_bbox_num
+        return det_ploys, det_scores
     
     def get_loss(self, inputs, head_outputs):
         return {'loss': 0.1}

@@ -23,6 +23,21 @@ class BBoxPostProcess(object):
 
 
 @register
+class S2ANetBBoxPostProcess(object):
+    __inject__ = ['nms']
+
+    def __init__(self,  nms_pre=2000, min_bbox_size=0, nms=None):
+        super(S2ANetBBoxPostProcess, self).__init__()
+        self.nms_pre = nms_pre
+        self.min_bbox_size = min_bbox_size
+        self.nms = nms
+
+    def __call__(self, det_ploys, det_scores):
+        bbox_pred, bbox_num, _ = self.nms(det_ploys, det_scores)
+        return bbox_pred, bbox_num
+
+
+@register
 class MaskPostProcess(object):
     __shared__ = ['mask_resolution']
 
