@@ -1836,7 +1836,7 @@ class Rbox2Poly(BaseOperator):
         for i in range(R.shape[2]):
             tmp_r = R[:, :, i].reshape(2, 2)
             poly.append(tmp_r.dot(rect[:, :, i]))
-        print('cord convert finish!')
+        #print('cord convert finish!')
         # poly:[M, 2, 4]
         poly = np.array(poly)
         coor_x = poly[:, 0, :4] + x_ctr.reshape(bbox_num, 1)

@@ -648,11 +648,9 @@ class S2ANetHead(nn.Layer):
         np_scale_factor = scale_factor.numpy()
 
         # data_format: (xc, yc, w, h, theta)
-        gt_bboxes_4 = inputs['gt_bbox'][0].numpy()[:, ]
+        gt_bboxes = inputs['gt_bbox'][0].numpy()[:, ]
         gt_labels = inputs['gt_class'][0].numpy()
-        gt_theta = inputs['gt_theta'][0].numpy()
         is_crowd = inputs['is_crowd'][0].numpy()
-        gt_bboxes = np.concatenate([gt_bboxes_4, gt_theta], axis=1)
 
         featmap_sizes = [self.featmap_sizes[e] for e in self.featmap_sizes]
         anchors_list, valid_flag_list = self.get_init_anchors(featmap_sizes, np_im_shape)

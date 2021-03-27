@@ -18,6 +18,7 @@ from ppdet.core.workspace import register, serializable
 
 from .target import rpn_anchor_target, generate_proposal_target, generate_mask_target
 from ppdet.modeling.utils import bbox_util
+from ppdet.utils import bbox_utils
 import numpy as np
 
 g_idx=0
@@ -118,23 +119,120 @@ class MaskAssigner(object):
         return outs
 
 
+
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, v):
+        if not isinstance(v, Vector):
+            return NotImplemented
+        return Vector(self.x + v.x, self.y + v.y)
+
+    def __sub__(self, v):
+        if not isinstance(v, Vector):
+            return NotImplemented
+        return Vector(self.x - v.x, self.y - v.y)
+
+    def cross(self, v):
+        if not isinstance(v, Vector):
+            return NotImplemented
+        return self.x*v.y - self.y*v.x
+
+
+class Line:
+    # ax + by + c = 0
+    def __init__(self, v1, v2):
+        self.a = v2.y - v1.y
+        self.b = v1.x - v2.x
+        self.c = v2.cross(v1)
+
+    def __call__(self, p):
+        return self.a*p.x + self.b*p.y + self.c
+
+    def intersection(self, other):
+        # See e.g.     https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection#Using_homogeneous_coordinates
+        if not isinstance(other, Line):
+            return NotImplemented
+        w = self.a*other.b - self.b*other.a
+        return Vector(
+            (self.b*other.c - self.c*other.b)/w,
+            (self.c*other.a - self.a*other.c)/w
+        )
+
+
+def rectangle_vertices(cx, cy, w, h, r):
+    angle = np.pi*r/180
+    dx = w/2
+    dy = h/2
+    dxcos = dx*np.cos(angle)
+    dxsin = dx*np.sin(angle)
+    dycos = dy*np.cos(angle)
+    dysin = dy*np.sin(angle)
+    return (
+        Vector(cx, cy) + Vector(-dxcos - -dysin, -dxsin + -dycos),
+        Vector(cx, cy) + Vector(dxcos - -dysin,  dxsin + -dycos),
+        Vector(cx, cy) + Vector(dxcos - dysin,  dxsin + dycos),
+        Vector(cx, cy) + Vector(-dxcos - dysin, -dxsin + dycos)
+    )
+
+def intersection_area(r1, r2):
+    # r1 and r2 are in (center, width, height, rotation) representation
+    # First convert these into a sequence of vertices
+
+    rect1 = rectangle_vertices(*r1)
+    rect2 = rectangle_vertices(*r2)
+
+    # Use the vertices of the first rectangle as
+    # starting vertices of the intersection polygon.
+    intersection = rect1
+
+    # Loop over the edges of the second rectangle
+    for p, q in zip(rect2, rect2[1:] + rect2[:1]):
+        if len(intersection) <= 2:
+            break # No intersection
+
+        line = Line(p, q)
+
+        # Any point p with line(p) <= 0 is on the "inside" (or on the boundary),
+        # any point p with line(p) > 0 is on the "outside".
+
+        # Loop over the edges of the intersection polygon,
+        # and determine which part is inside and which is outside.
+        new_intersection = []
+        line_values = [line(t) for t in intersection]
+        for s, t, s_value, t_value in zip(
+            intersection, intersection[1:] + intersection[:1],
+            line_values, line_values[1:] + line_values[:1]):
+            if s_value <= 0:
+                new_intersection.append(s)
+            if s_value * t_value < 0:
+                # Points are on opposite sides.
+                # Add the intersection of the lines to new_intersection.
+                intersection_point = line.intersection(Line(s, t))
+                new_intersection.append(intersection_point)
+
+        intersection = new_intersection
+
+    # Calculate area
+    if len(intersection) <= 2:
+        return 0
+
+    return 0.5 * sum(p.x*q.y - p.y*q.x for p, q in
+                     zip(intersection, intersection[1:] + intersection[:1]))
+
 @register
 class S2ANetAnchorAssigner(object):
-    def __init__(self, batch_size_per_im=256,
-                 pos_fraction=0.5,
-                 pos_iou_thr=0.5,
+    def __init__(self, pos_iou_thr=0.5,
                  neg_iou_thr=0.4,
                  min_iou_thr=0.0,
-                 ignore_iof_thr=-2,
-                 use_random=True):
+                 ignore_iof_thr=-2):
         super(S2ANetAnchorAssigner, self).__init__()
-        self.batch_size_per_im = batch_size_per_im
-        self.pos_fraction = pos_fraction
         self.pos_iou_thr = pos_iou_thr
         self.neg_iou_thr = neg_iou_thr
         self.min_iou_thr = min_iou_thr
         self.ignore_iof_thr = ignore_iof_thr
-        self.use_random = use_random
 
     def anchor_valid(self, anchors):
         """
@@ -177,18 +275,34 @@ class S2ANetAnchorAssigner(object):
         gt_bboxes_xc_yc = gt_bboxes
 
         # calc rbox iou
-        anchors_xc_yc = anchors_xc_yc.astype(np.float32)
-        anchors_xc_yc = paddle.to_tensor(anchors_xc_yc)
-        gt_bboxes_xc_yc = paddle.to_tensor(gt_bboxes_xc_yc)
+        #anchors_xc_yc = anchors_xc_yc.astype(np.float32)
+        #anchors_xc_yc = paddle.to_tensor(anchors_xc_yc)
+        #gt_bboxes_xc_yc = paddle.to_tensor(gt_bboxes_xc_yc)
 
         # call custom_ops
         #iou = custom_ops.rbox_iou(anchors_xc_yc, gt_bboxes_xc_yc)
         #iou = iou.numpy()
-        global g_idx
-        iou = np.load('npy/overlaps_0322_{}.npy'.format(g_idx))
-        iou = iou.T
-        g_idx+=1
+        #global g_idx
+        #iou = np.load('npy/overlaps_0322_{}.npy'.format(g_idx))
+        #iou = iou.T
+        #g_idx+=1
 
+        def calc_iou(bboxes1, bboxes2):
+            x11, y11, x12, y12 = np.split(bboxes1, 4, axis=1)
+            x21, y21, x22, y22 = np.split(bboxes2, 4, axis=1)
+            xA = np.maximum(x11, np.transpose(x21))
+            yA = np.maximum(y11, np.transpose(y21))
+            xB = np.minimum(x12, np.transpose(x22))
+            yB = np.minimum(y12, np.transpose(y22))
+            interArea = np.maximum((xB - xA + 1), 0) * np.maximum((yB - yA + 1), 0)
+            boxAArea = (x12 - x11 + 1) * (y12 - y11 + 1)
+            boxBArea = (x22 - x21 + 1) * (y22 - y21 + 1)
+            iou = interArea / (boxAArea + np.transpose(boxBArea) - interArea)
+            return iou
+
+        anchors_xc_yc = anchors_xc_yc.astype(np.float32)
+        gt_bboxes_xc_yc = gt_bboxes_xc_yc.astype(np.float32)
+        iou = calc_iou(anchors_xc_yc[:, 0:4], gt_bboxes_xc_yc[:, 0:4])
 
         # every gt's anchor's index
         gt_bbox_anchor_inds = iou.argmax(axis=0)
@@ -236,13 +350,10 @@ class S2ANetAnchorAssigner(object):
         print('gt_bboxes', gt_bboxes.shape, gt_bboxes)
         assert gt_bboxes.shape[1] == 5
 
-        batch_size_per_im = self.batch_size_per_im
         pos_iou_thr = self.pos_iou_thr
         neg_iou_thr = self.neg_iou_thr
         min_iou_thr = self.min_iou_thr
         ignore_iof_thr = self.ignore_iof_thr
-        pos_fraction = self.pos_fraction
-        use_random = self.use_random
 
         anchor_num = anchors.shape[0]
 
@@ -270,6 +381,8 @@ class S2ANetAnchorAssigner(object):
         pos_labels = np.ones(anchors_num, dtype=np.int32) * -1
         pos_labels_weights = np.zeros(anchors_num, dtype=np.float32)
 
+        print('anchors', anchors.shape)
+        print('pos_inds', pos_inds)
         pos_sampled_anchors = anchors[pos_inds]
         #print('ancho target pos_inds', pos_inds, len(pos_inds))
         pos_sampled_gt_boxes = gt_bboxes[anchor_gt_bbox_inds[pos_inds]]
