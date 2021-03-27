@@ -347,7 +347,7 @@ class S2ANetAnchorAssigner(object):
         assert anchors.ndim == 2
         assert anchors.shape[1] == 5
         assert gt_bboxes.ndim == 2
-        print('gt_bboxes', gt_bboxes.shape, gt_bboxes)
+        #print('gt_bboxes', gt_bboxes.shape, gt_bboxes)
         assert gt_bboxes.shape[1] == 5
 
         pos_iou_thr = self.pos_iou_thr
@@ -381,8 +381,8 @@ class S2ANetAnchorAssigner(object):
         pos_labels = np.ones(anchors_num, dtype=np.int32) * -1
         pos_labels_weights = np.zeros(anchors_num, dtype=np.float32)
 
-        print('anchors', anchors.shape)
-        print('pos_inds', pos_inds)
+        #print('anchors', anchors.shape)
+        #print('pos_inds', pos_inds)
         pos_sampled_anchors = anchors[pos_inds]
         #print('ancho target pos_inds', pos_inds, len(pos_inds))
         pos_sampled_gt_boxes = gt_bboxes[anchor_gt_bbox_inds[pos_inds]]
