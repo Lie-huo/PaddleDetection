@@ -38,14 +38,14 @@ import numpy as np
 
 
 import paddle
-from paddle.utils.cpp_extension import load
+#from paddle.utils.cpp_extension import load
 
 G_USE_CUSTOM_OP = False
 g_idx = 0
-if G_USE_CUSTOM_OP:
-    custom_ops = load(
-        name="custom_jit_ops",
-        sources=["ppdet/ext_op/rbox_iou_op.cc", "ppdet/ext_op/rbox_iou_op.cu"])
+#if G_USE_CUSTOM_OP:
+#    custom_ops = load(
+#        name="custom_jit_ops",
+#        sources=["ppdet/ext_op/rbox_iou_op.cc", "ppdet/ext_op/rbox_iou_op.cu"])
 
 
 def sa2net_smooth_l1_loss(pred, label, delta=1.0/9.0):
@@ -664,6 +664,7 @@ class S2ANetHead(nn.Layer):
             anchors_list_all.extend(anchor)
         anchors_list_all = np.array(anchors_list_all)
 
+        '''
         valid_flag_list_all = []
         for ii, anchor_flag in enumerate(valid_flag_list):
             anchor_flag = anchor_flag.reshape(-1, 4)
@@ -672,6 +673,7 @@ class S2ANetHead(nn.Layer):
 
         inside_flags = valid_flag_list_all
         inside_flags = np.array(inside_flags, np.int32)
+        '''
 
         # s2anet_anchor_assigner
         # anchor_list   gt_boxes,

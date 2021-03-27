@@ -20,6 +20,7 @@ from .target import rpn_anchor_target, generate_proposal_target, generate_mask_t
 from ppdet.modeling.utils import bbox_util
 import numpy as np
 
+g_idx=0
 
 @register
 @serializable
@@ -181,8 +182,13 @@ class S2ANetAnchorAssigner(object):
         gt_bboxes_xc_yc = paddle.to_tensor(gt_bboxes_xc_yc)
 
         # call custom_ops
-        iou = custom_ops.rbox_iou(anchors_xc_yc, gt_bboxes_xc_yc)
-        iou = iou.numpy()
+        #iou = custom_ops.rbox_iou(anchors_xc_yc, gt_bboxes_xc_yc)
+        #iou = iou.numpy()
+        global g_idx
+        iou = np.load('npy/overlaps_0322_{}.npy'.format(g_idx))
+        iou = iou.T
+        g_idx+=1
+
 
         # every gt's anchor's index
         gt_bbox_anchor_inds = iou.argmax(axis=0)
@@ -227,6 +233,7 @@ class S2ANetAnchorAssigner(object):
         assert anchors.ndim == 2
         assert anchors.shape[1] == 5
         assert gt_bboxes.ndim == 2
+        print('gt_bboxes', gt_bboxes.shape, gt_bboxes)
         assert gt_bboxes.shape[1] == 5
 
         batch_size_per_im = self.batch_size_per_im
