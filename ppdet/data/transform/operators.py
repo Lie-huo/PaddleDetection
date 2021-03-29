@@ -715,6 +715,7 @@ class Resize(BaseOperator):
 
         # apply bbox
         if 'gt_bbox' in sample and len(sample['gt_bbox']) > 0:
+            print('deng gt_bbox', sample)
             sample['gt_bbox'] = self.apply_bbox(sample['gt_bbox'],
                                                 [im_scale_x, im_scale_y],
                                                 [resize_w, resize_h])
@@ -2038,8 +2039,8 @@ class ResizeRbox(BaseOperator):
                 [im_scale_y, im_scale_x], dtype=np.float32)
 
         # apply bbox
-        if 'gt_bbox' in sample and len(sample['gt_bbox']) > 0:
-            sample['gt_bbox'] = self.apply_bbox(sample['gt_bbox'],
+        if 'gt_rbox2poly' in sample and len(sample['gt_rbox2poly']) > 0:
+            sample['gt_rbox2poly'] = self.apply_bbox(sample['gt_rbox2poly'],
                                                 [im_scale_x, im_scale_y],
                                                 [resize_w, resize_h])
 
@@ -2056,9 +2057,9 @@ class Rbox2Poly(BaseOperator):
         super(Rbox2Poly, self).__init__()
 
     def apply(self, sample, context=None):
-        assert 'gt_bbox' in sample
-        assert sample['gt_bbox'].shape[1] == 5
-        rrect = sample['gt_bbox']
+        assert 'gt_rbox' in sample
+        assert sample['gt_rbox'].shape[1] == 5
+        rrect = sample['gt_rbox']
         bbox_num = rrect.shape[0]
         x_ctr = rrect[:, 0]
         y_ctr = rrect[:, 1]
@@ -2082,7 +2083,12 @@ class Rbox2Poly(BaseOperator):
         coor_y = poly[:, 1, :4] + y_ctr.reshape(bbox_num, 1)
         poly = np.stack([coor_x[:, 0], coor_y[:, 0], coor_x[:, 1], coor_y[:, 1],
                          coor_x[:, 2], coor_y[:, 2], coor_x[:, 3], coor_y[:, 3]], axis=1)
-        sample['gt_bbox'] = poly
+        x1 = x_ctr - width / 2.0
+        y1 = y_ctr - height / 2.0
+        x2 = x_ctr + width / 2.0
+        y2 = y_ctr + height / 2.0
+        sample['gt_bbox'] = np.stack([x1, y1, x2, y2], axis=1)
+        sample['gt_rbox2poly'] = poly
         return sample
 
 @register_op
@@ -2138,8 +2144,8 @@ class Poly2Rbox(BaseOperator):
         return ret_rotated_boxes
 
     def apply(self, sample, context=None):
-        assert 'gt_bbox' in sample
-        poly = sample['gt_bbox']
+        assert 'gt_rbox2poly' in sample
+        poly = sample['gt_rbox2poly']
         rbox = self.poly_to_rbox(poly)
-        sample['gt_bbox'] = rbox
+        sample['gt_rbox'] = rbox
         return sample
