@@ -651,7 +651,7 @@ class S2ANetHead(nn.Layer):
         gt_bboxes = inputs['gt_rbox'][0].numpy()
         gt_labels = inputs['gt_class'][0].numpy()
         is_crowd = inputs['is_crowd'][0].numpy()
-
+        print('gt_bboxes', gt_bboxes)
         featmap_sizes = [self.featmap_sizes[e] for e in self.featmap_sizes]
         anchors_list, valid_flag_list = self.get_init_anchors(featmap_sizes, np_im_shape)
 

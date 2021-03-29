@@ -6,7 +6,7 @@ TrainDataset:
     image_dir: images/
     anno_path: annotations/s2anet_train_1_paddle_coco.json
     dataset_dir: dataset/dota_coco
-    data_fields: ['image', 'gt_bbox', 'gt_class', 'is_crowd', 'gt_theta']
+    data_fields: ['image', 'gt_bbox', 'gt_class', 'is_crowd', 'gt_rbox']
 
 EvalDataset:
   !COCODataSet

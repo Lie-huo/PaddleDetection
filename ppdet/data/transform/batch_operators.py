@@ -852,10 +852,9 @@ class Poly2RboxBatch(BaseOperator):
         """
 
         for sample in samples:
-            assert 'gt_poly' in sample
-            assert len(sample['gt_poly'][0]) == 8
-            poly = sample['gt_poly'][0]
-            rbox = self.poly_to_rbox(poly)
+            assert 'gt_rbox2poly' in sample
+            polys = sample['gt_rbox2poly']
+            rbox = self.poly_to_rbox(polys)
             sample['gt_rbox'] = rbox
         return samples
 

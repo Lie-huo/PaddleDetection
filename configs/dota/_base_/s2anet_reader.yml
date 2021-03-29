@@ -4,13 +4,11 @@ TrainReader:
   - Decode: {}
   - Rbox2Poly: {}
   - ResizeRbox: {target_size: [1024, 1024], interp: 2, keep_ratio: False}
-  #- RandomFlip: {prob: 0.5}
-  - Poly2Rbox: {}
-  - Rbox2Poly: {}
   - NormalizeImage: {is_scale: true, mean: [0.485,0.456,0.406], std: [0.229, 0.224,0.225]}
   - Permute: {}
   batch_transforms:
   - PadBatch: {pad_to_stride: 32, pad_gt: true}
+  - Poly2RboxBatch: {}
   batch_size: 1
   shuffle: true
   drop_last: true
