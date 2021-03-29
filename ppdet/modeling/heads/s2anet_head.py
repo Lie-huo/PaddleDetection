@@ -38,7 +38,7 @@ import numpy as np
 
 
 import paddle
-from paddle.utils.cpp_extension import load
+#from paddle.utils.cpp_extension import load
 
 G_USE_CUSTOM_OP = False
 g_idx = 0

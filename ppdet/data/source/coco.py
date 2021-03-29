@@ -91,8 +91,8 @@ class COCODataSet(DetDataset):
                     else:
                         if not any(np.array(inst['bbox'])):
                             continue
-                    angle = 0.0
-                    if len(inst['bbox']) > 4:
+                    is_rbox_anno = True if len(inst['bbox']) == 5 else False
+                    if is_rbox_anno:
                         xc, yc, box_w, box_h, angle = inst['bbox']
                         x1 = xc - box_w / 2.0
                         y1 = yc - box_h / 2.0
@@ -104,9 +104,8 @@ class COCODataSet(DetDataset):
                         y2 = y1 + box_h
                     eps = 1e-5
                     if inst['area'] > 0 and x2 - x1 > eps and y2 - y1 > eps:
-                        if len(inst['bbox']) > 4:
-                            inst['clean_bbox'] = [xc, yc, box_w, box_h]
-                            inst['gt_theta'] = angle
+                        if is_rbox_anno:
+                            inst['clean_bbox'] = [xc, yc, box_w, box_h, angle]
                         else:
                             inst['clean_bbox'] = [
                                 round(float(x), 3) for x in [x1, y1, x2, y2]
@@ -122,7 +121,10 @@ class COCODataSet(DetDataset):
                 if num_bbox <= 0:
                     continue
 
-                gt_bbox = np.zeros((num_bbox, 4), dtype=np.float32)
+                if is_rbox_anno:
+                    gt_bbox = np.zeros((num_bbox, 5), dtype=np.float32)
+                else:
+                    gt_bbox = np.zeros((num_bbox, 4), dtype=np.float32)
                 gt_theta = np.zeros((num_bbox, 1), dtype=np.int32)
                 gt_class = np.zeros((num_bbox, 1), dtype=np.int32)
                 is_crowd = np.zeros((num_bbox, 1), dtype=np.int32)
