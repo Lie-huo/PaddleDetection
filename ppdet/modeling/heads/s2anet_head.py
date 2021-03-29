@@ -826,9 +826,4 @@ class S2ANetHead(nn.Layer):
             padding = paddle.zeros([mlvl_scores.shape[0], 1], dtype=mlvl_scores.dtype)
             mlvl_scores = paddle.concat([padding, mlvl_scores], axis=1)
 
-        mlvl_scores_max_idx = paddle.argmax(mlvl_scores, axis=1, keepdim=True)
-        mlvl_scores_max_idx = paddle.cast(mlvl_scores_max_idx, mlvl_scores.dtype)
-        mlvl_scores_max = paddle.max(mlvl_scores, axis=1, keepdim=True)
-        pred_bbox = paddle.concat([mlvl_scores_max_idx, mlvl_scores_max, mlvl_bboxes], axis=1)
-        # mlvl_bboxes [[class_id, score, x_c, y_c, w, h, a] ]
         return mlvl_scores, mlvl_bboxes

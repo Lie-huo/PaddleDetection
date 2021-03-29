@@ -91,15 +91,21 @@ class S2ANet(BaseArch):
 
         im_shape = self.inputs['im_shape']
         scale_factor = self.inputs['scale_factor']
+        print('im_shape', im_shape.shape, 'scale_factor', scale_factor.shape)
         nms_pre = self.s2anet_bbox_post_process.nms_pre
         pred_scores, pred_bboxes = self.s2anet_head.get_prediction(s2anet_head_out, nms_pre)
+        print('pred_scores', pred_scores.shape, 'pred_bboxes',pred_bboxes.shape)
 
         # post_process
-        bbox_pred, bbox_num, index = self.s2anet_bbox_post_process.get_nms_result(pred_scores, pred_bboxes)
-        # pred_result = self.s2anet_bbox_post_process.get_pred(bbox_pred, bbox_num, im_shape, scale_factor)
+        pred_cls_score_bbox, bbox_num, index = self.s2anet_bbox_post_process.get_nms_result(pred_scores, pred_bboxes)
+        pred_bbox, bbox_num = self.s2anet_bbox_post_process.get_result(pred_cls_score_bbox[:, 2:], bbox_num,
+                                                                            im_shape[0], scale_factor[0])
+
+        # result [n, 10]
+        pred_cls_score_bbox = paddle.concat([pred_cls_score_bbox[:, 0:2], pred_bbox], axis=1)
 
         output = {
-            'bbox': bbox_pred,
+            'bbox': pred_cls_score_bbox,
             'bbox_num': bbox_num
         }
         return output
