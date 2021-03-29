@@ -119,21 +119,16 @@ class MaskAssigner(object):
 
 @register
 class S2ANetAnchorAssigner(object):
-    def __init__(self, batch_size_per_im=256,
-                 pos_fraction=0.5,
-                 pos_iou_thr=0.5,
+    def __init__(self, pos_iou_thr=0.5,
                  neg_iou_thr=0.4,
                  min_iou_thr=0.0,
-                 ignore_iof_thr=-2,
-                 use_random=True):
+                 ignore_iof_thr=-2):
         super(S2ANetAnchorAssigner, self).__init__()
-        self.batch_size_per_im = batch_size_per_im
-        self.pos_fraction = pos_fraction
+
         self.pos_iou_thr = pos_iou_thr
         self.neg_iou_thr = neg_iou_thr
         self.min_iou_thr = min_iou_thr
         self.ignore_iof_thr = ignore_iof_thr
-        self.use_random = use_random
 
     def anchor_valid(self, anchors):
         """
@@ -221,29 +216,22 @@ class S2ANetAnchorAssigner(object):
     def __call__(self, anchors,
                        gt_bboxes,
                        gt_labels,
-                       is_crowd,
-                       im_scale):
+                       is_crowd):
 
         assert anchors.ndim == 2
         assert anchors.shape[1] == 5
         assert gt_bboxes.ndim == 2
         assert gt_bboxes.shape[1] == 5
 
-        batch_size_per_im = self.batch_size_per_im
         pos_iou_thr = self.pos_iou_thr
         neg_iou_thr = self.neg_iou_thr
         min_iou_thr = self.min_iou_thr
         ignore_iof_thr = self.ignore_iof_thr
-        pos_fraction = self.pos_fraction
-        use_random = self.use_random
 
         anchor_num = anchors.shape[0]
-
-        # TODO: support not square image
-        im_scale = im_scale[0][0]
         anchors_inds = self.anchor_valid(anchors)
         anchors = anchors[anchors_inds]
-        gt_bboxes = gt_bboxes * im_scale
+        gt_bboxes = gt_bboxes
         is_crowd_slice = is_crowd
         not_crowd_inds = np.where(is_crowd_slice == 0)
 

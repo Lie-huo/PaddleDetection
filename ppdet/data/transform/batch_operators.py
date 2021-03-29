@@ -37,6 +37,7 @@ __all__ = [
     'Gt2FCOSTarget',
     'Gt2TTFTarget',
     'Gt2Solov2Target',
+    'PadRboxBatch',
     'Poly2RboxBatch'
 ]
 
@@ -788,6 +789,69 @@ class Gt2Solov2Target(BaseOperator):
                 data['grid_order{}'.format(idx)] = gt_grid_order
 
         return samples
+
+
+@register_op
+class PadRboxBatch(BaseOperator):
+    """
+    Pad a batch of samples so they can be divisible by a stride.
+    The layout of each image should be 'CHW'.
+    Args:
+        pad_to_stride (int): If `pad_to_stride > 0`, pad zeros to ensure
+            height and width is divisible by `pad_to_stride`.
+    """
+
+    def __init__(self, pad_to_stride=0, pad_gt=False):
+        super(PadRboxBatch, self).__init__()
+        self.pad_to_stride = pad_to_stride
+        self.pad_gt = pad_gt
+
+    def __call__(self, samples, context=None):
+        """
+        Args:
+            samples (list): a batch of sample, each is dict.
+        """
+        coarsest_stride = self.pad_to_stride
+
+        max_shape = np.array([data['image'].shape for data in samples]).max(
+            axis=0)
+        if coarsest_stride > 0:
+            max_shape[1] = int(
+                np.ceil(max_shape[1] / coarsest_stride) * coarsest_stride)
+            max_shape[2] = int(
+                np.ceil(max_shape[2] / coarsest_stride) * coarsest_stride)
+
+        padding_batch = []
+        for data in samples:
+            im = data['image']
+            im_c, im_h, im_w = im.shape[:]
+            padding_im = np.zeros(
+                (im_c, max_shape[1], max_shape[2]), dtype=np.float32)
+            padding_im[:, :im_h, :im_w] = im
+            data['image'] = padding_im
+
+        if self.pad_gt:
+            gt_num = []
+            for data in samples:
+                gt_num.append(data['gt_bbox'].shape[0])
+            gt_num_max = max(gt_num)
+
+            for i, data in enumerate(samples):
+                gt_rbox_data = -np.ones([gt_num_max, 5], dtype=np.float32)
+                gt_class_data = -np.ones([gt_num_max], dtype=np.int32)
+                is_crowd_data = np.ones([gt_num_max], dtype=np.int32)
+
+                gt_num = data['gt_rbox'].shape[0]
+                gt_rbox_data[0:gt_num, :] = data['gt_rbox']
+                gt_class_data[0:gt_num] = np.squeeze(data['gt_class'])
+                is_crowd_data[0:gt_num] = np.squeeze(data['is_crowd'])
+
+                data['gt_rbox'] = gt_rbox_data
+                data['gt_class'] = gt_class_data
+                data['is_crowd'] = is_crowd_data
+
+        return samples
+
 
 @register_op
 class Poly2RboxBatch(BaseOperator):

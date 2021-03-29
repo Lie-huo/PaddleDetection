@@ -565,7 +565,7 @@ class S2ANetHead(nn.Layer):
 
         fam_cls_loss = paddle.add_n(fam_cls_losses)
         fam_reg_loss = paddle.add_n(fam_bbox_losses)
-        return {'fam_cls_loss': fam_cls_loss, 'fam_reg_loss': fam_reg_loss}
+        return fam_cls_loss, fam_reg_loss
 
     def get_odm_loss(self, odm_target, s2anet_head_out):
         (labels, label_weights, bbox_targets, bbox_weights, pos_inds, neg_inds) = odm_target
@@ -638,23 +638,14 @@ class S2ANetHead(nn.Layer):
 
         odm_cls_loss = paddle.add_n(odm_cls_losses)
         odm_reg_loss = paddle.add_n(odm_bbox_losses)
-        return {'odm_cls_loss': odm_cls_loss, 'odm_reg_loss': odm_reg_loss}
+        return odm_cls_loss, odm_reg_loss
 
     def get_loss(self, inputs, s2anet_head_out, s2anet_anchor_assigner):
         # inputs: im_id image im_shape scale_factor gt_bbox gt_class is_crowd
-        im_shape = inputs['im_shape']
-        np_im_shape = im_shape[0].numpy()
-        scale_factor = inputs['scale_factor']
-        np_scale_factor = scale_factor.numpy()
 
-        # data_format: (xc, yc, w, h, theta)
-        gt_bboxes = inputs['gt_rbox'][0].numpy()
-        gt_labels = inputs['gt_class'][0].numpy()
-        is_crowd = inputs['is_crowd'][0].numpy()
-        print('gt_bboxes', gt_bboxes)
+        # same featmap_sizes
         featmap_sizes = [self.featmap_sizes[e] for e in self.featmap_sizes]
         anchors_list, valid_flag_list = self.get_init_anchors(featmap_sizes, np_im_shape)
-
         anchors_list_all = []
         for ii, anchor in enumerate(anchors_list):
             anchor = anchor.reshape(-1, 4)
@@ -662,39 +653,50 @@ class S2ANetHead(nn.Layer):
             anchors_list_all.extend(anchor)
         anchors_list_all = np.array(anchors_list_all)
 
-        valid_flag_list_all = []
-        for ii, anchor_flag in enumerate(valid_flag_list):
-            anchor_flag = anchor_flag.reshape(-1, 4)
-            valid_flag_list_all.extend(anchor_flag)
-        valid_flag_list_all = np.array(valid_flag_list_all)
+        # make loss
+        fam_cls_loss = paddle.to_tensor(1e-8, dtype='float32', stop_gradient=True)
+        fam_reg_loss = paddle.to_tensor(1e-8, dtype='float32', stop_gradient=True)
+        odm_cls_loss = paddle.to_tensor(1e-8, dtype='float32', stop_gradient=True)
+        odm_reg_loss = paddle.to_tensor(1e-8, dtype='float32', stop_gradient=True)
 
-        inside_flags = valid_flag_list_all
-        inside_flags = np.array(inside_flags, np.int32)
+        # loss of each image
+        for im_id in range(im_shape.shape[0]):
+            np_im_shape = inputs['im_shape'][im_id].numpy()
+            np_scale_factor = inputs['scale_factor'][im_id].numpy()
+            # data_format: (xc, yc, w, h, theta)
+            gt_bboxes = inputs['gt_rbox'][im_id].numpy()
+            gt_labels = inputs['gt_class'][im_id].numpy()
+            is_crowd = inputs['is_crowd'][im_id].numpy()
+            #print('gt_bboxes', gt_bboxes)
 
-        # s2anet_anchor_assigner
-        # anchor_list   gt_boxes,
-        fam_target = s2anet_anchor_assigner(anchors_list_all, gt_bboxes, gt_labels, is_crowd, np_scale_factor)
+            # get im_feat
+            fam_cls_feats_list = [e[im_id] for e in s2anet_head_out[0]]
+            fam_reg_feats_list = [e[im_id] for e in s2anet_head_out[1]]
+            odm_cls_feats_list = [e[im_id] for e in s2anet_head_out[2]]
+            odm_reg_feats_list = [e[im_id] for e in s2anet_head_out[3]]
+            im_s2anet_head_out = (fam_cls_feats_list, fam_reg_feats_list, odm_cls_feats_list, odm_reg_feats_list)
 
-        if fam_target is None:
-            return None
+            # FAM
+            im_fam_target = s2anet_anchor_assigner(anchors_list_all, gt_bboxes, gt_labels, is_crowd)
+            if im_fam_target is not None:
+                im_fam_cls_loss, im_fam_reg_loss = self.get_fam_loss(im_fam_target, im_s2anet_head_out)
+                fam_cls_loss += im_fam_cls_loss
+                fam_reg_loss += im_fam_reg_loss
 
-        fam_loss = self.get_fam_loss(fam_target, s2anet_head_out)
+            # ODM
+            refine_anchors_list, valid_flag_list = self.get_refine_anchors(featmap_sizes, image_shape=np_im_shape)
+            refine_anchors_list = np.array(refine_anchors_list)
+            im_odm_target = s2anet_anchor_assigner(refine_anchors_list, gt_bboxes, gt_labels, is_crowd)
 
-        # Oriented Detection Module targets
-        refine_anchors_list, valid_flag_list = self.get_refine_anchors(featmap_sizes, image_shape=np_im_shape)
-        refine_anchors_list = np.array(refine_anchors_list)
-        odm_target = s2anet_anchor_assigner(refine_anchors_list, gt_bboxes, gt_labels, is_crowd, np_scale_factor)
+            if odm_target is not None:
+                im_odm_cls_loss, im_odm_reg_loss = self.get_odm_loss(im_odm_target, im_s2anet_head_out)
+                odm_cls_loss += im_odm_cls_loss
+                odm_reg_loss += im_odm_reg_loss
 
-        if odm_target is None:
-            return None
-
-        odm_loss = self.get_odm_loss(odm_target, s2anet_head_out)
-        fam_loss_total = fam_loss['fam_cls_loss'] + fam_loss['fam_reg_loss']
-        odm_loss_total = odm_loss['odm_cls_loss'] + odm_loss['odm_reg_loss']
-        return {'fam_cls_loss': fam_loss['fam_cls_loss'],
-                'fam_reg_loss': fam_loss['fam_reg_loss'],
-                'odm_cls_loss': odm_loss['odm_cls_loss'],
-                'odm_reg_loss': odm_loss['odm_reg_loss']}
+        return {'fam_cls_loss': fam_cls_loss,
+                'fam_reg_loss': fam_reg_loss,
+                'odm_cls_loss': odm_cls_loss,
+                'odm_reg_loss': odm_reg_loss}
 
     def get_init_anchors(self, featmap_sizes, image_shape):
         """Get anchors according to feature map sizes.
