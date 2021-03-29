@@ -21,6 +21,15 @@ from ppdet.modeling.utils import bbox_util
 import numpy as np
 
 
+from paddle.utils.cpp_extension import load
+G_USE_CUSTOM_OP = True
+g_idx = 0
+if G_USE_CUSTOM_OP:
+    custom_ops = load(
+        name="custom_jit_ops",
+        sources=["ppdet/ext_op/rbox_iou_op.cc", "ppdet/ext_op/rbox_iou_op.cu"])
+
+
 @register
 @serializable
 class RPNTargetAssign(object):
@@ -171,9 +180,8 @@ class S2ANetAnchorAssigner(object):
         gt_bboxes_xc_yc = gt_bboxes
 
         # calc rbox iou
-        anchors_xc_yc = anchors_xc_yc.astype(np.float32)
-        anchors_xc_yc = paddle.to_tensor(anchors_xc_yc)
-        gt_bboxes_xc_yc = paddle.to_tensor(gt_bboxes_xc_yc)
+        anchors_xc_yc = paddle.to_tensor(anchors_xc_yc, dtype='float32')
+        gt_bboxes_xc_yc = paddle.to_tensor(gt_bboxes_xc_yc, dtype='float32')
 
         # call custom_ops
         iou = custom_ops.rbox_iou(anchors_xc_yc, gt_bboxes_xc_yc)
