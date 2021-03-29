@@ -901,8 +901,8 @@ class Poly2RboxBatch(BaseOperator):
                 return (angle - range[0]) % range[1] + range[0]
             angle = norm_angle(angle)
 
-            x_ctr = np.float(pt1[0] + pt3[0]) / 2
-            y_ctr = np.float(pt1[1] + pt3[1]) / 2
+            x_ctr = np.float(pt1[0] + pt3[0]) / 2.0
+            y_ctr = np.float(pt1[1] + pt3[1]) / 2.0
             rotated_box = np.array([x_ctr, y_ctr, width, height, angle])
             rotated_boxes.append(rotated_box)
         ret_rotated_boxes = np.array(rotated_boxes)
