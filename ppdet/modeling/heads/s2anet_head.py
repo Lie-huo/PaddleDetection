@@ -287,8 +287,8 @@ class S2ANetHead(nn.Layer):
         self.use_custom_smooth_l1_loss = use_custom_smooth_l1_loss
 
         self.use_sigmoid_cls = use_sigmoid_cls
-        num_classes = 15
-        self.cls_out_channels = num_classes if self.use_sigmoid_cls else 1
+        self.num_classes = num_classes
+        self.cls_out_channels = num_classes if self.use_sigmoid_cls else 1 + num_classes
         self.sampling = False
 
         # anchor
@@ -551,6 +551,7 @@ class S2ANetHead(nn.Layer):
 
             if self.use_custom_smooth_l1_loss:
                 fam_bbox = sa2net_smooth_l1_loss(fam_bbox_pred, feat_bbox_targets)
+                print('fam_bbox', fam_bbox.shape, fam_bbox.sum(), fam_bbox.mean())
             else:
                 fam_bbox = paddle.nn.functional.smooth_l1_loss(fam_bbox_pred, feat_bbox_targets, reduction='none')
                 delate = 1.0 / 9.0
@@ -569,12 +570,15 @@ class S2ANetHead(nn.Layer):
 
     def get_odm_loss(self, odm_target, s2anet_head_out):
         (labels, label_weights, bbox_targets, bbox_weights, pos_inds, neg_inds) = odm_target
+        print('0328 get_odm_loss', labels.max(), labels.min())
         fam_cls_branch_list, fam_reg_branch_list, odm_cls_branch_list, odm_reg_branch_list = s2anet_head_out
 
         odm_cls_losses = []
         odm_bbox_losses = []
         st_idx = 0
         featmap_sizes = [self.featmap_sizes[e] for e in self.featmap_sizes]
+        print('pos_inds', len(pos_inds), pos_inds)
+        print('neg_inds', len(neg_inds), neg_inds)
         num_total_samples = len(pos_inds) + len(neg_inds) if self.sampling else len(pos_inds)
         num_total_samples = max(1, num_total_samples)
         for idx, feat_size in enumerate(featmap_sizes):
@@ -598,11 +602,21 @@ class S2ANetHead(nn.Layer):
 
             # gt_classes 0~14(data), feat_labels 0~14, sigmoid_focal_loss need class>=1
             feat_labels = feat_labels.reshape(-1) + 1
-            np_one_hot_targets = np.eye(self.cls_out_channels + 1)[feat_labels]
-            np_one_hot_targets = np_one_hot_targets[:, 1:]
-            feat_labels_one_hot = paddle.to_tensor(np_one_hot_targets, dtype='float32', stop_gradient=True)
+            print('0328 feat_labels >=0 >0 ==-1 ==-2', feat_labels.max(), feat_labels.min(), np.sum(feat_labels>=0), np.sum(feat_labels>0), np.sum(feat_labels==-1), np.sum(feat_labels==-2))
+            #np_one_hot_targets = np.eye(self.cls_out_channels + 0)[feat_labels]
+            #np_one_hot_targets = np_one_hot_targets[:, 1:]
+
+            feat_labels = paddle.to_tensor(feat_labels, dtype='int64')
+            tag_labels_flatten_bin = paddle.nn.functional.one_hot(feat_labels, num_classes=1 + self.num_classes)
+            tag_labels_flatten_bin = tag_labels_flatten_bin[:, 1:]
+            tag_labels_flatten_bin.stop_gradient = True
+            print('0328 tag_labels_flatten_bin', tag_labels_flatten_bin.shape, tag_labels_flatten_bin.max(), tag_labels_flatten_bin.min(), tag_labels_flatten_bin.sum())
             num_total_samples = paddle.to_tensor(num_total_samples, dtype='float32', stop_gradient=True)
-            odm_cls = paddle.nn.functional.sigmoid_focal_loss(odm_cls_score1, feat_labels_one_hot,
+            print('odm_cls_score1', odm_cls_score1.shape, 'tag_labels_flatten_bin', tag_labels_flatten_bin.shape, tag_labels_flatten_bin.sum())
+            print('0328 feat_labels', feat_labels.shape) 
+            #feat_labels = paddle.reshape(feat_labels, [-1, 1])
+            #odm_cls = paddle.nn.functional.softmax_with_cross_entropy(odm_cls_score1, feat_labels)
+            odm_cls = paddle.nn.functional.sigmoid_focal_loss(odm_cls_score1, tag_labels_flatten_bin,
                                                               normalizer=num_total_samples, reduction='none')
 
             feat_label_weights = feat_label_weights.reshape(feat_label_weights.shape[0], 1)
@@ -610,7 +624,7 @@ class S2ANetHead(nn.Layer):
             feat_label_weights = paddle.to_tensor(feat_label_weights)
             feat_label_weights.stop_gradient = True
 
-            odm_cls = odm_cls * feat_label_weights
+            #odm_cls = odm_cls * feat_label_weights
             odm_cls_total = paddle.sum(odm_cls)
             odm_cls_losses.append(odm_cls_total)
 
@@ -624,6 +638,8 @@ class S2ANetHead(nn.Layer):
             odm_bbox_pred = paddle.reshape(odm_bbox_pred, [-1, 5])
 
             if self.use_custom_smooth_l1_loss:
+                print('odm_bbox_pred', odm_bbox_pred.shape, odm_bbox_pred)
+                print('feat_bbox_targets', feat_bbox_targets.shape, feat_bbox_targets)
                 odm_bbox = sa2net_smooth_l1_loss(odm_bbox_pred, feat_bbox_targets)
             else:
                 odm_bbox = paddle.nn.functional.smooth_l1_loss(odm_bbox_pred, feat_bbox_targets, reduction='none')
@@ -686,11 +702,12 @@ class S2ANetHead(nn.Layer):
         # Oriented Detection Module targets
         refine_anchors_list, valid_flag_list = self.get_refine_anchors(featmap_sizes, image_shape=np_im_shape)
         refine_anchors_list = np.array(refine_anchors_list)
-        odm_target = s2anet_anchor_assigner(anchors_list_all, gt_bboxes, gt_labels, is_crowd, np_scale_factor)
+        odm_target = s2anet_anchor_assigner(anchors_list_all, gt_bboxes, gt_labels, is_crowd)
 
-        pd_zero = paddle.to_tensor(1e-6)
+        pd_zero = paddle.to_tensor(1e-6, stop_gradient=True)
         if odm_target is None:
             #return None
+            return {'odm_cls_loss': pd_zero}
             return {'fam_cls_loss': pd_zero,
                 'fam_reg_loss': pd_zero,
                 'odm_cls_loss': pd_zero,
@@ -699,6 +716,7 @@ class S2ANetHead(nn.Layer):
         odm_loss = self.get_odm_loss(odm_target, s2anet_head_out)
         #fam_loss_total = fam_loss['fam_cls_loss'] + fam_loss['fam_reg_loss']
         odm_loss_total = odm_loss['odm_cls_loss'] + odm_loss['odm_reg_loss']
+        return {'odm_cls_loss': odm_loss['odm_cls_loss']}
         return {'fam_cls_loss': pd_zero,
                 'fam_reg_loss': pd_zero,
                 'odm_cls_loss': odm_loss['odm_cls_loss'],

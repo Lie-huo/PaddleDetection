@@ -207,6 +207,7 @@ class FCOSLoss(nn.Layer):
         # expand onehot labels
         num_classes = cls_logits_flatten.shape[-1]
         tag_labels_flatten = paddle.squeeze(tag_labels_flatten, axis=-1)
+        print('tag_labels_flatten', tag_labels_flatten.shape, tag_labels_flatten.max(), tag_labels_flatten.min())
         tag_labels_flatten_bin = F.one_hot(
             tag_labels_flatten, num_classes=1 + num_classes)
         tag_labels_flatten_bin = tag_labels_flatten_bin[:, 1:]

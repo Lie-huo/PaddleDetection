@@ -1,0 +1,19 @@
+metric: COCO
+num_classes: 15
+
+TrainDataset:
+  !COCODataSet
+    image_dir: train/images
+    anno_path: train/s2anet_train_paddle_coco_1024.json
+    dataset_dir: /paddle/s2anet/s2anet_0328/DOTA_1024_s2anet_1000_200
+    data_fields: ['image', 'gt_bbox', 'gt_class', 'is_crowd']
+
+EvalDataset:
+  !COCODataSet
+    image_dir: val/images
+    anno_path: val/s2anet_val_paddle_coco.json
+    dataset_dir: /paddle/s2anet/s2anet_0328/DOTA_1024_s2anet_1000_200
+
+TestDataset:
+  !ImageFolder
+    anno_path: val/s2anet_val_paddle_coco.json

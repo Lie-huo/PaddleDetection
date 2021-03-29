@@ -271,6 +271,8 @@ class S2ANetAnchorAssigner(object):
         """
         assert anchors.shape[1] == 4 or anchors.shape[1] == 5
         assert gt_bboxes.shape[1] == 4 or gt_bboxes.shape[1] == 5
+        #print('gt', gt_bboxes.shape, gt_bboxes, gt_lables, gt_lables.min())
+        #print('anchors', anchors.shape)
         anchors_xc_yc = anchors
         gt_bboxes_xc_yc = gt_bboxes
 
@@ -288,8 +290,21 @@ class S2ANetAnchorAssigner(object):
         #g_idx+=1
 
         def calc_iou(bboxes1, bboxes2):
-            x11, y11, x12, y12 = np.split(bboxes1, 4, axis=1)
-            x21, y21, x22, y22 = np.split(bboxes2, 4, axis=1)
+            # xc,yc,w,h
+            xc1, yc1, w1, h1 = np.split(bboxes1, 4, axis=1)
+            x11 = xc1 - w1/2.0
+            y11 = yc1 - h1/2.0
+            x12 = xc1 + w1/2.0
+            y12 = yc1 + h1/2.0
+            
+            xc2, yc2, w2, h2 = np.split(bboxes2, 4, axis=1)
+            x21 = xc2 - w2/2.0
+            y21 = yc2 - h2/2.0
+            x22 = xc2 + w2/2.0
+            y22 = yc2 + h2/2.0
+
+            #x11, y11, x12, y12 = np.split(bboxes1, 4, axis=1)
+            #x21, y21, x22, y22 = np.split(bboxes2, 4, axis=1)
             xA = np.maximum(x11, np.transpose(x21))
             yA = np.maximum(y11, np.transpose(y21))
             xB = np.minimum(x12, np.transpose(x22))
@@ -303,7 +318,8 @@ class S2ANetAnchorAssigner(object):
         anchors_xc_yc = anchors_xc_yc.astype(np.float32)
         gt_bboxes_xc_yc = gt_bboxes_xc_yc.astype(np.float32)
         iou = calc_iou(anchors_xc_yc[:, 0:4], gt_bboxes_xc_yc[:, 0:4])
-
+        print('iou', iou.shape, iou.max(), np.sum(iou>=0.5))
+        np.save('npy/0328_iou.npy', iou)
         # every gt's anchor's index
         gt_bbox_anchor_inds = iou.argmax(axis=0)
         gt_bbox_anchor_iou = iou[gt_bbox_anchor_inds, np.arange(iou.shape[1])]
@@ -336,18 +352,17 @@ class S2ANetAnchorAssigner(object):
         iou_pos_iou_thr_ids_box_inds = anchor_gt_bbox_inds[iou_pos_iou_thr_ids]
         labels[iou_pos_iou_thr_ids] = gt_lables[iou_pos_iou_thr_ids_box_inds]
 
+        print('label_finish', labels.max(), labels.min(), np.sum(labels>=0), np.sum(labels>=-1), np.sum(labels==-1))
         return anchor_gt_bbox_inds, anchor_gt_bbox_iou, labels
 
     def __call__(self, anchors,
                        gt_bboxes,
                        gt_labels,
-                       is_crowd,
-                       im_scale):
+                       is_crowd):
 
         assert anchors.ndim == 2
         assert anchors.shape[1] == 5
         assert gt_bboxes.ndim == 2
-        #print('gt_bboxes', gt_bboxes.shape, gt_bboxes)
         assert gt_bboxes.shape[1] == 5
 
         pos_iou_thr = self.pos_iou_thr
@@ -356,12 +371,10 @@ class S2ANetAnchorAssigner(object):
         ignore_iof_thr = self.ignore_iof_thr
 
         anchor_num = anchors.shape[0]
-
-        # TODO: support not square image
-        im_scale = im_scale[0][0]
         anchors_inds = self.anchor_valid(anchors)
         anchors = anchors[anchors_inds]
-        gt_bboxes = gt_bboxes * im_scale
+
+        print('gt_bboxes', gt_bboxes)
         is_crowd_slice = is_crowd
         not_crowd_inds = np.where(is_crowd_slice == 0)
 
@@ -370,9 +383,14 @@ class S2ANetAnchorAssigner(object):
                                                                         pos_iou_thr, neg_iou_thr, min_iou_thr,
                                                                         ignore_iof_thr)
 
+        
+        print('after anchor assigner  >=0 >=-1 ==-1', np.sum(labels>=0), np.sum(labels>=-1), np.sum(labels==-1))
         # Step2: sample anchor
         pos_inds = np.where(labels >= 0)[0]
         neg_inds = np.where(labels == -1)[0]
+        print('np.where(labels >= 0)', np.where(labels >= 0))
+        print('np.where(labels >= 0)', np.where(labels >= 0)[0])
+
 
         # Step3: make output
         anchors_num = anchors.shape[0]
@@ -384,7 +402,7 @@ class S2ANetAnchorAssigner(object):
         #print('anchors', anchors.shape)
         #print('pos_inds', pos_inds)
         pos_sampled_anchors = anchors[pos_inds]
-        #print('ancho target pos_inds', pos_inds, len(pos_inds))
+        print('ancho target pos_inds', pos_inds, len(pos_inds))
         pos_sampled_gt_boxes = gt_bboxes[anchor_gt_bbox_inds[pos_inds]]
         if len(pos_inds) > 0:
             pos_bbox_targets = bbox_util.rbox2delta(pos_sampled_anchors, pos_sampled_gt_boxes)
@@ -396,4 +414,5 @@ class S2ANetAnchorAssigner(object):
 
         if len(neg_inds) > 0:
             pos_labels_weights[neg_inds] = 1.0
+        print('pos_label_finish', pos_labels.max(), pos_labels.min())
         return (pos_labels, pos_labels_weights, bbox_targets, bbox_weights, pos_inds, neg_inds)

@@ -185,6 +185,8 @@ class FCOSPostProcess(object):
         bboxes, score = self.decode(locations, cls_logits, bboxes_reg,
                                     centerness, scale_factor)
         bbox_pred, bbox_num, _ = self.nms(bboxes, score)
+        print('bbox_pred', bbox_pred)
+        print('bbox_num', bbox_num)
         return bbox_pred, bbox_num
 
 
@@ -242,7 +244,7 @@ class S2ANetBBoxPostProcess(object):
         pred_scores : [N, M]  score
         pred_bboxes : [N, 5]  xc, yc, w, h, a
         """
-        # print('before nms pred_scores', pred_scores.shape, 'pred_bboxes', pred_bboxes.shape)
+        print('before nms pred_scores', pred_scores.shape, 'pred_bboxes', pred_bboxes.shape)
         pred_ploys = self.rbox2poly(pred_bboxes.numpy(), False)
         pred_ploys = paddle.to_tensor(pred_ploys)
         pred_ploys = paddle.reshape(pred_ploys, [1, pred_ploys.shape[0], pred_ploys.shape[1]])
@@ -251,9 +253,19 @@ class S2ANetBBoxPostProcess(object):
         # pred_scores [NA, 16] --> [16, NA]
         pred_scores = paddle.transpose(pred_scores, [1, 0])
         pred_scores = paddle.reshape(pred_scores, [1, pred_scores.shape[0], pred_scores.shape[1]])
-        #print('pred_ploys, ', pred_ploys.shape, 'pred_scores', pred_scores.shape)
+        
+        np_pred_scores = pred_scores.cpu().numpy()
+        np.save('npy/0327_pred_scores.npy', np_pred_scores)
+        print('pred_ploys, ', pred_ploys.shape, 'pred_scores', pred_scores.shape)
         bbox_pred, bbox_num, index = self.nms(pred_ploys, pred_scores)
-        #print('after nms', bbox_pred.shape, bbox_pred[:, 1].min(), 'bbox_num', bbox_num)
+        print('after nms', bbox_pred.shape, 'bbox_num', bbox_num)
+        print('index', index.shape, index)
+        indes_np = index.cpu().numpy().reshape(-1)
+        for t in indes_np:
+            t = int(t)
+            #print('t=',t)
+            #print('bbox', pred_bboxes[t, :])
+            #print('score', pred_scores[0, :, t])
         return bbox_pred, bbox_num, index
 
     def get_pred(self, bboxes, bbox_num, im_shape, scale_factor):

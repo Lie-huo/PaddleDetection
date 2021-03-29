@@ -12,7 +12,7 @@ TrainReader:
   batch_transforms:
   - PadBatch: {pad_to_stride: 32, pad_gt: true}
   batch_size: 1
-  shuffle: true
+  shuffle: false
   drop_last: false
 
 

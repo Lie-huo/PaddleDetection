@@ -85,7 +85,7 @@ def draw_bbox(image, im_id, catid2name, bboxes, threshold):
         catid, bbox, score = dt['category_id'], dt['bbox'], dt['score']
         if score < threshold:
             continue
-
+        print('threshold', threshold, catid, bbox, score)
         if catid not in catid2color:
             idx = np.random.randint(len(color_list))
             catid2color[catid] = color_list[idx]

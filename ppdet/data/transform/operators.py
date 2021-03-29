@@ -1819,13 +1819,14 @@ class Rbox2Poly(BaseOperator):
 
     def apply(self, sample, context=None):
         assert 'gt_bbox' in sample
+        assert sample['gt_bbox'].shape[1] == 5
         rrect = sample['gt_bbox']
         bbox_num = rrect.shape[0]
         x_ctr = rrect[:, 0]
         y_ctr = rrect[:, 1]
         width = rrect[:, 2]
         height = rrect[:, 3]
-        angle = sample['gt_theta'].reshape(rrect.shape[0], 1)
+        angle = rrect[:, 4]
         tl_x, tl_y, br_x, br_y = -width / 2, -height / 2, width / 2, height / 2
         # rect 2x4
         rect = np.array([[tl_x, br_x, br_x, tl_x], [tl_y, tl_y, br_y, br_y]])
