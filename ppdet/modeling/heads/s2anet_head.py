@@ -643,16 +643,6 @@ class S2ANetHead(nn.Layer):
     def get_loss(self, inputs, s2anet_head_out, s2anet_anchor_assigner):
         # inputs: im_id image im_shape scale_factor gt_bbox gt_class is_crowd
 
-        # same featmap_sizes
-        featmap_sizes = [self.featmap_sizes[e] for e in self.featmap_sizes]
-        anchors_list, valid_flag_list = self.get_init_anchors(featmap_sizes, np_im_shape)
-        anchors_list_all = []
-        for ii, anchor in enumerate(anchors_list):
-            anchor = anchor.reshape(-1, 4)
-            anchor = bbox_util.rect2rbox(anchor)
-            anchors_list_all.extend(anchor)
-        anchors_list_all = np.array(anchors_list_all)
-
         # make loss
         fam_cls_loss = paddle.to_tensor(1e-8, dtype='float32', stop_gradient=True)
         fam_reg_loss = paddle.to_tensor(1e-8, dtype='float32', stop_gradient=True)
@@ -660,6 +650,7 @@ class S2ANetHead(nn.Layer):
         odm_reg_loss = paddle.to_tensor(1e-8, dtype='float32', stop_gradient=True)
 
         # loss of each image
+        im_shape = inputs['im_shape']
         for im_id in range(im_shape.shape[0]):
             np_im_shape = inputs['im_shape'][im_id].numpy()
             np_scale_factor = inputs['scale_factor'][im_id].numpy()
@@ -668,6 +659,17 @@ class S2ANetHead(nn.Layer):
             gt_labels = inputs['gt_class'][im_id].numpy()
             is_crowd = inputs['is_crowd'][im_id].numpy()
             #print('gt_bboxes', gt_bboxes)
+
+            # featmap_sizes
+            featmap_sizes = [self.featmap_sizes[e] for e in self.featmap_sizes]
+            anchors_list, valid_flag_list = self.get_init_anchors(featmap_sizes, np_im_shape)
+            anchors_list_all = []
+            for ii, anchor in enumerate(anchors_list):
+                anchor = anchor.reshape(-1, 4)
+                anchor = bbox_util.rect2rbox(anchor)
+                anchors_list_all.extend(anchor)
+            anchors_list_all = np.array(anchors_list_all)
+
 
             # get im_feat
             fam_cls_feats_list = [e[im_id] for e in s2anet_head_out[0]]
@@ -688,7 +690,7 @@ class S2ANetHead(nn.Layer):
             refine_anchors_list = np.array(refine_anchors_list)
             im_odm_target = s2anet_anchor_assigner(refine_anchors_list, gt_bboxes, gt_labels, is_crowd)
 
-            if odm_target is not None:
+            if im_odm_target is not None:
                 im_odm_cls_loss, im_odm_reg_loss = self.get_odm_loss(im_odm_target, im_s2anet_head_out)
                 odm_cls_loss += im_odm_cls_loss
                 odm_reg_loss += im_odm_reg_loss
